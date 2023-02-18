@@ -103,7 +103,7 @@
             (40.9% <CIcon icon="cil-arrow-top" />)
           </span>
         </template>
-        <template #title>Income</template>
+        <template #title>Crew</template>
         <template #action>
           <CDropdown placement="bottom-end">
             <CDropdownToggle
@@ -197,7 +197,7 @@
             (84.7% <CIcon icon="cil-arrow-top" />)
           </span>
         </template>
-        <template #title>Conversion Rate</template>
+        <template #title>Services</template>
         <template #action>
           <CDropdown placement="bottom-end">
             <CDropdownToggle
@@ -278,7 +278,7 @@
             (-23.6% <CIcon icon="cil-arrow-bottom" />)
           </span>
         </template>
-        <template #title>Sessions</template>
+        <template #title>Phases</template>
         <template #action>
           <CDropdown placement="bottom-end">
             <CDropdownToggle

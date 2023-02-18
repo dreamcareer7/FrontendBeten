@@ -7,7 +7,7 @@
           <CCardBody>
             <CRow>
               <CCol :sm="5">
-                <h4 id="traffic" class="card-title mb-0">Traffic</h4>
+                <h4 id="traffic" class="card-title mb-0">Clients</h4>
                 <div class="small text-medium-emphasis">January 2021</div>
               </CCol>
               <CCol :sm="7" class="d-none d-md-block">
@@ -89,11 +89,11 @@
         </CCard>
       </CCol>
     </CRow>
-    <WidgetsStatsD />
+    <!-- <WidgetsStatsD /> -->
     <CRow>
       <CCol :md="12">
         <CCard class="mb-4">
-          <CCardHeader> Traffic &amp; Sales </CCardHeader>
+          <CCardHeader> Stats </CCardHeader>
           <CCardBody>
             <CRow>
               <CCol :sm="12" :lg="6">
@@ -168,28 +168,7 @@
                     <CProgress thin :value="item.value" color="warning" />
                   </div>
                 </div>
-
-                <div class="mb-5"></div>
-
-                <div
-                  v-for="item in progressGroupExample3"
-                  :key="item.title"
-                  class="progress-group"
-                >
-                  <div class="progress-group-header">
-                    <CIcon :icon="item.icon" class="me-2" size="lg" />
-                    <span class="title">Organic Search</span>
-                    <span class="ms-auto fw-semibold">
-                      {{ item.value }}
-                      <span class="text-medium-emphasis small"
-                        >({{ item.percent }}%)</span
-                      >
-                    </span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress thin :value="item.percent" color="success" />
-                  </div>
-                </div>
+                <!-- <CChartDoughnutExample /> -->
               </CCol>
             </CRow>
             <br />
@@ -204,9 +183,6 @@
                     >Country</CTableHeaderCell
                   >
                   <CTableHeaderCell>Usage</CTableHeaderCell>
-                  <CTableHeaderCell class="text-center"
-                    >Payment Method</CTableHeaderCell
-                  >
                   <CTableHeaderCell>Activity</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
@@ -250,9 +226,6 @@
                       :value="item.usage.value"
                     />
                   </CTableDataCell>
-                  <CTableDataCell class="text-center">
-                    <CIcon size="xl" :name="item.payment.icon" />
-                  </CTableDataCell>
                   <CTableDataCell>
                     <div class="small text-medium-emphasis">Last login</div>
                     <strong>{{ item.activity }}</strong>
@@ -277,14 +250,16 @@ import avatar5 from '@/assets/images/avatars/5.jpg'
 import avatar6 from '@/assets/images/avatars/6.jpg'
 import MainChartExample from './charts/MainChartExample'
 import WidgetsStatsA from './widgets/WidgetsStatsTypeA.vue'
-import WidgetsStatsD from './widgets/WidgetsStatsTypeD.vue'
+// import WidgetsStatsD from './widgets/WidgetsStatsTypeD.vue'
+import * as Charts from './charts/index'
 
 export default {
   name: 'Dashboard',
   components: {
     MainChartExample,
+    ...Charts,
     WidgetsStatsA,
-    WidgetsStatsD,
+    // WidgetsStatsD,
   },
   setup() {
     const progressGroupExample1 = [

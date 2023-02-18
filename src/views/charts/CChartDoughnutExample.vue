@@ -1,5 +1,5 @@
 <template>
-  <CChartDoughnut :data="defaultData" />
+  <CChartDoughnut :data="defaultData" :height="30"/>
 </template>
 
 <script>
@@ -10,7 +10,7 @@ export default {
   computed: {
     defaultData() {
       return {
-        labels: ['VueJs', 'EmberJs', 'VueJs', 'AngularJs'],
+        labels: ['Clients', 'Contracts', 'Vehicles', 'Crew'],
         datasets: [
           {
             backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
