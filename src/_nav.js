@@ -4,10 +4,10 @@ export default [
     name: 'Dashboard',
     to: '/dashboard',
     icon: 'cil-speedometer',
-    badge: {
-      color: 'primary',
-      text: 'NEW',
-    },
+    // badge: {
+    //   color: 'primary',
+    //   text: 'NEW',
+    // },
   },
   {
     component: 'CNavTitle',
@@ -23,7 +23,7 @@ export default [
     component: 'CNavItem',
     name: 'Clients',
     to: '/theme/typography',
-    icon: 'cil-contacts',
+    icon: 'cil-contact',
   },
   {
     component: 'CNavItem',
@@ -57,7 +57,7 @@ export default [
     component: 'CNavItem',
     name: 'Groups',
     to: '/theme/typography',
-    icon: 'cil-sitemap',
+    icon: 'cil-wc',
   },
   {
     component: 'CNavItem',
@@ -69,7 +69,7 @@ export default [
     component: 'CNavGroup',
     name: 'Services',
     to: '/pages',
-    icon: 'cil-star',
+    icon: 'cil-window',
     items: [
       {
         component: 'CNavItem',

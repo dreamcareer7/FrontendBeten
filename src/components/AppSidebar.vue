@@ -12,16 +12,7 @@
     "
   >
     <CSidebarBrand>
-      <CIcon
-        custom-class-name="sidebar-brand-full"
-        :icon="logoNegative"
-        :height="35"
-      />
-      <CIcon
-        custom-class-name="sidebar-brand-narrow"
-        :icon="sygnet"
-        :height="35"
-      />
+      <span style="font-family: Scripto; font-size: 2rem;">Beten</span>
     </CSidebarBrand>
     <AppSidebarNav />
     <CSidebarToggler
