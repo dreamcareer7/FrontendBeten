@@ -69,8 +69,7 @@
 
 <script>
 import axios from 'axios'
-
-const API_URL = 'https://test.perfectsmileil.com/api'
+const API_URL = config.base_url
 
 export default {
   name: 'Login',
@@ -85,7 +84,7 @@ export default {
       let uname = this.username
       let pass = this.password
       return await axios
-        .post(`${API_URL}/login`, {
+        .post(`/login`, {
           uname,
           pass,
         })

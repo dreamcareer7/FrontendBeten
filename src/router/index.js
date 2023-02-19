@@ -1,6 +1,5 @@
 import { h, resolveComponent } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
-import jwt_decode from 'vue-jwt-decode'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
 

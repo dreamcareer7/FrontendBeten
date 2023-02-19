@@ -23,38 +23,25 @@
                 <CTableHeaderCell scope="col">Username</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Contact</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Is Active</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Created at</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow>
-                <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                <CTableDataCell>Mark</CTableDataCell>
-                <CTableDataCell>Otto</CTableDataCell>
-                <CTableDataCell>Otto</CTableDataCell>
-                <CTableDataCell>Otto</CTableDataCell>
+              <CTableRow v-for="user in users" :key="user.id">
+                <CTableHeaderCell scope="row">{{ user.id }}</CTableHeaderCell>
+                <CTableDataCell>{{ user.name }}</CTableDataCell>
+                <CTableDataCell>{{ user.username }}</CTableDataCell>
+                <CTableDataCell>{{ user.contact }}</CTableDataCell>
+                <CTableDataCell>{{ user.is_active }}</CTableDataCell>
+                <CTableDataCell>{{ user.created_at }}</CTableDataCell>
                 <CTableDataCell>
-                  <button class="btn btn-danger text-white">Delete</button>
-                </CTableDataCell>
-              </CTableRow>
-              <CTableRow>
-                <CTableHeaderCell scope="row">2</CTableHeaderCell>
-                <CTableDataCell>Jacob</CTableDataCell>
-                <CTableDataCell>Thornton</CTableDataCell>
-                <CTableDataCell>Thornton</CTableDataCell>
-                <CTableDataCell>Thornton</CTableDataCell>
-                <CTableDataCell>
-                  <button class="btn btn-danger text-white">Delete</button>
-                </CTableDataCell>
-              </CTableRow>
-              <CTableRow>
-                <CTableHeaderCell scope="row">3</CTableHeaderCell>
-                <CTableDataCell>twitter</CTableDataCell>
-                <CTableDataCell>twitter</CTableDataCell>
-                <CTableDataCell>twitter</CTableDataCell>
-                <CTableDataCell>twitter</CTableDataCell>
-                <CTableDataCell>
-                  <button class="btn btn-danger text-white">Delete</button>
+                  <button
+                    class="btn btn-danger text-white"
+                    @click="deleteUser(user.id)"
+                  >
+                    Delete
+                  </button>
                 </CTableDataCell>
               </CTableRow>
             </CTableBody>
@@ -66,26 +53,36 @@
 </template>
 
 <script>
-import store from '@/store'
-import { ref } from 'vue'
-import UsersModule from '@/views/panel/User/UsersModule'
-
+import axios from 'axios'
 export default {
-  setup() {
-    const USER_APP_STORE_MODULE_NAME = 'app-users'
-
-    // Register module
-    if (!store.hasModule(USER_APP_STORE_MODULE_NAME))
-      store.registerModule(USER_APP_STORE_MODULE_NAME, UsersModule)
-    const data = ref(null)
-    const fetchUsers = () => {
-      store.dispatch('app-users/getUsers').then((response) => {
-        data.value = response.data.data
-      })
+  name: 'users',
+  data() {
+    return {
+      users: '',
+      current_page: '',
+      selected_user: null,
     }
-
-    //fetchUsers()
-    return { data, fetchUsers }
+  },
+  mounted() {
+    this.getUsers()
+  },
+  methods: {
+    getUsers: async function () {
+      await axios.get(`/users/paginate`).then((response) => {
+        this.users = response.data.data
+        console.log(this.users)
+      })
+    },
+    deleteUser: async function (id) {
+      await axios.delete(`/users/` + id).then((response) => {
+        alert(response.data.message)
+      })
+    },
+    fetchUserInfo: async function(id) {
+      await axios.get(`/users/show/` + id).then((response) => {
+        console.log(response.data)
+      })
+    },
   },
 }
 </script>
