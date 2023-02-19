@@ -39,7 +39,9 @@
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>@mdo</CTableDataCell>
+                  <CTableDataCell>
+                    <button class="btn btn-danger text-white">Delete</button>
+                  </CTableDataCell>
                 </CTableRow>
                 <CTableRow>
                   <CTableHeaderCell scope="row">2</CTableHeaderCell>
@@ -47,14 +49,19 @@
                   <CTableDataCell>Thornton</CTableDataCell>
                   <CTableDataCell>Thornton</CTableDataCell>
                   <CTableDataCell>Thornton</CTableDataCell>
-                  <CTableDataCell>@fat</CTableDataCell>
+                  <CTableDataCell>
+                    <button class="btn btn-danger text-white">Delete</button>
+                  </CTableDataCell>
                 </CTableRow>
                 <CTableRow>
                   <CTableHeaderCell scope="row">3</CTableHeaderCell>
-                  <CTableDataCell colspan="2">Larry the Bird</CTableDataCell>
-                  <CTableDataCell>@twitter</CTableDataCell>
-                  <CTableDataCell>@twitter</CTableDataCell>
-                  <CTableDataCell>@twitter</CTableDataCell>
+                  <CTableDataCell>twitter</CTableDataCell>
+                  <CTableDataCell>twitter</CTableDataCell>
+                  <CTableDataCell>twitter</CTableDataCell>
+                  <CTableDataCell>twitter</CTableDataCell>
+                  <CTableDataCell>
+                    <button class="btn btn-danger text-white">Delete</button>
+                  </CTableDataCell>
                 </CTableRow>
               </CTableBody>
             </CTable>
