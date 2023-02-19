@@ -29,26 +29,30 @@
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow>
-                <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                <CTableDataCell>Mark</CTableDataCell>
-                <CTableDataCell>Otto</CTableDataCell>
-                <CTableDataCell>Otto</CTableDataCell>
-                <CTableDataCell>Otto</CTableDataCell>
-                <CTableDataCell>Otto</CTableDataCell>
-                <CTableDataCell>Otto</CTableDataCell>
-                <CTableDataCell>
-                  <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-info text-white"
-                  >
-                    View
-                  </button>
-                  <button class="btn btn-sm btn-danger text-white">
-                    Delete
-                  </button>
-                </CTableDataCell>
-              </CTableRow>
+              <template v-if="crew">
+                <CTableRow v-for="(item, index) in crew" :key="index">
+                  <CTableHeaderCell scope="row">{{ item.id }}</CTableHeaderCell>
+                  <CTableDataCell>{{ item }}</CTableDataCell>
+                  <CTableDataCell>
+                    <button
+                      style="margin-right: 1em"
+                      class="btn btn-sm btn-info text-white"
+                    >
+                      View
+                    </button>
+                    <button class="btn btn-sm btn-danger text-white">
+                      Delete
+                    </button>
+                  </CTableDataCell>
+                </CTableRow>
+              </template>
+              <template v-else>
+                <CTableRow>
+                  <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                  <CTableDataCell>no Data</CTableDataCell>
+                </CTableRow>
+              </template>
+
             </CTableBody>
           </CTable>
         </CCardBody>
@@ -61,24 +65,25 @@
 import store from '@/store'
 import { ref } from 'vue'
 import CrewsModule from '@/views/panel/Crew/CrewsModule'
+import axios from 'axios'
 
 export default {
   name: 'crews',
   setup() {
     const USER_APP_STORE_MODULE_NAME = 'app-crews'
-
+    const crew = ref(null)
     // Register module
     if (!store.hasModule(USER_APP_STORE_MODULE_NAME))
       store.registerModule(USER_APP_STORE_MODULE_NAME, CrewsModule)
-    const data = ref(null)
     const fetchCrews = () => {
-      store.dispatch('app-crews/getUsers').then((response) => {
-        data.value = response.data.data
+      axios.get(`/crew`).then((response) => {
+        crew.value = response.data.data
+        console.log(this.users)
       })
     }
 
     fetchCrews()
-    return { data, fetchCrews }
+    return { crew, fetchCrews }
   },
 }
 </script>

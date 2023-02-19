@@ -193,22 +193,26 @@ const routes = [
       {
         path: 'hospitalities',
         name: 'hospitalities',
-        component: () => import('@/views/panel/Hospitality/Hospitalities/Hospitalities'),
+        component: () =>
+          import('@/views/panel/Hospitality/Hospitalities/Hospitalities'),
       },
       {
         path: 'hospitalities/create',
         name: 'Create Concurrent',
-        component: () => import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
+        component: () =>
+          import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
       },
       {
         path: 'hospitalities/transactions',
         name: 'Transactions',
-        component: () => import('@/views/panel/Hospitality/Transactions/Transactions'),
+        component: () =>
+          import('@/views/panel/Hospitality/Transactions/Transactions'),
       },
       {
         path: 'hospitalities/transactions/create',
         name: 'Create Transaction',
-        component: () => import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
+        component: () =>
+          import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
       },
       // Hospitalities Menu ends here
     ],
@@ -250,9 +254,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes: [
-    // Your Routes
-  ],
+  routes,
   scrollBehavior() {
     // always scroll to top
     return { top: 0 }
