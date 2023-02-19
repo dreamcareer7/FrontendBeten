@@ -15,12 +15,42 @@
           </div>
         </CCardHeader>
         <CCardBody>
+          <CRow>
+            <CCol :md="2">
+              <input
+                type="text"
+                class="form-control"
+                v-model="search.name"
+                placeholder="name"
+                @change="getUsers"
+              />
+            </CCol>
+            <CCol :md="2">
+              <input
+                type="text"
+                class="form-control"
+                v-model="search.email"
+                placeholder="Email"
+                @change="getUsers"
+              />
+            </CCol>
+            <CCol :md="2">
+              <input
+                type="text"
+                class="form-control"
+                v-model="search.contact"
+                placeholder="Contact"
+                @change="getUsers"
+              />
+            </CCol>
+          </CRow>
           <CTable>
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Username</CTableHeaderCell>
+                <CTableHeaderCell scope="col">email</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Contact</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Is Active</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Created at</CTableHeaderCell>
@@ -32,6 +62,7 @@
                 <CTableHeaderCell scope="row">{{ user.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ user.name }}</CTableDataCell>
                 <CTableDataCell>{{ user.username }}</CTableDataCell>
+                <CTableDataCell>{{ user.email }}</CTableDataCell>
                 <CTableDataCell>{{ user.contact }}</CTableDataCell>
                 <CTableDataCell>{{ user.is_active }}</CTableDataCell>
                 <CTableDataCell>{{ user.created_at }}</CTableDataCell>
@@ -42,12 +73,14 @@
                   >
                     View
                   </button>
-                  <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-success text-white"
+                  <router-link
+                    :to="{
+                      name: 'edit_user',
+                      params: { id: user.id },
+                    }"
                   >
-                    Update
-                  </button>
+                    <CButton class="btn btn-success text-white">Update</CButton>
+                  </router-link>
                   <button
                     class="btn btn-danger text-white"
                     @click="deleteUser(user.id)"
@@ -71,6 +104,7 @@ export default {
   data() {
     return {
       users: '',
+      search: {},
       current_page: '',
       selected_user: null,
     }
@@ -80,14 +114,18 @@ export default {
   },
   methods: {
     getUsers: async function () {
-      await axios.get(`/users/paginate`).then((response) => {
-        this.users = response.data.data
-        console.log(this.users)
-      })
+      await axios
+        .get(`/users/paginate`, {
+          params: this.search,
+        })
+        .then((response) => {
+          this.users = response.data.data
+        })
     },
     deleteUser: async function (id) {
       await axios.delete(`/users/` + id).then((response) => {
         alert(response.data.message)
+        this.getUsers()
       })
     },
     fetchUserInfo: async function (id) {

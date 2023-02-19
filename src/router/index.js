@@ -26,8 +26,13 @@ const routes = [
       },
       {
         path: 'users/create',
-        name: 'Create User',
+        name: 'create_user',
         component: () => import('@/views/panel/User/CreateUser'),
+      },
+      {
+        path: 'users/edit/:id',
+        name: 'edit_user',
+        component: () => import('@/views/panel/User/UpdateUser'),
       },
       {
         path: 'clients',
