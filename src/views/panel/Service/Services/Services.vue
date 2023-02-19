@@ -34,43 +34,17 @@
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                <CTableRow>
-                  <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                  <CTableDataCell>Mark</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
+                <CTableRow v-for="service in services" :key="service.id">
+                  <CTableHeaderCell scope="row">{{ service.id }}</CTableHeaderCell>
+                  <CTableDataCell>{{ service.title }}</CTableDataCell>
+                  <CTableDataCell>{{ service.country_id }}</CTableDataCell>
+                  <CTableDataCell>{{ service.before_date }}</CTableDataCell>
+                  <CTableDataCell>{{ service.exact_date }}</CTableDataCell>
+                  <CTableDataCell>{{ service.after_date }}</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-<button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
-                    <button class="btn btn-sm btn-danger text-white">Delete</button>
-                  </CTableDataCell>
-                </CTableRow>
-                <CTableRow>
-                  <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                  <CTableDataCell>Mark</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>
-                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-<button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
-                    <button class="btn btn-sm btn-danger text-white">Delete</button>
-                  </CTableDataCell>
-                </CTableRow>
-                <CTableRow>
-                  <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                  <CTableDataCell>Mark</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>
-                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-<button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
-                    <button class="btn btn-sm btn-danger text-white">Delete</button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
+                    <button @click="deleteService(service.id)" class="btn btn-sm btn-danger text-white">Delete</button>
                   </CTableDataCell>
                 </CTableRow>
               </CTableBody>
@@ -81,8 +55,38 @@
   </CRow>
 </template>
 
+
 <script>
+import axios from 'axios'
 export default {
   name: 'services',
+  data() {
+    return {
+      services: '',
+      current_page: '',
+      selected_user: null,
+    }
+  },
+  mounted() {
+    this.getServices()
+  },
+  methods: {
+    getServices: async function () {
+      await axios.get(`/services`).then((response) => {
+        this.services = response.data.data
+        console.log(this.users)
+      })
+    },
+    deleteService: async function (id) {
+      await axios.delete(`/services/` + id).then((response) => {
+        alert(response.data.message)
+      })
+    },
+    fetchServiceInfo: async function(id) {
+      await axios.get(`/services/show/` + id).then((response) => {
+        console.log(response.data)
+      })
+    },
+  },
 }
 </script>
