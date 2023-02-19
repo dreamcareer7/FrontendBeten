@@ -84,7 +84,7 @@ export default {
       })
     }
 
-    fetchUsers()
+    //fetchUsers()
     return { data, fetchUsers }
   },
 }
