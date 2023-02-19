@@ -88,6 +88,36 @@ export default [
     to: '/vehicles',
     icon: 'cil-car-alt',
   },
+  {
+    component: 'CNavItem',
+    name: 'Dormitories',
+    to: '/dormitories',
+    icon: 'cil-car-alt',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Concurrents',
+    to: '/concurrents',
+    icon: 'cil-car-alt',
+  },
+  {
+    component: 'CNavGroup',
+    name: 'Hospitalities',
+    to: '/hospitalities',
+    icon: 'cil-window',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'Hospitalities',
+        to: '/hospitalities',
+      },
+      {
+        component: 'CNavItem',
+        name: 'Transactions',
+        to: '/hospitalities/transactions',
+      },
+    ],
+  },
 
   // {
   //   component: 'CNavItem',

@@ -22,12 +22,12 @@ const routes = [
       {
         path: 'users',
         name: 'Users',
-        component: () => import('@/views/panel/UsersModule/Users'),
+        component: () => import('@/views/panel/User/Users'),
       },
       {
         path: 'users/create',
         name: 'Create User',
-        component: () => import('@/views/panel/UsersModule/CreateUser'),
+        component: () => import('@/views/panel/User/CreateUser'),
       },
       {
         path: 'clients',
@@ -130,6 +130,36 @@ const routes = [
         path: 'vehicles/create',
         name: 'Create Vehicle',
         component: () => import('@/views/panel/Vehicle/CreateVehicle'),
+      },
+      {
+        path: 'dormitories',
+        name: 'dormitories',
+        component: () => import('@/views/panel/Dormitory/Dormitories'),
+      },
+      {
+        path: 'dormitories/create',
+        name: 'Create Dormitory',
+        component: () => import('@/views/panel/Dormitory/CreateDormitory'),
+      },
+      {
+        path: 'concurrents',
+        name: 'concurrents',
+        component: () => import('@/views/panel/Concurrent/Concurrents'),
+      },
+      {
+        path: 'concurrents/create',
+        name: 'Create Concurrent',
+        component: () => import('@/views/panel/Concurrent/CreateConcurrent'),
+      },
+      {
+        path: 'hospitalities',
+        name: 'hospitalities',
+        component: () => import('@/views/panel/Hospitality/Hospitalities/hospitalities'),
+      },
+      {
+        path: 'hospitalities/create',
+        name: 'Create Concurrent',
+        component: () => import('@/views/panel/Hospitality/Hospitalities/CreateConcurrent'),
       },
     ],
   },

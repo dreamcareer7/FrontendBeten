@@ -68,7 +68,7 @@
 <script>
 import store from '@/store'
 import { ref } from 'vue'
-import UsersModule from '@/views/panel/UsersModule/UsersModule'
+import UsersModule from '@/views/panel/User/UsersModule'
 
 export default {
   setup() {
