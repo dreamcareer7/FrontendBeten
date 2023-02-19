@@ -22,12 +22,12 @@ const routes = [
       {
         path: 'users',
         name: 'Users',
-        component: () => import('@/views/panel/User/Users'),
+        component: () => import('@/views/panel/UsersModule/Users'),
       },
       {
         path: 'users/create',
         name: 'Create User',
-        component: () => import('@/views/panel/User/CreateUser'),
+        component: () => import('@/views/panel/UsersModule/CreateUser'),
       },
       {
         path: 'clients',
@@ -143,7 +143,6 @@ const routes = [
       },
     },
     children: [
-
       // Authentication
       {
         path: 'login',

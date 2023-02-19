@@ -32,7 +32,9 @@
                   </CInputGroup>
                   <CRow>
                     <CCol :xs="6">
-                      <CButton @click="login" color="primary" class="px-4"> Login </CButton>
+                      <CButton @click="login" color="primary" class="px-4">
+                        Login
+                      </CButton>
                     </CCol>
                     <CCol :xs="6" class="text-right">
                       <CButton color="link" class="px-0">
@@ -72,27 +74,27 @@ const API_URL = 'https://test.perfectsmileil.com/api'
 
 export default {
   name: 'Login',
-  data()
-  {
+  data() {
     return {
       username: '',
       password: '',
     }
   },
   methods: {
-    async login() {
+    login: async function () {
       let uname = this.username
       let pass = this.password
-      return await axios.post(`${API_URL}/login`, {
-              uname,
-              pass
-            })
-            .then(response => {
-              const token = response.data.token
-              localStorage.setItem('betenAuthToken', token)
-              return response.data
-            })
-    }
-  }
+      return await axios
+        .post(`${API_URL}/login`, {
+          uname,
+          pass,
+        })
+        .then((response) => {
+          const token = response.data.token
+          localStorage.setItem('betenAuthToken', token)
+          return response.data
+        })
+    },
+  },
 }
 </script>
