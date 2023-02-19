@@ -232,6 +232,16 @@ const routes = [
         component: () => import('@/views/panel/Auth/Login'),
       },
       {
+        path: 'reset',
+        name: 'reset_password',
+        component: () => import('@/views/panel/Auth/ResetPassword'),
+      },
+      {
+        path: 'new_password',
+        name: 'new_passport',
+        component: () => import('@/views/panel/Auth/NewPassword'),
+      },
+      {
         path: 'register',
         name: 'Register',
         component: () => import('@/views/panel/Auth/Register'),
