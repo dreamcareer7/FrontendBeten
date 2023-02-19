@@ -15,7 +15,7 @@
                     </CInputGroupText>
                     <CFormInput
                       placeholder="Username"
-                      v-model="form.email"
+                      v-model="form.username"
                       autocomplete="username"
                     />
                   </CInputGroup>
@@ -31,7 +31,7 @@
                     />
                   </CInputGroup>
                   <CRow>
-                    {{message}}
+                    {{ message }}
                   </CRow>
                   <CRow>
                     <CCol :xs="6">
@@ -42,7 +42,7 @@
                     <CCol :xs="6" class="text-right">
                       <router-link
                         :to="{
-                          name: 'reset_password'
+                          name: 'reset_password',
                         }"
                       >
                         <CButton color="link" class="px-0">
@@ -56,8 +56,7 @@
             </CCard>
             <CCard class="text-white bg-primary py-5" style="width: 44%">
               <CCardBody class="text-center">
-                <div>
-                </div>
+                <div></div>
               </CCardBody>
             </CCard>
           </CCardGroup>
@@ -74,28 +73,28 @@ export default {
   name: 'Login',
   data() {
     return {
-      message:'',
-      form: { email: '', password: '' },
+      message: '',
+      form: { username: '', password: '' },
     }
   },
   methods: {
     login: async function () {
       return await axios
-        .post(`/login`, this.form)
+        .post(`v2/sign_in`, this.form)
         .then((response) => {
-          if (response.data.success) {
-            const token = response.data.token
+          if (response.data.status) {
+            console.log(response.data.status)
+            const token = response.data.response
             localStorage.setItem('betenAuthToken', token)
-            this.$router.push('/dashboard')
+            this.$router.push({ path: '/dashboard' })
           } else {
             this.message = response.data.message
           }
         })
         .catch((error) => {
-          if(error.response){
+          if (error.response) {
             this.message = error.response.data.message
-          }
-          else{
+          } else {
             this.message = error
           }
         })

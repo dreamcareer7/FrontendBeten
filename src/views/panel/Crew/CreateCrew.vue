@@ -7,6 +7,7 @@
       <div class="card-body">
         <div class="form-floating mb-3">
           <input
+            v-model="crew_data.fullname"
             type="text"
             class="form-control"
             id="fname"
@@ -21,7 +22,12 @@
         </div>
 
         <div class="form-floating mb-3">
-          <select name="gender" id="gender" class="form-control">
+          <select
+            v-model="crew_data.gender"
+            name="gender"
+            id="gender"
+            class="form-control"
+          >
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
@@ -30,7 +36,12 @@
         </div>
 
         <div class="form-floating mb-3">
-          <select name="country_id" id="country_id" class="form-control">
+          <select
+            v-model="crew_data.country_id"
+            name="country_id"
+            id="country_id"
+            class="form-control"
+          >
             <option>Choose Country</option>
             <option value="1">Country 1</option>
           </select>
@@ -42,6 +53,7 @@
           <div class="col">
             <div class="form-floating mb-3">
               <input
+                v-model="crew_data.phone"
                 type="text"
                 class="form-control"
                 id="phone"
@@ -54,6 +66,7 @@
 
             <div class="form-floating mb-3">
               <input
+                v-model="crew_data.id_type"
                 type="text"
                 class="form-control"
                 id="id_type"
@@ -66,6 +79,7 @@
 
             <div class="form-floating mb-3">
               <input
+                v-model="crew_data.id_no"
                 type="text"
                 class="form-control"
                 id="id_number"
@@ -78,6 +92,7 @@
 
             <div class="form-floating mb-3">
               <input
+                v-model="crew_data.dob"
                 type="date"
                 class="form-control"
                 id="dob"
@@ -125,15 +140,12 @@ export default {
     const crew_data = ref({
       fullname: '',
       gender: '',
+      profession_id: '',
+      country_id: '',
+      phone: '',
       id_type: '',
-      id_sous_type: '',
-      id_assigne: '',
-      date_apparition: '',
-      priorite: '',
-      etat: '',
-      resolution: '',
-      description: '',
-      subject: '',
+      id_no: '',
+      dob: '',
     })
     const addCrew = (data) => {
       axios.post(`/crew`, data).then((response) => {
