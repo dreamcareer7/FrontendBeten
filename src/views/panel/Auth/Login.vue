@@ -85,7 +85,7 @@ export default {
           if (response.data.status) {
             const token = response.data.response
             localStorage.setItem('betenAuthToken', token)
-            this.$router.push({ name: 'Dashboard' })
+            this.$router.push({ path: '/dashboard' })
           } else {
             this.message = response.data.message
           }
