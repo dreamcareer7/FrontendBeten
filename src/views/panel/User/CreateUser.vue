@@ -1,7 +1,7 @@
 <template>
 <div class="card border-success mb-4">
 	<div class="card-header">
-		Users List
+		Create User
 	</div>
 
 	<div id="ialert" class="" role="alert"></div>
