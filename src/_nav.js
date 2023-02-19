@@ -28,7 +28,7 @@ export default [
   {
     component: 'CNavItem',
     name: 'Crew',
-    to: '/crew',
+    to: '/crews',
     icon: 'cil-address-book',
   },
   {
