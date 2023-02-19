@@ -40,7 +40,8 @@
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
-                    <button class="btn btn-danger text-white">Delete</button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
+                    <button class="btn btn-sm btn-danger text-white">Delete</button>
                   </CTableDataCell>
                 </CTableRow>
                 <CTableRow>
@@ -50,7 +51,8 @@
                   <CTableDataCell>Thornton</CTableDataCell>
                   <CTableDataCell>Thornton</CTableDataCell>
                   <CTableDataCell>
-                    <button class="btn btn-danger text-white">Delete</button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
+                    <button class="btn btn-sm btn-danger text-white">Delete</button>
                   </CTableDataCell>
                 </CTableRow>
                 <CTableRow>
@@ -60,7 +62,8 @@
                   <CTableDataCell>twitter</CTableDataCell>
                   <CTableDataCell>twitter</CTableDataCell>
                   <CTableDataCell>
-                    <button class="btn btn-danger text-white">Delete</button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
+                    <button class="btn btn-sm btn-danger text-white">Delete</button>
                   </CTableDataCell>
                 </CTableRow>
               </CTableBody>

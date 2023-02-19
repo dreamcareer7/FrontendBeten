@@ -21,13 +21,33 @@ const routes = [
       // Other Pages
       {
         path: 'users',
-        name: 'users',
-        component: () => import('@/views/panel/Users'),
+        name: 'Users',
+        component: () => import('@/views/panel/User/Users'),
       },
       {
         path: 'users/create',
-        name: 'create_user',
-        component: () => import('@/views/panel/CreateUser'),
+        name: 'Create User',
+        component: () => import('@/views/panel/User/CreateUser'),
+      },
+      {
+        path: 'clients',
+        name: 'Clients',
+        component: () => import('@/views/panel/Client/Clients'),
+      },
+      {
+        path: 'clients/create',
+        name: 'Create Client',
+        component: () => import('@/views/panel/Client/CreateClient'),
+      },
+      {
+        path: 'crews',
+        name: 'crews',
+        component: () => import('@/views/panel/Crew/Crews'),
+      },
+      {
+        path: 'crews/create',
+        name: 'Create Crew',
+        component: () => import('@/views/panel/Crew/CreateCrew'),
       },
     ],
   },
@@ -41,27 +61,17 @@ const routes = [
       },
     },
     children: [
-      // {
-      //   path: '404',
-      //   name: 'Page404',
-      //   component: () => import('@/views/panel/Page404'),
-      // },
-      // {
-      //   path: '500',
-      //   name: 'Page500',
-      //   component: () => import('@/views/panel/Page500'),
-      // },
 
       // Authentication
       {
         path: 'login',
         name: 'Login',
-        component: () => import('@/views/panel/Login'),
+        component: () => import('@/views/panel/Auth/Login'),
       },
       {
         path: 'register',
         name: 'Register',
-        component: () => import('@/views/panel/Register'),
+        component: () => import('@/views/panel/Auth/Register'),
       },
     ],
   },
