@@ -30,9 +30,7 @@
                       autocomplete="current-password"
                     />
                   </CInputGroup>
-                  <CRow>
-                    {{message}}
-                  </CRow>
+                  <div v-show="message" class="error_style">{{ message }}</div>
                   <CRow>
                     <CCol :xs="6">
                       <CButton @click="login" color="primary" class="px-4">
@@ -69,9 +67,11 @@
 
 <script>
 import axios from 'axios'
+import ColorTheme from '../../theme/ColorTheme'
 
 export default {
   name: 'Login',
+  components: { ColorTheme },
   data() {
     return {
       message:'',

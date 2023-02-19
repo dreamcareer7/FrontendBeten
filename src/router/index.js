@@ -119,7 +119,7 @@ const routes = [
       },
       {
         path: 'phases/services/create',
-        name: 'Create Service',
+        name: 'Create Phase Service',
         component: () => import('@/views/panel/Phase/Services/CreateService'),
       },
 
