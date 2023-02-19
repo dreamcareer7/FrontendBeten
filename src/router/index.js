@@ -1,10 +1,10 @@
 import { h, resolveComponent } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
+import jwt_decode from 'vue-jwt-decode'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
 
 const routes = [
-
   {
     path: '/',
     name: 'Home',
@@ -236,7 +236,7 @@ const routes = [
         component: () => import('@/views/panel/Auth/ResetPassword'),
       },
       {
-        path: 'new_password',
+        path: 'new_password/:hash',
         name: 'new_passport',
         component: () => import('@/views/panel/Auth/NewPassword'),
       },

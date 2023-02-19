@@ -20,6 +20,11 @@
                     />
                   </CInputGroup>
                   <CRow>
+                    <p>
+                      {{ message }}
+                    </p>
+                  </CRow>
+                  <CRow>
                     <CCol :xs="6">
                       <CButton @click="login" color="primary" class="px-4">
                         Send Link
@@ -33,7 +38,6 @@
               <CCardBody class="text-center">
                 <div>
                   <p>
-                    {{ message }}
                   </p>
                 </div>
               </CCardBody>
