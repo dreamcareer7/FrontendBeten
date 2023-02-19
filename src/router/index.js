@@ -76,7 +76,7 @@ const routes = [
       },
       {
         path: 'services/create',
-        name: 'Create Service',
+        name: 'create_service',
         component: () => import('@/views/panel/Service/Services/CreateService'),
       },
       {
@@ -251,13 +251,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes: [
-    // Your Routes
-  ],
-  scrollBehavior() {
-    // always scroll to top
-    return { top: 0 }
-  },
+  routes
 })
 
 // router.beforeEach((to, from, next) => {
