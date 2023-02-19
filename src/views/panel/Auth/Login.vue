@@ -84,14 +84,14 @@ export default {
       let uname = this.username
       let pass = this.password
       return await axios.post(`${API_URL}/login`, {
-              uname,
-              pass
-            })
-            .then(response => {
-              const token = response.data.token
-              localStorage.setItem('betenAuthToken', token)
-              return response.data
-            })
+        uname,
+        pass
+      })
+        .then(response => {
+          const token = response.data.token
+          localStorage.setItem('betenAuthToken', token)
+          return response.data
+        })
     }
   }
 }
