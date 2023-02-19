@@ -118,21 +118,15 @@
                   </CCol>
                 </CRow>
                 <hr class="mt-0" />
-                <div
-                  v-for="item in progressGroupExample1"
-                  :key="item.title"
-                  class="progress-group mb-4"
-                >
-                  <div class="progress-group-prepend">
-                    <span class="text-medium-emphasis small">{{
-                      item.title
-                    }}</span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress thin color="info" :value="item.value1" />
-                    <CProgress thin color="danger" :value="item.value2" />
-                  </div>
-                </div>
+
+                <CCol :md="12" class="mb-4">
+                  <CCard>
+                    <CCardHeader> Crew Growth </CCardHeader>
+                    <CCardBody>
+                      <CChartLineExample />
+                    </CCardBody>
+                  </CCard>
+                </CCol>
               </CCol>
               <CCol :sm="12" :lg="6">
                 <CRow>
@@ -154,21 +148,12 @@
                   </CCol>
                 </CRow>
                 <hr class="mt-0" />
-                <div
-                  v-for="item in progressGroupExample2"
-                  :key="item.title"
-                  class="progress-group"
-                >
-                  <div class="progress-group-header">
-                    <CIcon :icon="item.icon" class="me-2" size="lg" />
-                    <span class="title">{{ item.title }}</span>
-                    <span class="ms-auto fw-semibold">{{ item.value }}%</span>
-                  </div>
-                  <div class="progress-group-bars">
-                    <CProgress thin :value="item.value" color="warning" />
-                  </div>
-                </div>
-                <!-- <CChartDoughnutExample /> -->
+                <CCol :md="12" class="mb-4">
+                  <CCard>
+                    <CCardHeader>Clients Growth</CCardHeader>
+                    <CCardBody><CChartBarExample /></CCardBody>
+                  </CCard>
+                </CCol>
               </CCol>
             </CRow>
             <br />
