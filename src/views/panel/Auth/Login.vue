@@ -14,9 +14,9 @@
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
                     <CFormInput
-                      placeholder="Username"
-                      v-model="form.username"
-                      autocomplete="username"
+                      placeholder="Email"
+                      v-model="form.email"
+                      autocomplete="email"
                     />
                   </CInputGroup>
                   <CInputGroup class="mb-4">
@@ -74,18 +74,18 @@ export default {
   data() {
     return {
       message: '',
-      form: { username: '', password: '' },
+      form: { email: '', password: '' },
     }
   },
   methods: {
     login: async function () {
       return await axios
-        .post(`v2/sign_in`, this.form)
+        .post(`/login`, this.form)
         .then((response) => {
-          if (response.data.status) {
-            const token = response.data.response
+          if (response.data.success) {
+            const token = response.data.token
             localStorage.setItem('betenAuthToken', token)
-            this.$router.push({ path: '/dashboard' })
+            this.$router.push('/dashboard')
           } else {
             this.message = response.data.message
           }
