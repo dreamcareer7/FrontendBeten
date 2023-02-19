@@ -37,6 +37,18 @@
                 <CTableDataCell>{{ user.created_at }}</CTableDataCell>
                 <CTableDataCell>
                   <button
+                    style="margin-right: 1em"
+                    class="btn btn-sm btn-info text-white"
+                  >
+                    View
+                  </button>
+                  <button
+                    style="margin-right: 1em"
+                    class="btn btn-sm btn-success text-white"
+                  >
+                    Update
+                  </button>
+                  <button
                     class="btn btn-danger text-white"
                     @click="deleteUser(user.id)"
                   >
@@ -78,7 +90,7 @@ export default {
         alert(response.data.message)
       })
     },
-    fetchUserInfo: async function(id) {
+    fetchUserInfo: async function (id) {
       await axios.get(`/users/show/` + id).then((response) => {
         console.log(response.data)
       })

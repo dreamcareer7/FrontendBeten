@@ -1,5 +1,6 @@
 import { h, resolveComponent } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
+import jwt_decode from 'vue-jwt-decode'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
 
@@ -75,7 +76,7 @@ const routes = [
       },
       {
         path: 'services/create',
-        name: 'Create Service',
+        name: 'create_service',
         component: () => import('@/views/panel/Service/Services/CreateService'),
       },
       {
@@ -193,26 +194,22 @@ const routes = [
       {
         path: 'hospitalities',
         name: 'hospitalities',
-        component: () =>
-          import('@/views/panel/Hospitality/Hospitalities/Hospitalities'),
+        component: () => import('@/views/panel/Hospitality/Hospitalities/Hospitalities'),
       },
       {
         path: 'hospitalities/create',
         name: 'Create Concurrent',
-        component: () =>
-          import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
+        component: () => import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
       },
       {
         path: 'hospitalities/transactions',
         name: 'Transactions',
-        component: () =>
-          import('@/views/panel/Hospitality/Transactions/Transactions'),
+        component: () => import('@/views/panel/Hospitality/Transactions/Transactions'),
       },
       {
         path: 'hospitalities/transactions/create',
         name: 'Create Transaction',
-        component: () =>
-          import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
+        component: () => import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
       },
       // Hospitalities Menu ends here
     ],
@@ -239,7 +236,7 @@ const routes = [
         component: () => import('@/views/panel/Auth/ResetPassword'),
       },
       {
-        path: 'new_password',
+        path: 'new_password/:hash',
         name: 'new_passport',
         component: () => import('@/views/panel/Auth/NewPassword'),
       },

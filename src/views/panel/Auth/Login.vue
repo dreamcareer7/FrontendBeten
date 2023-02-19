@@ -15,7 +15,7 @@
                     </CInputGroupText>
                     <CFormInput
                       placeholder="Username"
-                      v-model="username"
+                      v-model="form.email"
                       autocomplete="username"
                     />
                   </CInputGroup>
@@ -25,11 +25,14 @@
                     </CInputGroupText>
                     <CFormInput
                       type="password"
-                      v-model="password"
+                      v-model="form.password"
                       placeholder="Password"
                       autocomplete="current-password"
                     />
                   </CInputGroup>
+                  <CRow>
+                    {{message}}
+                  </CRow>
                   <CRow>
                     <CCol :xs="6">
                       <CButton @click="login" color="primary" class="px-4">
@@ -37,9 +40,15 @@
                       </CButton>
                     </CCol>
                     <CCol :xs="6" class="text-right">
-                      <CButton color="link" class="px-0">
-                        Forgot password?
-                      </CButton>
+                      <router-link
+                        :to="{
+                          name: 'reset_password'
+                        }"
+                      >
+                        <CButton color="link" class="px-0">
+                          Forgot password?
+                        </CButton>
+                      </router-link>
                     </CCol>
                   </CRow>
                 </CForm>
@@ -48,15 +57,6 @@
             <CCard class="text-white bg-primary py-5" style="width: 44%">
               <CCardBody class="text-center">
                 <div>
-                  <h2>Sign up</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </p>
-                  <CButton color="light" variant="outline" class="mt-3">
-                    Register Now!
-                  </CButton>
                 </div>
               </CCardBody>
             </CCard>
@@ -69,29 +69,35 @@
 
 <script>
 import axios from 'axios'
-const API_URL = config.base_url
 
 export default {
   name: 'Login',
   data() {
     return {
-      username: '',
-      password: '',
+      message:'',
+      form: { email: '', password: '' },
     }
   },
   methods: {
     login: async function () {
-      let uname = this.username
-      let pass = this.password
       return await axios
-        .post(`/login`, {
-          uname,
-          pass,
-        })
+        .post(`/login`, this.form)
         .then((response) => {
-          const token = response.data.token
-          localStorage.setItem('betenAuthToken', token)
-          return response.data
+          if (response.data.success) {
+            const token = response.data.token
+            localStorage.setItem('betenAuthToken', token)
+            this.$router.push('/dashboard')
+          } else {
+            this.message = response.data.message
+          }
+        })
+        .catch((error) => {
+          if(error.response){
+            this.message = error.response.data.message
+          }
+          else{
+            this.message = error
+          }
         })
     },
   },
