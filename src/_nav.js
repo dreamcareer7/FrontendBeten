@@ -48,24 +48,6 @@ export default [
     icon: 'cil-file',
   },
   {
-    component: 'CNavItem',
-    name: 'Phases',
-    to: '/phases',
-    icon: 'cil-room',
-  },
-  {
-    component: 'CNavItem',
-    name: 'Groups',
-    to: '/groups',
-    icon: 'cil-wc',
-  },
-  {
-    component: 'CNavItem',
-    name: 'Vehicle',
-    to: '/vehicle',
-    icon: 'cil-car-alt',
-  },
-  {
     component: 'CNavGroup',
     name: 'Services',
     to: '/pages',
@@ -79,12 +61,90 @@ export default [
       {
         component: 'CNavItem',
         name: 'Service Commits',
-        to: '/service_commits',
+        to: '/services/commits',
       },
       {
         component: 'CNavItem',
         name: 'Service Commit Logs',
-        to: '/service_commit_logs',
+        to: '/services/logs',
+      },
+    ],
+  },
+  {
+    component: 'CNavGroup',
+    name: 'Phases',
+    to: '/phases',
+    icon: 'cil-media-step-forward',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'All Phases',
+        to: '/phases',
+      },
+      {
+        component: 'CNavItem',
+        name: 'Services',
+        to: '/phases/services',
+      },
+    ],
+  },
+  {
+    component: 'CNavGroup',
+    name: 'Meals',
+    to: '/meals',
+    icon: 'cil-fastfood',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'All meals',
+        to: '/meals',
+      },
+      {
+        component: 'CNavItem',
+        name: 'Types',
+        to: '/meals/types',
+      },
+    ],
+  },
+  {
+    component: 'CNavItem',
+    name: 'Groups',
+    to: '/groups',
+    icon: 'cil-wc',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Vehicle',
+    to: '/vehicles',
+    icon: 'cil-car-alt',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Dormitories',
+    to: '/dormitories',
+    icon: 'cil-door',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Concurrents',
+    to: '/concurrents',
+    icon: 'cil-contrast',
+  },
+  {
+    component: 'CNavGroup',
+    name: 'Hospitalities',
+    to: '/hospitalities',
+    icon: 'cil-mood-good',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'All Hospitalities',
+        to: '/hospitalities',
+      },
+      {
+        component: 'CNavItem',
+        name: 'Transactions',
+        to: '/hospitalities/transactions',
       },
     ],
   },

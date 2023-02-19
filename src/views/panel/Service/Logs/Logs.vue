@@ -5,16 +5,16 @@
         <CCardHeader>
           <div class="row">
             <div class="col-md-10">
-              <strong>Clients</strong>
+              <strong>Services Logs</strong>
             </div>
             <div class="col-md-2">
               <router-link
-                to="/clients/create"
+                to="/services/logs/create"
               >
                 <CButton
                   color="primary"
                 >
-                  Create Client
+                  Create Log
                 </CButton>
               </router-link>
             </div>
@@ -25,14 +25,11 @@
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Full Name</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">ID Type</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">ID Type</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Gender</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Is Handicap</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Phone</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Service Commit</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Model Type</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Model ID</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Role</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Created At</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
@@ -44,9 +41,6 @@
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
 <button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
@@ -60,9 +54,6 @@
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
 <button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
@@ -72,9 +63,6 @@
                 <CTableRow>
                   <CTableHeaderCell scope="row">1</CTableHeaderCell>
                   <CTableDataCell>Mark</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
@@ -95,6 +83,6 @@
 
 <script>
 export default {
-  name: 'users',
+  name: 'logs',
 }
 </script>

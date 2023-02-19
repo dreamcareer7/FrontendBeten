@@ -1,6 +1,5 @@
 import { h, resolveComponent } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
-import jwt_decode from 'vue-jwt-decode'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
 
@@ -21,12 +20,12 @@ const routes = [
       {
         path: 'users',
         name: 'Users',
-        component: () => import('@/views/panel/UsersModule/Users'),
+        component: () => import('@/views/panel/User/Users'),
       },
       {
         path: 'users/create',
         name: 'Create User',
-        component: () => import('@/views/panel/UsersModule/CreateUser'),
+        component: () => import('@/views/panel/User/CreateUser'),
       },
       {
         path: 'clients',
@@ -48,6 +47,170 @@ const routes = [
         name: 'Create Crew',
         component: () => import('@/views/panel/Crew/CreateCrew'),
       },
+      {
+        path: 'contracts',
+        name: 'contracts',
+        component: () => import('@/views/panel/Contract/Contracts'),
+      },
+      {
+        path: 'contracts/create',
+        name: 'Create Contract',
+        component: () => import('@/views/panel/Contract/CreateContract'),
+      },
+      {
+        path: 'documents',
+        name: 'documents',
+        component: () => import('@/views/panel/Document/Documents'),
+      },
+      {
+        path: 'documents/create',
+        name: 'Create Document',
+        component: () => import('@/views/panel/Document/CreateDocument'),
+      },
+      // Services menu
+      {
+        path: 'services',
+        name: 'services',
+        component: () => import('@/views/panel/Service/Services/Services'),
+      },
+      {
+        path: 'services/create',
+        name: 'Create Service',
+        component: () => import('@/views/panel/Service/Services/CreateService'),
+      },
+      {
+        path: 'services/commits',
+        name: 'Service Commits',
+        component: () => import('@/views/panel/Service/Commits/Commits'),
+      },
+      {
+        path: 'services/commits/create',
+        name: 'Create Commit',
+        component: () => import('@/views/panel/Service/Commits/CreateCommit'),
+      },
+      {
+        path: 'services/logs',
+        name: 'Service Logs',
+        component: () => import('@/views/panel/Service/Logs/Logs'),
+      },
+      {
+        path: 'services/logs/create',
+        name: 'Create Log',
+        component: () => import('@/views/panel/Service/Logs/CreateLog'),
+      },
+      // Services Menu ends here
+
+      // Phases Menu
+      {
+        path: 'phases',
+        name: 'All Phases',
+        component: () => import('@/views/panel/Phase/Phases/Phases'),
+      },
+      {
+        path: 'phases/create',
+        name: 'Create Phase',
+        component: () => import('@/views/panel/Phase/Phases/CreatePhase'),
+      },
+      {
+        path: 'phases/services',
+        name: 'Services',
+        component: () => import('@/views/panel/Phase/Services/Services'),
+      },
+      {
+        path: 'phases/services/create',
+        name: 'Create Service',
+        component: () => import('@/views/panel/Phase/Services/CreateService'),
+      },
+
+      // Phases Menu ends here
+
+
+      // Meals Menu
+      {
+        path: 'meals',
+        name: 'All Meals',
+        component: () => import('@/views/panel/Meal/Meals/Meals'),
+      },
+      {
+        path: 'meals/create',
+        name: 'Create Meal',
+        component: () => import('@/views/panel/Meal/Meals/CreateMeal'),
+      },
+      {
+        path: 'meals/types',
+        name: 'Types',
+        component: () => import('@/views/panel/Meal/Types/Types'),
+      },
+      {
+        path: 'meals/types/create',
+        name: 'Create Type',
+        component: () => import('@/views/panel/Meal/Types/CreateType'),
+      },
+
+      // Meals Menu ends here
+
+      {
+        path: 'groups',
+        name: 'groups',
+        component: () => import('@/views/panel/Group/Groups'),
+      },
+      {
+        path: 'groups/create',
+        name: 'Create Group',
+        component: () => import('@/views/panel/Group/CreateGroup'),
+      },
+      {
+        path: 'vehicles',
+        name: 'vehicles',
+        component: () => import('@/views/panel/Vehicle/Vehicles'),
+      },
+      {
+        path: 'vehicles/create',
+        name: 'Create Vehicle',
+        component: () => import('@/views/panel/Vehicle/CreateVehicle'),
+      },
+      {
+        path: 'dormitories',
+        name: 'dormitories',
+        component: () => import('@/views/panel/Dormitory/Dormitories'),
+      },
+      {
+        path: 'dormitories/create',
+        name: 'Create Dormitory',
+        component: () => import('@/views/panel/Dormitory/CreateDormitory'),
+      },
+      {
+        path: 'concurrents',
+        name: 'concurrents',
+        component: () => import('@/views/panel/Concurrent/Concurrents'),
+      },
+      {
+        path: 'concurrents/create',
+        name: 'Create Concurrent',
+        component: () => import('@/views/panel/Concurrent/CreateConcurrent'),
+      },
+      // Hospitalities Menu
+      {
+        path: 'hospitalities',
+        name: 'hospitalities',
+        component: () => import('@/views/panel/Hospitality/Hospitalities/Hospitalities'),
+      },
+      {
+        path: 'hospitalities/create',
+        name: 'Create Concurrent',
+        component: () => import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
+      },
+      {
+        path: 'hospitalities/transactions',
+        name: 'Transactions',
+        component: () => import('@/views/panel/Hospitality/Transactions/Transactions'),
+      },
+      {
+        path: 'hospitalities/transactions/create',
+        name: 'Create Transaction',
+        component: () => import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
+      },
+      // Hospitalities Menu ends here
     ],
   },
   {
@@ -65,6 +228,16 @@ const routes = [
         path: 'login',
         name: 'Login',
         component: () => import('@/views/panel/Auth/Login'),
+      },
+      {
+        path: 'reset',
+        name: 'reset_password',
+        component: () => import('@/views/panel/Auth/ResetPassword'),
+      },
+      {
+        path: 'new_password',
+        name: 'new_passport',
+        component: () => import('@/views/panel/Auth/NewPassword'),
       },
       {
         path: 'register',

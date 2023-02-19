@@ -7,38 +7,32 @@
             <CCard class="p-4">
               <CCardBody>
                 <CForm>
-                  <h1>Login</h1>
+                  <h1>New Password</h1>
                   <p class="text-medium-emphasis">Sign In to your account</p>
                   <CInputGroup class="mb-3">
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
                     <CFormInput
-                      placeholder="Username"
-                      v-model="username"
-                      autocomplete="username"
+                      placeholder="Email"
+                      v-model="form.email"
+                      autocomplete="email"
                     />
                   </CInputGroup>
-                  <CInputGroup class="mb-4">
+                  <CInputGroup class="mb-3">
                     <CInputGroupText>
-                      <CIcon icon="cil-lock-locked" />
+                      <CIcon icon="cil-user" />
                     </CInputGroupText>
                     <CFormInput
-                      type="password"
-                      v-model="password"
-                      placeholder="Password"
-                      autocomplete="current-password"
+                      placeholder="********"
+                      v-model="form.password"
+                      autocomplete="password"
                     />
                   </CInputGroup>
                   <CRow>
                     <CCol :xs="6">
-                      <CButton @click="login" color="primary" class="px-4">
-                        Login
-                      </CButton>
-                    </CCol>
-                    <CCol :xs="6" class="text-right">
-                      <CButton color="link" class="px-0">
-                        Forgot password?
+                      <CButton @click="resetPwd" color="primary" class="px-4">
+                        Reset
                       </CButton>
                     </CCol>
                   </CRow>
@@ -48,15 +42,9 @@
             <CCard class="text-white bg-primary py-5" style="width: 44%">
               <CCardBody class="text-center">
                 <div>
-                  <h2>Sign up</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                    {{ message }}
                   </p>
-                  <CButton color="light" variant="outline" class="mt-3">
-                    Register Now!
-                  </CButton>
                 </div>
               </CCardBody>
             </CCard>
@@ -69,29 +57,26 @@
 
 <script>
 import axios from 'axios'
+import config from '@/config'
 const API_URL = config.base_url
 
 export default {
   name: 'Login',
   data() {
     return {
-      username: '',
-      password: '',
+      form: { email: '', token: '', password: '' },
+      message: '',
     }
   },
   methods: {
-    login: async function () {
-      let uname = this.username
-      let pass = this.password
+    resetPwd: async function () {
       return await axios
-        .post(`/login`, {
-          uname,
-          pass,
-        })
+        .post(`${API_URL}/password/reset`, this.form)
         .then((response) => {
-          const token = response.data.token
-          localStorage.setItem('betenAuthToken', token)
-          return response.data
+          this.message = response.data.message
+        })
+        .catch((error) => {
+          this.message = error.message
         })
     },
   },

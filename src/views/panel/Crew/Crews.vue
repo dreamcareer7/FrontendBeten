@@ -63,6 +63,7 @@ import { ref } from 'vue'
 import CrewsModule from '@/views/panel/Crew/CrewsModule'
 
 export default {
+  name: 'crews',
   setup() {
     const USER_APP_STORE_MODULE_NAME = 'app-crews'
 

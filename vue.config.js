@@ -7,7 +7,7 @@ module.exports = defineConfig({
   configureWebpack: {
     resolve: {
       alias: {
-        '@axios': path.resolve(__dirname, 'src/libs/axios'),
+        'axios': path.resolve(__dirname, 'src/libs/axios'),
       },
     },
   },
