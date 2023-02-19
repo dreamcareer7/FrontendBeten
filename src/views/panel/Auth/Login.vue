@@ -92,10 +92,9 @@ export default {
           }
         })
         .catch((error) => {
-          if(error.response){
+          if (error.response) {
             this.message = error.response.data.message
-          }
-          else{
+          } else {
             this.message = error
           }
         })
