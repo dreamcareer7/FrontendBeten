@@ -3,7 +3,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import jwt_decode from 'vue-jwt-decode'
 import store from '@/store'
 
-
 import DefaultLayout from '@/layouts/DefaultLayout'
 
 const routes = [

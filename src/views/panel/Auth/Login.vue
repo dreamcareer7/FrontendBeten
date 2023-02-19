@@ -83,10 +83,9 @@ export default {
         .post(`v2/sign_in`, this.form)
         .then((response) => {
           if (response.data.status) {
-            console.log(response.data.status)
             const token = response.data.response
             localStorage.setItem('betenAuthToken', token)
-            this.$router.push({ path: '/dashboard' })
+            this.$router.push({ name: 'Dashboard' })
           } else {
             this.message = response.data.message
           }
