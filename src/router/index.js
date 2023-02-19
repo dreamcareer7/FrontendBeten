@@ -49,6 +49,88 @@ const routes = [
         name: 'Create Crew',
         component: () => import('@/views/panel/Crew/CreateCrew'),
       },
+      {
+        path: 'contracts',
+        name: 'contracts',
+        component: () => import('@/views/panel/Contract/Contracts'),
+      },
+      {
+        path: 'contracts/create',
+        name: 'Create Contract',
+        component: () => import('@/views/panel/Contract/CreateContract'),
+      },
+      {
+        path: 'documents',
+        name: 'documents',
+        component: () => import('@/views/panel/Document/Documents'),
+      },
+      {
+        path: 'documents/create',
+        name: 'Create Document',
+        component: () => import('@/views/panel/Document/CreateDocument'),
+      },
+      // Services menu
+      {
+        path: 'services',
+        name: 'services',
+        component: () => import('@/views/panel/Service/Services/Services'),
+      },
+      {
+        path: 'services/create',
+        name: 'Create Service',
+        component: () => import('@/views/panel/Service/Services/CreateService'),
+      },
+      {
+        path: 'services/commits',
+        name: 'Service Commits',
+        component: () => import('@/views/panel/Service/Commits/Commits'),
+      },
+      {
+        path: 'services/commits/create',
+        name: 'Create Commit',
+        component: () => import('@/views/panel/Service/Commits/CreateCommit'),
+      },
+      {
+        path: 'services/logs',
+        name: 'Service Logs',
+        component: () => import('@/views/panel/Service/Logs/Logs'),
+      },
+      {
+        path: 'services/logs/create',
+        name: 'Create Log',
+        component: () => import('@/views/panel/Service/Logs/CreateLog'),
+      },
+      // Services Menu ends here
+      {
+        path: 'phases',
+        name: 'Phases',
+        component: () => import('@/views/panel/Phase/Phases'),
+      },
+      {
+        path: 'phases/create',
+        name: 'Create Phase',
+        component: () => import('@/views/panel/Phase/CreatePhase'),
+      },
+      {
+        path: 'groups',
+        name: 'groups',
+        component: () => import('@/views/panel/Group/Groups'),
+      },
+      {
+        path: 'groups/create',
+        name: 'Create Group',
+        component: () => import('@/views/panel/Group/CreateGroup'),
+      },
+      {
+        path: 'vehicles',
+        name: 'vehicles',
+        component: () => import('@/views/panel/Vehicle/Vehicles'),
+      },
+      {
+        path: 'vehicles/create',
+        name: 'Create Vehicle',
+        component: () => import('@/views/panel/Vehicle/CreateVehicle'),
+      },
     ],
   },
   {

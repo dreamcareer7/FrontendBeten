@@ -74,7 +74,7 @@
         </div>
 
 	<div class="card-footer text-end">
-      <a href="/create/user" class="btn btn-outline-success ajax">Save</a>
+      <a href="/create/crew" class="btn btn-outline-success ajax">Save</a>
 	</div>
 	</form>
 </div>
@@ -82,6 +82,6 @@
 
 <script>
 export default {
-  name: 'create_user',
+  name: 'create_crew',
 }
 </script>

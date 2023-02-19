@@ -67,7 +67,7 @@
 
 <script>
 import store from '@/store'
-import { ref } from '@vue/composition-api'
+import { ref } from 'vue'
 import UsersModule from '@/views/panel/UsersModule/UsersModule'
 
 export default {

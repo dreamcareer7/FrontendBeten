@@ -48,6 +48,29 @@ export default [
     icon: 'cil-file',
   },
   {
+    component: 'CNavGroup',
+    name: 'Services',
+    to: '/pages',
+    icon: 'cil-window',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'All Services',
+        to: '/services',
+      },
+      {
+        component: 'CNavItem',
+        name: 'Service Commits',
+        to: '/services/commits',
+      },
+      {
+        component: 'CNavItem',
+        name: 'Service Commit Logs',
+        to: '/services/logs',
+      },
+    ],
+  },
+  {
     component: 'CNavItem',
     name: 'Phases',
     to: '/phases',
@@ -62,31 +85,8 @@ export default [
   {
     component: 'CNavItem',
     name: 'Vehicle',
-    to: '/vehicle',
+    to: '/vehicles',
     icon: 'cil-car-alt',
-  },
-  {
-    component: 'CNavGroup',
-    name: 'Services',
-    to: '/pages',
-    icon: 'cil-window',
-    items: [
-      {
-        component: 'CNavItem',
-        name: 'All Services',
-        to: '/services',
-      },
-      {
-        component: 'CNavItem',
-        name: 'Service Commits',
-        to: '/service_commits',
-      },
-      {
-        component: 'CNavItem',
-        name: 'Service Commit Logs',
-        to: '/service_commit_logs',
-      },
-    ],
   },
 
   // {
