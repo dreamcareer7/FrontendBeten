@@ -251,13 +251,14 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes,
+  routes: [
+    // Your Routes
+  ],
   scrollBehavior() {
     // always scroll to top
     return { top: 0 }
   },
 })
-
 
 // router.beforeEach((to, from, next) => {
 //   if (to.matched.some(record => record.meta.requiresAuth)) {
