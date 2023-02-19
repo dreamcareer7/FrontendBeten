@@ -262,8 +262,8 @@ const routes = [
     ],
   },
   {
-    path: '/pages',
-    redirect: '/pages/404',
+    path: '/panel',
+    redirect: '/panel/404',
     name: 'Pages',
     component: {
       render() {
@@ -274,22 +274,22 @@ const routes = [
       {
         path: '404',
         name: 'Page404',
-        component: () => import('@/views/pages/Page404'),
+        component: () => import('@/views/panel/Page404'),
       },
       {
         path: '500',
         name: 'Page500',
-        component: () => import('@/views/pages/Page500'),
+        component: () => import('@/views/panel/Page500'),
       },
       {
         path: 'login',
         name: 'Login',
-        component: () => import('@/views/pages/Login'),
+        component: () => import('@/views/panel/Login'),
       },
       {
         path: 'register',
         name: 'Register',
-        component: () => import('@/views/pages/Register'),
+        component: () => import('@/views/panel/Register'),
       },
     ],
   },

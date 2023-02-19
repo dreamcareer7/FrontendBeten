@@ -29,7 +29,7 @@ export default [
     component: 'CNavItem',
     name: 'Crew',
     to: '/theme/typography',
-    icon: 'cil-pencil',
+    icon: 'cil-address-book',
   },
   {
     component: 'CNavTitle',

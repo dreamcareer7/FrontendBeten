@@ -26,7 +26,7 @@ export default {
         ],
         datasets: [
           {
-            label: 'GitHub Commits',
+            label: 'Number of clients',
             backgroundColor: '#f87979',
             data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 12],
           },
