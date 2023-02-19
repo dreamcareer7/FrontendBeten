@@ -16,19 +16,19 @@ export default [
   {
     component: 'CNavItem',
     name: 'Users',
-    to: '/theme/colors',
+    to: '/users',
     icon: 'cil-people',
   },
   {
     component: 'CNavItem',
     name: 'Clients',
-    to: '/theme/typography',
+    to: '/clients',
     icon: 'cil-contact',
   },
   {
     component: 'CNavItem',
     name: 'Crew',
-    to: '/theme/typography',
+    to: '/crew',
     icon: 'cil-address-book',
   },
   {
@@ -38,31 +38,31 @@ export default [
   {
     component: 'CNavItem',
     name: 'Contracts',
-    to: '/theme/typography',
+    to: '/contracts',
     icon: 'cil-pen-alt',
   },
   {
     component: 'CNavItem',
     name: 'Documents',
-    to: '/theme/typography',
+    to: '/documents',
     icon: 'cil-file',
   },
   {
     component: 'CNavItem',
     name: 'Phases',
-    to: '/theme/typography',
+    to: '/phases',
     icon: 'cil-room',
   },
   {
     component: 'CNavItem',
     name: 'Groups',
-    to: '/theme/typography',
+    to: '/groups',
     icon: 'cil-wc',
   },
   {
     component: 'CNavItem',
     name: 'Vehicle',
-    to: '/theme/typography',
+    to: '/vehicle',
     icon: 'cil-car-alt',
   },
   {
@@ -74,22 +74,17 @@ export default [
       {
         component: 'CNavItem',
         name: 'All Services',
-        to: '/pages/login',
+        to: '/services',
       },
       {
         component: 'CNavItem',
         name: 'Service Commits',
-        to: '/pages/register',
+        to: '/service_commits',
       },
       {
         component: 'CNavItem',
         name: 'Service Commit Logs',
-        to: '/pages/404',
-      },
-      {
-        component: 'CNavItem',
-        name: 'Error 500',
-        to: '/pages/500',
+        to: '/service_commit_logs',
       },
     ],
   },
