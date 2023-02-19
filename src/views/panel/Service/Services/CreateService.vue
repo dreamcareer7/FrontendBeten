@@ -91,6 +91,7 @@ export default {
     // },
     createService: async function () {
       await axios.post(`/services`, this.service).then((response) => {
+        this.$router.push({ name: 'Dashboard' })
         let res = response.data.data
         console.log(res)
       })
