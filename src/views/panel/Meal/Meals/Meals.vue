@@ -5,16 +5,16 @@
         <CCardHeader>
           <div class="row">
             <div class="col-md-10">
-              <strong>Hospitalities</strong>
+              <strong>Meals</strong>
             </div>
             <div class="col-md-2">
               <router-link
-                to="/hospitalities/create"
+                to="/meals/create"
               >
                 <CButton
                   color="primary"
                 >
-                  Create Hospitality
+                  Create Meal
                 </CButton>
               </router-link>
             </div>
@@ -25,12 +25,11 @@
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Description</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Required Date</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Meal Type</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Quantity</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Received By</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Extra</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">To Model Type</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">To Model ID</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Sent At</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
@@ -38,10 +37,9 @@
                 <CTableRow>
                   <CTableHeaderCell scope="row">1</CTableHeaderCell>
                   <CTableDataCell>Mark</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
+                  <CTableDataCell>Mark</CTableDataCell>
+                  <CTableDataCell>Mark</CTableDataCell>
+                  <CTableDataCell>Mark</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
@@ -51,10 +49,9 @@
                 <CTableRow>
                   <CTableHeaderCell scope="row">1</CTableHeaderCell>
                   <CTableDataCell>Mark</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
+                  <CTableDataCell>Mark</CTableDataCell>
+                  <CTableDataCell>Mark</CTableDataCell>
+                  <CTableDataCell>Mark</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
@@ -64,10 +61,9 @@
                 <CTableRow>
                   <CTableHeaderCell scope="row">1</CTableHeaderCell>
                   <CTableDataCell>Mark</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
+                  <CTableDataCell>Mark</CTableDataCell>
+                  <CTableDataCell>Mark</CTableDataCell>
+                  <CTableDataCell>Mark</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
@@ -84,6 +80,6 @@
 
 <script>
 export default {
-  name: 'Hospitalities',
+  name: 'Meals',
 }
 </script>

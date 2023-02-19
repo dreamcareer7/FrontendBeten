@@ -5,16 +5,16 @@
         <CCardHeader>
           <div class="row">
             <div class="col-md-10">
-              <strong>Hospitalities</strong>
+              <strong>Services</strong>
             </div>
             <div class="col-md-2">
               <router-link
-                to="/hospitalities/create"
+                to="/phases/services/create"
               >
                 <CButton
                   color="primary"
                 >
-                  Create Hospitality
+                  Create Service
                 </CButton>
               </router-link>
             </div>
@@ -25,12 +25,8 @@
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Description</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Required Date</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Quantity</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Received By</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Extra</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Phase</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Service</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
@@ -39,10 +35,6 @@
                   <CTableHeaderCell scope="row">1</CTableHeaderCell>
                   <CTableDataCell>Mark</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
                     <button class="btn btn-sm btn-danger text-white">Delete</button>
@@ -52,10 +44,6 @@
                   <CTableHeaderCell scope="row">1</CTableHeaderCell>
                   <CTableDataCell>Mark</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
                     <button class="btn btn-sm btn-danger text-white">Delete</button>
@@ -64,10 +52,6 @@
                 <CTableRow>
                   <CTableHeaderCell scope="row">1</CTableHeaderCell>
                   <CTableDataCell>Mark</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
@@ -84,6 +68,6 @@
 
 <script>
 export default {
-  name: 'Hospitalities',
+  name: 'Phases',
 }
 </script>

@@ -101,16 +101,56 @@ const routes = [
         component: () => import('@/views/panel/Service/Logs/CreateLog'),
       },
       // Services Menu ends here
+
+      // Phases Menu
       {
         path: 'phases',
-        name: 'Phases',
-        component: () => import('@/views/panel/Phase/Phases'),
+        name: 'All Phases',
+        component: () => import('@/views/panel/Phase/Phases/Phases'),
       },
       {
         path: 'phases/create',
         name: 'Create Phase',
-        component: () => import('@/views/panel/Phase/CreatePhase'),
+        component: () => import('@/views/panel/Phase/Phases/CreatePhase'),
       },
+      {
+        path: 'phases/services',
+        name: 'Services',
+        component: () => import('@/views/panel/Phase/Services/Services'),
+      },
+      {
+        path: 'phases/services/create',
+        name: 'Create Service',
+        component: () => import('@/views/panel/Phase/Services/CreateService'),
+      },
+
+      // Phases Menu ends here
+
+
+      // Meals Menu
+      {
+        path: 'meals',
+        name: 'All Meals',
+        component: () => import('@/views/panel/Meal/Meals/Meals'),
+      },
+      {
+        path: 'meals/create',
+        name: 'Create Meal',
+        component: () => import('@/views/panel/Meal/Meals/CreateMeal'),
+      },
+      {
+        path: 'meals/types',
+        name: 'Types',
+        component: () => import('@/views/panel/Meal/Types/Types'),
+      },
+      {
+        path: 'meals/types/create',
+        name: 'Create Type',
+        component: () => import('@/views/panel/Meal/Types/CreateType'),
+      },
+
+      // Meals Menu ends here
+
       {
         path: 'groups',
         name: 'groups',
@@ -151,16 +191,28 @@ const routes = [
         name: 'Create Concurrent',
         component: () => import('@/views/panel/Concurrent/CreateConcurrent'),
       },
+      // Hospitalities Menu
       {
         path: 'hospitalities',
         name: 'hospitalities',
-        component: () => import('@/views/panel/Hospitality/Hospitalities/hospitalities'),
+        component: () => import('@/views/panel/Hospitality/Hospitalities/Hospitalities'),
       },
       {
         path: 'hospitalities/create',
         name: 'Create Concurrent',
-        component: () => import('@/views/panel/Hospitality/Hospitalities/CreateConcurrent'),
+        component: () => import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
       },
+      {
+        path: 'hospitalities/transactions',
+        name: 'Transactions',
+        component: () => import('@/views/panel/Hospitality/Transactions/Transactions'),
+      },
+      {
+        path: 'hospitalities/transactions/create',
+        name: 'Create Transaction',
+        component: () => import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
+      },
+      // Hospitalities Menu ends here
     ],
   },
   {

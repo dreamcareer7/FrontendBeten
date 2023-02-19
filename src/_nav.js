@@ -71,10 +71,40 @@ export default [
     ],
   },
   {
-    component: 'CNavItem',
+    component: 'CNavGroup',
     name: 'Phases',
     to: '/phases',
-    icon: 'cil-room',
+    icon: 'cil-window',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'All Phases',
+        to: '/phases',
+      },
+      {
+        component: 'CNavItem',
+        name: 'Services',
+        to: '/phases/services',
+      },
+    ],
+  },
+  {
+    component: 'CNavGroup',
+    name: 'Meals',
+    to: '/meals',
+    icon: 'cil-window',
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'All meals',
+        to: '/meals',
+      },
+      {
+        component: 'CNavItem',
+        name: 'Types',
+        to: '/meals/types',
+      },
+    ],
   },
   {
     component: 'CNavItem',
@@ -92,7 +122,7 @@ export default [
     component: 'CNavItem',
     name: 'Dormitories',
     to: '/dormitories',
-    icon: 'cil-car-alt',
+    icon: 'cil-door',
   },
   {
     component: 'CNavItem',
@@ -108,7 +138,7 @@ export default [
     items: [
       {
         component: 'CNavItem',
-        name: 'Hospitalities',
+        name: 'All Hospitalities',
         to: '/hospitalities',
       },
       {
