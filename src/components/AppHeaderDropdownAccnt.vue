@@ -40,7 +40,9 @@
       <CDropdownItem>
         <CIcon icon="cil-shield-alt" /> Lock Account
       </CDropdownItem>
-      <CDropdownItem> <CIcon icon="cil-lock-locked" /> Logout </CDropdownItem>
+      <router-link to="/panel/login">
+        <CDropdownItem> <CIcon icon="cil-lock-locked" /> Logout </CDropdownItem>
+      </router-link>
     </CDropdownMenu>
   </CDropdown>
 </template>
