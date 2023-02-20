@@ -112,9 +112,15 @@
               <nav aria-label="Page navigation example">
                 <ul class="pagination">
                   <li class="page-item" v-if="current_page>1"><a class="page-link" href="#"  @click.prevent="previousPage">Previous</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item" v-for="page in pagination" :key="page">
+                    <a
+                      @click.prevent="gotoPage(page.url)"
+                      class="page-link"
+                      href="#"
+                      v-html="page.label"
+                      v-if="page.url"
+                    ></a>
+                  </li>
                   <li class="page-item" v-if="last_page>current_page"><a class="page-link" href="#"   @click.prevent="nextPage"> Next</a></li>
                 </ul>
               </nav>
@@ -134,6 +140,7 @@ export default {
     return {
       users: '',
       search: {},
+      pagination: {},
       current_page: 1,
       last_page: 99,
       selected_user: null,
@@ -164,6 +171,8 @@ export default {
           this.users = response.data.data
           this.current_page = response.data.current_page
           this.last_page = response.data.last_page
+          this.pagination = response.data.links
+
         })
       this.loading = false
     },
