@@ -117,20 +117,11 @@
           </div>
 
           <div class="col">
-            <div class="form-floating1">
-              <label class="text-bg-secondary px-5 rounded mb-1" for="iroles"
-                >Roles</label
-              >
-              <select
-                class="form-select"
-                size="6"
-                multiple
-                name="roles[]"
-                id="iroles"
-                v-model="user.roles"
-              >
-                <option value=""></option>
-              </select>
+            <div class="form-floating">
+              <CFormSelect :html-size="6" multiple aria-label="Roles"
+                :text="'User Roles'" v-model="user.roles"
+                :options="roles_select_options">
+              </CFormSelect>
             </div>
           </div>
         </div>
@@ -169,6 +160,7 @@ export default {
       user: {},
       form: {},
       user_id: null,
+      roles_select_options: [],
     }
   },
   mounted() {
@@ -202,6 +194,15 @@ export default {
     fetchUserInfo: async function (id) {
       await axios.get(`/users/info/` + id).then((response) => {
         this.user = response.data.data
+        this.user.roles = response.data.data.roles.map((role) => role.name)
+        // Populate the roles select element options
+        this.roles_select_options = response.data.available_roles.map((role) => {
+          return {
+            value: role.name,
+            label: role.name,
+            selected: this.user.roles.some(user_role => user_role.name === role.name)
+          }
+        })
       })
     },
   },
