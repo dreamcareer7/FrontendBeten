@@ -182,6 +182,11 @@ const routes = [
         component: () => import('@/views/panel/Group/CreateGroup'),
       },
       {
+        path: 'groups/edit/:id',
+        name: 'update_group',
+        component: () => import('@/views/panel/Group/UpdateGroup'),
+      },
+      {
         path: 'vehicles',
         name: 'vehicles',
         component: () => import('@/views/panel/Vehicle/Vehicles'),

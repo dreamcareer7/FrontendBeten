@@ -9,76 +9,203 @@
             </div>
             <div class="col-md-2">
               <router-link
-                to="/groups/create"
+                :to="{
+                  name: 'Create Group',
+                }"
               >
-                <CButton
-                  color="primary"
-                >
-                  Create Group
-                </CButton>
+                <CButton color="primary"> Create Group</CButton>
               </router-link>
             </div>
           </div>
         </CCardHeader>
         <CCardBody>
-            <CTable>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Crew</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
+          <CRow>
+            <CCol :md="2">
+              <select
+                v-model="search.crew_id"
+                name="crew_id"
+                id="crew_id"
+                class="form-control"
+                @change="getGroups"
+              >
+                <option>Choose Crew</option>
+                <template v-for="crew in crews" :key="crew.id">
+                  <option :value="crew.id">{{ crew.fullname }}</option>
+                </template>
+              </select>
+            </CCol>
+            <CCol :md="2">
+              <input
+                type="text"
+                class="form-control"
+                v-model="search.title"
+                placeholder="Group Title"
+                @change="getGroups"
+              />
+            </CCol>
 
-                <CTableRow v-for="group in groups" :key="group.id">
-                  <CTableHeaderCell scope="row">{{ group.id }}</CTableHeaderCell>
-                  <CTableDataCell>{{ group.title }}</CTableDataCell>
-                  <CTableDataCell>{{ group.crew_id }}</CTableDataCell>
-                  <CTableDataCell>
-                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-                    <button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
-                    <button @click="deleteGroup(group.id)" class="btn btn-sm btn-danger text-white">Delete</button>
-                  </CTableDataCell>
-                </CTableRow>
-
-              </CTableBody>
-            </CTable>
+          </CRow>
+          <CRow v-if="loading" class="mt-4">
+            <CCol :md="12" class="text-center">
+              <div class="spinner-border text-success" role="status"></div>
+            </CCol>
+            <CCol :md="12" class="text-center">
+              <span class="sr-only">Loading...</span>
+            </CCol>
+          </CRow>
+          <CTable v-if="!loading">
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Crew</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow v-for="group in groups" :key="group.id">
+                <CTableHeaderCell scope="row">{{ group.id }}</CTableHeaderCell>
+                <CTableDataCell>{{ group.title }}</CTableDataCell>
+                <CTableDataCell>{{ group.crew.fullname }}</CTableDataCell>
+                <CTableDataCell>
+                  <router-link
+                    :to="{
+                      name: 'user_info',
+                      params: { id: group.id },
+                    }"
+                  >
+                    <button
+                      style="margin-right: 1em"
+                      class="btn btn-sm btn-info text-white"
+                    >
+                      View
+                    </button>
+                  </router-link>
+                  <router-link
+                    :to="{
+                      name: 'update_group',
+                      params: { id: group.id },
+                    }"
+                  >
+                    <CButton class="btn btn-success text-white">Update</CButton>
+                  </router-link>
+                  <button
+                    class="btn btn-danger text-white"
+                    @click="deleteGroup(group.id)"
+                  >
+                    Delete
+                  </button>
+                </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+          <CRow>
+            <CCol :md="12" class="text-center">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item" v-if="current_page > 1">
+                    <a class="page-link" href="#" @click.prevent="previousPage"
+                      >Previous</a
+                    >
+                  </li>
+                  <li class="page-item" v-for="page in pagination" :key="page">
+                    <a
+                      @click.prevent="gotoPage(page.url)"
+                      class="page-link"
+                      href="#"
+                      v-html="page.label"
+                      v-if="page.url"
+                    ></a>
+                  </li>
+                  <li class="page-item" v-if="last_page > current_page">
+                    <a class="page-link" href="#" @click.prevent="nextPage">
+                      Next</a
+                    >
+                  </li>
+                </ul>
+              </nav>
+            </CCol>
+          </CRow>
         </CCardBody>
       </CCard>
     </CCol>
   </CRow>
 </template>
+
 <script>
 import axios from 'axios'
+import countries from "@/store/countries";
+
 export default {
-  name: 'Groups',
+  name: 'clients',
   data() {
     return {
-      groups: '',
-      current_page: '',
+      countries,
+      groups: {},
+      search: {
+        crew_id:'',
+       },
+      current_page: 1,
+      last_page: 99,
       selected_user: null,
+      loading: false,
+      pagination: {},
     }
   },
   mounted() {
     this.getGroups()
+    this.getCrews()
   },
   methods: {
-    getGroups: async function () {
-      await axios.get(`/groups`).then((response) => {
-        this.groups = response.data.data
-        console.log(this.users)
+    getCrews: async function () {
+      await axios.get(`/crews/all`).then((response) => {
+        this.crews = response.data
       })
+    },
+    nextPage: async function () {
+      this.current_page = this.current_page + 1
+      this.search.page = this.current_page
+      await this.getGroups()
+    },
+    previousPage: async function () {
+      this.current_page = this.current_page - 1
+      this.search.page = this.current_page
+      await this.getGroups()
+    },
+    getGroups: async function () {
+      this.loading = true
+      await axios
+        .get(`/groups/paginate`, {
+          params: this.search,
+        })
+        .then((response) => {
+          this.groups = response.data.data
+          this.current_page = response.data.current_page
+          this.last_page = response.data.last_page
+          this.total_pages = response.data.total / response.data.per_page
+          this.pagination = response.data.links
+        })
+      this.loading = false
+    },
+    gotoPage: async function (url) {
+      this.loading = true
+      await axios
+        .get(url, {
+          params: this.search,
+        })
+        .then((response) => {
+          this.groups = response.data.data
+          this.current_page = response.data.current_page
+          this.last_page = response.data.last_page
+          this.total_pages = response.data.total / response.data.per_page
+          this.pagination = response.data.links
+        })
+      this.loading = false
     },
     deleteGroup: async function (id) {
-      await axios.delete(`/groups/` + id).then((response) => {
+      await axios.post(`/groups/delete/` + id).then((response) => {
         alert(response.data.message)
-      })
-    },
-    fetchServiceInfo: async function(id) {
-      await axios.get(`/groups/show/` + id).then((response) => {
-        console.log(response.data)
+        this.getGroups()
       })
     },
   },

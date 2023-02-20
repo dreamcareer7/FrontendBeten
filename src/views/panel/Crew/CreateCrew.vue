@@ -209,6 +209,10 @@ export default {
           if (response.data.success) {
             this.success = true
           }
+          else{
+            this.success = false
+
+          }
         })
         .catch((error) => {
           if (error.response) {
@@ -216,6 +220,7 @@ export default {
           } else {
             this.message = error.message
           }
+          this.success = false
         })
     },
   },

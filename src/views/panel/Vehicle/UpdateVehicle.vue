@@ -114,7 +114,7 @@ export default {
   },
   mounted() {
     this.vehicle_id = this.$route.params.id
-    this.fetchVehicleInfo(this.vehicle_id)
+    this.fetchInfo(this.vehicle_id)
   },
   methods: {
     updateVehicle: async function () {
@@ -125,6 +125,10 @@ export default {
           if (response.data.success) {
             this.success = true
           }
+          else{
+            this.success=  false
+
+          }
         })
         .catch((error) => {
           if (error.response) {
@@ -132,15 +136,11 @@ export default {
           } else {
             this.message = error.message
           }
+          this.success=  false
+
         })
     },
-    deleteUser: async function () {
-      await axios.delete(`/users/` + this.user_id).then((response) => {
-        alert(response.data.message)
-        this.getUsers()
-      })
-    },
-    fetchVehicleInfo: async function (id) {
+    fetchInfo: async function (id) {
       await axios.get(`/vehicles/info/` + id).then((response) => {
         this.vehicle = response.data
       })

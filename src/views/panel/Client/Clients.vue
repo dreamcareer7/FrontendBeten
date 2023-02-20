@@ -21,30 +21,55 @@
         <CCardBody>
           <CRow>
             <CCol :md="2">
+              <select
+                type="text"
+                class="form-control"
+                v-model="search.country"
+                 @change="getClients"
+              >
+              <option value="" selected disabled>Country</option>
+                <template v-for="country in countries" :key="country.code">
+                  <option :value="country.code">{{ country.name }}</option>
+                </template>
+              </select>
+            </CCol>
+            <CCol :md="2">
+              <select
+                type="text"
+                class="form-control"
+                v-model="search.gender"
+                 @change="getClients"
+              >
+              <option value="" selected disabled>Gender</option>
+              <option value="1">Male</option>
+              <option value="0">Female</option>
+              </select>
+            </CCol>
+            <CCol :md="2">
               <input
                 type="text"
                 class="form-control"
-                v-model="search.model"
-                placeholder="model"
-                @change="getVehicles"
+                v-model="search.name"
+                placeholder="Name"
+                @change="getClients"
               />
             </CCol>
             <CCol :md="2">
               <input
                 type="text"
                 class="form-control"
-                v-model="search.manufacturer"
-                placeholder="Manufacturer"
-                @change="getVehicles"
+                v-model="search.phone"
+                placeholder="Phone"
+                @change="getClients"
               />
             </CCol>
             <CCol :md="2">
               <input
                 type="text"
                 class="form-control"
-                v-model="search.registration"
-                placeholder="Registration"
-                @change="getVehicles"
+                v-model="search.id_no"
+                placeholder="Id Number"
+                @change="getClients"
               />
             </CCol>
           </CRow>
@@ -150,13 +175,18 @@
 
 <script>
 import axios from 'axios'
+import countries from "@/store/countries";
 
 export default {
   name: 'clients',
   data() {
     return {
+      countries,
       clients: {},
-      search: {},
+      search: {
+        gender:'',
+        country:''
+       },
       current_page: 1,
       last_page: 99,
       selected_user: null,
@@ -165,20 +195,20 @@ export default {
     }
   },
   mounted() {
-    this.getVehicles()
+    this.getClients()
   },
   methods: {
     nextPage: async function () {
       this.current_page = this.current_page + 1
       this.search.page = this.current_page
-      await this.getVehicles()
+      await this.getClients()
     },
     previousPage: async function () {
       this.current_page = this.current_page - 1
       this.search.page = this.current_page
-      await this.getVehicles()
+      await this.getClients()
     },
-    getVehicles: async function () {
+    getClients: async function () {
       this.loading = true
       await axios
         .get(`/clients/paginate`, {

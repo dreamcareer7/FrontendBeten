@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">Create Group</div>
+    <div class="card-header">Update Group</div>
 
     <div class="row mt-4">
       <div class="col-4">
@@ -91,7 +91,7 @@
       </CRow>
     </div>
     <div class="card-footer text-end">
-      <a @click="createGroup()" class="btn btn-outline-success ajax">Save</a>
+      <a @click.prevent="updateGroup()" class="btn btn-outline-success ajax">Save</a>
     </div>
   </div>
 </template>
@@ -112,11 +112,14 @@ export default {
         crew_id: '',
       },
       crews: {},
-      group_clients:[]
+      group_clients:[],
+      group_id:''
     }
   },
   mounted() {
     this.getCrews()
+    this.group_id = this.$route.params.id
+    this.fetchInfo(this.group_id)
   },
   methods: {
     getCrews: async function () {
@@ -143,7 +146,7 @@ export default {
         this.group_clients.push(client)
       }
     },
-     removeClientFromGroup(client){
+    removeClientFromGroup(client){
       const index = this.group_clients.indexOf(client);
       if (index > -1) { // only splice array when item is found
         this.group_clients.splice(index, 1); // 2nd parameter means remove one item only
@@ -152,15 +155,15 @@ export default {
         this.searched_client.push(client)
       }
     },
-    createGroup: async function () {
-      this.group.clients = this.group_clients
-      await axios
-        .post(`/groups/add`, this.group)
+    updateGroup: async function () {
+       await axios
+        .post(`/groups/update/` + this.group_id, this.group)
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
-           }
+            this.assignClients()
+          }
           else{
             this.success = false
           }
@@ -173,6 +176,34 @@ export default {
           }
           this.success = false
         })
+    },
+    assignClients: async function () {
+      this.group.clients = this.group_clients
+      await axios
+        .post(`/groups/assign_clients/` + this.group_id, {clients:this.group_clients})
+        .then((response) => {
+          this.message = response.data.message
+          if (response.data.success) {
+            this.success = true
+          }
+          else{
+            this.success = false
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            this.message = error.response.data.message
+          } else {
+            this.message = error.message
+          }
+          this.success = false
+        })
+    },
+    fetchInfo: async function (id) {
+      await axios.get(`/groups/info/` + id).then((response) => {
+        this.group = response.data.group
+        this.group_clients = response.data.clients
+      })
     },
   }
 }

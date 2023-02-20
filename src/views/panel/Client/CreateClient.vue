@@ -120,6 +120,7 @@ export default {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
+            this.client={}
           } else {
             this.success = false
           }
@@ -131,11 +132,6 @@ export default {
             this.message = error.message
           }
         })
-    },
-    fetchUserInfo: async function (id) {
-      await axios.get(`/users/info/` + id).then((response) => {
-        this.user = response.data.data
-      })
     },
   },
 }

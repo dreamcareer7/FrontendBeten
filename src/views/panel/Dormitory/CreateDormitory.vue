@@ -162,6 +162,10 @@ export default {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
+            this.dormitory = {}
+          }
+          else{
+            this.success=  false
           }
         })
         .catch((error) => {
@@ -170,12 +174,9 @@ export default {
           } else {
             this.message = error.message
           }
+          this.success=  false
+
         })
-    },
-    fetchUserInfo: async function (id) {
-      await axios.get(`/users/info/` + id).then((response) => {
-        this.user = response.data.data
-      })
     },
   },
 }

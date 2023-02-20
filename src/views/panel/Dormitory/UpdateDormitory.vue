@@ -152,7 +152,7 @@ export default {
   },
   mounted() {
     this.dormitory_id = this.$route.params.id
-    this.fetchUserInfo(this.dormitory_id)
+    this.fetchInfo(this.dormitory_id)
   },
   methods: {
     updateDormitory: async function () {
@@ -163,6 +163,9 @@ export default {
           if (response.data.success) {
             this.success = true
           }
+          else{
+            this.success=  false
+          }
         })
         .catch((error) => {
           if (error.response) {
@@ -170,9 +173,11 @@ export default {
           } else {
             this.message = error.message
           }
+          this.success=  false
+
         })
     },
-    fetchUserInfo: async function (id) {
+    fetchInfo: async function (id) {
       await axios.get(`/dormitories/info/` + id).then((response) => {
         this.user = response.data.data
       })

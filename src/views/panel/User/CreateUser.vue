@@ -134,18 +134,19 @@
             </div>
           </div>
         </div>
-      </div>
-      <CRow>
-        <CCol :md="12">
-          <div v-show="message && !success" class="error_style">
-            {{ message }}
-          </div>
-          <div v-show="message && success" class="alert alert-success">
-            {{ message }}
-          </div>
-        </CCol>
+        <CRow>
+          <CCol :md="12">
+            <div v-show="message && !success" class="error_style">
+              {{ message }}
+            </div>
+            <div v-show="message && success" class="alert alert-success">
+              {{ message }}
+            </div>
+          </CCol>
 
-      </CRow>
+        </CRow>
+      </div>
+
       <div class="card-footer text-end">
         <button
           @click.prevent="addUser"
@@ -186,6 +187,7 @@ export default {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
+            this.user = {}
           }
           else{
             this.success= false
@@ -197,6 +199,7 @@ export default {
           } else {
             this.message = error.message
           }
+          this.success=  false
         })
     }
   },
