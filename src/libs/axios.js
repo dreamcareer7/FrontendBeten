@@ -6,11 +6,8 @@ import App from '@/App.vue'
 const app = createApp(App)
 
 let apikey
-if (localStorage.getItem('userData')) {
-  const user = JSON.parse(localStorage.getItem('userData'))
-  apikey = user.apikey
-} else {
-  apikey = ''
+if (localStorage.getItem('betenAuthToken')) {
+  apikey = localStorage.getItem('betenAuthToken')
 }
 
 axios.interceptors.request.use(
@@ -29,7 +26,7 @@ axios.interceptors.request.use(
 const axiosIns = axios.create({
   // You can add your headers here
   // ================================
-  baseURL: process.env.BASE_API_URL,
+  baseURL: process.env.BASE_API_URL, // This might be undefined at runtime
   // timeout: 1000,
   headers: {
     Authorization: `Bearer ${apikey}`,
