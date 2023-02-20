@@ -166,23 +166,29 @@ export default {
     return {
       message: '',
       success: false,
-      user: {},
+      user: {
+        name: '',
+        roles:[],
+      },
       form: {},
       user_id: null,
+      roles:{}
     }
   },
   mounted() {
-    this.user_id = this.$route.params.id
-    this.fetchUserInfo(this.user_id)
+
   },
   methods: {
-    addUser: async function () {
+    async addUser() {
       await axios
         .post(`/users/add`, this.user)
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
+          }
+          else{
+            this.success= false
           }
         })
         .catch((error) => {
@@ -192,18 +198,7 @@ export default {
             this.message = error.message
           }
         })
-    },
-    deleteUser: async function () {
-      await axios.delete(`/users/` + this.user_id).then((response) => {
-        alert(response.data.message)
-        this.getUsers()
-      })
-    },
-    fetchUserInfo: async function (id) {
-      await axios.get(`/users/info/` + id).then((response) => {
-        this.user = response.data.data
-      })
-    },
+    }
   },
 }
 </script>
