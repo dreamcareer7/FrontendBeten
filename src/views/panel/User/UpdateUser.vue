@@ -127,6 +127,7 @@
                 multiple
                 name="roles[]"
                 id="iroles"
+                v-model="user.roles"
               >
                 <option value=""></option>
               </select>
@@ -135,11 +136,21 @@
         </div>
       </div>
       <CRow>
-        <div v-show="message && !success" class="error_style">{{ message }}</div>
-        <div v-show="message && success" class="success_style">{{ message }}</div>
+        <CCol :md="12">
+          <div v-show="message && !success" class="error_style">
+            {{ message }}
+          </div>
+          <div v-show="message && success" class="alert alert-success">
+            {{ message }}
+          </div>
+        </CCol>
+
       </CRow>
       <div class="card-footer text-end">
-        <button @click="updateInfo" class="btn btn-outline-success ajax">
+        <button
+          @click.prevent="updateInfo"
+          class="btn btn-outline-success ajax"
+        >
           Save Changes
         </button>
       </div>
@@ -172,6 +183,13 @@ export default {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            this.message = error.response.data.message
+          } else {
+            this.message = error.message
           }
         })
     },

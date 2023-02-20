@@ -35,6 +35,11 @@ const routes = [
         component: () => import('@/views/panel/User/UpdateUser'),
       },
       {
+        path: 'users/info/:id',
+        name: 'user_info',
+        component: () => import('@/views/panel/User/UserInfo'),
+      },
+      {
         path: 'clients',
         name: 'Clients',
         component: () => import('@/views/panel/Client/Clients'),
@@ -173,8 +178,13 @@ const routes = [
       },
       {
         path: 'vehicles/create',
-        name: 'Create Vehicle',
+        name: 'create_vehicle',
         component: () => import('@/views/panel/Vehicle/CreateVehicle'),
+      },
+      {
+        path: 'vehicles/update/:id',
+        name: 'update_vehicle',
+        component: () => import('@/views/panel/Vehicle/UpdateVehicle'),
       },
       {
         path: 'dormitories',
@@ -268,13 +278,16 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    // if (!store.getters.isLoggedIn) {
+    //  if (!store.getters.isLoggedIn) {
+    if (1 === 2) {
+      next({ name: 'Login' })
+    } else {
+      // if (!store.getters.isLoggedIn) {
       // next({ name: 'Login' })
-    // } else {
+      // } else {
       next() // go to wherever I'm going
-    // }
-  } else {
-    next() // does not require auth, make sure to always call next()!
+      // }
+    }
   }
 })
 

@@ -83,14 +83,20 @@ export default {
         .post(`/login`, this.form)
         .then((response) => {
           if (response.data.success) {
+            console.log("Successssss")
             const token = response.data.token
             localStorage.setItem('betenAuthToken', token)
-            this.$router.push('/dashboard')
+           // this.$router.push('/dashboard')
+            this.$router.push({
+              name: 'Dashboard',
+            })
           } else {
             this.message = response.data.message
+            console.log("faillllll")
           }
         })
         .catch((error) => {
+          console.log("dfasdfasdfsdf")
           if (error.response) {
             this.message = error.response.data.message
           } else {

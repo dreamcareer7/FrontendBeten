@@ -1,8 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">
-      Create Group
-    </div>
+    <div class="card-header">Update Vehicle</div>
 
     <div id="ialert" class="" role="alert"></div>
     <form method="post">
@@ -35,7 +33,7 @@
             required
             autocomplete="off"
           />
-          <label for="manufactory">Manufactory</label>
+          <label for="manufactory">Manufacturer</label>
           <div class="invalid-feedback"></div>
         </div>
 
@@ -95,7 +93,7 @@
         </CCol>
       </CRow>
       <div class="card-footer text-end">
-        <a class="btn btn-outline-success ajax" @click="addVehicle">Save</a>
+        <a class="btn btn-outline-success ajax" @click="updateVehicle">Save Changes</a>
       </div>
     </form>
   </div>
@@ -111,17 +109,17 @@ export default {
       success: false,
       vehicle: {},
       form: {},
-      user_id: null,
+      vehicle_id: null,
     }
   },
   mounted() {
-    this.user_id = this.$route.params.id
-    this.fetchUserInfo(this.user_id)
+    this.vehicle_id = this.$route.params.id
+    this.fetchVehicleInfo(this.vehicle_id)
   },
   methods: {
-    addVehicle: async function () {
+    updateVehicle: async function () {
       await axios
-        .post(`/vehicles/add`, this.vehicle)
+        .post(`/vehicles/update/` + this.vehicle_id, this.vehicle)
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
@@ -136,11 +134,18 @@ export default {
           }
         })
     },
-    fetchUserInfo: async function (id) {
-      await axios.get(`/users/info/` + id).then((response) => {
-        this.user = response.data.data
+    deleteUser: async function () {
+      await axios.delete(`/users/` + this.user_id).then((response) => {
+        alert(response.data.message)
+        this.getUsers()
+      })
+    },
+    fetchVehicleInfo: async function (id) {
+      await axios.get(`/vehicles/info/` + id).then((response) => {
+        this.vehicle = response.data
       })
     },
   },
 }
 </script>
+

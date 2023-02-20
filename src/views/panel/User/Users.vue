@@ -44,7 +44,16 @@
               />
             </CCol>
           </CRow>
-          <CTable>
+          <CRow v-if="loading" class="mt-4">
+            <CCol :md="12" class="text-center">
+              <div class="spinner-border text-success" role="status">
+              </div>
+            </CCol>
+            <CCol :md="12" class="text-center">
+              <span class="sr-only">Loading...</span>
+            </CCol>
+          </CRow>
+          <CTable v-if="!loading">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -67,12 +76,19 @@
                 <CTableDataCell>{{ user.is_active }}</CTableDataCell>
                 <CTableDataCell>{{ user.created_at }}</CTableDataCell>
                 <CTableDataCell>
-                  <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-info text-white"
+                  <router-link
+                    :to="{
+                      name: 'user_info',
+                      params: { id: user.id },
+                    }"
                   >
-                    View
-                  </button>
+                    <button
+                      style="margin-right: 1em"
+                      class="btn btn-sm btn-info text-white"
+                    >
+                      View
+                    </button>
+                  </router-link>
                   <router-link
                     :to="{
                       name: 'edit_user',
@@ -91,6 +107,19 @@
               </CTableRow>
             </CTableBody>
           </CTable>
+          <CRow>
+            <CCol :md="12" class="text-center">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item" v-if="current_page>1"><a class="page-link" href="#"  @click.prevent="previousPage">Previous</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item" v-if="last_page>current_page"><a class="page-link" href="#"   @click.prevent="nextPage"> Next</a></li>
+                </ul>
+              </nav>
+            </CCol>
+          </CRow>
         </CCardBody>
       </CCard>
     </CCol>
@@ -105,25 +134,41 @@ export default {
     return {
       users: '',
       search: {},
-      current_page: '',
+      current_page: 1,
+      last_page: 99,
       selected_user: null,
+      loading:false
     }
   },
   mounted() {
     this.getUsers()
   },
   methods: {
+    nextPage: async function () {
+      this.current_page = this.current_page + 1
+      this.search.page = this.current_page
+      this.getUsers()
+    },
+    previousPage: async function () {
+      this.current_page = this.current_page - 1
+      this.search.page = this.current_page
+      this.getUsers()
+    },
     getUsers: async function () {
+      this.loading = true
       await axios
         .get(`/users/paginate`, {
           params: this.search,
         })
         .then((response) => {
           this.users = response.data.data
+          this.current_page = response.data.current_page
+          this.last_page = response.data.last_page
         })
+      this.loading = false
     },
     deleteUser: async function (id) {
-      await axios.delete(`/users/` + id).then((response) => {
+      await axios.post(`/users/delete/` + id).then((response) => {
         alert(response.data.message)
         this.getUsers()
       })
