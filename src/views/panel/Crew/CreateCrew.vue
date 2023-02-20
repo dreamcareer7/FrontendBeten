@@ -7,7 +7,7 @@
       <div class="card-body">
         <div class="form-floating mb-3">
           <input
-            v-model="crew_data.fullname"
+            v-model="crew.fullname"
             type="text"
             class="form-control"
             id="fname"
@@ -23,7 +23,7 @@
 
         <div class="form-floating mb-3">
           <select
-            v-model="crew_data.gender"
+            v-model="crew.gender"
             name="gender"
             id="gender"
             class="form-control"
@@ -36,24 +36,33 @@
         </div>
 
         <div class="form-floating mb-3">
-          <select
-            v-model="crew_data.country_id"
-            name="country_id"
-            id="country_id"
-            class="form-control"
-          >
-            <option>Choose Country</option>
-            <option value="1">Country 1</option>
-          </select>
-          <label for="country_id">Country</label>
-          <div class="invalid-feedback"></div>
+            <select v-model="crew.country_id" name="country" id="country" class="form-control">
+                <option>Choose Country</option>
+                <template v-for="country in countries" :key="country.code">
+                  <option :value="country.code">{{ country.name }}</option>
+                </template>
+            </select>
+            <label for="country_id">Country</label>
+            <div class="invalid-feedback"></div>
+        </div>
+
+
+        <div class="form-floating mb-3">
+            <select v-model="crew.profession_id" name="profession" id="profession" class="form-control">
+                <option>Choose Country</option>
+                <template v-for="profession in professions" :key="profession.id">
+                  <option :value="profession.id">{{ profession.title }}</option>
+                </template>
+            </select>
+            <label for="profession_id">Profession</label>
+            <div class="invalid-feedback"></div>
         </div>
 
         <div class="row g-1 mb-1">
           <div class="col">
             <div class="form-floating mb-3">
               <input
-                v-model="crew_data.phone"
+                v-model="crew.phone"
                 type="text"
                 class="form-control"
                 id="phone"
@@ -66,7 +75,7 @@
 
             <div class="form-floating mb-3">
               <input
-                v-model="crew_data.id_type"
+                v-model="crew.id_type"
                 type="text"
                 class="form-control"
                 id="id_type"
@@ -79,7 +88,7 @@
 
             <div class="form-floating mb-3">
               <input
-                v-model="crew_data.id_no"
+                v-model="crew.id_no"
                 type="text"
                 class="form-control"
                 id="id_number"
@@ -92,7 +101,7 @@
 
             <div class="form-floating mb-3">
               <input
-                v-model="crew_data.dob"
+                v-model="crew.dob"
                 type="date"
                 class="form-control"
                 id="dob"
@@ -105,11 +114,10 @@
 
             <div class="border rounded px-1">
               <div class="form-switch">
-                <input type="hidden" value="0" name="is_handicap" />
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  value="1"
+                  v-model="crew.is_handicap"
                   name="is_handicap"
                   checked
                   id="is_handicap"
@@ -124,36 +132,70 @@
       </div>
 
       <div class="card-footer text-end">
-        <a href="/create/crew" class="btn btn-outline-success ajax">Save</a>
+        <a @click="createCrew()" class="btn btn-outline-success ajax">Save</a>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
 import axios from 'axios'
+import countries from '../../../store/countries'
 
 export default {
   name: 'create_crew',
-  setup: function () {
-    const crew_data = ref({
-      fullname: '',
-      gender: '',
-      profession_id: '',
-      country_id: '',
-      phone: '',
-      id_type: '',
-      id_no: '',
-      dob: '',
-    })
-    const addCrew = (data) => {
-      axios.post(`/crew`, data).then((response) => {
-        console.log(response)
-      })
+  data() {
+    return {
+      crew: {
+        fullname: '',
+        gender: '',
+        profession_id: '',
+        country_id: '',
+        phone: '',
+        id_type: '',
+        id_no: '',
+        dob: '',
+        is_handicap: false,
+      },
+      countries,
+      professions: [
+        {
+          id: 1,
+          title: "Developer"
+        },
+        {
+          id: 2,
+          title: "Doctor"
+        },
+        {
+          id: 3,
+          title: "Engineer"
+        },
+        {
+          id: 4,
+          title: "Accountant"
+        },
+      ]
     }
+  },
+  mounted() {
+    this.countries = countries;
+    // this.getCountries();
+  },
+  methods: {
 
-    return { crew_data, addCrew }
+    // getCountries: async function () {
+    //   await axios.get(`/countries`).then((response) => {
+    //     this.countries = response.data.data
+    //   })
+    // },
+    createCrew: async function () {
+      let crew = this.crew;
+      await axios.post(`/crew`, crew).then((response) => {
+        let res = response.data.data
+        console.log(res,response)
+      }).catch(err => console.log(err))
+    },
   },
 }
 </script>

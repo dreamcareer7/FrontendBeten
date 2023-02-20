@@ -56,7 +56,7 @@ const routes = [
       },
       {
         path: 'crews/create',
-        name: 'Create Crew',
+        name: 'Create_Crew',
         component: () => import('@/views/panel/Crew/CreateCrew'),
       },
       {
