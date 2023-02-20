@@ -73,8 +73,8 @@ export default {
   methods: {
     getServices: async function () {
       await axios.get(`/services`).then((response) => {
-        let allServices = Object.entries(response.data.data.data)[0]
-        allServices.forEach((s) => s.id != undefined ? this.services.push(s) : '')
+        let allServices = Object.entries(response.data.data.data)
+        allServices.forEach((s) => this.services.push(s[1]))
       })
     },
     deleteService: async function (id) {
