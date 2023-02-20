@@ -148,7 +148,7 @@
       </CRow>
       <div class="card-footer text-end">
         <button
-          @click.prevent="updateInfo"
+          @click.prevent="addUser"
           class="btn btn-outline-success ajax"
         >
           Save Changes
