@@ -178,7 +178,7 @@ export default {
   methods: {
     addUser: async function () {
       await axios
-        .post(`/users/store/`, this.user)
+        .post(`/users/add`, this.user)
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
