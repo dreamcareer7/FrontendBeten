@@ -142,7 +142,7 @@
       </div>
 
       <div class="card-footer text-end">
-        <a @click="createCrew()" class="btn btn-outline-success ajax">Save</a>
+        <button @click.prevent="updateCrew()" class="btn btn-outline-success ajax">Save</button>
       </div>
     </form>
   </div>
@@ -157,6 +157,7 @@ export default {
   data() {
     return {
       message: '',
+      crew_id: null,
       success: false,
       crew: {
         fullname: '',
@@ -192,7 +193,8 @@ export default {
   },
   mounted() {
     this.countries = countries;
-    // this.getCountries();
+    this.crew_id = this.$route.params.id
+    this.fetchCrewInfo(this.crew_id)
   },
   methods: {
 
@@ -201,9 +203,9 @@ export default {
     //     this.countries = response.data.data
     //   })
     // },
-    createCrew: async function () {
+    updateCrew: async function () {
       let crew = this.crew;
-      await axios.post(`/crews/add`, crew)
+      await axios.post(`/crews/update/`+ this.crew_id, crew)
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
@@ -217,6 +219,11 @@ export default {
             this.message = error.message
           }
         })
+    },
+    fetchCrewInfo: async function (id) {
+      await axios.get(`/crews/info/` + id).then((response) => {
+        this.crew = response.data
+      })
     },
   },
 }

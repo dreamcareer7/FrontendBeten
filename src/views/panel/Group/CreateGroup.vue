@@ -50,8 +50,21 @@
           </CRow>
         </form>
       </div>
-      <div class="col-8">
-        <h4>Assign Members to this Group</h4>
+      <div class="col-8 text-center">
+        <h6>Assign Members to this Group</h6>
+        <div class="row">
+          <div class="col-4">
+            <h6>Search</h6>
+            <input type="text" v-model="client_search" class="form-control" @change="searchClients" />
+            <div class="row mt-3">
+              <div class="col-12 card" v-for="client in searched_client" @click="addClientToGroup(client)">
+               <h6>  {{ client.fullname }} </h6>
+                <span> {{ client.country_id}} </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-8"></div>
+        </div>
       </div>
     </div>
     <div class="card-footer text-end">
@@ -68,6 +81,8 @@ export default {
   data() {
     return {
       message: '',
+      client_search: '',
+      searched_client: {},
       success: false,
       group: {
         title: '',
@@ -84,6 +99,18 @@ export default {
       await axios.get(`/crews/all`).then((response) => {
         this.crews = response.data
       })
+    },
+    searchClients: async function () {
+      await axios
+        .get(`/clients/paginate`, {
+          params: { name: this.client_search, per_page: 500 },
+        })
+        .then((response) => {
+          this.searched_client = response.data.data
+        })
+    },
+    addClientToGroup(client) {
+      console.log(client)
     },
     createGroup: async function () {
       await axios

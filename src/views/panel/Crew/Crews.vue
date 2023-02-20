@@ -54,7 +54,6 @@
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Phone</CTableHeaderCell>
                 <CTableHeaderCell scope="col">ID Type</CTableHeaderCell>
-                <CTableHeaderCell scope="col">ID Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">ID Number</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Is Active</CTableHeaderCell>
@@ -67,11 +66,10 @@
                 <CTableDataCell>{{ crew.user_id }}</CTableDataCell>
                 <CTableDataCell>{{ crew.fullname }}</CTableDataCell>
                 <CTableDataCell>{{ crew.gender }}</CTableDataCell>
-                <CTableDataCell>{{ crew.profession }}</CTableDataCell>
-                <CTableDataCell>{{ crew.country }}</CTableDataCell>
+                <CTableDataCell>{{ crew.profession_id }}</CTableDataCell>
+                <CTableDataCell>{{ crew.country_id }}</CTableDataCell>
                 <CTableDataCell>{{ crew.phone }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_type }}</CTableDataCell>
-                <CTableDataCell>{{ crew.id_name }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_no }}</CTableDataCell>
                 <CTableDataCell>{{ crew.dob }}</CTableDataCell>
                 <CTableDataCell>{{ crew.is_active }}</CTableDataCell>
