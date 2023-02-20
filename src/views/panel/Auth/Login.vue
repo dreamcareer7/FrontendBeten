@@ -1,14 +1,14 @@
 <template>
-  <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+  <div class="bg-light min-vh-100 d-flex flex-row align-items-center login_bg">
     <CContainer>
       <CRow class="justify-content-center">
-        <CCol :md="8">
+        <CCol :md="6">
           <CCardGroup>
             <CCard class="p-4">
               <CCardBody>
                 <CForm>
-                  <h1>Login</h1>
-                  <p class="text-medium-emphasis">Sign In to your account</p>
+                  <h1 class="text-center">Login</h1>
+                  <p class="text-medium-emphasis text-center">Sign In to your account</p>
                   <CInputGroup class="mb-3">
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
@@ -32,12 +32,12 @@
                   </CInputGroup>
                   <div v-show="message" class="error_style">{{ message }}</div>
                   <CRow>
-                    <CCol :xs="6">
+                    <CCol :xs="8">
                       <CButton @click="login" color="primary" class="px-4">
                         Login
                       </CButton>
                     </CCol>
-                    <CCol :xs="6" class="text-right">
+                    <CCol :xs="4" class="text-right">
                       <router-link
                         :to="{
                           name: 'reset_password',
@@ -50,11 +50,6 @@
                     </CCol>
                   </CRow>
                 </CForm>
-              </CCardBody>
-            </CCard>
-            <CCard class="text-white bg-primary py-5" style="width: 44%">
-              <CCardBody class="text-center">
-                <div></div>
               </CCardBody>
             </CCard>
           </CCardGroup>
@@ -107,3 +102,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+  div.login_bg {
+    background-image: url('/src/assets/images/login_bg.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+</style>

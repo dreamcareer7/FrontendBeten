@@ -12,7 +12,7 @@
     "
   >
     <CSidebarBrand>
-      <span style="font-family: Scripto; font-size: 2rem;">Beten</span>
+      <span style="font-family: Scripto; font-size: 2rem;">Murafiq</span>
     </CSidebarBrand>
     <AppSidebarNav />
     <CSidebarToggler
