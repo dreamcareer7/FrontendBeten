@@ -40,9 +40,9 @@
       <CDropdownItem>
         <CIcon icon="cil-shield-alt" /> Lock Account
       </CDropdownItem>
-      <router-link to="/panel/login">
-        <CDropdownItem> <CIcon icon="cil-lock-locked" /> Logout </CDropdownItem>
-      </router-link>
+      <CDropdownItem @click="logout">
+        <CIcon icon="cil-lock-locked"/> Logout
+      </CDropdownItem>
     </CDropdownMenu>
   </CDropdown>
 </template>
@@ -57,5 +57,13 @@ export default {
       itemsCount: 42,
     }
   },
+  methods: {
+    logout() {
+      localStorage.removeItem('betenAuthToken')
+      this.$router.push({
+        name: 'Login',
+      })
+    }
+  }
 }
 </script>
