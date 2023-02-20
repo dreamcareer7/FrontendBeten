@@ -62,7 +62,7 @@ export default {
   name: 'services',
   data() {
     return {
-      services: '',
+      services: [],
       current_page: '',
       selected_user: null,
     }
@@ -73,8 +73,8 @@ export default {
   methods: {
     getServices: async function () {
       await axios.get(`/services`).then((response) => {
-        this.services = response.data.data
-        console.log(this.users)
+        let allServices = Object.entries(response.data.data.data)[0]
+        allServices.forEach((s) => s.id != undefined ? this.services.push(s) : '')
       })
     },
     deleteService: async function (id) {

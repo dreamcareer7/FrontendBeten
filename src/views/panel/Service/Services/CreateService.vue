@@ -18,7 +18,7 @@
               <select v-model="service.country_id" name="country_id" id="country_id" class="form-control">
                   <option>Choose Country</option>
                   <template v-for="country in countries" :key="country.code">
-                    <option value="{{ country.code }}">{{ country.name }}</option>
+                    <option :value="country.code">{{ country.name }}</option>
                   </template>
               </select>
               <label for="country_id">Country</label>
@@ -90,11 +90,12 @@ export default {
     //   })
     // },
     createService: async function () {
-      await axios.post(`/services`, this.service).then((response) => {
-        this.$router.push({ name: 'Dashboard' })
+      let service = this.service;
+      await axios.post(`/services`, service).then((response) => {
+        // this.$router.push({ name: 'Dashboard' })
         let res = response.data.data
-        console.log(res)
-      })
+        console.log(res,response)
+      }).catch(err => console.log(err))
     },
   },
 }
