@@ -46,8 +46,13 @@ const routes = [
       },
       {
         path: 'clients/create',
-        name: 'Create Client',
+        name: 'create_client',
         component: () => import('@/views/panel/Client/CreateClient'),
+      },
+      {
+        path: 'clients/edit/:id',
+        name: 'update_client',
+        component: () => import('@/views/panel/Client/UpdateClient'),
       },
       {
         path: 'crews',

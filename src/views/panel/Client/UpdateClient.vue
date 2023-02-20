@@ -1,7 +1,7 @@
 <template>
   <div class="card border-success mb-4">
     <div class="card-header">
-      Create Client
+      Update Client
     </div>
 
     <div id="ialert" class="" role="alert"></div>
@@ -16,8 +16,8 @@
 
         <div class="form-floating mb-3">
           <select name="gender" id="gender" class="form-control"  v-model="client.gender">
-            <option value="0">Male</option>
-            <option value="1">Female</option>
+            <option value="1">Male</option>
+            <option value="0">Female</option>
           </select>
           <label for="gender">Gender</label>
           <div class="invalid-feedback"></div>
@@ -110,18 +110,16 @@ export default {
   },
   mounted() {
     this.user_id = this.$route.params.id
-   // this.fetchUserInfo(this.user_id)
+    this.fetchUserInfo(this.user_id)
   },
   methods: {
     addClient: async function () {
       await axios
-        .post(`/clients/add`, this.client)
+        .post(`/clients/update/` + this.user_id, this.client)
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
-          } else {
-            this.success = false
           }
         })
         .catch((error) => {
@@ -133,8 +131,8 @@ export default {
         })
     },
     fetchUserInfo: async function (id) {
-      await axios.get(`/users/info/` + id).then((response) => {
-        this.user = response.data.data
+      await axios.get(`/clients/info/` + id).then((response) => {
+        this.client = response.data
       })
     },
   },
