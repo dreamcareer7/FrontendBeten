@@ -65,6 +65,11 @@ const routes = [
         component: () => import('@/views/panel/Crew/CreateCrew'),
       },
       {
+        path: 'crews/edit/:id',
+        name: 'update_crew',
+        component: () => import('@/views/panel/Crew/UpdateCrew'),
+      },
+      {
         path: 'contracts',
         name: 'contracts',
         component: () => import('@/views/panel/Contract/Contracts'),
