@@ -197,6 +197,11 @@ const routes = [
         component: () => import('@/views/panel/Dormitory/CreateDormitory'),
       },
       {
+        path: 'dormitories/update/:id',
+        name: 'update_dormitory',
+        component: () => import('@/views/panel/Dormitory/UpdateDormitory'),
+      },
+      {
         path: 'concurrents',
         name: 'concurrents',
         component: () => import('@/views/panel/Concurrent/Concurrents'),
