@@ -59,10 +59,10 @@
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Username</CTableHeaderCell>
-                <CTableHeaderCell scope="col">email</CTableHeaderCell>
+                <CTableHeaderCell scope="col">E-mail</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Contact</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Is Active</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Created at</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Active</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Date created</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -83,8 +83,7 @@
                     }"
                   >
                     <button
-                      style="margin-right: 1em"
-                      class="btn btn-sm btn-info text-white"
+                      class="btn btn-sm btn-info text-white mx-1"
                     >
                       View
                     </button>
@@ -95,10 +94,10 @@
                       params: { id: user.id },
                     }"
                   >
-                    <CButton class="btn btn-success text-white">Update</CButton>
+                    <CButton class="btn btn-sm btn-success text-white mx-1">Update</CButton>
                   </router-link>
                   <button
-                    class="btn btn-danger text-white"
+                    class="btn btn-sm btn-danger text-white"
                     @click="deleteUser(user.id)"
                   >
                     Delete

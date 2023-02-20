@@ -149,7 +149,7 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'users',
+  name: 'dormitories',
   data() {
     return {
       dormitories: {},
