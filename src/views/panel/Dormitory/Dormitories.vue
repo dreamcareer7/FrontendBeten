@@ -24,27 +24,36 @@
               <input
                 type="text"
                 class="form-control"
-                v-model="search.model"
-                placeholder="model"
-                @change="getVehicles"
+                v-model="search.title"
+                placeholder="title.."
+                @change="getDormitories"
               />
             </CCol>
             <CCol :md="2">
               <input
                 type="text"
                 class="form-control"
-                v-model="search.manufacturer"
-                placeholder="Manufacturer"
-                @change="getVehicles"
+                v-model="search.phone"
+                placeholder="Phone.."
+                @change="getDormitories"
               />
             </CCol>
             <CCol :md="2">
               <input
                 type="text"
                 class="form-control"
-                v-model="search.registration"
-                placeholder="Registration"
-                @change="getVehicles"
+                v-model="search.country"
+                placeholder="Country"
+                @change="getDormitories"
+              />
+            </CCol>
+            <CCol :md="2">
+              <input
+                type="text"
+                class="form-control"
+                v-model="search.city"
+                placeholder="City"
+                @change="getDormitories"
               />
             </CCol>
           </CRow>
@@ -69,18 +78,14 @@
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="vehicle in vehicles" :key="vehicle.id">
-                <CTableHeaderCell scope="row">{{ vehicle.id }}</CTableHeaderCell>
+              <CTableRow v-for="dormitory in dormitories" :key="dormitory.id">
+                <CTableHeaderCell scope="row">{{ dormitory.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ vehicle.model }}</CTableDataCell>
-                <CTableDataCell>{{ vehicle.registration }}</CTableDataCell>
-                <CTableDataCell>{{ vehicle.manufacturer }}</CTableDataCell>
-                <CTableDataCell>{{ vehicle.year }}</CTableDataCell>
-                <CTableDataCell>{{ vehicle.badge }}</CTableDataCell>
                 <CTableDataCell>
                   <router-link
                     :to="{
                       name: 'user_info',
-                      params: { id: vehicle.id },
+                      params: { id: dormitory.id },
                     }"
                   >
                     <button
@@ -93,14 +98,14 @@
                   <router-link
                     :to="{
                       name: 'update_vehicle',
-                      params: { id: vehicle.id },
+                      params: { id: dormitory.id },
                     }"
                   >
                     <CButton class="btn btn-success text-white">Update</CButton>
                   </router-link>
                   <button
                     class="btn btn-danger text-white"
-                    @click="deleteVehicle(vehicle.id)"
+                    @click="deleteVehicle(dormitory.id)"
                   >
                     Delete
                   </button>
