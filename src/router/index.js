@@ -1,5 +1,5 @@
 import { h, resolveComponent } from 'vue'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory,createWebHistory } from 'vue-router'
 import jwt_decode from 'vue-jwt-decode'
 import store from '@/store'
 
@@ -291,7 +291,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(process.env.BASE_URL),
+  hashbang: false,
+  history: createWebHistory(),
   routes,
   scrollBehavior() {
     // always scroll to top

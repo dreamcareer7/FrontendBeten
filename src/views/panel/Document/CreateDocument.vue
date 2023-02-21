@@ -51,12 +51,6 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12" v-if="uploaded">
-              <h5>Uploaded Successfully</h5>
-            </div>
-          </div>
-
           <CRow>
             <CCol :md="12">
               <div v-show="message && !success" class="error_style">
