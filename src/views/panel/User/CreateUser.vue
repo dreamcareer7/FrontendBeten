@@ -88,8 +88,9 @@
 
 <script>
 import axios from 'axios'
+
 export default {
-  name: 'update_user',
+  name: 'create_user',
   data: () => ({
     message: '',
     success: false,
@@ -124,21 +125,17 @@ export default {
           this.success = false
         })
     },
-    fetchUserRoles: async function () {
-      await axios.get('/users/roles').then((response) => {
-        this.user = response.data.data
-        // Populate the roles select element options
-        this.roles_select_options = response.data.map((role) => {
-          return {
-            value: role.name,
-            label: role.name,
-          }
-        })
-      })
-    },
   },
   mounted() {
-    this.fetchUserRoles()
+    axios.get('/roles').then((response) => {
+      // Populate the roles select element options
+      this.roles_select_options = response.data.map((role) => {
+        return {
+          value: role,
+          label: role,
+        }
+      })
+    })
   },
 }
 </script>
