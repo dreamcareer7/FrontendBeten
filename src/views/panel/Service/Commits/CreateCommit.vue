@@ -9,7 +9,7 @@
       <div class="card-body">
 
           <div class="form-floating mb-3">
-              <select name="service_id" id="service_id" class="form-control" v-model="service_commit.service_id" autofocus>
+              <select name="service_id" id="service_id" class="form-control" v-model="service_commit.service_id" autofocus required>
                   <option :value="null">Choose Service</option>
                   <option v-for="service in services" :value="service.id">{{ service.title }}</option>
               </select>
@@ -60,9 +60,23 @@
 
       </div>
 
-	<div class="card-footer text-end">
-      <a class="btn btn-outline-success ajax">Save</a>
-	</div>
+      <CRow>
+          <CCol :md="12">
+            <div v-show="message && !success" class="error_style">
+              {{ message }}
+            </div>
+            <div v-show="message && success" class="alert alert-success">
+              {{ message }}
+            </div>
+          </CCol>
+
+        </CRow>
+
+    <div class="card-footer text-end">
+      <button @click.prevent="createCommit" class="btn text-white btn-success">
+        <span>Create service commit</span>
+      </button>
+    </div>
 	</form>
 </div>
 </template>
@@ -71,6 +85,8 @@
 export default {
   name: 'create_commit',
   data: () => ({
+    message: '',
+    success: false,
     services: [],
     users: [], // A key/value pair of users name/id to select the supervisor
     service_commit: {
@@ -83,8 +99,34 @@ export default {
     }
   }),
   methods: {
-    createCommit() {
+    async createCommit() {
       // Send the service commit object to the API for creation
+      await this.$axios.post('service/commits', this.service_commit)
+        .then((response) => {
+          // Feedback to the client
+          this.message = response.data.message
+          if (response.status == 201) { // If created
+            this.success = true
+            // Reset the service commit object
+            this.service_commit = {
+              service_id: null,
+              badge: '',
+              scheduled_at: '',
+              started_at: '',
+              location: '',
+              supervisor_id: null
+            }
+          } else {
+            this.success = false
+          }
+        }).catch((error) => {
+          if (error.response) {
+            this.message = error.response.data.message
+          } else {
+            this.message = error.message
+          }
+          this.success = false
+        })
     }
   },
   mounted() {
