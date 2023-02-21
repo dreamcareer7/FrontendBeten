@@ -137,7 +137,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'users',
   data() {
@@ -167,7 +166,7 @@ export default {
     },
     getUsers: async function () {
       this.loading = true
-      await axios
+      await this.$axios
         .get(`/users/paginate`, {
           params: this.search,
         })
@@ -182,7 +181,7 @@ export default {
     },
     gotoPage: async function (url) {
       this.loading = true
-      await axios
+      await this.$axios
         .get(url, {
           params: this.search,
         })
@@ -196,13 +195,13 @@ export default {
       this.loading = false
     },
     deleteUser: async function (id) {
-      await axios.post(`/users/delete/` + id).then((response) => {
+      await this.$axios.post(`/users/delete/` + id).then((response) => {
         alert(response.data.message)
         this.getUsers()
       })
     },
     fetchUserInfo: async function (id) {
-      await axios.get(`/users/show/` + id).then((response) => {
+      await this.$axios.get(`/users/show/` + id).then((response) => {
         console.log(response.data)
       })
     },

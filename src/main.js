@@ -1,10 +1,12 @@
 import { createApp } from 'vue'
+import CoreuiVue from '@coreui/vue'
+import CIcon from '@coreui/icons-vue'
+
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axiosInstance from './plugins/axios'
 
-import CoreuiVue from '@coreui/vue'
-import CIcon from '@coreui/icons-vue'
 import { iconsSet as icons } from '@/assets/icons'
 import DocsExample from '@/components/DocsExample'
 
@@ -18,5 +20,7 @@ app.provide('icons', icons)
 
 app.component('CIcon', CIcon)
 app.component('DocsExample', DocsExample)
+
+app.config.globalProperties.$axios = axiosInstance
 
 app.mount('#app')
