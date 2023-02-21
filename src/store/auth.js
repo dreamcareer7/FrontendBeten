@@ -7,4 +7,7 @@ export default createStore({
   isAdmin: (state) => {
     return state.user ? state.user.isAdmin : false;
   },
+  canIndexVehicles: (state) => {
+    return state.user ? state.user.canIndexVehicles : false;
+  },
 })

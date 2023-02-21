@@ -117,12 +117,11 @@
           </div>
 
           <div class="col">
-            <div class="form-floating">
-              <CFormSelect :html-size="6" multiple aria-label="Roles"
-                :text="'User Roles'" v-model="user.roles"
-                :options="roles_select_options">
-              </CFormSelect>
-            </div>
+            <label class="form-label roles-select-label">User Roles</label>
+            <CFormSelect :html-size="roles_select_options.length + 1" multiple
+              aria-label="Roles" v-model="user.roles"
+              :options="roles_select_options">
+            </CFormSelect>
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-import { h, resolveComponent } from 'vue'
 import { createRouter, createWebHistory, isNavigationFailure, NavigationFailureType } from 'vue-router'
 
 import store from '@/store'
@@ -88,6 +87,7 @@ const routes = [
         name: 'Create Document',
         component: () => import('@/views/panel/Document/CreateDocument'),
       },
+
       // Services menu
       {
         path: 'services',
@@ -119,7 +119,7 @@ const routes = [
         name: 'Create Log',
         component: () => import('@/views/panel/Service/Logs/CreateLog'),
       },
-      // Services Menu ends here
+      // End Services Menu
 
       // Phases Menu
       {
@@ -142,8 +142,7 @@ const routes = [
         name: 'Create Phase Service',
         component: () => import('@/views/panel/Phase/Services/CreateService'),
       },
-
-      // Phases Menu ends here
+      // End Phases Menu
 
 
       // Meals Menu
@@ -189,6 +188,11 @@ const routes = [
         path: 'vehicles',
         name: 'vehicles',
         component: () => import('@/views/panel/Vehicle/Vehicles'),
+        // Only users with permission "vehicles.index" shall access this route
+        beforeEnter: (to, from, next) => {
+          if (store.getters["auth/canIndexVehicles"]) next();
+          else next(false);
+        }
       },
       {
         path: 'vehicles/create',
@@ -255,14 +259,9 @@ const routes = [
     ],
   },
   {
-    path: '/panel',
-    redirect: '/panel/404',
+    path: '/auth',
+    redirect: '/404',
     name: 'Panel',
-    component: {
-      render() {
-        return h(resolveComponent('router-view'))
-      },
-    },
     children: [
       // Authentication
       {
@@ -287,10 +286,10 @@ const routes = [
       },
     ],
   },
+  { path: '/:pathMatch(.*)', component: () => import('@/views/panel/Page404') }
 ]
 
 const router = createRouter({
-  hashbang: false,
   history: createWebHistory(process.env.BASE_URL || '/'),
   routes,
   scrollBehavior() {
@@ -343,15 +342,15 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from, failure) => {
   // Any kind of navigation failure
   if (isNavigationFailure(failure)) {
-    console.error(failure);
+    console.log(failure);
   }
   // Only duplicated navigations
   if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
-    console.error(`Duplicated ${failure}`);
+    console.log(failure);
   }
   // Aborted or canceled navigations
   if (isNavigationFailure(failure, NavigationFailureType.aborted | NavigationFailureType.canceled)) {
-    console.warn(`Aborted or cancelled ${failure}`);
+    console.log(failure);
   }
 })
 

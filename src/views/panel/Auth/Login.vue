@@ -13,22 +13,14 @@
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput
-                      placeholder="Email"
-                      v-model="form.email"
-                      autocomplete="email"
-                    />
+                    <CFormInput placeholder="Email" v-model="form.email" autocomplete="email" />
                   </CInputGroup>
                   <CInputGroup class="mb-4">
                     <CInputGroupText>
                       <CIcon icon="cil-lock-locked" />
                     </CInputGroupText>
-                    <CFormInput
-                      type="password"
-                      v-model="form.password"
-                      placeholder="Password"
-                      autocomplete="current-password"
-                    />
+                    <CFormInput type="password" v-model="form.password" placeholder="Password"
+                      autocomplete="current-password" @keyup.enter="login" />
                   </CInputGroup>
                   <div v-show="message" class="error_style">{{ message }}</div>
                   <CRow>
@@ -38,11 +30,9 @@
                       </CButton>
                     </CCol>
                     <CCol :xs="4" class="text-right">
-                      <router-link
-                        :to="{
-                          name: 'reset_password',
-                        }"
-                      >
+                      <router-link :to="{
+                        name: 'reset_password',
+                      }">
                         <CButton color="link" class="px-0">
                           Forgot password?
                         </CButton>
@@ -66,32 +56,28 @@ import ColorTheme from '../../theme/ColorTheme'
 export default {
   name: 'Login',
   components: { ColorTheme },
-  data() {
-    return {
-      message: '',
-      form: { email: '', password: '' },
-    }
-  },
+  data: () => ({
+    message: '',
+    form: { email: '', password: '' },
+  }),
   methods: {
     login: async function () {
       return await axios
         .post(`/login`, this.form)
         .then((response) => {
           if (response.data.success) {
-            console.log("Successssss")
+            console.log("Success")
             const token = response.data.token
             localStorage.setItem('betenAuthToken', token)
-           // this.$router.push('/dashboard')
             this.$router.push({
               name: 'Dashboard',
             })
           } else {
             this.message = response.data.message
-            console.log("faillllll")
+            console.log("fail")
           }
         })
         .catch((error) => {
-          console.log("dfasdfasdfsdf")
           if (error.response) {
             this.message = error.response.data.message
           } else {
@@ -104,10 +90,10 @@ export default {
 </script>
 
 <style scoped>
-  div.login_bg {
-    background-image: url('/src/assets/images/login_bg.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-  }
+div.login_bg {
+  background-image: url('/src/assets/images/login_bg.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
 </style>
