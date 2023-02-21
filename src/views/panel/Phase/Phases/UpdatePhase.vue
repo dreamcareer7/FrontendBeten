@@ -22,7 +22,7 @@
               <div class="invalid-feedback"></div>
             </div>
 
-          </div>
+           </div>
 
         </form>
       </div>
@@ -32,7 +32,7 @@
 
         <div class="row ms-0 p-4" v-if="searched_services">
           <div class="col-6 p-3">
-            <div class="row mt-3 no-bars ms-0 border-dark" style="height: 300px; overflow: scroll">
+              <div class="row mt-3 no-bars ms-0 border-dark" style="height: 300px; overflow: scroll">
               <div class="row border p-2 mb-2 ms-0 " v-for="service in searched_services" :key="service.id" >
                 <div class="col-8">
                   <h6>  {{ service.title }} </h6>
@@ -78,94 +78,110 @@
       </CRow>
     </div>
     <div class="card-footer text-end">
-      <a @click="createPhase()" class="btn btn-outline-success ajax" v-if="!success">Save</a>
+      <a @click="updatePhase()" class="btn btn-outline-success ajax" v-if="!success">Save</a>
     </div>
   </div>
 </template>
 
 <script>
-  import axios from 'axios'
+import axios from 'axios'
 
-  export default {
-    name: 'create_phase',
-    data() {
-      return {
-        message: '',
-        service_search: '',
-        searched_services: [],
-        success: false,
-        phase: {
-          title: '',
-        },
-        phase_services:[]
+export default {
+  name: 'update_phase',
+  data() {
+    return {
+      phase_id: '',
+      message: '',
+      service_search: '',
+      searched_services: [],
+      success: false,
+      phase: {
+        title: '',
+       },
+      phase_services:[]
+    }
+  },
+  mounted() {
+    this.getServices()
+    this.phase_id = this.$route.params.id
+    this.fetchInfo(this.phase_id)
+  },
+  methods: {
+    async isAdded(service){
+      let added= false
+      this.phase_services.forEach((cln)=>{
+        if(service.id===cln.id){
+          added= true
+        }
+      })
+      return added
+    },
+    getServices: async function () {
+      await axios.get(`/services?per_page=1000`).then((response) => {
+        this.searched_services = response.data.data.data
+      })
+    },
+     async addServiceToPhase(service) {
+       if (! await this.isAdded(service)) {
+         const index = this.searched_services.indexOf(service);
+         if (index > -1) { // only splice array when item is found
+           this.searched_services.splice(index, 1); // 2nd parameter means remove one item only
+         }
+         if (!this.phase_services.includes(service)) {
+           this.phase_services.push(service)
+         }
+       }
+     },
+     removeServiceFromPhase(client){
+      const index = this.phase_services.indexOf(client);
+      if (index > -1) { // only splice array when item is found
+        this.phase_services.splice(index, 1); // 2nd parameter means remove one item only
+      }
+      if(!this.searched_services.includes(client)){
+        this.searched_services.push(client)
       }
     },
-    mounted() {
-      this.getServices()
-    },
-    methods: {
-      async isAdded(service){
-        let added= false
-        this.phase_services.forEach((cln)=>{
-          if(service.id===cln.id){
-            added= true
+   async updatePhase  () {
+      this.phase.services = this.phase_services
+      await axios
+        .post(`/phases/update/` + this.phase_id, this.phase)
+        .then((response) => {
+          this.message = response.data.message
+          if (response.data.success) {
+            this.success = true
+            this.phase={}
+            this.phase_services={}
+            this.searched_services={}
+           }
+          else{
+            this.success = false
           }
         })
-        return added
-      },
-      getServices: async function () {
-        await axios.get(`/services?per_page=1000`).then((response) => {
-          this.searched_services = response.data.data.data
+        .catch((error) => {
+          if (error.response) {
+            this.message = error.response.data.message
+          } else {
+            this.message = error.message
+          }
+          this.success = false
         })
-      },
-      async addServiceToPhase(service) {
-        if (! await this.isAdded(service)) {
-          const index = this.searched_services.indexOf(service);
+    },
+    fetchInfo: async function (id) {
+      await axios.get(`/phases/info/` + id).then((response) => {
+        this.phase = response.data.phase
+        this.phase_services = response.data.services
+
+        this.phase_services.forEach((s)=>{
+          const index = this.searched_services.indexOf(s);
           if (index > -1) { // only splice array when item is found
             this.searched_services.splice(index, 1); // 2nd parameter means remove one item only
           }
-          if (!this.phase_services.includes(service)) {
-            this.phase_services.push(service)
-          }
-        }
+        })
 
-      },
-      removeServiceFromPhase(client){
-        const index = this.phase_services.indexOf(client);
-        if (index > -1) { // only splice array when item is found
-          this.phase_services.splice(index, 1); // 2nd parameter means remove one item only
-        }
-        if(!this.searched_services.includes(client)){
-          this.searched_services.push(client)
-        }
-      },
-      async createPhase  () {
-        this.phase.services = this.phase_services
-        await axios
-          .post(`/phases/add`, this.phase)
-          .then((response) => {
-            this.message = response.data.message
-            if (response.data.success) {
-              this.success = true
-              this.phase={}
-              this.phase_services={}
-              this.searched_services={}
-            }
-            else{
-              this.success = false
-            }
-          })
-          .catch((error) => {
-            if (error.response) {
-              this.message = error.response.data.message
-            } else {
-              this.message = error.message
-            }
-            this.success = false
-          })
-      },
-    }
+      })
+    },
   }
+}
 </script>
 <style scoped="scoped">
   .no-bars {

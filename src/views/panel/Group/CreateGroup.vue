@@ -119,6 +119,15 @@ export default {
     this.getCrews()
   },
   methods: {
+    async isAdded(client){
+      let added= false
+      this.group_clients.forEach((cln)=>{
+        if(client.id===cln.id){
+          added= true
+        }
+      })
+      return added
+    },
     getCrews: async function () {
       await axios.get(`/crews/all`).then((response) => {
         this.crews = response.data

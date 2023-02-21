@@ -143,6 +143,16 @@ const routes = [
         component: () => import('@/views/panel/Phase/Phases/CreatePhase'),
       },
       {
+        path: 'phases/update/:id',
+        name: 'update_phase',
+        component: () => import('@/views/panel/Phase/Phases/UpdatePhase'),
+      },
+      {
+        path: 'phases/info/:id',
+        name: 'phase_info',
+        component: () => import('@/views/panel/Phase/Phases/PhaseInfo'),
+      },
+      {
         path: 'phases/services',
         name: 'Services',
         component: () => import('@/views/panel/Phase/Services/Services'),
