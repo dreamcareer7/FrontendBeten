@@ -115,9 +115,7 @@ export default {
     }
   },
   mounted() {
-    this.user_id = this.$route.params.id
-    this.fetchUserInfo(this.user_id)
-  },
+    },
   methods: {
     addVehicle: async function () {
       await axios

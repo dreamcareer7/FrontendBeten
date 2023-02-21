@@ -93,6 +93,11 @@ const routes = [
         name: 'View Document',
         component: () => import('@/views/panel/Document/viewDocument'),
       },
+      {
+        path: 'documents/update/:id',
+        name: 'update_document',
+        component: () => import('@/views/panel/Document/UpdateDocument'),
+      },
       // Services menu
       {
         path: 'services',

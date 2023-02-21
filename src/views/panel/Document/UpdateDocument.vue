@@ -1,7 +1,7 @@
 <template>
 <div class="card border-success mb-4">
 	<div class="card-header">
-		Upload Document
+		Update Document
 	</div>
 
 	<div id="ialert" class="" role="alert"></div>
@@ -42,6 +42,9 @@
             <div class="col-6 overflow-scroll" style="height: 400px">
                <input type="file" ref="file" name="image" class="form-control" @change="detectFile"/>
               <img :src="previewurl" ref="preview" class="img-thumbnail">
+                <div style="width:550px; height:550px; overflow: scroll" v-if="!previewurl">
+                  <img :src="base_url +'/documents/' + form.path" class="img-thumbnail" />
+                </div>
             </div>
           </div>
           <div v-if="!uploaded" class="row">
@@ -64,7 +67,7 @@
         </div>
 
 	<div class="card-footer text-end">
-      <a class="btn btn-outline-success ajax" @click="upload" v-if="!uploaded">Save</a>
+      <a class="btn btn-outline-success ajax" @click="update" v-if="!uploaded">Update</a>
 	</div>
 	</form>
 </div>
@@ -75,14 +78,16 @@
 import  axios from "axios";
 
 export default {
-    name: 'upload_document',
+    name: 'update_document',
   components: {
 
   },
     data() {
       return {
+        document_id: '',
         message: '',
         success: false,
+        base_url:'',
        previewurl:'',
         uploadpercent:0,
         uploaded:false,
@@ -94,15 +99,16 @@ export default {
       }
     },
     mounted() {
-     // this.user_id = this.$route.params.id
-      // this.fetchUserInfo(this.user_id)
+      this.document_id = this.$route.params.id
+      this.fetchInfo(this.document_id)
+      this.base_url = process.env.VUE_APP_BACKEND_BASE_URL
     },
     methods: {
-       detectFile(){
+      detectFile(){
         let f = this.$refs.file.files[0]
         this.previewurl=URL.createObjectURL(f)
       },
-      upload(){
+      update(){
         this.uploaded=  false
         let formdata = new FormData()
         formdata.append("title",this.form.title)
@@ -119,7 +125,7 @@ export default {
           }
         }
 
-        axios.post('/documents/upload', formdata, config)
+        axios.post('/documents/update/' + this.document_id, formdata, config)
           .then(response => {
             this.message = response.data.message
             if (response.data.success) {
@@ -139,8 +145,12 @@ export default {
           })
 
 
-      }
-
+      },
+      fetchInfo: async function (id) {
+        await axios.get(`/documents/info/` + id).then((response) => {
+          this.form = response.data
+        })
+      },
     }
   }
 </script>

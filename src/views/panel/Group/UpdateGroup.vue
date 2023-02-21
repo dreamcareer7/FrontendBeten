@@ -136,14 +136,26 @@ export default {
           this.searched_client = response.data.data
         })
     },
-    addClientToGroup(client) {
+   async isAdded(client){
+      let added= false
+      this.group_clients.forEach((cln)=>{
+         if(client.id===cln.id){
+          added= true
+        }
+      })
+       return added
+    },
+  async  addClientToGroup(client) {
+      if(! await this.isAdded(client))
+      {
 
+        if(!this.group_clients.includes(client)){
+          this.group_clients.push(client)
+        }
+      }
       const index = this.searched_client.indexOf(client);
       if (index > -1) { // only splice array when item is found
         this.searched_client.splice(index, 1); // 2nd parameter means remove one item only
-      }
-      if(!this.group_clients.includes(client)){
-        this.group_clients.push(client)
       }
     },
     removeClientFromGroup(client){

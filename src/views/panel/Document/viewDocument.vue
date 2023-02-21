@@ -40,7 +40,7 @@
       </div>
 
       <div class="card-footer text-end">
-        <a :src="base_url +'/documents/' + document.path" class="btn btn-primary" >Download </a>
+        <a :href="base_url +'/documents/' + document.path" target="_blank" class="btn btn-primary" >Download </a>
 
       </div>
     </form>

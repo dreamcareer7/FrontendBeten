@@ -20,6 +20,7 @@ app.provide('icons', icons)
 
 app.component('CIcon', CIcon)
 app.component('DocsExample', DocsExample)
+app.config.compilerOptions.isCustomElement = (tag) => tag.includes('ion-icon')
 
 app.config.globalProperties.$axios = axiosInstance
 

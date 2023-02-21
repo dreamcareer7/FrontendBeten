@@ -95,7 +95,7 @@
                   </router-link>
                   <router-link
                     :to="{
-                      name: 'update_client',
+                      name: 'update_document',
                       params: { id: document.id },
                     }"
                   >
@@ -119,11 +119,7 @@
             <CCol :md="12" class="text-center">
               <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                  <li class="page-item" v-if="current_page > 1">
-                    <a class="page-link" href="#" @click.prevent="previousPage"
-                      >Previous</a
-                    >
-                  </li>
+
                   <li class="page-item" v-for="page in pagination" :key="page">
                     <a
                       @click.prevent="gotoPage(page.url)"
@@ -132,11 +128,6 @@
                       v-html="page.label"
                       v-if="page.url"
                     ></a>
-                  </li>
-                  <li class="page-item" v-if="last_page > current_page">
-                    <a class="page-link" href="#" @click.prevent="nextPage">
-                      Next</a
-                    >
                   </li>
                 </ul>
               </nav>

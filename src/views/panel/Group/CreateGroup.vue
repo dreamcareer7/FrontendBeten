@@ -160,6 +160,8 @@ export default {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
+            this.group={}
+            this.group_clients={}
            }
           else{
             this.success = false
