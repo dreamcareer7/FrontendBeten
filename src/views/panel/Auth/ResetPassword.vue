@@ -13,11 +13,7 @@
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput
-                      placeholder="Email"
-                      v-model="email"
-                      autocomplete="email"
-                    />
+                    <CFormInput placeholder="Email" v-model="email" autocomplete="email" />
                   </CInputGroup>
                   <CRow>
                     <p>
@@ -51,21 +47,17 @@
 
 <script>
 import axios from 'axios'
-import config from '@/config'
-const API_URL = config.base_url
 
 export default {
   name: 'Login',
-  data() {
-    return {
-      email: '',
-      message: '',
-    }
-  },
+  data: () => ({
+    email: '',
+    message: '',
+  }),
   methods: {
     login: async function () {
       return await axios
-        .post(`${API_URL}/password/email`, { email: this.email })
+        .post(`${process.env.VUE_APP_BASE_API_URL}/password/email`, { email: this.email })
         .then((response) => {
           this.message = response.data.message
         })

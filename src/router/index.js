@@ -296,7 +296,7 @@ const routes = [
 
 const router = createRouter({
   hashbang: false,
-  history: createWebHistory(process.env.BASE_URL || '/'),
+  history: createWebHistory(process.env.VUE_APP_BASE_URL || '/'),
   routes,
   scrollBehavior() {
     // always scroll to top

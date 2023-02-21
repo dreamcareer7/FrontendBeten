@@ -13,32 +13,19 @@
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput
-                      placeholder="Email"
-                      v-model="form.email"
-                      autocomplete="email"
-                      disabled
-                    />
+                    <CFormInput placeholder="Email" v-model="form.email" autocomplete="email" disabled />
                   </CInputGroup>
                   <CInputGroup class="mb-3">
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput
-                      placeholder="********"
-                      v-model="form.password"
-                      autocomplete="password"
-                    />
+                    <CFormInput placeholder="********" v-model="form.password" autocomplete="password" />
                   </CInputGroup>
                   <CInputGroup class="mb-3">
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput
-                      placeholder="********"
-                      v-model="form.password_confirmation"
-                      autocomplete="password"
-                    />
+                    <CFormInput placeholder="********" v-model="form.password_confirmation" autocomplete="password" />
                   </CInputGroup>
                   <CRow>
                     <p>
@@ -70,17 +57,13 @@
 
 <script>
 import axios from 'axios'
-import config from '@/config'
-const API_URL = config.base_url
 
 export default {
   name: 'Login',
-  data() {
-    return {
-      form: { email: '', token: '', password: '', password_confirmation: '' },
-      message: '',
-    }
-  },
+  data: () => ({
+    form: { email: '', token: '', password: '', password_confirmation: '' },
+    message: '',
+  }),
   mounted() {
     this.form.token = this.$route.params.hash
     this.form.email = this.$route.query.email
@@ -88,7 +71,7 @@ export default {
   methods: {
     resetPwd: async function () {
       return await axios
-        .post(`${API_URL}/password/reset`, this.form)
+        .post(`${process.env.VUE_APP_BASE_API_URL}/password/reset`, this.form)
         .then((response) => {
           if (response.status === 200) {
             this.$router.push('login')
