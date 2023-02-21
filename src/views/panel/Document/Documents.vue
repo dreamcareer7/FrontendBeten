@@ -88,7 +88,10 @@
                       params: { id: document.id },
                     }"
                   >
-                    <CButton class="btn btn-success text-white">view</CButton>
+                    <CButton class="btn btn-success text-white m">
+                      <ion-icon name="eye-outline"></ion-icon>
+
+                    </CButton>
                   </router-link>
                   <router-link
                     :to="{
@@ -96,13 +99,17 @@
                       params: { id: document.id },
                     }"
                   >
-                    <CButton class="btn btn-success text-white">Update</CButton>
+                    <CButton class="btn btn-success text-white">
+                      <ion-icon name="create-outline"></ion-icon>
+
+                    </CButton>
                   </router-link>
                   <button
                     class="btn btn-danger text-white"
                     @click="deleteDocument(document.id)"
                   >
-                    Delete
+                    <ion-icon name="trash-bin-outline"></ion-icon>
+
                   </button>
                 </CTableDataCell>
               </CTableRow>
