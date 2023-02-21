@@ -22,54 +22,35 @@
           <CRow>
             <CCol :md="2">
               <select
-                type="text"
                 class="form-control"
-                v-model="search.country"
-                 @change="getClients"
+                v-model="search.model_type"
               >
-              <option value="" selected disabled>Country</option>
-                <template v-for="country in countries" :key="country.code">
-                  <option :value="country.code">{{ country.name }}</option>
-                </template>
-              </select>
-            </CCol>
-            <CCol :md="2">
-              <select
-                type="text"
-                class="form-control"
-                v-model="search.gender"
-                 @change="getClients"
-              >
-              <option value="" selected disabled>Gender</option>
-              <option value="1">Male</option>
-              <option value="0">Female</option>
+                <option value="others">others</option>
+                <option value="Contract">Contract</option>
+                <option value="Crew">Crew</option>
+                <option value="User">User</option>
+                <option value="Meal">Meal</option>
+                <option value="Complaint">Complaint</option>
+                <option value="Dormitory">Dormitory</option>
+
               </select>
             </CCol>
             <CCol :md="2">
               <input
                 type="text"
                 class="form-control"
-                v-model="search.name"
-                placeholder="Name"
-                @change="getClients"
+                v-model="search.title"
+                placeholder="Title"
+                @change="getDocuments"
               />
             </CCol>
             <CCol :md="2">
               <input
                 type="text"
                 class="form-control"
-                v-model="search.phone"
-                placeholder="Phone"
-                @change="getClients"
-              />
-            </CCol>
-            <CCol :md="2">
-              <input
-                type="text"
-                class="form-control"
-                v-model="search.id_no"
-                placeholder="Id Number"
-                @change="getClients"
+                v-model="search.model_id"
+                placeholder="Model Id"
+                @change="getDocuments"
               />
             </CCol>
           </CRow>
@@ -85,54 +66,41 @@
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Gender</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">phone</CTableHeaderCell>
-                <CTableHeaderCell scope="col">ID Type</CTableHeaderCell>
-                <CTableHeaderCell scope="col">ID No</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Date Of Birth</CTableHeaderCell>
+                <CTableHeaderCell scope="col"> </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Model Type</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Model Id</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="client in clients" :key="client.id">
-                <CTableHeaderCell scope="row">{{ client.id }}</CTableHeaderCell>
-                <CTableDataCell>{{ client.fullname }}</CTableDataCell>
+              <CTableRow v-for="document in documents" :key="document.id">
+                <CTableHeaderCell scope="row">{{ document.id }}</CTableHeaderCell>
+                <CTableDataCell>{{ document.title }}</CTableDataCell>
+                <CTableDataCell>{{ document.title }}</CTableDataCell>
+                <CTableDataCell>{{ document.model_type }}</CTableDataCell>
+                <CTableDataCell>{{ document.model_id }}</CTableDataCell>
                 <CTableDataCell>
-                  <span v-if="client.gender === 1">Male</span>
-                  <span v-if="client.gender === 0">Female</span>
-                </CTableDataCell>
-                <CTableDataCell>{{ client.country_id }}</CTableDataCell>
-                <CTableDataCell>{{ client.phone }}</CTableDataCell>
-                <CTableDataCell>{{ client.id_type }}</CTableDataCell>
-                <CTableDataCell>{{ client.id_no }}</CTableDataCell>
-                <CTableDataCell>{{ client.dob }}</CTableDataCell>
-                <CTableDataCell>
+
                   <router-link
                     :to="{
-                      name: 'user_info',
-                      params: { id: client.id },
+                      name: 'View Document',
+                      params: { id: document.id },
                     }"
                   >
-                    <button
-                      style="margin-right: 1em"
-                      class="btn btn-sm btn-info text-white"
-                    >
-                      View
-                    </button>
+                    <CButton class="btn btn-success text-white">view</CButton>
                   </router-link>
                   <router-link
                     :to="{
                       name: 'update_client',
-                      params: { id: client.id },
+                      params: { id: document.id },
                     }"
                   >
                     <CButton class="btn btn-success text-white">Update</CButton>
                   </router-link>
                   <button
                     class="btn btn-danger text-white"
-                    @click="deleteClient(client.id)"
+                    @click="deleteDocument(document.id)"
                   >
                     Delete
                   </button>
@@ -171,6 +139,10 @@
       </CCard>
     </CCol>
   </CRow>
+  <!-- Vertically centered scrollable modal -->
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    ...
+  </div>
 </template>
 
 <script>
@@ -184,9 +156,8 @@ export default {
       countries,
       documents: {},
       search: {
-        gender:'',
-        country:''
-       },
+        model_type:'',
+      },
       current_page: 1,
       last_page: 99,
       selected_user: null,
@@ -238,7 +209,7 @@ export default {
         })
       this.loading = false
     },
-    deleteClient: async function (id) {
+    deleteDocument: async function (id) {
       await axios.post(`/documents/delete/` + id).then((response) => {
         alert(response.data.message)
         this.getDocuments()

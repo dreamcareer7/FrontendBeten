@@ -88,6 +88,11 @@ const routes = [
         name: 'Create Document',
         component: () => import('@/views/panel/Document/CreateDocument'),
       },
+      {
+        path: 'documents/view/:id',
+        name: 'View Document',
+        component: () => import('@/views/panel/Document/viewDocument'),
+      },
       // Services menu
       {
         path: 'services',

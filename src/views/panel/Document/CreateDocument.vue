@@ -64,7 +64,7 @@
         </div>
 
 	<div class="card-footer text-end">
-      <a class="btn btn-outline-success ajax" @click="upload">Save</a>
+      <a class="btn btn-outline-success ajax" @click="upload" v-if="!uploaded">Save</a>
 	</div>
 	</form>
 </div>
