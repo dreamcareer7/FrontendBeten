@@ -63,7 +63,7 @@
                 <CTableHeaderCell scope="col">Contact</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Active</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Date created</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col"  :aria-colspan="2">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -75,7 +75,7 @@
                 <CTableDataCell>{{ user.contact }}</CTableDataCell>
                 <CTableDataCell>{{ user.is_active }}</CTableDataCell>
                 <CTableDataCell>{{ user.created_at }}</CTableDataCell>
-                <CTableDataCell>
+                <CTableDataCell :aria-colspan="2">
                   <router-link
                     :to="{
                       name: 'user_info',
@@ -85,7 +85,7 @@
                     <button
                       class="btn btn-sm btn-info text-white mx-1"
                     >
-                      View
+                      <ion-icon name="eye-outline"></ion-icon>
                     </button>
                   </router-link>
                   <router-link
@@ -94,13 +94,15 @@
                       params: { id: user.id },
                     }"
                   >
-                    <CButton class="btn btn-sm btn-success text-white mx-1">Update</CButton>
+                    <CButton class="btn btn-sm btn-success text-white mx-1">
+                      <ion-icon name="create-outline"></ion-icon>
+                    </CButton>
                   </router-link>
                   <button
                     class="btn btn-sm btn-danger text-white"
                     @click="deleteUser(user.id)"
                   >
-                    Delete
+                    <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
               </CTableRow>
@@ -110,20 +112,23 @@
             <CCol :md="12" class="text-center">
               <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                  <li class="page-item" v-if="current_page>1"><a class="page-link" href="#"  @click.prevent="previousPage">Previous</a></li>
-                  <li class="page-item" v-for="page in pagination" :key="page">
-                    <a
-                      @click.prevent="gotoPage(page.url)"
-                      class="page-link"
-                      href="#"
-                      v-html="page.label"
-                      v-if="page.url"
-                    ></a>
-                  </li>
-                  <li class="page-item" v-if="last_page>current_page"><a class="page-link" href="#"   @click.prevent="nextPage"> Next</a></li>
+
+                  <template  v-for="page in pagination" :key="page">
+                    <li class="page-item">
+                      <a
+                        @click.prevent="gotoPage(page.url)"
+                        class="page-link"
+                        href="#"
+                        v-html="page.label"
+                        v-if="page.url"
+                      ></a>
+                    </li>
+                  </template>
+
                 </ul>
               </nav>
             </CCol>
+
           </CRow>
         </CCardBody>
       </CCard>
@@ -164,6 +169,21 @@ export default {
       this.loading = true
       await axios
         .get(`/users/paginate`, {
+          params: this.search,
+        })
+        .then((response) => {
+          this.users = response.data.data
+          this.current_page = response.data.current_page
+          this.last_page = response.data.last_page
+          this.pagination = response.data.links
+
+        })
+      this.loading = false
+    },
+    gotoPage: async function (url) {
+      this.loading = true
+      await axios
+        .get(url, {
           params: this.search,
         })
         .then((response) => {
