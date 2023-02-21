@@ -122,9 +122,7 @@
                   checked
                   id="is_handicap"
                 />
-                <label class="form-check-label" for="is_handicap"
-                  >Is Handicap?</label
-                >
+                <label class="form-check-label" style="margin-left: .4em;" for="is_handicap">Is Handicap?</label>
               </div>
             </div>
           </div>
@@ -142,7 +140,10 @@
       </div>
 
       <div class="card-footer text-end">
-        <a @click="createCrew()" class="btn btn-outline-success ajax">Save</a>
+        <a @click="createCrew()" class="btn btn-success text-white">
+          <svg clip-rule="evenodd" class="button-icon" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m21 3.998c0-.478-.379-1-1-1h-16c-.62 0-1 .519-1 1v16c0 .621.52 1 1 1h16c.478 0 1-.379 1-1zm-16.5.5h15v15h-15zm6.75 6.752h-3.5c-.414 0-.75.336-.75.75s.336.75.75.75h3.5v3.5c0 .414.336.75.75.75s.75-.336.75-.75v-3.5h3.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3.5v-3.5c0-.414-.336-.75-.75-.75s-.75.336-.75.75z" fill-rule="nonzero"/></svg>
+          <span>Save</span>
+        </a>
       </div>
     </form>
   </div>

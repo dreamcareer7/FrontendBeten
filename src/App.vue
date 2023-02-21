@@ -27,4 +27,24 @@ export default {
   padding: .5em .3em;
   text-align: center;
 }
+.button-icon {
+  margin-bottom: .3em;
+  margin-right: .46em;
+  fill: white;
+  width: 1.3em;
+  height: 1.3em;
+}
+.clients_chart_bg {
+  background-image: url('../src/assets/images/Untitled-1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+}
+img.avatar-img {
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgb(25, 98, 233);
+}
 </style>

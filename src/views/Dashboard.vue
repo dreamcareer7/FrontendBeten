@@ -4,7 +4,7 @@
     <CRow>
       <CCol :md="12">
         <CCard class="mb-4">
-          <CCardBody>
+          <CCardBody class="clients_chart_bg">
             <CRow>
               <CCol :sm="5">
                 <h4 id="traffic" class="card-title mb-0">Clients</h4>

@@ -85,7 +85,7 @@
       </div>
 
       <div class="card-footer text-end">
-        <button class="btn btn-outline-success ajax" @click.prevent="addClient">
+        <button class="btn text-white btn-success" @click.prevent="addClient">
           Save
         </button>
       </div>

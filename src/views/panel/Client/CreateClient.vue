@@ -64,7 +64,7 @@
               <div class="form-switch">
                 <input type="hidden"  value="0" name="is_handicap">
                 <input class="form-check-input" type="checkbox"  value="1" name="is_handicap" checked id="is_handicap" v-model="client.is_handicap">
-                <label class="form-check-label" for="is_handicap">Is Handicap?</label>
+                <label class="form-check-label"  style="margin-left: .4em;" for="is_handicap">Is Handicap?</label>
               </div>
             </div>
           </div>
@@ -85,8 +85,9 @@
       </div>
 
       <div class="card-footer text-end">
-        <button class="btn btn-outline-success ajax" @click.prevent="addClient">
-          Save
+        <button class="btn text-white btn-success" @click.prevent="addClient">
+          <svg class="button-icon" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m20 20h-15.25c-.414 0-.75.336-.75.75s.336.75.75.75h15.75c.53 0 1-.47 1-1v-15.75c0-.414-.336-.75-.75-.75s-.75.336-.75.75zm-1-17c0-.478-.379-1-1-1h-15c-.62 0-1 .519-1 1v15c0 .621.52 1 1 1h15c.478 0 1-.379 1-1zm-15.5.5h14v14h-14zm6.25 6.25h-3c-.414 0-.75.336-.75.75s.336.75.75.75h3v3c0 .414.336.75.75.75s.75-.336.75-.75v-3h3c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3v-3c0-.414-.336-.75-.75-.75s-.75.336-.75.75z" fill-rule="nonzero"/></svg>
+          <span>Save</span>
         </button>
       </div>
     </form>

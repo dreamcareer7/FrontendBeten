@@ -122,9 +122,7 @@
                   checked
                   id="is_handicap"
                 />
-                <label class="form-check-label" for="is_handicap"
-                  >Is Handicap?</label
-                >
+                <label class="form-check-label" style="margin-left: .4em;" for="is_handicap">Is Handicap?</label>
               </div>
             </div>
           </div>
