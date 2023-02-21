@@ -59,6 +59,13 @@
 
 <script>
 export default {
-  name: 'services',
+  name: 'service_commit',
+  data: () => ({
+    commits: []
+  }),
+  mounted() {
+    this.$axios.get('/service/commits')
+      .then((response) => this.commits = response.data)
+  }
 }
 </script>
