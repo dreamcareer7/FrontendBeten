@@ -1,57 +1,62 @@
 <template>
 <div class="card border-success mb-4">
 	<div class="card-header">
-		Create Crew
+		Upload Document
 	</div>
 
 	<div id="ialert" class="" role="alert"></div>
 	<form method="post">
         <div class="card-body">
 
-          <div class="row">
+          <div class="row" v-if="!uploaded">
             <div class="col-6">
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="title" name="title" placeholder="Title..." required autofocus autocomplete="off">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Title..." required autofocus autocomplete="off"  v-model="form.title">
                 <label for="title">Title</label>
                 <div class="invalid-feedback"></div>
               </div>
               <div class="form-floating mb-3">
                 <select
                   class="form-control"
-
+                  v-model="form.model_type"
                   >
-                  <option value="dormitory">Dormitory</option>
-                  <option value="client">Client</option>
-                  <option value="vehicle">Vehicle</option>
-                  <option value="crew">Crew</option>
-                </select>
-                <label for="path">Belongs to</label>
-                <div class="invalid-feedback"></div>
-              </div>
-              <div class="form-floating mb-3">
-                <select
-                  class="form-control"
-                  >
-                  <option value="misc">Misc</option>
-                  <option value="nic">Identity</option>
-                  <option value="driving_license">Driving License</option>
-                  <option value="driving_license">Driving License</option>
+                  <option value="others">others</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Crew">Crew</option>
+                  <option value="User">User</option>
+                  <option value="Meal">Meal</option>
+                  <option value="Complaint">Complaint</option>
+                   <option value="Dormitory">Dormitory</option>
 
                 </select>
-                <label for="path">Document Type</label>
+                <label for="path">Modal Type</label>
                 <div class="invalid-feedback"></div>
               </div>
                <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="model_id" name="model_id" placeholder="Model ID..." required autocomplete="off">
+                <input type="text" class="form-control" id="model_id" name="model_id" placeholder="Model ID..." required autocomplete="off" v-model="form.model_id">
                 <label for="model_id">Model ID</label>
                 <div class="invalid-feedback"></div>
               </div>
 
             </div>
-            <div class="col-6">
-
+            <div class="col-6 overflow-scroll" style="height: 400px">
+               <input type="file" ref="file" name="image" class="form-control" @change="detectFile"/>
+              <img :src="previewurl" ref="preview" class="img-thumbnail">
             </div>
           </div>
+          <div v-if="!uploaded" class="row">
+            <div class="col-12">
+              <div class="progress" v-if="uploadpercent> 0 && uploadpercent<100">
+                <div class="progress-bar" role="progressbar" :style="'width:'+ uploadpercent +'%'" :aria-valuenow="uploadpercent" aria-valuemin="0" aria-valuemax="100">{{uploadpercent}}%</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12" v-if="uploaded">
+              <h5>Uploaded Successfully</h5>
+            </div>
+          </div>
+
           <CRow>
             <CCol :md="12">
               <div v-show="message && !success" class="error_style">
@@ -65,14 +70,103 @@
         </div>
 
 	<div class="card-footer text-end">
-      <a class="btn btn-outline-success ajax">Save</a>
+      <a class="btn btn-outline-success ajax" @click="upload">Save</a>
 	</div>
 	</form>
 </div>
 </template>
 
 <script>
+
+import  axios from "axios";
+
 export default {
-  name: 'create_document',
-}
+    name: 'upload_document',
+  components: {
+
+  },
+    data() {
+      return {
+        message: '',
+        success: false,
+       previewurl:'',
+        uploadpercent:0,
+        uploaded:false,
+        form:{
+          title:'',
+          model_type:'',
+          model_id:''
+        }
+      }
+    },
+    mounted() {
+     // this.user_id = this.$route.params.id
+      // this.fetchUserInfo(this.user_id)
+    },
+    methods: {
+      addClient: async function () {
+        await axios
+          .post(`/clients/add`, this.client)
+          .then((response) => {
+            this.message = response.data.message
+            if (response.data.success) {
+              this.success = true
+              this.client={}
+            } else {
+              this.success = false
+            }
+          })
+          .catch((error) => {
+            if (error.response) {
+              this.message = error.response.data.message
+            } else {
+              this.message = error.message
+            }
+          })
+      },
+      detectFile(){
+        let f = this.$refs.file.files[0]
+        this.previewurl=URL.createObjectURL(f)
+      },
+      upload(){
+        this.uploaded=  false
+        let formdata = new FormData()
+        formdata.append("title",this.form.title)
+        formdata.append("model_id",this.form.model_id)
+        formdata.append("model_type",this.form.model_type)
+        let f = this.$refs.file.files[0]
+        formdata.append("file",f)
+
+        const config = {
+          onUploadProgress: (progressEvent)=> {
+            var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            console.log(percentCompleted)
+            this.uploadpercent = percentCompleted
+          }
+        }
+
+        axios.post('/documents/upload', formdata, config)
+          .then(response => {
+            this.message = response.data.message
+            if (response.data.success) {
+              this.uploaded = true
+              this.success = true
+              this.client={}
+            } else {
+              this.success = false
+            }
+          })
+          .catch(error => {
+            if (error.response) {
+              this.message = error.response.data.message
+            } else {
+              this.message = error.message
+            }
+          })
+
+
+      }
+
+    }
+  }
 </script>
