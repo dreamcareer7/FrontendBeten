@@ -68,19 +68,7 @@
                 <CTableDataCell>{{ group.title }}</CTableDataCell>
                 <CTableDataCell>{{ group.crew.fullname }}</CTableDataCell>
                 <CTableDataCell>
-                  <router-link
-                    :to="{
-                      name: 'user_info',
-                      params: { id: group.id },
-                    }"
-                  >
-                    <button
-                      style="margin-right: 1em"
-                      class="btn btn-sm btn-info text-white"
-                    >
-                      View
-                    </button>
-                  </router-link>
+
                   <router-link
                     :to="{
                       name: 'update_group',
