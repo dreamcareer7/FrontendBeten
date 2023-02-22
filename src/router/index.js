@@ -35,7 +35,7 @@ const routes = [
       },
       {
         path: 'users/info/:id',
-        name: 'user_info',
+        name: 'User Details',
         component: () => import('@/views/panel/User/UserInfo'),
       },
       {

@@ -65,7 +65,7 @@
                 <CTableDataCell>{{ user.created_at }}</CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
                   <router-link :to="{
-                    name: 'user_info',
+                    name: 'User Details',
                     params: { id: user.id },
                   }">
                     <button class="btn btn-sm btn-info text-white mx-1">
