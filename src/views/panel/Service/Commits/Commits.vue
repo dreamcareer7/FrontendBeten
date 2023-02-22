@@ -56,7 +56,13 @@
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button class="btn btn-sm btn-danger text-white">Delete</button>
+                  <button
+                    class="btn btn-sm btn-danger text-white"
+                    @click="deleteCommit(commit.id)"
+                    title="Delete"
+                  >
+                    <ion-icon name="trash-bin-outline"></ion-icon>
+                  </button>
                 </CTableDataCell>
               </CTableRow>
             </CTableBody>
@@ -71,8 +77,20 @@
 export default {
   name: "service_commit",
   data: () => ({
-      commits: []
+      commits: [],
   }),
+  methods: {
+    deleteCommit(id) {
+      this.$axios.delete(`/service/commits/${id}`).then(() => {
+        // TODO: swal
+        // alert(response.data.message)
+        // TODO: remove item from commits state
+        this.commits = this.commits.filter((commit) => commit.id !== id)
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+  },
   mounted() {
       this.$axios.get("/service/commits")
           .then((response) => this.commits = response.data);
