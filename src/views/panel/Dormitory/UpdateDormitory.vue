@@ -181,7 +181,7 @@ export default {
         })
     },
     fetchInfo: async function (id) {
-      await axios.get(`/dormitories/info/` + id).then((response) => {
+      await this.$axios.get(`/dormitories/info/` + id).then((response) => {
         this.dormitory = response.data
       })
     },

@@ -87,7 +87,7 @@ export default {
     createService: async function () {
       let service = this.service;
       await axios.post(`/services`, service).then((response) => {
-        this.$router.push({ name: 'services' })
+        this.$router.push({ name: 'Services' })
       }).catch(err => console.log(err))
     },
   },

@@ -26,8 +26,8 @@
         <div class="form-floating mb-3">
           <select name="country_id" id="country_id" class="form-control"  v-model="client.country_id">
             <option>Choose Country</option>
-            <option :value="c.id" v-for="c in countries" :key="c.code">
-              {{ c.name }}
+            <option :value="country.id" v-for="country in countries" :key="country.code">
+              {{ country.name }}
             </option>
           </select>
           <label for="country_id">Country</label>

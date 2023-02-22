@@ -146,13 +146,10 @@ export default {
       success: false,
       dormitory: {},
       form: {},
-      user_id: null,
       countries: [],
     }
   },
   mounted() {
-    this.user_id = this.$route.params.id
-    this.fetchInfo(this.user_id)
     countries.fetchCountries().then((countries) => {
       this.countries = countries
     })
@@ -180,11 +177,6 @@ export default {
           this.success = false
 
         })
-    },
-    fetchInfo: async function (id) {
-      await axios.get(`/dormitories/info/` + id).then((response) => {
-        this.user = response.data.data
-      })
     },
   },
 }

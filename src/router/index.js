@@ -101,7 +101,7 @@ const routes = [
       // Services menu
       {
         path: 'services',
-        name: 'services',
+        name: 'Services',
         component: () => import('@/views/panel/Service/Services/Services'),
       },
       {
@@ -164,7 +164,7 @@ const routes = [
       },
       {
         path: 'phases/services',
-        name: 'Services',
+        name: 'Phases Services',
         component: () => import('@/views/panel/Phase/Services/Services'),
       },
       {

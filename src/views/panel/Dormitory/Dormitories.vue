@@ -75,6 +75,7 @@
                 <CTableHeaderCell scope="col">City</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Location</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Coordinate</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Is Active</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -87,6 +88,7 @@
                 <CTableDataCell>{{ dormitory.city_id }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.location }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.coordinate }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.is_active }}</CTableDataCell>
                 <CTableDataCell>
                   <router-link
                     :to="{
