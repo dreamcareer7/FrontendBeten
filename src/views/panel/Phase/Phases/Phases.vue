@@ -50,7 +50,7 @@
               <CTableRow v-for="phase in phases" :key="phase.id">
                 <CTableHeaderCell scope="row">{{ phase.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ phase.title }}</CTableDataCell>
-                <CTableDataCell>
+                <CTableDataCell class="float-end">
                   <router-link
                     :to="{
                       name: 'phase_info',
@@ -58,8 +58,7 @@
                     }"
                   >
                     <button
-                      style="margin-right: 1em"
-                      class="btn btn-sm btn-info text-white"
+                      class="btn btn-sm btn-info text-white mx-1"
                     >
                       View
                     </button>
@@ -70,10 +69,10 @@
                       params: { id: phase.id },
                     }"
                   >
-                    <CButton class="btn btn-success text-white">Update</CButton>
+                    <CButton class="btn btn-sm btn-success text-white mx-1">Update</CButton>
                   </router-link>
                   <button
-                    class="btn btn-danger text-white"
+                    class="btn btn-sm btn-danger text-white mx-1"
                     @click="deletePhase(phase.id)"
                   >
                     Delete
