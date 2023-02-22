@@ -90,19 +90,6 @@
                 <CTableDataCell>
                   <router-link
                     :to="{
-                      name: 'user_info',
-                      params: { id: dormitory.id },
-                    }"
-                  >
-                    <button
-                      style="margin-right: 1em"
-                      class="btn btn-sm btn-info text-white"
-                    >
-                      View
-                    </button>
-                  </router-link>
-                  <router-link
-                    :to="{
                       name: 'update_dormitory',
                       params: { id: dormitory.id },
                     }"
@@ -111,7 +98,7 @@
                   </router-link>
                   <button
                     class="btn btn-danger text-white"
-                    @click="deleteVehicle(dormitory.id)"
+                    @click="deleteDormitory(dormitory.id)"
                   >
                     Delete
                   </button>
@@ -212,10 +199,10 @@ export default {
         })
       this.loading = false
     },
-    deleteVehicle: async function (id) {
+    deleteDormitory: async function (id) {
       await axios.post(`/dormitories/delete/` + id).then((response) => {
         alert(response.data.message)
-        this.getVehicles()
+        this.getDormitories()
       })
     },
   },

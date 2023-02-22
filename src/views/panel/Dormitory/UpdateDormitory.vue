@@ -58,7 +58,7 @@
           >
             <option>Choose Country</option>
             <template v-for="country in countries" :key="country.code">
-              <option :value="country.code">{{ country.name }}</option>
+              <option :value="country.id">{{ country.name }}</option>
             </template>
           </select>
           <label for="city">Country</label>
@@ -182,7 +182,7 @@ export default {
     },
     fetchInfo: async function (id) {
       await axios.get(`/dormitories/info/` + id).then((response) => {
-        this.user = response.data.data
+        this.dormitory = response.data
       })
     },
   },
