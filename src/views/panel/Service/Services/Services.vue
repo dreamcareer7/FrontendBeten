@@ -79,9 +79,20 @@ export default {
       })
     },
     deleteService: async function (id) {
-      await axios.delete(`/services/` + id).then((response) => {
-        alert(response.data.message)
-      })
+      await swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this service!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.delete(`/services/${id}`).then(() => this.getServices())
+          swal('Service has been deleted!', {
+            icon: 'success',
+          });
+        }
+      });
     },
     fetchServiceInfo: async function(id) {
       await axios.get(`/services/show/` + id).then((response) => {

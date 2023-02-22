@@ -202,9 +202,19 @@ export default {
       this.loading = false
     },
     deleteDormitory: async function (id) {
-      await axios.post(`/dormitories/delete/` + id).then((response) => {
-        alert(response.data.message)
-        this.getDormitories()
+      await swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this dormitory!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.post(`/dormitories/delete/${id}`).then(() => this.getDormitories())
+          swal('Dormitory has been deleted!', {
+            icon: 'success',
+          })
+        }
       })
     },
   },

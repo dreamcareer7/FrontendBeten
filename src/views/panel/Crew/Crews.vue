@@ -194,10 +194,20 @@ export default {
       this.loading = false
     },
     deleteCrew: async function (id) {
-      await axios.post(`/crews/delete/` + id).then((response) => {
-        alert(response.data.message)
-        this.getCrews()
-      })
+      await swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this crew member!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.post(`/crews/delete/${id}`).then(() => this.getCrews())
+          swal('Crew member has been deleted!', {
+            icon: 'success',
+          });
+        }
+      });
     },
   },
 }

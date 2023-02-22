@@ -208,10 +208,20 @@ export default {
       this.loading = false
     },
     deleteDocument: async function (id) {
-      await axios.post(`/documents/delete/` + id).then((response) => {
-        alert(response.data.message)
-        this.getDocuments()
-      })
+      await swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this document!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.post(`/documents/delete/${id}`).then(() => this.getDocuments())
+          swal('Document has been deleted!', {
+            icon: 'success',
+          });
+        }
+      });
     },
   },
 }

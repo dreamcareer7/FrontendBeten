@@ -168,10 +168,20 @@ export default {
       this.loading = false
     },
     deletePhase: async function (id) {
-      await axios.post(`/phases/delete/` + id).then((response) => {
-        alert(response.data.message)
-        this.getPhases()
-      })
+      await swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this phase!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.post(`/phases/delete/${id}`).then(() => this.getPhases())
+          swal('Phase has been deleted!', {
+            icon: 'success',
+          });
+        }
+      });
     },
   },
 }

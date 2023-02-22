@@ -80,15 +80,26 @@ export default {
       commits: [],
   }),
   methods: {
-    deleteCommit(id) {
-      this.$axios.delete(`/service/commits/${id}`).then(() => {
-        // TODO: swal
-        // alert(response.data.message)
-        // TODO: remove item from commits state
-        this.commits = this.commits.filter((commit) => commit.id !== id)
-      }).catch((error) => {
-        console.log(error)
-      })
+    async deleteCommit(id) {
+      await swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this service commit!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          this.$axios.delete(`/service/commits/${id}`).then(() =>
+            this.commits = this.commits.filter((commit) => commit.id !== id)
+          ).catch((error) => {
+            // TODO: swal the error message
+            console.log(error)
+          })
+          swal('Service commit has been deleted!', {
+            icon: 'success',
+          });
+        }
+      });
     },
   },
   mounted() {

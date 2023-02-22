@@ -191,9 +191,19 @@ export default {
       this.loading = false
     },
     deleteGroup: async function (id) {
-      await axios.post(`/groups/delete/` + id).then((response) => {
-        alert(response.data.message)
-        this.getGroups()
+      await swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this group!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.post(`/groups/delete/${id}`).then(() => this.getGroups())
+          swal('Group has been deleted!', {
+            icon: 'success',
+          })
+        }
       })
     },
   },

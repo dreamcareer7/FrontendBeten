@@ -181,9 +181,19 @@ export default {
       this.loading = false
     },
     deleteVehicle: async function (id) {
-      await axios.post(`/vehicles/delete/` + id).then((response) => {
-        alert(response.data.message)
-        this.getVehicles()
+      await swal({
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover this vehicle!',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.post(`/vehicles/delete/${id}`).then(() => this.getVehicles())
+          swal('Vehicle has been deleted!', {
+            icon: 'success',
+          })
+        }
       })
     },
   },
