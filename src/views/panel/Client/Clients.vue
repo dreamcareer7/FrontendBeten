@@ -123,7 +123,7 @@
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button class="btn btn-sm btn-danger text-white" @click="deleteClient(client.id)" title="Delete">
+                  <button class="btn btn-sm btn-danger text-white" @click="deleteClient(client.id, client.fullname)" title="Delete">
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -231,10 +231,20 @@ export default {
         })
       this.loading = false
     },
-    deleteClient: async function (id) {
-      await axios.post(`/clients/delete/` + id).then((response) => {
-        alert(response.data.message)
-        this.getVehicles()
+    deleteClient: async function (id, name) {
+      await swal({
+        title: `Are you sure?`,
+        text: `Once deleted, you will not be able to recover the client ${name}!`,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.post(`/clients/delete/` + id).then(() => this.getClients())
+          swal(`The client ${name} has been deleted!`, {
+            icon: "success",
+          });
+        }
       })
     },
   },
