@@ -44,7 +44,18 @@
                   <CTableDataCell>{{ commit.location }}</CTableDataCell>
                   <CTableDataCell>{{ commit.supervisor?.name }}</CTableDataCell>
                   <CTableDataCell>
-                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
+                    <router-link
+                      :to="{
+                        name: 'service_commit_info',
+                        params: { id: commit.id },
+                      }"
+                    >
+                      <button
+                        class="btn btn-sm btn-info text-white mx-1"
+                      >
+                        <ion-icon name="eye-outline"></ion-icon>
+                      </button>
+                    </router-link>
 <button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
                     <button class="btn btn-sm btn-danger text-white">Delete</button>
                   </CTableDataCell>
