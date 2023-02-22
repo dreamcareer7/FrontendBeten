@@ -125,6 +125,11 @@ const routes = [
         component: () => import('@/views/panel/Service/Commits/CreateCommit'),
       },
       {
+        path: 'services/commits/edit/:id',
+        name: 'Update Service Commit',
+        component: () => import('@/views/panel/Service/Commits/UpdateServiceCommit'),
+      },
+      {
         path: 'services/logs',
         name: 'Service Logs',
         component: () => import('@/views/panel/Service/Logs/Logs'),
