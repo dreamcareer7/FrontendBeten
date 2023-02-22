@@ -80,7 +80,7 @@
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button class="btn btn-sm btn-danger text-white" @click="deleteUser(user.id)" title="Delete">
+                  <button class="btn btn-sm btn-danger text-white" @click="deleteUser(user.id, user.name)" title="Delete">
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -160,11 +160,23 @@ export default {
         })
       this.loading = false
     },
-    deleteUser: async function (id) {
-      await this.$axios.post(`/users/delete/${id}`).then((response) => {
-        alert(response.data.message)
-        this.getUsers()
-      })
+    deleteUser: async function (id, name) {
+      await swal({
+        title: `Are you sure?`,
+        text: `Once deleted, you will not be able to recover ${name}!`,
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          this.$axios.post(`/users/delete/${id}`).then(() => {
+            this.getUsers()
+          })
+          swal(`The user ${name} has been deleted!`, {
+            icon: "success",
+          });
+        }
+      });
     },
     fetchUserInfo: async function (id) {
       await this.$axios.get(`/users/show/${id}`).then((response) => {
