@@ -13,7 +13,7 @@
                   name: 'Create Phase',
                 }"
               >
-                <CButton color="primary"> Create Phase</CButton>
+                <CButton color="primary" class="float-end"> Create Phase</CButton>
               </router-link>
             </div>
           </div>

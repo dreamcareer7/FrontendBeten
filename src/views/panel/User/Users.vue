@@ -9,7 +9,7 @@
             </div>
             <div class="col-md-2">
               <router-link to="/users/create">
-                <CButton color="primary">
+                <CButton color="primary" class="float-end">
                   <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
                       d="M19.5 15c-2.483 0-4.5 2.015-4.5 4.5s2.017 4.5 4.5 4.5 4.5-2.015 4.5-4.5-2.017-4.5-4.5-4.5zm2.5 5h-2v2h-1v-2h-2v-1h2v-2h1v2h2v1zm-7.18 4h-14.815l-.005-1.241c0-2.52.199-3.975 3.178-4.663 3.365-.777 6.688-1.473 5.09-4.418-4.733-8.729-1.35-13.678 3.732-13.678 6.751 0 7.506 7.595 3.64 13.679-1.292 2.031-2.64 3.63-2.64 5.821 0 1.747.696 3.331 1.82 4.5z" />
@@ -68,7 +68,7 @@
                     name: 'User Details',
                     params: { id: user.id },
                   }">
-                    <button class="btn btn-sm btn-info text-white mx-1">
+                    <button class="btn btn-sm btn-info text-white mx-1" title="View details">
                       <ion-icon name="eye-outline"></ion-icon>
                     </button>
                   </router-link>
@@ -76,11 +76,11 @@
                     name: 'edit_user',
                     params: { id: user.id },
                   }">
-                    <CButton class="btn btn-sm btn-success text-white mx-1">
+                    <CButton class="btn btn-sm btn-success text-white mx-1" title="Edit">
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button class="btn btn-sm btn-danger text-white" @click="deleteUser(user.id)">
+                  <button class="btn btn-sm btn-danger text-white" @click="deleteUser(user.id)" title="Delete">
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>

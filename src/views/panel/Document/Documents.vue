@@ -13,7 +13,7 @@
                   name: 'Create Document',
                 }"
               >
-                <CButton color="primary"> Upload Document </CButton>
+                <CButton color="primary" class="float-end"> Upload Document </CButton>
               </router-link>
             </div>
           </div>

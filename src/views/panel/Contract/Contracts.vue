@@ -13,6 +13,7 @@
               >
                 <CButton
                   color="primary"
+                  class="float-end"
                 >
                   Create Contract
                 </CButton>

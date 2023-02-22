@@ -13,7 +13,7 @@
                   name: 'Create Group',
                 }"
               >
-                <CButton color="primary"> Create Group</CButton>
+                <CButton color="primary" class="float-end"> Create Group</CButton>
               </router-link>
             </div>
           </div>

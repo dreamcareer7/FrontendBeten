@@ -13,7 +13,7 @@
                   name: 'create_dormitory'
                 }"
               >
-                <CButton color="primary"> Create Dormitory</CButton>
+                <CButton color="primary" class="float-end"> Create Dormitory</CButton>
               </router-link>
             </div>
           </div>

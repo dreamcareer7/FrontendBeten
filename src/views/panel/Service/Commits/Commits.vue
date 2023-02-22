@@ -9,7 +9,7 @@
             </div>
             <div class="col-md-2">
               <router-link to="/services/commits/create">
-                <CButton color="primary">
+                <CButton color="primary" class="float-end">
                   Create Commit
                 </CButton>
               </router-link>

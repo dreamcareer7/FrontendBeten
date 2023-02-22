@@ -13,7 +13,7 @@
                   name: 'create_vehicle'
                 }"
               >
-                <CButton color="primary"> Create Vehicle</CButton>
+                <CButton color="primary" class="float-end"> Create Vehicle</CButton>
               </router-link>
             </div>
           </div>
