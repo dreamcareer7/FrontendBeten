@@ -99,7 +99,7 @@
                       params: { id: document.id },
                     }"
                   >
-                    <CButton class="btn btn-success text-white">
+                    <CButton class="btn btn-warning text-white">
                       <ion-icon name="create-outline"></ion-icon>
 
                     </CButton>

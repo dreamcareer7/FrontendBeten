@@ -44,7 +44,7 @@
                   <CTableDataCell>{{ service.after_date }}</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-                    <button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white">Update</button>
                     <button @click="deleteService(service.id)" class="btn btn-sm btn-danger text-white">Delete</button>
                   </CTableDataCell>
                 </CTableRow>

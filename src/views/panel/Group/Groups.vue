@@ -75,7 +75,7 @@
                       params: { id: group.id },
                     }"
                   >
-                    <CButton class="btn btn-success text-white">Update</CButton>
+                    <CButton class="btn btn-warning text-white">Update</CButton>
                   </router-link>
                   <button
                     class="btn btn-danger text-white"

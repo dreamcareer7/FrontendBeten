@@ -1,5 +1,5 @@
 <template>
-  <div class="card border-success mb-4">
+  <div class="card border-warning mb-4">
     <div class="card-header">Update Vehicle</div>
 
     <div id="ialert" class="" role="alert"></div>

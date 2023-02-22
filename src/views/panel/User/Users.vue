@@ -76,7 +76,7 @@
                     name: 'Edit user',
                     params: { id: user.id },
                   }">
-                    <CButton class="btn btn-sm btn-success text-white mx-1" title="Edit">
+                    <CButton class="btn btn-sm btn-warning text-white mx-1" title="Edit">
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>

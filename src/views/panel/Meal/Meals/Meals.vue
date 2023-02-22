@@ -44,7 +44,7 @@
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-<button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
+<button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white">Update</button>
                     <button class="btn btn-sm btn-danger text-white">Delete</button>
                   </CTableDataCell>
                 </CTableRow>
@@ -57,7 +57,7 @@
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-<button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
+<button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white">Update</button>
                     <button class="btn btn-sm btn-danger text-white">Delete</button>
                   </CTableDataCell>
                 </CTableRow>
@@ -70,7 +70,7 @@
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-<button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
+<button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white">Update</button>
                     <button class="btn btn-sm btn-danger text-white">Delete</button>
                   </CTableDataCell>
                 </CTableRow>

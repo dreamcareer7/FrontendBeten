@@ -69,7 +69,7 @@
                       params: { id: phase.id },
                     }"
                   >
-                    <CButton class="btn btn-sm btn-success text-white mx-1">Update</CButton>
+                    <CButton class="btn btn-sm btn-warning text-white mx-1">Update</CButton>
                   </router-link>
                   <button
                     class="btn btn-sm btn-danger text-white mx-1"
