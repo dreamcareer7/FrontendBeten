@@ -76,12 +76,7 @@ export default [
         component: 'CNavItem',
         name: 'All Phases',
         to: '/phases',
-      },
-      {
-        component: 'CNavItem',
-        name: 'Services',
-        to: '/phases/services',
-      },
+      }
     ],
   },
   {
