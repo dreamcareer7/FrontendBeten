@@ -1,84 +1,89 @@
 <template>
-<div class="card border-success mb-4">
-	<div class="card-header">
-		Create Commit
-	</div>
+  <div class="card border-success mb-4">
+    <div class="card-header">
+      Create Commit
+    </div>
 
-	<div id="ialert" class="" role="alert"></div>
-	<form method="post">
+    <div id="ialert" class="" role="alert"></div>
+    <form method="post">
       <div class="card-body">
 
-          <div class="form-floating mb-3">
-              <select name="service_id" id="service_id" class="form-control" v-model="service_commit.service_id" autofocus required>
-                  <option :value="null">Choose Service</option>
-                  <option v-for="service in services" :value="service.id">{{ service.title }}</option>
-              </select>
-              <label for="service_id">Service</label>
+        <div class="form-floating mb-3">
+          <select name="service_id" id="service_id" class="form-control" v-model="service_commit.service_id" autofocus
+            required>
+            <option :value="null">Choose Service</option>
+            <option v-for="service in services" :value="service.id">{{ service.title }}</option>
+          </select>
+          <label for="service_id">Service</label>
+          <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="badge" name="badge" placeholder="Badge..." required
+            autocomplete="off" v-model="service_commit.badge">
+          <label for="badge">Badge</label>
+          <div class="invalid-feedback"></div>
+        </div>
+
+
+        <div class="row g-1 mb-1">
+          <div class="col">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="before_date" name="before_date" placeholder="Before date..."
+                v-model="service_commit.scheduled_at">
+              <label for="phone">Scheduled At</label>
               <div class="invalid-feedback"></div>
-          </div>
-
-          <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="badge" name="badge" placeholder="Badge..." required autocomplete="off" v-model="service_commit.badge">
-              <label for="badge">Badge</label>
-              <div class="invalid-feedback"></div>
-          </div>
-
-
-          <div class="row g-1 mb-1">
-            <div class="col">
-                <div class="form-floating mb-3">
-                <input type="date" class="form-control" id="before_date" name="before_date" placeholder="Before date..." v-model="service_commit.scheduled_at">
-                <label for="phone">Scheduled At</label>
-                <div class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-floating mb-3">
-                <input type="date" class="form-control" id="exact_date" name="exact_date" placeholder="Exact date..." v-model="service_commit.started_at">
-                <label for="phone">Started At</label>
-                <div class="invalid-feedback"></div>
-                </div>
-
             </div>
-          </div>
 
-          <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="from_location" name="from_location" placeholder="From Location..." required autocomplete="off" v-model="service_commit.location">
-              <label for="from_location">From Location</label>
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="exact_date" name="exact_date" placeholder="Exact date..."
+                v-model="service_commit.started_at">
+              <label for="phone">Started At</label>
               <div class="invalid-feedback"></div>
-          </div>
+            </div>
 
-          <div class="form-floating mb-3">
-              <select name="supervisor_id" id="supervisor_id" class="form-control" v-model="service_commit.supervisor_id">
-                  <option :value="null">Choose a supervisor</option>
-                  <option v-for="user in users" :value="user.id">{{ user.name }}</option>
-              </select>
-              <label for="supervisor_id">Supervisor</label>
-              <div class="invalid-feedback"></div>
           </div>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="from_location" name="from_location" placeholder="From Location..."
+            required autocomplete="off" v-model="service_commit.location">
+          <label for="from_location">From Location</label>
+          <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="form-floating mb-3">
+          <select name="supervisor_id" id="supervisor_id" class="form-control" v-model="service_commit.supervisor_id">
+            <option :value="null">Choose a supervisor</option>
+            <option v-for="user in users" :value="user.id">{{ user.name }}</option>
+          </select>
+          <label for="supervisor_id">Supervisor</label>
+          <div class="invalid-feedback"></div>
+        </div>
 
 
 
       </div>
 
       <CRow>
-          <CCol :md="12">
-            <div v-show="message && !success" class="error_style">
-              {{ message }}
-            </div>
-            <div v-show="message && success" class="alert alert-success">
-              {{ message }}
-            </div>
-          </CCol>
+        <CCol :md="12">
+          <div v-show="message && !success" class="error_style">
+            {{ message }}
+          </div>
+          <div v-show="message && success" class="alert alert-success">
+            {{ message }}
+          </div>
+        </CCol>
 
-        </CRow>
+      </CRow>
 
-    <div class="card-footer text-end">
-      <button @click.prevent="createCommit" class="btn text-white btn-success">
-        <span>Create service commit</span>
-      </button>
-    </div>
-	</form>
-</div>
+      <div class="card-footer text-end">
+        <button @click.prevent="createCommit" class="btn text-white btn-success">
+          <span>Create service commit</span>
+        </button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
