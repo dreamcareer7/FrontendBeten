@@ -10,7 +10,7 @@
             <div class="col-md-2">
               <router-link
                 :to="{
-                  name: 'create_client',
+                  name: 'Create client',
                 }"
               >
                <!-- class="button-icon" -->

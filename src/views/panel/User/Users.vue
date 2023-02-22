@@ -73,7 +73,7 @@
                     </button>
                   </router-link>
                   <router-link :to="{
-                    name: 'edit_user',
+                    name: 'Edit user',
                     params: { id: user.id },
                   }">
                     <CButton class="btn btn-sm btn-success text-white mx-1" title="Edit">

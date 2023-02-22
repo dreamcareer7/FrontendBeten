@@ -25,12 +25,12 @@ const routes = [
       },
       {
         path: 'users/create',
-        name: 'create_user',
+        name: 'Create user',
         component: () => import('@/views/panel/User/CreateUser'),
       },
       {
         path: 'users/edit/:id',
-        name: 'edit_user',
+        name: 'Edit user',
         component: () => import('@/views/panel/User/UpdateUser'),
       },
       {
@@ -45,7 +45,7 @@ const routes = [
       },
       {
         path: 'clients/create',
-        name: 'create_client',
+        name: 'Create client',
         component: () => import('@/views/panel/Client/CreateClient'),
       },
       {
