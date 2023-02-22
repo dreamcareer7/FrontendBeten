@@ -43,7 +43,7 @@
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col" class="float-end">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
