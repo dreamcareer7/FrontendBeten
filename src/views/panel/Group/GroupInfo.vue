@@ -1,5 +1,5 @@
 <template>
-  <div class="card border-success mb-4">
+  <div class="card border-info mb-4">
     <div class="card-header">User Information</div>
 
     <div id="ialert" class="" role="alert"></div>

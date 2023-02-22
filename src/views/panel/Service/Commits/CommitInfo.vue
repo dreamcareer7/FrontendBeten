@@ -1,5 +1,5 @@
 <template>
-  <div class="card border-success mb-4">
+  <div class="card border-info mb-4">
     <div class="card-header">Service Commit Information</div>
     <CRow class="mt-3 ms-3">
       <CCol :md="6">
