@@ -103,10 +103,9 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  value="1"
                   name="is_active"
-                  checked
                   id="iis_active"
+                  :checked="Boolean(user.is_active)"
                   v-model="user.is_active"
                 />
                 <label class="form-check-label" for="iis_active"
