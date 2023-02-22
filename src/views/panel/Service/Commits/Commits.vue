@@ -35,14 +35,14 @@
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                <CTableRow>
-                  <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                  <CTableDataCell>Mark</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
+                <CTableRow v-for="commit in commits" :key="commit.id">
+                  <CTableHeaderCell scope="row">{{ commit.id }}</CTableHeaderCell>
+                  <CTableDataCell>{{ commit.service.title }}</CTableDataCell>
+                  <CTableDataCell>{{ commit.badge }}</CTableDataCell>
+                  <CTableDataCell>{{ commit.scheduled_at }}</CTableDataCell>
+                  <CTableDataCell>{{ commit.started_at }}</CTableDataCell>
+                  <CTableDataCell>{{ commit.location }}</CTableDataCell>
+                  <CTableDataCell>{{ commit.supervisor?.name }}</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
 <button style="margin-right: 1em;" class="btn btn-sm btn-success text-white">Update</button>
