@@ -136,7 +136,7 @@
 
 <script>
 import axios from 'axios'
-import countries from '../../../store/countries'
+import countries from '@/store/countries'
 
 export default {
   name: 'create_dormitory',
@@ -153,6 +153,9 @@ export default {
   mounted() {
     this.dormitory_id = this.$route.params.id
     this.fetchInfo(this.dormitory_id)
+    countries.fetchCountries().then((countries) => {
+      this.countries = countries
+    })
   },
   methods: {
     updateDormitory: async function () {

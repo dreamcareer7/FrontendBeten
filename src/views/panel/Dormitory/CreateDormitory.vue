@@ -58,7 +58,7 @@
           >
             <option>Choose Country</option>
             <template v-for="country in countries" :key="country.code">
-              <option :value="country.code">{{ country.name }}</option>
+              <option :value="country.id">{{ country.name }}</option>
             </template>
           </select>
           <label for="city">Country</label>
@@ -136,7 +136,7 @@
 
 <script>
 import axios from 'axios'
-import countries from '../../../store/countries'
+import countries from '@/store/countries'
 
 export default {
   name: 'create_dormitory',
@@ -147,12 +147,15 @@ export default {
       dormitory: {},
       form: {},
       user_id: null,
-      countries,
+      countries: [],
     }
   },
   mounted() {
     this.user_id = this.$route.params.id
-    this.fetchUserInfo(this.user_id)
+    this.fetchInfo(this.user_id)
+    countries.fetchCountries().then((countries) => {
+      this.countries = countries
+    })
   },
   methods: {
     addDormitory: async function () {
@@ -164,7 +167,7 @@ export default {
             this.success = true
             this.dormitory = {}
           }
-          else{
+          else {
             this.success=  false
           }
         })
@@ -174,9 +177,14 @@ export default {
           } else {
             this.message = error.message
           }
-          this.success=  false
+          this.success = false
 
         })
+    },
+    fetchInfo: async function (id) {
+      await axios.get(`/dormitories/info/` + id).then((response) => {
+        this.user = response.data.data
+      })
     },
   },
 }

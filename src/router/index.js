@@ -233,12 +233,7 @@ const routes = [
       {
         path: 'dormitories',
         name: 'dormitories',
-        meta: { requiresAuth: true },
         component: () => import('@/views/panel/Dormitory/Dormitories'),
-        beforeEnter: (to, from, next) => {
-        if (store.getters["auth/isAdmin"]) next();
-          else next(false);
-        }
       },
       {
         path: 'dormitories/create',

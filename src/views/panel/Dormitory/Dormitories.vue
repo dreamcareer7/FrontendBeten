@@ -69,18 +69,24 @@
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Model</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Registration</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Manufacturer</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Year</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Badge</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Phone</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Country</CTableHeaderCell>
+                <CTableHeaderCell scope="col">City</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Location</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Coordinate</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="dormitory in dormitories" :key="dormitory.id">
                 <CTableHeaderCell scope="row">{{ dormitory.id }}</CTableHeaderCell>
-                <CTableDataCell>{{ vehicle.model }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.phone }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.country_name }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.city_id }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.location }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.coordinate }}</CTableDataCell>
                 <CTableDataCell>
                   <router-link
                     :to="{
@@ -97,7 +103,7 @@
                   </router-link>
                   <router-link
                     :to="{
-                      name: 'update_vehicle',
+                      name: 'update_dormitory',
                       params: { id: dormitory.id },
                     }"
                   >
