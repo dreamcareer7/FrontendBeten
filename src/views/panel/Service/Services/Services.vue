@@ -22,7 +22,7 @@
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Country ID</CTableHeaderCell>
+                <CTableHeaderCell scope="col">City</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Before Date</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Exact Date</CTableHeaderCell>
                 <CTableHeaderCell scope="col">After Date</CTableHeaderCell>
@@ -35,28 +35,17 @@
                   {{ service.id }}
                 </CTableHeaderCell>
                 <CTableDataCell>{{ service.title }}</CTableDataCell>
-                <CTableDataCell>{{ service.country_name }}</CTableDataCell>
+                <CTableDataCell>{{ service.city }}</CTableDataCell>
                 <CTableDataCell>{{ service.before_date }}</CTableDataCell>
                 <CTableDataCell>{{ service.exact_date }}</CTableDataCell>
                 <CTableDataCell>{{ service.after_date }}</CTableDataCell>
-                <CTableDataCell>
+                <CTableDataCell :aria-colspan="2">
                   <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-info text-white"
-                  >
-                    View
-                  </button>
-                  <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-warning text-white"
-                  >
-                    Update
-                  </button>
-                  <button
-                    @click="deleteService(service.id)"
                     class="btn btn-sm btn-danger text-white"
+                    @click="deleteService(service.id)"
+                    title="Delete"
                   >
-                    Delete
+                    <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
               </CTableRow>
@@ -73,16 +62,8 @@ export default {
   name: 'Services',
   data: () => ({
     services: [],
-    current_page: '',
-    selected_user: null,
   }),
   methods: {
-    getServices: async function () {
-      await this.$axios.get(`/services`).then((response) => {
-        let allServices = Object.entries(response.data.data.data)
-        allServices.forEach((s) => this.services.push(s[1]))
-      })
-    },
     deleteService: async function (id) {
       await swal({
         title: 'Are you sure?',
@@ -92,21 +73,19 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.delete(`/services/${id}`).then(() => this.getServices())
+          this.$axios.delete(`/services/${id}`).then(() => {
+            this.services = this.services.filter((service) => service.id !== id)
+          })
           swal('Service has been deleted!', {
             icon: 'success',
           })
         }
       })
     },
-    fetchServiceInfo: async function (id) {
-      await this.$axios.get(`/services/show/` + id).then((response) => {
-        console.log(response.data)
-      })
-    },
   },
-  mounted() {
-    this.getServices()
+  async mounted() {
+    await this.$axios.get('/services')
+      .then((response) => this.services = response.data)
   },
 }
 </script>
