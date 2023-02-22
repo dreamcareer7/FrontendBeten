@@ -1,61 +1,81 @@
 <template>
   <div class="card border-success mb-4">
     <div class="card-header">Create Phase</div>
-
     <div class="row mt-4">
       <div class="col-12" v-if="!success">
         <form method="post">
           <div class="card-body">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="title" v-model="phase.title" name="title" placeholder="Title..."
-                required autofocus autocomplete="off" />
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                v-model="phase.title"
+                name="title"
+                placeholder="Title..."
+                required
+                autofocus
+                autocomplete="off"
+              />
               <label for="title">Title</label>
               <div class="invalid-feedback"></div>
             </div>
-
           </div>
-
         </form>
       </div>
       <div v-if="!success" class="col-12 text-center">
         <h6>Assigned Services to this Phase</h6>
-
-
         <div class="row ms-0 p-4" v-if="searched_services">
           <div class="col-6 p-3">
-            <div class="row mt-3 no-bars ms-0 border-dark" style="height: 300px; overflow: scroll">
-              <div class="row border p-2 mb-2 ms-0 " v-for="service in searched_services" :key="service.id">
+            <div
+              class="row mt-3 no-bars ms-0 border-dark"
+              style="height: 300px; overflow: scroll"
+            >
+              <div
+                class="row border p-2 mb-2 ms-0"
+                v-for="service in searched_services"
+                :key="service.id"
+              >
                 <div class="col-8">
-                  <h6> {{ service.title }} </h6>
+                  <h6>{{ service.title }}</h6>
                   <span> {{ service.id }} </span>
                 </div>
                 <div class="col-4">
-                  <button class="btn btn-primary" @click="addServiceToPhase(service)">
+                  <button
+                    class="btn btn-primary"
+                    @click="addServiceToPhase(service)"
+                  >
                     <ion-icon name="arrow-forward-outline"></ion-icon>
                   </button>
                 </div>
-
               </div>
             </div>
           </div>
-          <div class="col-6 p-3 no-bars" v-if="phase_services" style="height: 300px; overflow: scroll">
-            <div class="row mt-3 border p-2 mb-2" v-for="service in phase_services" :key="service.id">
+          <div
+            class="col-6 p-3 no-bars"
+            v-if="phase_services"
+            style="height: 300px; overflow: scroll"
+          >
+            <div
+              class="row mt-3 border p-2 mb-2"
+              v-for="service in phase_services"
+              :key="service.id"
+            >
               <div class="col-6">
-                <h6> {{ service.title }} </h6>
+                <h6>{{ service.title }}</h6>
                 <span> {{ service.id }} </span>
               </div>
               <div class="col-4">
-                <button class="btn btn-primary" @click="removeServiceFromPhase(service)">
+                <button
+                  class="btn btn-primary"
+                  @click="removeServiceFromPhase(service)"
+                >
                   <ion-icon name="close-outline"></ion-icon>
                 </button>
               </div>
-
             </div>
-
           </div>
         </div>
-
-
       </div>
       <CRow>
         <CCol :md="12">
@@ -69,31 +89,30 @@
       </CRow>
     </div>
     <div class="card-footer text-end">
-      <a @click="createPhase()" class="btn btn-outline-success ajax" v-if="!success">Save</a>
+      <button
+        @click="createPhase"
+        class="btn btn-success text-white"
+        v-if="!success"
+      >
+        Create phase
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
-  name: 'create_phase',
-  data() {
-    return {
-      message: '',
-      service_search: '',
-      searched_services: [],
-      success: false,
-      phase: {
-        title: '',
-      },
-      phase_services: []
-    }
-  },
-  mounted() {
-    this.getServices()
-  },
+  name: 'CreatePhase',
+  data: () => ({
+    message: '',
+    service_search: '',
+    searched_services: [],
+    success: false,
+    phase: {
+      title: '',
+    },
+    phase_services: [],
+  }),
   methods: {
     async isAdded(service) {
       let added = false
@@ -104,27 +123,25 @@ export default {
       })
       return added
     },
-    getServices: async function () {
-      await axios.get(`/services?per_page=1000`).then((response) => {
-        this.searched_services = response.data.data.data
-      })
-    },
     async addServiceToPhase(service) {
-      if (! await this.isAdded(service)) {
-        const index = this.searched_services.indexOf(service);
-        if (index > -1) { // only splice array when item is found
-          this.searched_services.splice(index, 1); // 2nd parameter means remove one item only
+      if (!(await this.isAdded(service))) {
+        const index = this.searched_services.indexOf(service)
+        if (index > -1) {
+          // only splice array when item is found
+          // 2nd parameter means remove one item only
+          this.searched_services.splice(index, 1)
         }
         if (!this.phase_services.includes(service)) {
           this.phase_services.push(service)
         }
       }
-
     },
     removeServiceFromPhase(client) {
-      const index = this.phase_services.indexOf(client);
-      if (index > -1) { // only splice array when item is found
-        this.phase_services.splice(index, 1); // 2nd parameter means remove one item only
+      const index = this.phase_services.indexOf(client)
+      if (index > -1) {
+        /* only splice array when item is found
+         2nd parameter means remove one item only */
+        this.phase_services.splice(index, 1)
       }
       if (!this.searched_services.includes(client)) {
         this.searched_services.push(client)
@@ -132,8 +149,8 @@ export default {
     },
     async createPhase() {
       this.phase.services = this.phase_services
-      await axios
-        .post(`/phases/add`, this.phase)
+      await this.$axios
+        .post('/phases/add', this.phase)
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
@@ -141,8 +158,7 @@ export default {
             this.phase = {}
             this.phase_services = {}
             this.searched_services = {}
-          }
-          else {
+          } else {
             this.success = false
           }
         })
@@ -155,9 +171,15 @@ export default {
           this.success = false
         })
     },
-  }
+  },
+  async mounted() {
+    await this.$axios
+      .get('/services?per_page=1000')
+      .then((response) => (this.searched_services = response.data))
+  },
 }
 </script>
+
 <style scoped="scoped">
 .no-bars {
   overflow-y: scroll;
