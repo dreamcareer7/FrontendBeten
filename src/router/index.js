@@ -101,7 +101,7 @@ const routes = [
       // Services menu
       {
         path: 'services',
-        name: 'services',
+        name: 'Services',
         component: () => import('@/views/panel/Service/Services/Services'),
       },
       {
@@ -164,7 +164,7 @@ const routes = [
       },
       {
         path: 'phases/services',
-        name: 'Services',
+        name: 'Phases Services',
         component: () => import('@/views/panel/Phase/Services/Services'),
       },
       {
@@ -233,12 +233,7 @@ const routes = [
       {
         path: 'dormitories',
         name: 'dormitories',
-        meta: { requiresAuth: true },
         component: () => import('@/views/panel/Dormitory/Dormitories'),
-        beforeEnter: (to, from, next) => {
-        if (store.getters["auth/isAdmin"]) next();
-          else next(false);
-        }
       },
       {
         path: 'dormitories/create',

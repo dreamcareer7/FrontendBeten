@@ -26,7 +26,7 @@
         <div class="form-floating mb-3">
           <select name="country_id" id="country_id" class="form-control"  v-model="client.country_id">
             <option>Choose Country</option>
-            <option value="1" v-for="c in countries" :key="c.code">
+            <option :value="c.id" v-for="c in countries" :key="c.code">
               {{ c.name }}
             </option>
           </select>
@@ -95,7 +95,7 @@
 </template>
 <script>
 import axios from 'axios'
-import countries from '../../../store/countries'
+import countries from '@/store/countries'
 
 export default {
   name: 'create_client',
@@ -106,12 +106,14 @@ export default {
       client: {},
       form: {},
       user_id: null,
-      countries,
+      countries: [],
     }
   },
   mounted() {
     this.user_id = this.$route.params.id
-   // this.fetchUserInfo(this.user_id)
+    countries.fetchCountries().then((countries) => {
+      this.countries = countries
+    })
   },
   methods: {
     addClient: async function () {

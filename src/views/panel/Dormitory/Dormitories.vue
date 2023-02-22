@@ -69,35 +69,30 @@
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Model</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Registration</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Manufacturer</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Year</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Badge</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Phone</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Country</CTableHeaderCell>
+                <CTableHeaderCell scope="col">City</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Location</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Coordinate</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Is Active</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="dormitory in dormitories" :key="dormitory.id">
                 <CTableHeaderCell scope="row">{{ dormitory.id }}</CTableHeaderCell>
-                <CTableDataCell>{{ vehicle.model }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.phone }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.country_name }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.city_id }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.location }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.coordinate }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.is_active }}</CTableDataCell>
                 <CTableDataCell>
                   <router-link
                     :to="{
-                      name: 'user_info',
-                      params: { id: dormitory.id },
-                    }"
-                  >
-                    <button
-                      style="margin-right: 1em"
-                      class="btn btn-sm btn-info text-white"
-                    >
-                      View
-                    </button>
-                  </router-link>
-                  <router-link
-                    :to="{
-                      name: 'update_vehicle',
+                      name: 'update_dormitory',
                       params: { id: dormitory.id },
                     }"
                   >
@@ -105,7 +100,7 @@
                   </router-link>
                   <button
                     class="btn btn-danger text-white"
-                    @click="deleteVehicle(dormitory.id)"
+                    @click="deleteDormitory(dormitory.id)"
                   >
                     Delete
                   </button>
@@ -206,10 +201,10 @@ export default {
         })
       this.loading = false
     },
-    deleteVehicle: async function (id) {
+    deleteDormitory: async function (id) {
       await axios.post(`/dormitories/delete/` + id).then((response) => {
         alert(response.data.message)
-        this.getVehicles()
+        this.getDormitories()
       })
     },
   },

@@ -39,7 +39,7 @@
             <select v-model="crew.country_id" name="country" id="country" class="form-control">
                 <option>Choose Country</option>
                 <template v-for="country in countries" :key="country.code">
-                  <option :value="country.code">{{ country.name }}</option>
+                  <option :value="country.id">{{ country.name }}</option>
                 </template>
             </select>
             <label for="country_id">Country</label>
@@ -151,7 +151,7 @@
 
 <script>
 import axios from 'axios'
-import countries from '../../../store/countries'
+import countries from '@/store/countries'
 
 export default {
   name: 'create_crew',
@@ -170,7 +170,7 @@ export default {
         dob: '',
         is_handicap: false,
       },
-      countries,
+      countries: [],
       professions: [
         {
           id: 1,
@@ -188,20 +188,15 @@ export default {
           id: 4,
           title: "Accountant"
         },
-      ]
+      ],
     }
   },
   mounted() {
-    this.countries = countries;
-    // this.getCountries();
+    countries.fetchCountries().then((countries) => {
+      this.countries = countries
+    })
   },
   methods: {
-
-    // getCountries: async function () {
-    //   await axios.get(`/countries`).then((response) => {
-    //     this.countries = response.data.data
-    //   })
-    // },
     createCrew: async function () {
       let crew = this.crew;
       await axios.post(`/crews/add`, crew)

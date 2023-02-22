@@ -79,19 +79,6 @@
                 <CTableDataCell>
                   <router-link
                     :to="{
-                      name: 'user_info',
-                      params: { id: vehicle.id },
-                    }"
-                  >
-                    <button
-                      style="margin-right: 1em"
-                      class="btn btn-sm btn-info text-white"
-                    >
-                      View
-                    </button>
-                  </router-link>
-                  <router-link
-                    :to="{
                       name: 'update_vehicle',
                       params: { id: vehicle.id },
                     }"
