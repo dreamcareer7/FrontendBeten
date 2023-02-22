@@ -70,7 +70,7 @@
                 <CTableDataCell>{{ crew.fullname }}</CTableDataCell>
                 <CTableDataCell>{{ crew.gender }}</CTableDataCell>
                 <CTableDataCell>{{ crew.profession_id }}</CTableDataCell>
-                <CTableDataCell>{{ crew.country_id }}</CTableDataCell>
+                <CTableDataCell>{{ crew.country_name }}</CTableDataCell>
                 <CTableDataCell>{{ crew.phone }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_no }}</CTableDataCell>

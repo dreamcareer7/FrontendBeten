@@ -33,7 +33,7 @@
               >
               <option value="" selected disabled>Country</option>
                 <template v-for="country in countries" :key="country.code">
-                  <option :value="country.code">{{ country.name }}</option>
+                  <option :value="country.id">{{ country.name }}</option>
                 </template>
               </select>
             </CCol>
@@ -107,7 +107,7 @@
                   <span v-if="client.gender === 1">Male</span>
                   <span v-if="client.gender === 0">Female</span>
                 </CTableDataCell>
-                <CTableDataCell>{{ client.country_id }}</CTableDataCell>
+                <CTableDataCell>{{ client.country_name }}</CTableDataCell>
                 <CTableDataCell>{{ client.phone }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_no }}</CTableDataCell>
@@ -179,13 +179,13 @@
 
 <script>
 import axios from 'axios'
-import countries from "@/store/countries";
+import countries from '@/store/countries'
 
 export default {
   name: 'clients',
   data() {
     return {
-      countries,
+      countries: [],
       clients: {},
       search: {
         gender:'',
@@ -200,6 +200,9 @@ export default {
   },
   mounted() {
     this.getClients()
+    countries.fetchCountries().then((countries) => {
+      this.countries = countries
+    })
   },
   methods: {
     nextPage: async function () {

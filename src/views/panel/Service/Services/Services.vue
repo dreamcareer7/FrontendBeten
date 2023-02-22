@@ -37,7 +37,7 @@
                 <CTableRow v-for="service in services" :key="service.id">
                   <CTableHeaderCell scope="row">{{ service.id }}</CTableHeaderCell>
                   <CTableDataCell>{{ service.title }}</CTableDataCell>
-                  <CTableDataCell>{{ service.country_id }}</CTableDataCell>
+                  <CTableDataCell>{{ service.country_name }}</CTableDataCell>
                   <CTableDataCell>{{ service.before_date }}</CTableDataCell>
                   <CTableDataCell>{{ service.exact_date }}</CTableDataCell>
                   <CTableDataCell>{{ service.after_date }}</CTableDataCell>
