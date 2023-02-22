@@ -5,7 +5,7 @@
     </div>
 
     <div id="ialert" class="" role="alert"></div>
-    <form method="post">
+    <form method="post" @submit.prevent="createService">
       <div class="card-body">
 
         <div class="form-floating mb-3">
@@ -29,7 +29,7 @@
       </div>
 
       <div class="card-footer text-end">
-        <a class="btn btn-outline-success ajax">Save</a>
+        <a class="btn btn-outline-success ajax">Create</a>
       </div>
     </form>
   </div>
@@ -37,6 +37,11 @@
 
 <script>
 export default {
-  name: 'create_service',
+  name: 'CreateService',
+  methods: {
+    createService() {
+      console.log('Not implemented');
+    }
+  }
 }
 </script>

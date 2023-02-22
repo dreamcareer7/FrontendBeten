@@ -106,7 +106,7 @@ const routes = [
       },
       {
         path: 'services/create',
-        name: 'create_service',
+        name: 'Create Service',
         component: () => import('@/views/panel/Service/Services/CreateService'),
       },
       {
