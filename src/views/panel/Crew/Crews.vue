@@ -8,7 +8,9 @@
               <strong>Crews</strong>
             </div>
             <div class="col-md-2">
-              <router-link to="/crews/create">
+              <router-link  :to="{
+                           name: 'Create_Crew',
+              }">
                 <CButton color="primary" class="float-end">
                     <svg clip-rule="evenodd" class="button-icon" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m21 3.998c0-.478-.379-1-1-1h-16c-.62 0-1 .519-1 1v16c0 .621.52 1 1 1h16c.478 0 1-.379 1-1zm-16.5.5h15v15h-15zm6.75 6.752h-3.5c-.414 0-.75.336-.75.75s.336.75.75.75h3.5v3.5c0 .414.336.75.75.75s.75-.336.75-.75v-3.5h3.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3.5v-3.5c0-.414-.336-.75-.75-.75s-.75.336-.75.75z" fill-rule="nonzero"/></svg>
                     <span>Create Crew</span>
@@ -78,19 +80,7 @@
                 <CTableDataCell>{{ crew.is_active }}</CTableDataCell>
                 <CTableDataCell>{{ crew.created_at }}</CTableDataCell>
                 <CTableDataCell>
-                  <router-link
-                    :to="{
-                      name: 'user_info',
-                      params: { id: crew.id },
-                    }"
-                  >
-                    <button
-                      style="margin-right: 1em"
-                      class="btn btn-sm btn-info text-white"
-                    >
-                      View
-                    </button>
-                  </router-link>
+
                   <router-link
                     :to="{
                       name: 'update_crew',
