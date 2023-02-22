@@ -119,13 +119,12 @@
                       params: { id: client.id },
                     }"
                   >
-                    <CButton class="btn btn-success text-white">Update</CButton>
+                    <CButton class="btn btn-sm btn-success text-white mx-1" title="Edit">
+                      <ion-icon name="create-outline"></ion-icon>
+                    </CButton>
                   </router-link>
-                  <button
-                    class="btn btn-danger text-white"
-                    @click="deleteClient(client.id)"
-                  >
-                    Delete
+                  <button class="btn btn-sm btn-danger text-white" @click="deleteClient(client.id)" title="Delete">
+                    <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
               </CTableRow>
