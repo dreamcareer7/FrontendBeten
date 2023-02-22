@@ -76,7 +76,7 @@
                 <CTableDataCell>{{ user.username }}</CTableDataCell>
                 <CTableDataCell>{{ user.email }}</CTableDataCell>
                 <CTableDataCell>{{ user.contact }}</CTableDataCell>
-                <CTableDataCell>{{ user.is_active }}</CTableDataCell>
+                <CTableDataCell>{{ user.is_active ? 'Yes' : 'No' }}</CTableDataCell>
                 <CTableDataCell>{{ user.created_at }}</CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
                   <router-link
