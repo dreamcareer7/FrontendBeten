@@ -55,7 +55,9 @@
         <div class="form-floating mb-3">
           <select name="supervisor_id" id="supervisor_id" class="form-control" v-model="service_commit.supervisor_id">
             <option :value="null">Choose a supervisor</option>
-            <option v-for="user in users" :value="user.id">{{ user.name }}</option>
+            <option v-for="crew_member in crew_members" :value="crew_member.id">
+              {{ crew_member.fullname }}
+            </option>
           </select>
           <label for="supervisor_id">Supervisor</label>
           <div class="invalid-feedback"></div>
@@ -93,7 +95,8 @@ export default {
     message: '',
     success: false,
     services: [],
-    users: [], // A key/value pair of users name/id to select the supervisor
+    // A key/value pair of crew member name/id to select the supervisor
+    crew_members: [],
     service_commit: {
       service_id: null,
       badge: '',
@@ -137,8 +140,8 @@ export default {
   mounted() {
     this.$axios.get('service/list')
       .then((response) => this.services = response.data);
-    this.$axios.get('users/list_supervisors')
-      .then((response) => this.users = response.data);
+    this.$axios.get('crews/list')
+      .then((response) => this.crew_members = response.data);
   }
 }
 </script>

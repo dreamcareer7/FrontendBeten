@@ -26,7 +26,7 @@
                 <CTableHeaderCell scope="col">Schedule At</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Started At</CTableHeaderCell>
                 <CTableHeaderCell scope="col">From Location</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Supervisor ID</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Supervisor</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -38,21 +38,31 @@
                 <CTableDataCell>{{ commit.scheduled_at }}</CTableDataCell>
                 <CTableDataCell>{{ commit.started_at }}</CTableDataCell>
                 <CTableDataCell>{{ commit.location }}</CTableDataCell>
-                <CTableDataCell>{{ commit.supervisor?.name }}</CTableDataCell>
+                <CTableDataCell>{{ commit.supervisor?.fullname }}</CTableDataCell>
                 <CTableDataCell>
-                  <router-link :to="{
-                    name: 'service_commit_info',
-                    params: { id: this.$encrypt(commit.id) },
-                  }">
-                    <button class="btn btn-sm btn-info text-white mx-1" title="View">
+                  <router-link
+                    :to="{
+                      name: 'service_commit_info',
+                      params: { id: this.$encrypt(commit.id) },
+                    }"
+                  >
+                    <button
+                      class="btn btn-sm btn-info text-white mx-1"
+                      title="View"
+                    >
                       <ion-icon name="eye-outline"></ion-icon>
                     </button>
                   </router-link>
-                  <router-link :to="{
-                    name: 'Update Service Commit',
-                    params: { id: this.$encrypt(commit.id) },
-                  }">
-                    <CButton class="btn btn-sm btn-warning text-white mx-1" title="Edit">
+                  <router-link
+                    :to="{
+                      name: 'Update Service Commit',
+                      params: { id: this.$encrypt(commit.id) },
+                    }"
+                  >
+                    <CButton
+                      class="btn btn-sm btn-warning text-white mx-1"
+                      title="Edit"
+                    >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
@@ -75,9 +85,9 @@
 
 <script>
 export default {
-  name: "service_commit",
+  name: 'service_commit',
   data: () => ({
-      commits: [],
+    commits: [],
   }),
   methods: {
     async deleteCommit(id) {
@@ -89,22 +99,36 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.delete(`/service/commits/${id}`).then(() =>
-            this.commits = this.commits.filter((commit) => commit.id !== id)
-          ).catch((error) => {
-            // TODO: swal the error message
-            console.log(error)
-          })
+          this.$axios
+            .delete(`/service/commits/${id}`)
+            .then(
+              () =>
+                (this.commits = this.commits.filter(
+                  (commit) => commit.id !== id,
+                )),
+            )
+            .catch((error) => {
+              // TODO: swal the error message
+              console.log(error)
+            })
           swal('Service commit has been deleted!', {
             icon: 'success',
-          });
+          })
         }
-      });
+      })
     },
   },
-  mounted() {
-      this.$axios.get("/service/commits")
-          .then((response) => this.commits = response.data);
+  async mounted() {
+    await this.$axios
+      .get('/service/commits')
+      .then((response) => (this.commits = response.data))
+      .catch((error) => {
+        swal({
+          title: error.response.statusText,
+          text: error.response.data.message,
+          icon: 'error',
+        })
+      })
   },
 }
 </script>
