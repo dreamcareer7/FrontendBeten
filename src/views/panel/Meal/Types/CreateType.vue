@@ -9,7 +9,7 @@
       <div class="card-body">
 
         <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="title" name="title" placeholder="Title..." required
+          <input type="text" class="form-control" id="title" name="title" placeholder="Title..." required
             autocomplete="off">
           <label for="title">Title</label>
           <div class="invalid-feedback"></div>
