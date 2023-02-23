@@ -13,7 +13,9 @@
                   name: 'Create Document',
                 }"
               >
-                <CButton color="primary" class="float-end"> Upload Document </CButton>
+                <CButton color="primary" class="float-end">
+                  Upload Document
+                </CButton>
               </router-link>
             </div>
           </div>
@@ -21,10 +23,7 @@
         <CCardBody>
           <CRow>
             <CCol :md="2">
-              <select
-                class="form-control"
-                v-model="search.model_type"
-              >
+              <select class="form-control" v-model="search.model_type">
                 <option value="others">others</option>
                 <option value="Contract">Contract</option>
                 <option value="Crew">Crew</option>
@@ -32,7 +31,6 @@
                 <option value="Meal">Meal</option>
                 <option value="Complaint">Complaint</option>
                 <option value="Dormitory">Dormitory</option>
-
               </select>
             </CCol>
             <CCol :md="2">
@@ -75,22 +73,22 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="document in documents" :key="document.id">
-                <CTableHeaderCell scope="row">{{ document.id }}</CTableHeaderCell>
+                <CTableHeaderCell scope="row">{{
+                  document.id
+                }}</CTableHeaderCell>
                 <CTableDataCell>{{ document.title }}</CTableDataCell>
                 <CTableDataCell>{{ document.title }}</CTableDataCell>
                 <CTableDataCell>{{ document.model_type }}</CTableDataCell>
                 <CTableDataCell>{{ document.model_id }}</CTableDataCell>
                 <CTableDataCell>
-
                   <router-link
                     :to="{
                       name: 'View Document',
                       params: { id: document.id },
                     }"
                   >
-                    <CButton class="btn btn-success text-white m">
+                    <CButton class="btn btn-success text-white" title="View">
                       <ion-icon name="eye-outline"></ion-icon>
-
                     </CButton>
                   </router-link>
                   <router-link
@@ -99,17 +97,16 @@
                       params: { id: document.id },
                     }"
                   >
-                    <CButton class="btn btn-warning text-white">
+                    <CButton class="btn btn-warning text-white" title="Edit">
                       <ion-icon name="create-outline"></ion-icon>
-
                     </CButton>
                   </router-link>
                   <button
                     class="btn btn-danger text-white"
                     @click="deleteDocument(document.id)"
+                    title="Delete document"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
-
                   </button>
                 </CTableDataCell>
               </CTableRow>
@@ -119,7 +116,6 @@
             <CCol :md="12" class="text-center">
               <nav aria-label="Page navigation example">
                 <ul class="pagination">
-
                   <li class="page-item" v-for="page in pagination" :key="page">
                     <a
                       @click.prevent="gotoPage(page.url)"
@@ -137,15 +133,11 @@
       </CCard>
     </CCol>
   </CRow>
-  <!-- Vertically centered scrollable modal -->
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    ...
-  </div>
 </template>
 
 <script>
 import axios from 'axios'
-import countries from "@/store/countries";
+import countries from '@/store/countries'
 
 export default {
   name: 'clients',
@@ -154,7 +146,7 @@ export default {
       countries,
       documents: {},
       search: {
-        model_type:'',
+        model_type: '',
       },
       current_page: 1,
       last_page: 99,
@@ -219,9 +211,9 @@ export default {
           axios.post(`/documents/delete/${id}`).then(() => this.getDocuments())
           swal('Document has been deleted!', {
             icon: 'success',
-          });
+          })
         }
-      });
+      })
     },
   },
 }
