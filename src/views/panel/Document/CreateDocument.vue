@@ -24,12 +24,10 @@
             <div class="form-floating mb-3">
               <select class="form-select" v-model="form.model_type">
                 <option>Select a model type</option>
-                <option value="Contract">Contract</option>
-                <option value="Crew">Crew</option>
-                <option value="User">User</option>
-                <option value="Meal">Meal</option>
-                <option value="Complaint">Complaint</option>
-                <option value="Dormitory">Dormitory</option>
+                <option v-for="(model_type, index) in model_types" :key="index"
+                  :value="model_type">
+                  {{ model_type }}
+                </option>
               </select>
               <label for="path">Model Type</label>
               <div class="invalid-feedback"></div>
@@ -118,6 +116,7 @@ export default {
       model_type: '',
       model_id: '',
     },
+    model_types: [],
   }),
   methods: {
     detectFile() {
@@ -163,5 +162,9 @@ export default {
         })
     },
   },
+  async mounted() {
+    await this.$axios.get('/documents/model-types')
+      .then((response) => this.model_types = response.data)
+  }
 }
 </script>
