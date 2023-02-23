@@ -85,7 +85,9 @@
                 <CTableHeaderCell scope="row">{{ crew.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ crew.user_id }}</CTableDataCell>
                 <CTableDataCell>{{ crew.fullname }}</CTableDataCell>
-                <CTableDataCell>{{ crew.gender }}</CTableDataCell>
+                <CTableDataCell>
+                  {{ crew.gender === 1 ? 'Male' : 'Female' }}
+                </CTableDataCell>
                 <CTableDataCell>{{ crew.profession_id }}</CTableDataCell>
                 <CTableDataCell>{{ crew.country_name }}</CTableDataCell>
                 <CTableDataCell>{{ crew.phone }}</CTableDataCell>
