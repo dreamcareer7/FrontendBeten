@@ -80,7 +80,7 @@
       </div>
       <div class="card-footer text-end">
         <span class="float-start">* Required fields</span>
-        <button @click="createService" class="btn btn-success text-white">
+        <button type="submit" class="btn btn-success text-white">
           Create
         </button>
       </div>
