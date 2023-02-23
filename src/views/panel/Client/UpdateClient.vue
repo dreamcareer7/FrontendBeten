@@ -109,7 +109,7 @@ export default {
     }
   },
   mounted() {
-    this.user_id = this.$route.params.id
+    this.user_id = this.$decrypt(this.$route.params.id)
     countries.fetchCountries().then((countries) => {
       this.countries = countries
     })

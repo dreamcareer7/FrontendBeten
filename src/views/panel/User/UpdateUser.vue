@@ -111,18 +111,19 @@ export default {
     },
   },
   async mounted() {
-    await this.$axios.get(`/users/info/${this.$route.params.id}`).then((response) => {
-      this.user = response.data.data
-      this.user.roles = response.data.data.roles.map((role) => role.name)
-      // Populate the roles select element options
-      this.roles_select_options = response.data.available_roles.map((role) => {
-        return {
-          value: role.name,
-          label: role.name,
-          selected: this.user.roles.some(user_role => user_role.name === role.name)
-        }
+    await this.$axios.get(`/users/info/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => {
+        this.user = response.data.data
+        this.user.roles = response.data.data.roles.map((role) => role.name)
+        // Populate the roles select element options
+        this.roles_select_options = response.data.available_roles.map((role) => {
+          return {
+            value: role.name,
+            label: role.name,
+            selected: this.user.roles.some(user_role => user_role.name === role.name)
+          }
+        })
       })
-    })
   },
 }
 </script>

@@ -84,7 +84,7 @@
                   <router-link
                     :to="{
                       name: 'View Document',
-                      params: { id: document.id },
+                      params: { id: this.$encrypt(document.id) },
                     }"
                   >
                     <CButton class="btn btn-success text-white" title="View">
@@ -94,7 +94,7 @@
                   <router-link
                     :to="{
                       name: 'update_document',
-                      params: { id: document.id },
+                      params: { id: this.$encrypt(document.id) },
                     }"
                   >
                     <CButton class="btn btn-warning text-white" title="Edit">

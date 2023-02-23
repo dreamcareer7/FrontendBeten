@@ -118,7 +118,7 @@ export default {
   },
   mounted() {
     this.getCrews()
-    this.group_id = this.$route.params.id
+    this.group_id = this.$decrypt(this.$route.params.id)
     this.fetchInfo(this.group_id)
   },
   methods: {

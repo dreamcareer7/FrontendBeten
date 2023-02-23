@@ -42,7 +42,7 @@
                 <CTableDataCell>
                   <router-link :to="{
                     name: 'service_commit_info',
-                    params: { id: commit.id },
+                    params: { id: this.$encrypt(commit.id) },
                   }">
                     <button class="btn btn-sm btn-info text-white mx-1" title="View">
                       <ion-icon name="eye-outline"></ion-icon>
@@ -50,7 +50,7 @@
                   </router-link>
                   <router-link :to="{
                     name: 'Update Service Commit',
-                    params: { id: commit.id },
+                    params: { id: this.$encrypt(commit.id) },
                   }">
                     <CButton class="btn btn-sm btn-warning text-white mx-1" title="Edit">
                       <ion-icon name="create-outline"></ion-icon>

@@ -7,6 +7,7 @@ import router from './router'
 import store from './store'
 import axiosInstance from './plugins/axios'
 import swalInstance from './plugins/swal'
+import { encrypt, decrypt } from '@/plugins/crypto'
 
 import { iconsSet as icons } from '@/assets/icons'
 import DocsExample from '@/components/DocsExample'
@@ -25,5 +26,7 @@ app.config.compilerOptions.isCustomElement = (tag) => tag.includes('ion-icon')
 
 app.config.globalProperties.$swal = swalInstance
 app.config.globalProperties.$axios = axiosInstance
+app.config.globalProperties.$encrypt = encrypt
+app.config.globalProperties.$decrypt = decrypt
 
 app.mount('#app')

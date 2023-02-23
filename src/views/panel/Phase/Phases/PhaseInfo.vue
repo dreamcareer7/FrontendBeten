@@ -58,7 +58,7 @@ export default {
     }
   },
   mounted() {
-    this.phase_id = this.$route.params.id
+    this.phase_id = this.$decrypt(this.$route.params.id)
     this.fetchInfo(this.phase_id)
   },
   methods: {

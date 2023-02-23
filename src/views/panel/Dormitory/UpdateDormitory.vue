@@ -151,7 +151,7 @@ export default {
     }
   },
   mounted() {
-    this.dormitory_id = this.$route.params.id
+    this.dormitory_id = this.$decrypt(this.$route.params.id)
     this.fetchInfo(this.dormitory_id)
     countries.fetchCountries().then((countries) => {
       this.countries = countries

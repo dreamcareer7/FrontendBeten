@@ -49,9 +49,8 @@ export default {
     user: {},
   }),
   async mounted() {
-    await this.$axios.get(`/users/info/${this.$route.params.id}`).then((response) => {
-      this.user = response.data.data
-    })
+    await this.$axios.get(`/users/info/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => this.user = response.data.data)
   },
 }
 </script>

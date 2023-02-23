@@ -99,8 +99,11 @@ export default {
   methods: {
     async update() {
       // Send the service commit object to the API for update
-      await this.$axios.patch(`service/commits/${this.$route.params.id}`, this.service_commit)
-        .then((response) => {
+      await this.$axios
+        .patch(
+          `service/commits/${this.$decrypt(this.$route.params.id)}`,
+          this.service_commit
+        ).then((response) => {
           // Feedback to the client
           if (response.status == 204) { // If updated
             this.success = true
@@ -123,7 +126,7 @@ export default {
       .then((response) => this.services = response.data);
     this.$axios.get('users/list_supervisors')
       .then((response) => this.users = response.data);
-    this.$axios.get(`/service/commits/${this.$route.params.id}`)
+    this.$axios.get(`/service/commits/${this.$decrypt(this.$route.params.id)}`)
       .then((response) => {
         this.service_commit = response.data
       })

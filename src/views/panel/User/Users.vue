@@ -66,7 +66,7 @@
                 <CTableDataCell :aria-colspan="2">
                   <router-link :to="{
                     name: 'User Details',
-                    params: { id: user.id },
+                    params: { id: this.$encrypt(user.id) },
                   }">
                     <button class="btn btn-sm btn-info text-white mx-1" title="View details">
                       <ion-icon name="eye-outline"></ion-icon>
@@ -74,7 +74,7 @@
                   </router-link>
                   <router-link :to="{
                     name: 'Edit user',
-                    params: { id: user.id },
+                    params: { id: this.$encrypt(user.id) },
                   }">
                     <CButton class="btn btn-sm btn-warning text-white mx-1" title="Edit">
                       <ion-icon name="create-outline"></ion-icon>

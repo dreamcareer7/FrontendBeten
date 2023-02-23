@@ -99,7 +99,7 @@ export default {
       }
     },
     mounted() {
-      this.document_id = this.$route.params.id
+      this.document_id = this.$decrypt(this.$route.params.id)
       this.fetchInfo(this.document_id)
       this.base_url = process.env.VUE_APP_BACKEND_BASE_URL
     },

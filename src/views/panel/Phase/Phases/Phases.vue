@@ -54,7 +54,7 @@
                   <router-link
                     :to="{
                       name: 'phase_info',
-                      params: { id: phase.id },
+                      params: { id: this.$encrypt(phase.id) },
                     }"
                   >
                     <button
@@ -66,7 +66,7 @@
                   <router-link
                     :to="{
                       name: 'update_phase',
-                      params: { id: phase.id },
+                      params: { id: this.$encrypt(phase.id) },
                     }"
                   >
                     <CButton class="btn btn-sm btn-warning text-white mx-1">Update</CButton>

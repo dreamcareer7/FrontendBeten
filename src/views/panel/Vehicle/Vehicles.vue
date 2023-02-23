@@ -80,7 +80,7 @@
                   <router-link
                     :to="{
                       name: 'update_vehicle',
-                      params: { id: vehicle.id },
+                      params: { id: this.$encrypt(vehicle.id) },
                     }"
                   >
                     <CButton class="btn btn-warning text-white">Update</CButton>

@@ -48,7 +48,8 @@ export default {
     },
   }),
   async mounted() {
-    await this.$axios.get(`/service/commits/${this.$route.params.id}`)
+    await this.$axios
+      .get(`/service/commits/${this.$decrypt(this.$route.params.id)}`)
       .then((response) => {
         this.service_commit = response.data
       })

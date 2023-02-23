@@ -113,7 +113,7 @@ export default {
     }
   },
   mounted() {
-    this.vehicle_id = this.$route.params.id
+    this.vehicle_id = this.$decrypt(this.$route.params.id)
     this.fetchInfo(this.vehicle_id)
   },
   methods: {
