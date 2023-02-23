@@ -8,19 +8,30 @@
               <CCardBody>
                 <CForm>
                   <h1 class="text-center">Login</h1>
-                  <p class="text-medium-emphasis text-center">Sign In to your account</p>
+                  <p class="text-medium-emphasis text-center">
+                    Sign In to your account
+                  </p>
                   <CInputGroup class="mb-3">
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput placeholder="Email" v-model="form.email" autocomplete="email" />
+                    <CFormInput
+                      placeholder="Email"
+                      v-model="form.email"
+                      autocomplete="email"
+                    />
                   </CInputGroup>
                   <CInputGroup class="mb-4">
                     <CInputGroupText>
                       <CIcon icon="cil-lock-locked" />
                     </CInputGroupText>
-                    <CFormInput type="password" v-model="form.password" placeholder="Password"
-                      autocomplete="current-password" @keyup.enter="login" />
+                    <CFormInput
+                      type="password"
+                      v-model="form.password"
+                      placeholder="Password"
+                      autocomplete="current-password"
+                      @keyup.enter="login"
+                    />
                   </CInputGroup>
                   <div v-show="message" class="error_style">{{ message }}</div>
                   <CRow>
@@ -30,9 +41,11 @@
                       </CButton>
                     </CCol>
                     <CCol :xs="4" class="text-right">
-                      <router-link :to="{
-                        name: 'reset_password',
-                      }">
+                      <router-link
+                        :to="{
+                          name: 'reset_password',
+                        }"
+                      >
                         <CButton color="link" class="px-0">
                           Forgot password?
                         </CButton>
@@ -50,7 +63,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import ColorTheme from '../../theme/ColorTheme'
 
 export default {
@@ -62,19 +74,16 @@ export default {
   }),
   methods: {
     login: async function () {
-      return await axios
+      return await this.$axios
         .post(`/login`, this.form)
         .then((response) => {
           if (response.data.success) {
-            console.log("Success")
-            const token = response.data.token
-            localStorage.setItem('betenAuthToken', token)
+            localStorage.setItem('betenAuthToken', response.data.token)
             this.$router.push({
               name: 'Dashboard',
             })
           } else {
             this.message = response.data.message
-            console.log("fail")
           }
         })
         .catch((error) => {
