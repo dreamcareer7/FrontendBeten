@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'update_user',
   data() {
@@ -63,7 +62,7 @@ export default {
   },
   methods: {
     fetchInfo: async function (id) {
-      await axios.get(`/phases/info/` + id).then((response) => {
+      await this.$axios.get(`/phases/info/` + id).then((response) => {
         this.phase = response.data.phase
         this.phase_services = response.data.services
 

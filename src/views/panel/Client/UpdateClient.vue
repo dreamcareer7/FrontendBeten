@@ -1,21 +1,33 @@
 <template>
   <div class="card border-warning mb-4">
-    <div class="card-header">
-      Update Client
-    </div>
+    <div class="card-header">Update Client</div>
 
     <div id="ialert" class="" role="alert"></div>
     <form method="post">
       <div class="card-body">
-
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="fname" name="fullname" placeholder="Full Name..." required autofocus autocomplete="off"  v-model="client.fullname">
+          <input
+            type="text"
+            class="form-control"
+            id="fname"
+            name="fullname"
+            placeholder="Full Name..."
+            required
+            autofocus
+            autocomplete="off"
+            v-model="client.fullname"
+          />
           <label for="fname">Full Name</label>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <select name="gender" id="gender" class="form-control"  v-model="client.gender">
+          <select
+            name="gender"
+            id="gender"
+            class="form-control"
+            v-model="client.gender"
+          >
             <option value="1">Male</option>
             <option value="0">Female</option>
           </select>
@@ -24,9 +36,18 @@
         </div>
 
         <div class="form-floating mb-3">
-          <select name="country_id" id="country_id" class="form-control"  v-model="client.country_id">
+          <select
+            name="country_id"
+            id="country_id"
+            class="form-control"
+            v-model="client.country_id"
+          >
             <option>Choose Country</option>
-            <option :value="country.id" v-for="country in countries" :key="country.code">
+            <option
+              :value="country.id"
+              v-for="country in countries"
+              :key="country.code"
+            >
               {{ country.name }}
             </option>
           </select>
@@ -37,39 +58,75 @@
         <div class="row g-1 mb-1">
           <div class="col">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number..."  v-model="client.phone">
+              <input
+                type="text"
+                class="form-control"
+                id="phone"
+                name="phone"
+                placeholder="Phone Number..."
+                v-model="client.phone"
+              />
               <label for="phone">Phone Number</label>
               <div class="invalid-feedback"></div>
             </div>
 
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="id_type" name="id_type" placeholder="ID Type..."  v-model="client.id_type">
+              <input
+                type="text"
+                class="form-control"
+                id="id_type"
+                name="id_type"
+                placeholder="ID Type..."
+                v-model="client.id_type"
+              />
               <label for="phone">ID Type</label>
               <div class="invalid-feedback"></div>
             </div>
 
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="id_number" name="id_number" placeholder="ID Number..."  v-model="client.id_no">
+              <input
+                type="text"
+                class="form-control"
+                id="id_number"
+                name="id_number"
+                placeholder="ID Number..."
+                v-model="client.id_no"
+              />
               <label for="phone">ID Number</label>
               <div class="invalid-feedback"></div>
             </div>
 
             <div class="form-floating mb-3">
-              <input type="date" class="form-control" id="dob" name="dob" placeholder="Date of Birth..."  v-model="client.dob">
+              <input
+                type="date"
+                class="form-control"
+                id="dob"
+                name="dob"
+                placeholder="Date of Birth..."
+                v-model="client.dob"
+              />
               <label for="phone">Date of Birth</label>
               <div class="invalid-feedback"></div>
             </div>
 
             <div class="border rounded px-1">
               <div class="form-switch">
-                <input type="hidden"  value="0" name="is_handicap">
-                <input class="form-check-input" type="checkbox"  value="1" name="is_handicap" checked id="is_handicap" v-model="client.is_handicap">
-                <label class="form-check-label" for="is_handicap">Is Handicap?</label>
+                <input type="hidden" value="0" name="is_handicap" />
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="1"
+                  name="is_handicap"
+                  checked
+                  id="is_handicap"
+                  v-model="client.is_handicap"
+                />
+                <label class="form-check-label" for="is_handicap"
+                  >Is Handicap?</label
+                >
               </div>
             </div>
           </div>
-
-
         </div>
 
         <CRow>
@@ -93,31 +150,21 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-import countries from '../../../store/countries'
+import countries from '@/store/countries'
 
 export default {
-  name: 'create_client',
-  data() {
-    return {
-      message: '',
-      success: false,
-      client: {},
-      form: {},
-      user_id: null,
-      countries: [],
-    }
-  },
-  mounted() {
-    this.user_id = this.$decrypt(this.$route.params.id)
-    countries.fetchCountries().then((countries) => {
-      this.countries = countries
-    })
-    this.fetchUserInfo(this.user_id)
-  },
+  name: 'UpdateClient',
+  data: () => ({
+    message: '',
+    success: false,
+    client: {},
+    form: {},
+    user_id: null,
+    countries: [],
+  }),
   methods: {
     addClient: async function () {
-      await axios
+      await this.$axios
         .post(`/clients/update/` + this.user_id, this.client)
         .then((response) => {
           this.message = response.data.message
@@ -134,10 +181,17 @@ export default {
         })
     },
     fetchUserInfo: async function (id) {
-      await axios.get(`/clients/info/` + id).then((response) => {
+      await this.$axios.get(`/clients/info/` + id).then((response) => {
         this.client = response.data
       })
     },
+  },
+  mounted() {
+    this.user_id = this.$decrypt(this.$route.params.id)
+    countries.fetchCountries().then((countries) => {
+      this.countries = countries
+    })
+    this.fetchUserInfo(this.user_id)
   },
 }
 </script>

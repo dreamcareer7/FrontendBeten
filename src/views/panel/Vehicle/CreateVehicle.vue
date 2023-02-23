@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'create_vehicle',
   data() {
@@ -77,7 +76,7 @@ export default {
   },
   methods: {
     addVehicle: async function () {
-      await axios
+      await this.$axios
         .post(`/vehicles/add`, this.vehicle)
         .then((response) => {
           this.message = response.data.message

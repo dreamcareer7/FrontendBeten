@@ -13,9 +13,22 @@
                   name: 'Create client',
                 }"
               >
-               <!-- class="button-icon" -->
+                <!-- class="button-icon" -->
                 <CButton color="primary" class="float-end">
-                  <svg class="button-icon" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m20 20h-15.25c-.414 0-.75.336-.75.75s.336.75.75.75h15.75c.53 0 1-.47 1-1v-15.75c0-.414-.336-.75-.75-.75s-.75.336-.75.75zm-1-17c0-.478-.379-1-1-1h-15c-.62 0-1 .519-1 1v15c0 .621.52 1 1 1h15c.478 0 1-.379 1-1zm-15.5.5h14v14h-14zm6.25 6.25h-3c-.414 0-.75.336-.75.75s.336.75.75.75h3v3c0 .414.336.75.75.75s.75-.336.75-.75v-3h3c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3v-3c0-.414-.336-.75-.75-.75s-.75.336-.75.75z" fill-rule="nonzero"/></svg>
+                  <svg
+                    class="button-icon"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                    stroke-linejoin="round"
+                    stroke-miterlimit="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m20 20h-15.25c-.414 0-.75.336-.75.75s.336.75.75.75h15.75c.53 0 1-.47 1-1v-15.75c0-.414-.336-.75-.75-.75s-.75.336-.75.75zm-1-17c0-.478-.379-1-1-1h-15c-.62 0-1 .519-1 1v15c0 .621.52 1 1 1h15c.478 0 1-.379 1-1zm-15.5.5h14v14h-14zm6.25 6.25h-3c-.414 0-.75.336-.75.75s.336.75.75.75h3v3c0 .414.336.75.75.75s.75-.336.75-.75v-3h3c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3v-3c0-.414-.336-.75-.75-.75s-.75.336-.75.75z"
+                      fill-rule="nonzero"
+                    />
+                  </svg>
                   <span>Create Client</span>
                 </CButton>
               </router-link>
@@ -29,9 +42,9 @@
                 type="text"
                 class="form-control"
                 v-model="search.country"
-                 @change="getClients"
+                @change="getClients"
               >
-              <option value="" selected disabled>Country</option>
+                <option value="" selected disabled>Country</option>
                 <template v-for="country in countries" :key="country.code">
                   <option :value="country.id">{{ country.name }}</option>
                 </template>
@@ -42,11 +55,11 @@
                 type="text"
                 class="form-control"
                 v-model="search.gender"
-                 @change="getClients"
+                @change="getClients"
               >
-              <option value="" selected disabled>Gender</option>
-              <option value="1">Male</option>
-              <option value="0">Female</option>
+                <option value="" selected disabled>Gender</option>
+                <option value="1">Male</option>
+                <option value="0">Female</option>
               </select>
             </CCol>
             <CCol :md="2">
@@ -119,11 +132,18 @@
                       params: { id: this.$encrypt(client.id) },
                     }"
                   >
-                    <CButton class="btn btn-sm btn-warning text-white mx-1" title="Edit">
+                    <CButton
+                      class="btn btn-sm btn-warning text-white mx-1"
+                      title="Edit"
+                    >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button class="btn btn-sm btn-danger text-white" @click="deleteClient(client.id, client.fullname)" title="Delete">
+                  <button
+                    class="btn btn-sm btn-danger text-white"
+                    @click="deleteClient(client.id, client.fullname)"
+                    title="Delete"
+                  >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -164,32 +184,23 @@
 </template>
 
 <script>
-import axios from 'axios'
 import countries from '@/store/countries'
 
 export default {
-  name: 'clients',
-  data() {
-    return {
-      countries: [],
-      clients: {},
-      search: {
-        gender:'',
-        country:''
-       },
-      current_page: 1,
-      last_page: 99,
-      selected_user: null,
-      loading: false,
-      pagination: {},
-    }
-  },
-  mounted() {
-    this.getClients()
-    countries.fetchCountries().then((countries) => {
-      this.countries = countries
-    })
-  },
+  name: 'Client',
+  data: () => ({
+    countries: [],
+    clients: {},
+    search: {
+      gender: '',
+      country: '',
+    },
+    current_page: 1,
+    last_page: 99,
+    selected_user: null,
+    loading: false,
+    pagination: {},
+  }),
   methods: {
     nextPage: async function () {
       this.current_page = this.current_page + 1
@@ -203,7 +214,7 @@ export default {
     },
     getClients: async function () {
       this.loading = true
-      await axios
+      await this.$axios
         .get(`/clients/paginate`, {
           params: this.search,
         })
@@ -218,7 +229,7 @@ export default {
     },
     gotoPage: async function (url) {
       this.loading = true
-      await axios
+      await this.$axios
         .get(url, {
           params: this.search,
         })
@@ -235,18 +246,26 @@ export default {
       await swal({
         title: `Are you sure?`,
         text: `Once deleted, you will not be able to recover the client ${name}!`,
-        icon: "warning",
+        icon: 'warning',
         buttons: true,
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          axios.post(`/clients/delete/` + id).then(() => this.getClients())
+          this.$axios
+            .post(`/clients/delete/` + id)
+            .then(() => this.getClients())
           swal(`The client ${name} has been deleted!`, {
-            icon: "success",
-          });
+            icon: 'success',
+          })
         }
       })
     },
+  },
+  mounted() {
+    this.getClients()
+    countries.fetchCountries().then((countries) => {
+      this.countries = countries
+    })
   },
 }
 </script>

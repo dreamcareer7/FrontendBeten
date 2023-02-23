@@ -135,7 +135,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import countries from '@/store/countries'
 
 export default {
@@ -159,7 +158,7 @@ export default {
   },
   methods: {
     updateDormitory: async function () {
-      await axios
+      await this.$axios
         .post(`/dormitories/update/` + this.dormitory_id, this.dormitory)
         .then((response) => {
           this.message = response.data.message

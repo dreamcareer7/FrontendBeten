@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'update_user',
   data() {
@@ -43,7 +42,7 @@ export default {
   },
   methods: {
     updateInfo: async function () {
-      await axios
+      await this.$axios
         .post(`/users/update/` + this.user_id, this.user)
         .then((response) => {
           this.message = response.data.message
@@ -60,13 +59,13 @@ export default {
         })
     },
     deleteUser: async function () {
-      await axios.delete(`/users/` + this.user_id).then((response) => {
+      await this.$axios.delete(`/users/` + this.user_id).then((response) => {
         alert(response.data.message)
         this.getUsers()
       })
     },
     fetchUserInfo: async function (id) {
-      await axios.get(`/users/info/` + id).then((response) => {
+      await this.$axios.get(`/users/info/` + id).then((response) => {
         this.user = response.data.data
       })
     },

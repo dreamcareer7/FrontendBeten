@@ -106,8 +106,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'clients',
   data() {
@@ -139,7 +137,7 @@ export default {
     },
     getPhases: async function () {
       this.loading = true
-      await axios
+      await this.$axios
         .get(`/phases/paginate`, {
           params: this.search,
         })
@@ -154,7 +152,7 @@ export default {
     },
     gotoPage: async function (url) {
       this.loading = true
-      await axios
+      await this.$axios
         .get(url, {
           params: this.search,
         })
@@ -176,7 +174,7 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          axios.post(`/phases/delete/${id}`).then(() => this.getPhases())
+          this.$axios.post(`/phases/delete/${id}`).then(() => this.getPhases())
           swal('Phase has been deleted!', {
             icon: 'success',
           });

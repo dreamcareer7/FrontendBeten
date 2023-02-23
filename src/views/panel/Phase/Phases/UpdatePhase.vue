@@ -84,8 +84,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'update_phase',
   data() {
@@ -117,7 +115,7 @@ export default {
       return added
     },
     getServices: async function () {
-      await axios.get(`/services?per_page=1000`).then((response) => {
+      await this.$axios.get(`/services?per_page=1000`).then((response) => {
         this.searched_services = response.data.data.data
       })
     },
@@ -143,7 +141,7 @@ export default {
     },
    async updatePhase  () {
       this.phase.services = this.phase_services
-      await axios
+      await this.$axios
         .post(`/phases/update/` + this.phase_id, this.phase)
         .then((response) => {
           this.message = response.data.message
@@ -167,7 +165,7 @@ export default {
         })
     },
     fetchInfo: async function (id) {
-      await axios.get(`/phases/info/` + id).then((response) => {
+      await this.$axios.get(`/phases/info/` + id).then((response) => {
         this.phase = response.data.phase
         this.phase_services = response.data.services
 

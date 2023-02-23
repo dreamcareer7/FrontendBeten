@@ -13,19 +13,32 @@
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput placeholder="Email" v-model="form.email" autocomplete="email" disabled />
+                    <CFormInput
+                      placeholder="Email"
+                      v-model="form.email"
+                      autocomplete="email"
+                      disabled
+                    />
                   </CInputGroup>
                   <CInputGroup class="mb-3">
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput placeholder="********" v-model="form.password" autocomplete="password" />
+                    <CFormInput
+                      placeholder="********"
+                      v-model="form.password"
+                      autocomplete="password"
+                    />
                   </CInputGroup>
                   <CInputGroup class="mb-3">
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput placeholder="********" v-model="form.password_confirmation" autocomplete="password" />
+                    <CFormInput
+                      placeholder="********"
+                      v-model="form.password_confirmation"
+                      autocomplete="password"
+                    />
                   </CInputGroup>
                   <CRow>
                     <p>
@@ -44,8 +57,7 @@
             </CCard>
             <CCard class="text-white bg-primary py-5" style="width: 44%">
               <CCardBody class="text-center">
-                <div>
-                </div>
+                <div></div>
               </CCardBody>
             </CCard>
           </CCardGroup>
@@ -56,21 +68,15 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
-  name: 'Login',
+  name: 'NewPassword',
   data: () => ({
     form: { email: '', token: '', password: '', password_confirmation: '' },
     message: '',
   }),
-  mounted() {
-    this.form.token = this.$route.params.hash
-    this.form.email = this.$route.query.email
-  },
   methods: {
     resetPwd: async function () {
-      return await axios
+      return await this.$axios
         .post(`${process.env.VUE_APP_BASE_API_URL}/password/reset`, this.form)
         .then((response) => {
           if (response.status === 200) {
@@ -86,6 +92,10 @@ export default {
           }
         })
     },
+  },
+  mounted() {
+    this.form.token = this.$route.params.hash
+    this.form.email = this.$route.query.email
   },
 }
 </script>

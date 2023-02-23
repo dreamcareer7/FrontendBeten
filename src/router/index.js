@@ -263,7 +263,7 @@ const routes = [
       },
       {
         path: 'hospitalities/create',
-        name: 'Create Concurrent',
+        name: 'Create hospitality',
         component: () =>
           import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
       },

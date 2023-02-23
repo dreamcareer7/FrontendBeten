@@ -83,7 +83,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import countries from '@/store/countries'
 
 export default {
@@ -104,7 +103,7 @@ export default {
   },
   methods: {
     addDormitory: async function () {
-      await axios
+      await this.$axios
         .post(`/dormitories/add`, this.dormitory)
         .then((response) => {
           this.message = response.data.message

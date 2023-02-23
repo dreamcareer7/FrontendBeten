@@ -83,8 +83,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'create_group',
   data() {
@@ -115,12 +113,12 @@ export default {
       return added
     },
     getCrews: async function () {
-      await axios.get(`/crews/all`).then((response) => {
+      await this.$axios.get(`/crews/all`).then((response) => {
         this.crews = response.data
       })
     },
     searchClients: async function () {
-      await axios
+      await this.$axios
         .get(`/clients/paginate`, {
           params: { name: this.client_search, per_page: 500 },
         })
@@ -149,7 +147,7 @@ export default {
     },
     createGroup: async function () {
       this.group.clients = this.group_clients
-      await axios
+      await this.$axios
         .post(`/groups/add`, this.group)
         .then((response) => {
           this.message = response.data.message

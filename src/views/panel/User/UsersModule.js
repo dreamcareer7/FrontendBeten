@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axiosInstance from "@/plugins/axios"
 
 export default {
   namespaced: true,
@@ -8,7 +8,7 @@ export default {
   actions: {
     getUsers(ctx, payload) {
       return new Promise((resolve, reject) => {
-        axios
+        axiosInstance
           .get('/api/users', { params: payload })
           .then((response) => resolve(response))
           .catch((error) => reject(error))
@@ -16,7 +16,7 @@ export default {
     },
     addUser(ctx, data) {
       return new Promise((resolve, reject) => {
-        axios
+        axiosInstance
           .post('/api/users', data)
           .then((response) => resolve(response))
           .catch((error) => reject(error))

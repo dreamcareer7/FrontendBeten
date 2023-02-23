@@ -15,7 +15,7 @@ axiosInstance.interceptors.request.use(
      * that is only if there isn't an Authorization header to begin with
      * before request is sent
     */
-    let token = localStorage.getItem('betenAuthToken')
+    let token = localStorage.getItem('auth_token')
 
     if (token) {
       config.headers['Authorization'] = `Bearer ${ token }`

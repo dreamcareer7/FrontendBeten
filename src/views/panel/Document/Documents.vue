@@ -136,7 +136,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import countries from '@/store/countries'
 
 export default {
@@ -171,7 +170,7 @@ export default {
     },
     getDocuments: async function () {
       this.loading = true
-      await axios
+      await this.$axios
         .get(`/documents/paginate`, {
           params: this.search,
         })
@@ -186,7 +185,7 @@ export default {
     },
     gotoPage: async function (url) {
       this.loading = true
-      await axios
+      await this.$axios
         .get(url, {
           params: this.search,
         })

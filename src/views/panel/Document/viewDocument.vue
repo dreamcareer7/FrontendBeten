@@ -47,9 +47,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-
-
 export default {
   name: 'viewDocument',
   data() {
@@ -69,7 +66,7 @@ export default {
   },
   methods: {
      fetchInfo: async function (id) {
-      await axios.get(`/documents/info/` + id).then((response) => {
+      await this.$axios.get(`/documents/info/` + id).then((response) => {
         this.document = response.data
       })
     },

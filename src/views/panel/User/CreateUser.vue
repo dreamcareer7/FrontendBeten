@@ -87,8 +87,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'create_user',
   data: () => ({
@@ -104,7 +102,7 @@ export default {
   }),
   methods: {
     async addUser() {
-      await axios
+      await this.$axios
         .post(`/users/add`, this.user)
         .then((response) => {
           this.message = response.data.message
@@ -127,7 +125,7 @@ export default {
     },
   },
   mounted() {
-    axios.get('/roles').then((response) => {
+    this.$axios.get('/roles').then((response) => {
       // Populate the roles select element options
       this.roles_select_options = response.data.map((role) => {
         return {

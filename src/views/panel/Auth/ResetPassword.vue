@@ -13,7 +13,11 @@
                     <CInputGroupText>
                       <CIcon icon="cil-user" />
                     </CInputGroupText>
-                    <CFormInput placeholder="Email" v-model="email" autocomplete="email" />
+                    <CFormInput
+                      placeholder="Email"
+                      v-model="email"
+                      autocomplete="email"
+                    />
                   </CInputGroup>
                   <CRow>
                     <p>
@@ -33,8 +37,7 @@
             <CCard class="text-white bg-primary py-5" style="width: 44%">
               <CCardBody class="text-center">
                 <div>
-                  <p>
-                  </p>
+                  <p></p>
                 </div>
               </CCardBody>
             </CCard>
@@ -46,8 +49,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'Login',
   data: () => ({
@@ -56,8 +57,10 @@ export default {
   }),
   methods: {
     login: async function () {
-      return await axios
-        .post(`${process.env.VUE_APP_BASE_API_URL}/password/email`, { email: this.email })
+      return await this.$axios
+        .post(`${process.env.VUE_APP_BASE_API_URL}/password/email`, {
+          email: this.email,
+        })
         .then((response) => {
           this.message = response.data.message
         })

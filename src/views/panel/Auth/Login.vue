@@ -78,7 +78,7 @@ export default {
         .post(`/login`, this.form)
         .then((response) => {
           if (response.data.success) {
-            localStorage.setItem('betenAuthToken', response.data.token)
+            localStorage.setItem('auth_token', response.data.token)
             this.$router.push({
               name: 'Dashboard',
             })

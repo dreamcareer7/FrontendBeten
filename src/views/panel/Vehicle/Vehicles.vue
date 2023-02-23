@@ -10,10 +10,12 @@
             <div class="col-md-2">
               <router-link
                 :to="{
-                  name: 'create_vehicle'
+                  name: 'create_vehicle',
                 }"
               >
-                <CButton color="primary" class="float-end"> Create Vehicle</CButton>
+                <CButton color="primary" class="float-end">
+                  Create Vehicle</CButton
+                >
               </router-link>
             </div>
           </div>
@@ -70,7 +72,9 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="vehicle in vehicles" :key="vehicle.id">
-                <CTableHeaderCell scope="row">{{ vehicle.id }}</CTableHeaderCell>
+                <CTableHeaderCell scope="row">{{
+                  vehicle.id
+                }}</CTableHeaderCell>
                 <CTableDataCell>{{ vehicle.model }}</CTableDataCell>
                 <CTableDataCell>{{ vehicle.registration }}</CTableDataCell>
                 <CTableDataCell>{{ vehicle.manufacturer }}</CTableDataCell>
@@ -99,7 +103,6 @@
             <CCol :md="12" class="text-center">
               <nav aria-label="Page navigation example">
                 <ul class="pagination">
-
                   <li class="page-item" v-for="page in pagination" :key="page">
                     <a
                       @click.prevent="gotoPage(page.url)"
@@ -120,7 +123,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'users',
   data() {
@@ -131,7 +133,7 @@ export default {
       last_page: 99,
       selected_user: null,
       loading: false,
-      pagination:{}
+      pagination: {},
     }
   },
   mounted() {
@@ -150,7 +152,7 @@ export default {
     },
     getVehicles: async function () {
       this.loading = true
-      await axios
+      await this.$axios
         .get(`/vehicles/paginate`, {
           params: this.search,
         })
@@ -166,7 +168,7 @@ export default {
     },
     gotoPage: async function (url) {
       this.loading = true
-      await axios
+      await this.$axios
         .get(url, {
           params: this.search,
         })
@@ -189,7 +191,9 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          axios.post(`/vehicles/delete/${id}`).then(() => this.getVehicles())
+          this.$axios
+            .post(`/vehicles/delete/${id}`)
+            .then(() => this.getVehicles())
           swal('Vehicle has been deleted!', {
             icon: 'success',
           })

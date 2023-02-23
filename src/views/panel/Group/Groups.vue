@@ -121,7 +121,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import countries from "@/store/countries";
 
 export default {
@@ -146,7 +145,7 @@ export default {
   },
   methods: {
     getCrews: async function () {
-      await axios.get(`/crews/all`).then((response) => {
+      await this.$axios.get(`/crews/all`).then((response) => {
         this.crews = response.data
       })
     },
@@ -162,7 +161,7 @@ export default {
     },
     getGroups: async function () {
       this.loading = true
-      await axios
+      await this.$axios
         .get(`/groups/paginate`, {
           params: this.search,
         })
@@ -177,7 +176,7 @@ export default {
     },
     gotoPage: async function (url) {
       this.loading = true
-      await axios
+      await this.$axios
         .get(url, {
           params: this.search,
         })
@@ -199,7 +198,7 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          axios.post(`/groups/delete/${id}`).then(() => this.getGroups())
+          this.$axios.post(`/groups/delete/${id}`).then(() => this.getGroups())
           swal('Group has been deleted!', {
             icon: 'success',
           })

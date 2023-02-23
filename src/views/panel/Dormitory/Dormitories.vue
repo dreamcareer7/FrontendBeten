@@ -142,7 +142,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: 'dormitories',
   data() {
@@ -173,7 +172,7 @@ export default {
     },
     getDormitories: async function () {
       this.loading = true
-      await axios
+      await this.$axios
         .get(`/dormitories/paginate`, {
           params: this.search,
         })
@@ -188,7 +187,7 @@ export default {
     },
     gotoPage: async function (url) {
       this.loading = true
-      await axios
+      await this.$axios
         .get(url, {
           params: this.search,
         })
@@ -210,7 +209,7 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          axios.post(`/dormitories/delete/${id}`).then(() => this.getDormitories())
+          this.$axios.post(`/dormitories/delete/${id}`).then(() => this.getDormitories())
           swal('Dormitory has been deleted!', {
             icon: 'success',
           })

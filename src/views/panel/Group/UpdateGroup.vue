@@ -38,7 +38,6 @@
               <div class="invalid-feedback"></div>
             </div>
           </div>
-
         </form>
       </div>
       <div class="col-8 text-center">
@@ -46,36 +45,47 @@
         <div class="row">
           <div class="col-4">
             <h6>Search Client</h6>
-            <input type="text" v-model="client_search" class="form-control" @change="searchClients" />
+            <input
+              type="text"
+              v-model="client_search"
+              class="form-control"
+              @change="searchClients"
+            />
             <div class="row mt-3">
-              <div class="row border p-2 mb-2" v-for="client in searched_client" >
+              <div
+                class="row border p-2 mb-2"
+                v-for="client in searched_client"
+              >
                 <div class="col-8">
-                  <h6>  {{ client.fullname }} </h6>
-                  <span> {{ client.id}} </span>
+                  <h6>{{ client.fullname }}</h6>
+                  <span> {{ client.id }} </span>
                 </div>
                 <div class="col-4">
-                  <button class="btn btn-primary" @click="addClientToGroup(client)">
+                  <button
+                    class="btn btn-primary"
+                    @click="addClientToGroup(client)"
+                  >
                     <ion-icon name="arrow-forward-outline"></ion-icon>
                   </button>
                 </div>
-
               </div>
             </div>
           </div>
           <div class="col-7">
             <div class="row border p-2 mb-2" v-for="client in group_clients">
               <div class="col-6">
-                <h6>  {{ client.fullname }} </h6>
-                <span> {{ client.id}} </span>
+                <h6>{{ client.fullname }}</h6>
+                <span> {{ client.id }} </span>
               </div>
               <div class="col-4">
-                <button class="btn btn-primary" @click="removeClientFromGroup(client)">
+                <button
+                  class="btn btn-primary"
+                  @click="removeClientFromGroup(client)"
+                >
                   <ion-icon name="close-outline"></ion-icon>
                 </button>
               </div>
-
             </div>
-
           </div>
         </div>
       </div>
@@ -91,14 +101,14 @@
       </CRow>
     </div>
     <div class="card-footer text-end">
-      <a @click.prevent="updateGroup()" class="btn btn-outline-success ajax">Save</a>
+      <a @click.prevent="updateGroup()" class="btn btn-outline-success ajax"
+        >Save</a
+      >
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'create_group',
   data() {
@@ -112,8 +122,8 @@ export default {
         crew_id: '',
       },
       crews: {},
-      group_clients:[],
-      group_id:''
+      group_clients: [],
+      group_id: '',
     }
   },
   mounted() {
@@ -123,12 +133,12 @@ export default {
   },
   methods: {
     getCrews: async function () {
-      await axios.get(`/crews/all`).then((response) => {
+      await this.$axios.get(`/crews/all`).then((response) => {
         this.crews = response.data
       })
     },
     searchClients: async function () {
-      await axios
+      await this.$axios
         .get(`/clients/paginate`, {
           params: { name: this.client_search, per_page: 500 },
         })
@@ -136,47 +146,46 @@ export default {
           this.searched_client = response.data.data
         })
     },
-   async isAdded(client){
-      let added= false
-      this.group_clients.forEach((cln)=>{
-         if(client.id===cln.id){
-          added= true
+    async isAdded(client) {
+      let added = false
+      this.group_clients.forEach((cln) => {
+        if (client.id === cln.id) {
+          added = true
         }
       })
-       return added
+      return added
     },
-  async  addClientToGroup(client) {
-      if(! await this.isAdded(client))
-      {
-
-        if(!this.group_clients.includes(client)){
+    async addClientToGroup(client) {
+      if (!(await this.isAdded(client))) {
+        if (!this.group_clients.includes(client)) {
           this.group_clients.push(client)
         }
       }
-      const index = this.searched_client.indexOf(client);
-      if (index > -1) { // only splice array when item is found
-        this.searched_client.splice(index, 1); // 2nd parameter means remove one item only
+      const index = this.searched_client.indexOf(client)
+      if (index > -1) {
+        // only splice array when item is found
+        this.searched_client.splice(index, 1) // 2nd parameter means remove one item only
       }
     },
-    removeClientFromGroup(client){
-      const index = this.group_clients.indexOf(client);
-      if (index > -1) { // only splice array when item is found
-        this.group_clients.splice(index, 1); // 2nd parameter means remove one item only
+    removeClientFromGroup(client) {
+      const index = this.group_clients.indexOf(client)
+      if (index > -1) {
+        // only splice array when item is found
+        this.group_clients.splice(index, 1) // 2nd parameter means remove one item only
       }
-      if(!this.searched_client.includes(client)){
+      if (!this.searched_client.includes(client)) {
         this.searched_client.push(client)
       }
     },
     updateGroup: async function () {
-       await axios
+      await this.$axios
         .post(`/groups/update/` + this.group_id, this.group)
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
             this.assignClients()
-          }
-          else{
+          } else {
             this.success = false
           }
         })
@@ -191,14 +200,15 @@ export default {
     },
     assignClients: async function () {
       this.group.clients = this.group_clients
-      await axios
-        .post(`/groups/assign_clients/` + this.group_id, {clients:this.group_clients})
+      await this.$axios
+        .post(`/groups/assign_clients/` + this.group_id, {
+          clients: this.group_clients,
+        })
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
-          }
-          else{
+          } else {
             this.success = false
           }
         })
@@ -212,11 +222,11 @@ export default {
         })
     },
     fetchInfo: async function (id) {
-      await axios.get(`/groups/info/` + id).then((response) => {
+      await this.$axios.get(`/groups/info/` + id).then((response) => {
         this.group = response.data.group
         this.group_clients = response.data.clients
       })
     },
-  }
+  },
 }
 </script>

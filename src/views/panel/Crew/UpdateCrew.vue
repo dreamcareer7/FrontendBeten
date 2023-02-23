@@ -147,7 +147,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import countries from '@/store/countries'
 
 export default {
@@ -200,7 +199,7 @@ export default {
   methods: {
     updateCrew: async function () {
       let crew = this.crew;
-      await axios.post(`/crews/update/`+ this.crew_id, crew)
+      await this.$axios.post(`/crews/update/`+ this.crew_id, crew)
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
@@ -216,7 +215,7 @@ export default {
         })
     },
     fetchCrewInfo: async function (id) {
-      await axios.get(`/crews/info/` + id).then((response) => {
+      await this.$axios.get(`/crews/info/` + id).then((response) => {
         this.crew = response.data
       })
     },

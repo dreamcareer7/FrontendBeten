@@ -41,7 +41,7 @@
         <CIcon icon="cil-shield-alt" /> Lock Account
       </CDropdownItem>
       <CDropdownItem @click="logout">
-        <CIcon icon="cil-lock-locked"/> Logout
+        <CIcon icon="cil-lock-locked" /> Logout
       </CDropdownItem>
     </CDropdownMenu>
   </CDropdown>
@@ -59,11 +59,11 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.removeItem('betenAuthToken')
+      localStorage.removeItem('auth_token')
       this.$router.push({
         name: 'Login',
       })
-    }
-  }
+    },
+  },
 }
 </script>
