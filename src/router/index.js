@@ -1,7 +1,6 @@
 import { h, resolveComponent } from 'vue'
-import { createRouter, createWebHistory, isNavigationFailure, NavigationFailureType } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
-import store from '@/store'
 import DefaultLayout from '@/layouts/DefaultLayout'
 
 const routes = [
@@ -127,7 +126,8 @@ const routes = [
       {
         path: 'services/commits/edit/:id',
         name: 'Update Service Commit',
-        component: () => import('@/views/panel/Service/Commits/UpdateServiceCommit'),
+        component: () =>
+          import('@/views/panel/Service/Commits/UpdateServiceCommit'),
       },
       {
         path: 'services/logs',
@@ -174,7 +174,6 @@ const routes = [
       },
 
       // Phases Menu ends here
-
 
       // Meals Menu
       {
@@ -259,22 +258,26 @@ const routes = [
       {
         path: 'hospitalities',
         name: 'hospitalities',
-        component: () => import('@/views/panel/Hospitality/Hospitalities/Hospitalities'),
+        component: () =>
+          import('@/views/panel/Hospitality/Hospitalities/Hospitalities'),
       },
       {
         path: 'hospitalities/create',
         name: 'Create Concurrent',
-        component: () => import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
+        component: () =>
+          import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
       },
       {
         path: 'hospitalities/transactions',
         name: 'Transactions',
-        component: () => import('@/views/panel/Hospitality/Transactions/Transactions'),
+        component: () =>
+          import('@/views/panel/Hospitality/Transactions/Transactions'),
       },
       {
         path: 'hospitalities/transactions/create',
         name: 'Create Transaction',
-        component: () => import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
+        component: () =>
+          import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
       },
       // Hospitalities Menu ends here
     ],
@@ -315,69 +318,12 @@ const routes = [
 ]
 
 const router = createRouter({
-  hashbang: false,
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
   scrollBehavior() {
     // always scroll to top
     return { top: 0 }
   },
-})
-
-router.beforeEach((to, from, next) => {
-  // if (to.matched.some((record) => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    //  if (!store.getters.isLoggedIn) {
-    // if (1 === 2) {
-    //   next({ name: 'Login' })
-    // } else {
-      // if (!store.getters.isLoggedIn) {
-      // next({ name: 'Login' })
-      // } else {
-      next() // go to wherever I'm going
-      // }
-    // }
-  // }
-})
-
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     const token = localStorage.getItem('betenAuthToken')
-//     if (!token) {
-//       next({
-//         path: '/panel/login'
-//       })
-//     } else {
-//       const decoded = jwt_decode(token)
-//       const currentTime = Date.now() / 1000
-//       if (decoded.exp < currentTime) {
-//         localStorage.removeItem('betenAuthToken')
-//         next({
-//           path: '/panel/login'
-//         })
-//       } else {
-//         next()
-//       }
-//     }
-//   } else {
-//     next()
-//   }
-// })
-
-router.afterEach((to, from, failure) => {
-  // Any kind of navigation failure
-  if (isNavigationFailure(failure)) {
-    console.error(failure);
-  }
-  // Only duplicated navigations
-  if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
-    console.error(`Duplicated ${failure}`);
-  }
-  // Aborted or canceled navigations
-  if (isNavigationFailure(failure, NavigationFailureType.aborted | NavigationFailureType.canceled)) {
-    console.warn(`Aborted or cancelled ${failure}`);
-  }
 })
 
 export default router
