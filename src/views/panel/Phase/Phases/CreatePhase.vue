@@ -3,7 +3,7 @@
     <div class="card-header">Create Phase</div>
     <div class="row mt-4">
       <div class="col-12" v-if="!success">
-        <form method="post">
+        <form @submit.prevent="createPhase">
           <div class="card-body">
             <div class="form-floating mb-3">
               <input
