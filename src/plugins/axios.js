@@ -45,9 +45,21 @@ axiosInstance.interceptors.response.use(
      * Do something with response error
      * If error is is Unauthenticated, redirect to login
      */
-    if (error.response.status === 401) { // Unauthenticated
+    if (error.response?.status === 401) { // Unauthenticated
       router.push({
           name: 'Login' // Redirect to login
+      })
+    } else {
+      swal({
+        title: error.code,
+        text: error.message,
+        icon: 'error',
+      }).then(() => {
+        if (!localStorage.getItem('auth_token')) {
+          router.push({
+            name: 'Login' // Redirect to login
+          })
+        }
       })
     }
     return Promise.reject(error)
