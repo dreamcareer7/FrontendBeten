@@ -369,5 +369,8 @@ export default {
       progressGroupExample3,
     }
   },
+  async mounted() {
+    await this.$axios.get('/countries')
+  }
 }
 </script>
