@@ -41,7 +41,7 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
-          <CTable v-if="!loading">
+          <CTable v-if="!loading" responsive>
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -68,7 +68,7 @@
                     name: 'User Details',
                     params: { id: this.$encrypt(user.id) },
                   }">
-                    <button class="btn btn-sm btn-info text-white mx-1" title="View details">
+                    <button class="btn btn-sm btn-info text-white m-1" title="View details">
                       <ion-icon name="eye-outline"></ion-icon>
                     </button>
                   </router-link>
@@ -76,11 +76,11 @@
                     name: 'Edit user',
                     params: { id: this.$encrypt(user.id) },
                   }">
-                    <CButton class="btn btn-sm btn-warning text-white mx-1" title="Edit">
+                    <CButton class="btn btn-sm btn-warning text-white m-1" :xl="0" title="Edit">
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button class="btn btn-sm btn-danger text-white" @click="deleteUser(user.id, user.name)" title="Delete">
+                  <button class="btn btn-sm btn-danger text-white m-1" @click="deleteUser(user.id, user.name)" title="Delete">
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
