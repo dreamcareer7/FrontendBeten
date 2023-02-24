@@ -1,7 +1,9 @@
 import { h, resolveComponent } from 'vue'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
+
+const auth_token = localStorage.getItem('auth_token')
 
 const routes = [
   {
@@ -9,7 +11,7 @@ const routes = [
     name: 'Home',
     component: DefaultLayout,
     meta: { requiresAuth: true },
-    redirect: '/dashboard',
+    redirect: !!auth_token ? '/dashboard' : '/panel/login',
     children: [
       {
         path: '/dashboard',
@@ -288,7 +290,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
   scrollBehavior() {
     // always scroll to top

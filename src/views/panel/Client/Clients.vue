@@ -95,7 +95,7 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
-          <CTable v-if="!loading">
+          <CTable v-if="!loading" responsive>
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -130,14 +130,14 @@
                     }"
                   >
                     <CButton
-                      class="btn btn-sm btn-warning text-white mx-1"
+                      class="btn btn-sm btn-warning text-white m-1"
                       title="Edit"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
                   <button
-                    class="btn btn-sm btn-danger text-white"
+                    class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteClient(client.id, client.fullname)"
                     title="Delete"
                   >
