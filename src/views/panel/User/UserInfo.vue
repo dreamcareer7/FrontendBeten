@@ -37,8 +37,7 @@
             <CTableDataCell>{{ user.updated_at }}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Upload documents</CTableDataCell>
-            <CTableDataCell>
+            <CTableDataCell colspan="2">
               <Documentable :endpoint="`/users/update/${user.id}`" />
             </CTableDataCell>
           </CTableRow>

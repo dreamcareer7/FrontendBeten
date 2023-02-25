@@ -4,10 +4,10 @@
       <CCard class="mb-4">
         <CCardHeader>
           <div class="row">
-            <div class="col-md-10">
-              <strong>Clients</strong>
+            <div class="col-md-8 col-sm-4">
+              <h3 class="mt-1">Clients</h3>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4 col-sm-8">
               <router-link
                 :to="{
                   name: 'Create client',
@@ -38,7 +38,8 @@
           <CRow>
             <CCol :md="2">
               <select
-                class="form-control"
+                type="text"
+                class="form-control mb-3"
                 v-model="search.country"
                 @change="getClients"
               >
@@ -50,7 +51,8 @@
             </CCol>
             <CCol :md="2">
               <select
-                class="form-control"
+                type="text"
+                class="form-control mb-3"
                 v-model="search.gender"
                 @change="getClients"
               >
@@ -62,7 +64,7 @@
             <CCol :md="2">
               <input
                 type="text"
-                class="form-control"
+                class="form-control mb-3"
                 v-model="search.name"
                 placeholder="Name"
                 @change="getClients"
@@ -71,7 +73,7 @@
             <CCol :md="2">
               <input
                 type="text"
-                class="form-control"
+                class="form-control mb-3"
                 v-model="search.phone"
                 placeholder="Phone"
                 @change="getClients"
@@ -80,7 +82,7 @@
             <CCol :md="2">
               <input
                 type="text"
-                class="form-control"
+                class="form-control mb-3"
                 v-model="search.id_no"
                 placeholder="Id Number"
                 @change="getClients"

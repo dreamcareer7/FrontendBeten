@@ -1,7 +1,15 @@
 <template>
   <CForm @submit.prevent="attachDocuments">
-    <input type="file" ref="documents" multiple="multiple" />
-    <button type="submit">Upload</button>
+<!--    <input type="file" ref="documents" multiple="multiple" />-->
+<!--    <button type="submit">Upload</button>-->
+    <CRow>
+      <CCol xs="12" sm="6" class="p1">
+        <CFormInput type="file" ref="documents" multiple="multiple" id="formFileLg" label="Upload Documents" />
+      </CCol>
+      <CCol xs="12" sm="6" class="mt-4">
+        <CButton type="submit" color="primary mt-2" shape="rounded-pill">Upload</CButton>
+      </CCol>
+    </CRow>
   </CForm>
 </template>
 
