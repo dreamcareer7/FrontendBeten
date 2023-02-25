@@ -97,6 +97,13 @@
                 <CTableDataCell>{{ crew.is_active }}</CTableDataCell>
                 <CTableDataCell>{{ crew.created_at }}</CTableDataCell>
                 <CTableDataCell>
+                  <button
+                    class="btn btn-sm btn-info text-white mx-1"
+                    title="View details"
+                    @click="viewDetails(crew.id)"
+                  >
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </button>
                   <router-link
                     :to="{
                       name: 'update_crew',
@@ -146,6 +153,77 @@
       </CCard>
     </CCol>
   </CRow>
+  <CModal
+    :visible="visibleLiveDemo"
+    @close="
+      () => {
+        visibleLiveDemo = false
+      }
+    "
+  >
+    <CModalHeader>
+      <CModalTitle>Client details</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CTable class="table table-responsive">
+        <CTableRow>
+          <CTableDataCell>ID</CTableDataCell>
+          <CTableDataCell>{{ crew_member.id }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Fullname</CTableDataCell>
+          <CTableDataCell>{{ crew_member.fullname }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Gender</CTableDataCell>
+          <CTableDataCell>
+            {{ crew_member.gender === 1 ? 'Male' : 'Female' }}
+          </CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Profession</CTableDataCell>
+          <CTableDataCell>{{ crew_member.profession_id }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Country</CTableDataCell>
+          <CTableDataCell>{{ crew_member.country_id }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Phone</CTableDataCell>
+          <CTableDataCell>{{ crew_member.phone }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>ID Type</CTableDataCell>
+          <CTableDataCell>{{ crew_member.id_type }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Is active?</CTableDataCell>
+          <CTableDataCell>{{ crew_member.is_active ? 'Yes' : 'No' }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Contact</CTableDataCell>
+          <CTableDataCell>{{ crew_member.country_id }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Date created</CTableDataCell>
+          <CTableDataCell>{{ crew_member.created_at }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Date updated</CTableDataCell>
+          <CTableDataCell>{{ crew_member.updated_at }}</CTableDataCell>
+        </CTableRow>
+      </CTable>
+    </CModalBody>
+    <CModalFooter>
+      <CForm @submit.prevent="attachContract">
+        <CFormInput type="file" ref="contract" />
+        <button type="submit">Upload</button>
+      </CForm>
+      <CButton color="secondary" @click="visibleLiveDemo = false">
+        Close
+      </CButton>
+    </CModalFooter>
+  </CModal>
 </template>
 
 <script>
@@ -159,6 +237,8 @@ export default {
     selected_user: null,
     loading: false,
     pagination: {},
+    crew_member: {},
+    visibleLiveDemo: false,
   }),
   methods: {
     nextPage: async function () {
@@ -219,6 +299,18 @@ export default {
         }
       })
     },
+    viewDetails: async function (id) {
+      await this.$axios.get(`/crews/info/${id}`).then((response) => {
+        this.crew_member = response.data
+        this.visibleLiveDemo = true
+      })
+    },
+    attachContract: async function () {
+      let form_data = new FormData()
+      let contract = this.$refs.contract
+      console.log(contract.files);
+      form_data.append('file', contract)
+    }
   },
   mounted() {
     this.getCrews()
