@@ -200,10 +200,21 @@
           <CTableDataCell>Date updated</CTableDataCell>
           <CTableDataCell>{{ dormitory.updated_at }}</CTableDataCell>
         </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Upload contract</CTableDataCell>
+          <CTableDataCell>
+            <Contractable :endpoint="`/dormitories/update/${dormitory.id}`" />
+          </CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Upload documents</CTableDataCell>
+          <CTableDataCell>
+            <Documentable :endpoint="`/dormitories/update/${dormitory.id}`" />
+          </CTableDataCell>
+        </CTableRow>
       </CTable>
     </CModalBody>
     <CModalFooter>
-      <Contractable :endpoint="`dormitories/update/${dormitory.id}`" />
       <CButton color="secondary" @click="visibleLiveDemo = false">
         Close
       </CButton>

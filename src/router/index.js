@@ -67,36 +67,6 @@ const routes = [
         name: 'update_crew',
         component: () => import('@/views/panel/Crew/UpdateCrew'),
       },
-      {
-        path: 'contracts',
-        name: 'contracts',
-        component: () => import('@/views/panel/Contract/Contracts'),
-      },
-      {
-        path: 'contracts/create',
-        name: 'Create Contract',
-        component: () => import('@/views/panel/Contract/CreateContract'),
-      },
-      {
-        path: 'documents',
-        name: 'documents',
-        component: () => import('@/views/panel/Document/Documents'),
-      },
-      {
-        path: 'documents/create',
-        name: 'Create Document',
-        component: () => import('@/views/panel/Document/CreateDocument'),
-      },
-      {
-        path: 'documents/view/:id',
-        name: 'View Document',
-        component: () => import('@/views/panel/Document/viewDocument'),
-      },
-      {
-        path: 'documents/update/:id',
-        name: 'update_document',
-        component: () => import('@/views/panel/Document/UpdateDocument'),
-      },
       // Services menu
       {
         path: 'services',

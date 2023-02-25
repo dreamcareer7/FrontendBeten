@@ -167,10 +167,21 @@
           <CTableDataCell>Date updated</CTableDataCell>
           <CTableDataCell>{{ vehicle.updated_at }}</CTableDataCell>
         </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Upload contract</CTableDataCell>
+          <CTableDataCell>
+            <Contractable :endpoint="`vehicles/update/${vehicle.id}`" />
+          </CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Upload documents</CTableDataCell>
+          <CTableDataCell>
+            <Documentable :endpoint="`/vehicles/update/${vehicle.id}`" />
+          </CTableDataCell>
+        </CTableRow>
       </CTable>
     </CModalBody>
     <CModalFooter>
-      <Contractable :endpoint="`vehicles/update/${vehicle.id}`"/>
       <CButton color="secondary" @click="visibleLiveDemo = false">
         Close
       </CButton>
