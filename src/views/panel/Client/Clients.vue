@@ -13,7 +13,6 @@
                   name: 'Create client',
                 }"
               >
-                <!-- class="button-icon" -->
                 <CButton color="primary" class="float-end">
                   <svg
                     class="button-icon"
@@ -39,7 +38,6 @@
           <CRow>
             <CCol :md="2">
               <select
-                type="text"
                 class="form-control"
                 v-model="search.country"
                 @change="getClients"
@@ -52,7 +50,6 @@
             </CCol>
             <CCol :md="2">
               <select
-                type="text"
                 class="form-control"
                 v-model="search.gender"
                 @change="getClients"
