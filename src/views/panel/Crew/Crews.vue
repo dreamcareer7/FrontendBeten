@@ -162,7 +162,7 @@
     "
   >
     <CModalHeader>
-      <CModalTitle>Client details</CModalTitle>
+      <CModalTitle>Crew member details</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
@@ -216,7 +216,7 @@
     </CModalBody>
     <CModalFooter>
       <CForm @submit.prevent="attachContract">
-        <CFormInput type="file" ref="contract" />
+        <input type="file" ref="contract" />
         <button type="submit">Upload</button>
       </CForm>
       <CButton color="secondary" @click="visibleLiveDemo = false">
@@ -307,9 +307,12 @@ export default {
     },
     attachContract: async function () {
       let form_data = new FormData()
-      let contract = this.$refs.contract
-      console.log(contract.files);
-      form_data.append('file', contract)
+      let contract = this.$refs.contract.files[0]
+      form_data.append('contract', contract)
+      this.$axios.post(`/crews/update/${this.crew_member.id}`, form_data)
+        .then((response) => {
+          swal(response.data.message)
+        })
     }
   },
   mounted() {
