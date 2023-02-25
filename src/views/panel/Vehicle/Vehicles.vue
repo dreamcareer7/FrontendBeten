@@ -81,6 +81,13 @@
                 <CTableDataCell>{{ vehicle.year }}</CTableDataCell>
                 <CTableDataCell>{{ vehicle.badge }}</CTableDataCell>
                 <CTableDataCell>
+                  <button
+                    class="btn btn-sm btn-info text-white mx-1"
+                    title="View details"
+                    @click="viewDetails(vehicle.id)"
+                  >
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </button>
                   <router-link
                     :to="{
                       name: 'update_vehicle',
@@ -120,6 +127,55 @@
       </CCard>
     </CCol>
   </CRow>
+  <CModal :visible="visibleLiveDemo" @close="visibleLiveDemo = false">
+    <CModalHeader>
+      <CModalTitle>Vehicle details</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CTable class="table table-responsive">
+        <CTableRow>
+          <CTableDataCell>ID</CTableDataCell>
+          <CTableDataCell>{{ vehicle.id }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Model</CTableDataCell>
+          <CTableDataCell>{{ vehicle.model }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Manufacturer</CTableDataCell>
+          <CTableDataCell>
+            {{ vehicle.manufacturer }}
+          </CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Year</CTableDataCell>
+          <CTableDataCell>{{ vehicle.year }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Registration</CTableDataCell>
+          <CTableDataCell>{{ vehicle.registration }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Badge</CTableDataCell>
+          <CTableDataCell>{{ vehicle.badge }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Date created</CTableDataCell>
+          <CTableDataCell>{{ vehicle.created_at }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Date updated</CTableDataCell>
+          <CTableDataCell>{{ vehicle.updated_at }}</CTableDataCell>
+        </CTableRow>
+      </CTable>
+    </CModalBody>
+    <CModalFooter>
+      <Contractable :endpoint="`vehicles/update/${vehicle.id}`"/>
+      <CButton color="secondary" @click="visibleLiveDemo = false">
+        Close
+      </CButton>
+    </CModalFooter>
+  </CModal>
 </template>
 
 <script>
@@ -134,6 +190,8 @@ export default {
       selected_user: null,
       loading: false,
       pagination: {},
+      vehicle: {},
+      visibleLiveDemo: false,
     }
   },
   mounted() {
@@ -181,6 +239,12 @@ export default {
           this.pagination = response.data.links
         })
       this.loading = false
+    },
+    viewDetails: async function (id) {
+      await this.$axios.get(`/vehicles/info/${id}`).then((response) => {
+        this.vehicle = response.data
+        this.visibleLiveDemo = true
+      })
     },
     deleteVehicle: async function (id) {
       await swal({

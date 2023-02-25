@@ -153,14 +153,7 @@
       </CCard>
     </CCol>
   </CRow>
-  <CModal
-    :visible="visibleLiveDemo"
-    @close="
-      () => {
-        visibleLiveDemo = false
-      }
-    "
-  >
+  <CModal :visible="visibleLiveDemo" @close="visibleLiveDemo = false">
     <CModalHeader>
       <CModalTitle>Crew member details</CModalTitle>
     </CModalHeader>
@@ -198,7 +191,9 @@
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Is active?</CTableDataCell>
-          <CTableDataCell>{{ crew_member.is_active ? 'Yes' : 'No' }}</CTableDataCell>
+          <CTableDataCell>{{
+            crew_member.is_active ? 'Yes' : 'No'
+          }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Contact</CTableDataCell>
@@ -215,10 +210,7 @@
       </CTable>
     </CModalBody>
     <CModalFooter>
-      <CForm @submit.prevent="attachContract">
-        <input type="file" ref="contract" />
-        <button type="submit">Upload</button>
-      </CForm>
+      <Contractable :endpoint="`/crews/update/${crew_member.id}`" />
       <CButton color="secondary" @click="visibleLiveDemo = false">
         Close
       </CButton>
@@ -305,15 +297,6 @@ export default {
         this.visibleLiveDemo = true
       })
     },
-    attachContract: async function () {
-      let form_data = new FormData()
-      let contract = this.$refs.contract.files[0]
-      form_data.append('contract', contract)
-      this.$axios.post(`/crews/update/${this.crew_member.id}`, form_data)
-        .then((response) => {
-          swal(response.data.message)
-        })
-    }
   },
   mounted() {
     this.getCrews()
