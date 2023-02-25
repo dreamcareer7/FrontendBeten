@@ -1,6 +1,6 @@
 <template>
   <CForm @submit.prevent="attachDocuments">
-    <input type="file" ref="documents"/>
+    <input type="file" ref="documents" multiple="multiple" />
     <button type="submit">Upload</button>
   </CForm>
 </template>
@@ -11,14 +11,16 @@ export default {
   props: ['endpoint'],
   methods: {
     async attachDocuments() {
-      let documents = this.$refs.documents.files[0]
       let form_data = new FormData()
-      form_data.append('documents', documents)
-      await this.$axios
-        .post(this.endpoint, form_data)
-        .then((response) => {
-          swal(response.data.message)
-        })
+
+      for (let i = 0; i < this.$refs.documents.files.length; i++) {
+        let document = this.$refs.documents.files[i]
+        form_data.append(`documents[${i}]`, document)
+      }
+
+      await this.$axios.post(this.endpoint, form_data).then((response) => {
+        swal(response.data.message)
+      })
     },
   },
 }

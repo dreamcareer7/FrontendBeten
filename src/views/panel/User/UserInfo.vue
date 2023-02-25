@@ -36,6 +36,12 @@
             <CTableDataCell>Date updated</CTableDataCell>
             <CTableDataCell>{{ user.updated_at }}</CTableDataCell>
           </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Upload documents</CTableDataCell>
+            <CTableDataCell>
+              <Documentable :endpoint="`/users/update/${user.id}`" />
+            </CTableDataCell>
+          </CTableRow>
         </CTable>
       </CCol>
     </CRow>
@@ -49,8 +55,9 @@ export default {
     user: {},
   }),
   async mounted() {
-    await this.$axios.get(`/users/info/${this.$decrypt(this.$route.params.id)}`)
-      .then((response) => this.user = response.data.data)
+    await this.$axios
+      .get(`/users/info/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => (this.user = response.data.data))
   },
 }
 </script>
