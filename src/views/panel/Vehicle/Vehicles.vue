@@ -94,13 +94,13 @@
                       params: { id: this.$encrypt(vehicle.id) },
                     }"
                   >
-                    <CButton class="btn btn-warning text-white">Update</CButton>
+                    <CButton class="btn btn-sm btn-warning text-white m-1"><ion-icon name="create-outline"></ion-icon></CButton>
                   </router-link>
                   <button
-                    class="btn btn-danger text-white"
+                    class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteVehicle(vehicle.id)"
                   >
-                    Delete
+                    <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
               </CTableRow>
