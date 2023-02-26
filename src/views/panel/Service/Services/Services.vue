@@ -35,7 +35,7 @@
                   {{ service.id }}
                 </CTableHeaderCell>
                 <CTableDataCell>{{ service.title }}</CTableDataCell>
-                <CTableDataCell>{{ service.city }}</CTableDataCell>
+                <CTableDataCell>{{ service.city.title }}</CTableDataCell>
                 <CTableDataCell>{{ service.before_date }}</CTableDataCell>
                 <CTableDataCell>{{ service.exact_date }}</CTableDataCell>
                 <CTableDataCell>{{ service.after_date }}</CTableDataCell>

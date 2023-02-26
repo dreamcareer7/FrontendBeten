@@ -25,8 +25,8 @@
             required
           >
             <option>Choose city</option>
-            <option v-for="(city, index) in cities" :value="city" :key="index">
-              {{ city }}
+            <option v-for="city in cities" :value="city.id" :key="city.id">
+              {{ city.title }}
             </option>
           </select>
           <label for="city">City *</label>
@@ -95,7 +95,7 @@ export default {
     message: '',
     success: false,
     service: {},
-    cities: ['Jeddah', 'Medina', 'Ynbu', 'Taif'],
+    cities: [],
   }),
   methods: {
     createService: async function () {
@@ -113,5 +113,8 @@ export default {
         })
     },
   },
+  mounted() {
+    this.$axios.get('/cities').then((response) => this.cities = response.data)
+  }
 }
 </script>

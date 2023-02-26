@@ -78,7 +78,7 @@
       </CRow>
     </div>
     <div class="card-footer text-end">
-      <a @click="updatePhase()" class="btn btn-outline-success ajax" v-if="!success">Save</a>
+      <button @click="updatePhase()" class="btn btn-outline-success ajax" v-if="!success" :disabled="phase_services.length === 0">Save</button>
     </div>
   </div>
 </template>

@@ -85,5 +85,11 @@
 <script>
 export default {
   name: 'Meals',
+  data: () => ({
+    meals: [],
+  }),
+  mounted() {
+    this.$axios.get('/meals').then((response) => this.meals = response.data)
+  }
 }
 </script>

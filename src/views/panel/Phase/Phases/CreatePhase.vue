@@ -91,6 +91,7 @@
     <div class="card-footer text-end">
       <button
         @click="createPhase"
+        :disabled="phase_services.length === 0"
         class="btn btn-success text-white"
         v-if="!success"
       >
