@@ -4,10 +4,10 @@
       <CCard class="mb-4">
         <CCardHeader>
           <div class="row">
-            <div class="col-md-10">
-              <strong>Users</strong>
+            <div class="col-md-8 col-sm-4 col-xs-4">
+              <h3 class="mt-1">Users</h3>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4 col-sm-8 col-xs-8">
               <router-link to="/users/create">
                 <CButton color="primary" class="float-end">
                   <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -22,14 +22,14 @@
         </CCardHeader>
         <CCardBody>
           <CRow>
-            <CCol :md="2">
-              <input type="text" class="form-control" v-model="search.name" placeholder="name" @change="getUsers" />
+            <CCol :md="2" :sm="4">
+              <input type="text" class="form-control mb-3" v-model="search.name" placeholder="Name" @change="getUsers" />
             </CCol>
-            <CCol :md="2">
-              <input type="text" class="form-control" v-model="search.email" placeholder="Email" @change="getUsers" />
+            <CCol :md="2" :sm="4">
+              <input type="text" class="form-control mb-3" v-model="search.email" placeholder="Email" @change="getUsers" />
             </CCol>
-            <CCol :md="2">
-              <input type="text" class="form-control" v-model="search.contact" placeholder="Contact" @change="getUsers" />
+            <CCol :md="2" :sm="4">
+              <input type="text" class="form-control mb-3" v-model="search.contact" placeholder="Contact" @change="getUsers" />
             </CCol>
           </CRow>
           <CRow v-if="loading" class="mt-4">
@@ -41,7 +41,7 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
-          <CTable v-if="!loading">
+          <CTable v-if="!loading" responsive hover class="cursor-pointer">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -51,11 +51,11 @@
                 <CTableHeaderCell scope="col">Contact</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Active</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Date created</CTableHeaderCell>
-                <CTableHeaderCell scope="col" :aria-colspan="2">Actions</CTableHeaderCell>
+                <CTableHeaderCell style="width: 15%;" scope="col" :aria-colspan="2">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="user in users" :key="user.id">
+              <CTableRow v-for="user in users" :key="user.id" @click="viewDetails(this.$encrypt(user.id))" v-c-tooltip="{content: 'View Detail.', placement: 'left'}">
                 <CTableHeaderCell scope="row">{{ user.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ user.name }}</CTableDataCell>
                 <CTableDataCell>{{ user.username }}</CTableDataCell>
@@ -64,23 +64,23 @@
                 <CTableDataCell>{{ user.is_active ? 'Yes' : 'No' }}</CTableDataCell>
                 <CTableDataCell>{{ user.created_at }}</CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
-                  <router-link :to="{
-                    name: 'User Details',
-                    params: { id: this.$encrypt(user.id) },
-                  }">
-                    <button class="btn btn-sm btn-info text-white mx-1" title="View details">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-                  </router-link>
+<!--                  <router-link :to="{-->
+<!--                    name: 'User Details',-->
+<!--                    params: { id: this.$encrypt(user.id) },-->
+<!--                  }">-->
+<!--                    <button class="btn btn-sm btn-info text-white m-1" title="View details">-->
+<!--                      <ion-icon name="eye-outline"></ion-icon>-->
+<!--                    </button>-->
+<!--                  </router-link>-->
                   <router-link :to="{
                     name: 'Edit user',
                     params: { id: this.$encrypt(user.id) },
                   }">
-                    <CButton class="btn btn-sm btn-warning text-white mx-1" title="Edit">
+                    <CButton class="btn btn-sm btn-warning text-white m-1" :xl="0" title="Edit">
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button class="btn btn-sm btn-danger text-white" @click="deleteUser(user.id, user.name)" title="Delete">
+                  <button class="btn btn-sm btn-danger text-white m-1" @click="deleteUser(user.id, user.name)" title="Delete">
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -182,6 +182,9 @@ export default {
       await this.$axios.get(`/users/show/${id}`).then((response) => {
         console.log(response.data)
       })
+    },
+    viewDetails(id){
+      this.$router.push({name:'User Details', params:{id:id}});
     },
   },
   mounted() {

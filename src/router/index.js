@@ -1,5 +1,5 @@
 import { h, resolveComponent } from 'vue'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
 
@@ -288,12 +288,24 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
   scrollBehavior() {
     // always scroll to top
     return { top: 0 }
   },
+})
+
+router.beforeEach((to, from, next) => {
+  const auth_token = localStorage.getItem('auth_token')
+  const reqAuth = to.matched.some((record) => record.meta.requiresAuth)
+  const loginQuery = { path: '/panel/login', query: {} }
+
+  if (reqAuth && !auth_token) {
+    next(loginQuery)
+  } else {
+    next();
+  }
 })
 
 export default router
