@@ -128,7 +128,7 @@
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View details"
-                    @click="viewDetails(client.id)"
+                    @click="viewDetails(this.$encrypt(client.id))"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -366,7 +366,7 @@ export default {
       })
     },
     viewDetails: async function (id) {
-      await this.$axios.get(`/clients/info/${id}`).then((response) => {
+      await this.$axios.get(`/clients/info/${this.$decrypt(id)}`).then((response) => {
         this.client = response.data
         this.visibleLiveDemo = true
       })
