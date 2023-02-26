@@ -11,6 +11,8 @@ import { encrypt, decrypt } from '@/plugins/crypto'
 
 import { iconsSet as icons } from '@/assets/icons'
 import DocsExample from '@/components/DocsExample'
+import Contractable from '@/components/Contractable'
+import Documentable from '@/components/Documentable'
 
 const app = createApp(App)
 
@@ -22,6 +24,9 @@ app.provide('icons', icons)
 
 app.component('CIcon', CIcon)
 app.component('DocsExample', DocsExample)
+app.component('Contractable', Contractable)
+app.component('Documentable', Documentable)
+
 app.config.compilerOptions.isCustomElement = (tag) => tag.includes('ion-icon')
 
 app.config.globalProperties.$swal = swalInstance

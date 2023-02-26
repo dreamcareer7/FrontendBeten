@@ -32,18 +32,6 @@ export default [
     name: 'Others',
   },
   {
-    component: 'CNavItem',
-    name: 'Contracts',
-    to: '/contracts',
-    icon: 'cil-pen-alt',
-  },
-  {
-    component: 'CNavItem',
-    name: 'Documents',
-    to: '/documents',
-    icon: 'cil-file',
-  },
-  {
     component: 'CNavGroup',
     name: 'Services',
     to: '/pages',

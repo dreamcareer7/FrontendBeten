@@ -10,10 +10,12 @@
             <div class="col-md-2">
               <router-link
                 :to="{
-                  name: 'create_dormitory'
+                  name: 'create_dormitory',
                 }"
               >
-                <CButton color="primary" class="float-end"> Create Dormitory</CButton>
+                <CButton color="primary" class="float-end">
+                  Create Dormitory</CButton
+                >
               </router-link>
             </div>
           </div>
@@ -81,7 +83,9 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="dormitory in dormitories" :key="dormitory.id">
-                <CTableHeaderCell scope="row">{{ dormitory.id }}</CTableHeaderCell>
+                <CTableHeaderCell scope="row">{{
+                  dormitory.id
+                }}</CTableHeaderCell>
                 <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.phone }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.country_name }}</CTableDataCell>
@@ -90,6 +94,13 @@
                 <CTableDataCell>{{ dormitory.coordinate }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.is_active }}</CTableDataCell>
                 <CTableDataCell>
+                  <button
+                    class="btn btn-sm btn-info text-white mx-1"
+                    title="View details"
+                    @click="viewDetails(dormitory.id)"
+                  >
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </button>
                   <router-link
                     :to="{
                       name: 'update_dormitory',
@@ -139,6 +150,76 @@
       </CCard>
     </CCol>
   </CRow>
+  <CModal :visible="visibleLiveDemo" @close="visibleLiveDemo = false">
+    <CModalHeader>
+      <CModalTitle>Dormitory details</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CTable class="table table-responsive">
+        <CTableRow>
+          <CTableDataCell>ID</CTableDataCell>
+          <CTableDataCell>{{ dormitory.id }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Title</CTableDataCell>
+          <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Phone</CTableDataCell>
+          <CTableDataCell>
+            {{ dormitory.phone }}
+          </CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Country</CTableDataCell>
+          <CTableDataCell>{{ dormitory.country }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>City</CTableDataCell>
+          <CTableDataCell>{{ dormitory.city_id }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Location</CTableDataCell>
+          <CTableDataCell>{{ dormitory.location }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Coordinates</CTableDataCell>
+          <CTableDataCell>{{ dormitory.coordinate }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Is active?</CTableDataCell>
+          <CTableDataCell>{{
+            dormitory.is_active ? 'Yes' : 'No'
+          }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Date created</CTableDataCell>
+          <CTableDataCell>{{ dormitory.created_at }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Date updated</CTableDataCell>
+          <CTableDataCell>{{ dormitory.updated_at }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Upload contract</CTableDataCell>
+          <CTableDataCell>
+            <Contractable :endpoint="`/dormitories/update/${dormitory.id}`" />
+          </CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>Upload documents</CTableDataCell>
+          <CTableDataCell>
+            <Documentable :endpoint="`/dormitories/update/${dormitory.id}`" />
+          </CTableDataCell>
+        </CTableRow>
+      </CTable>
+    </CModalBody>
+    <CModalFooter>
+      <CButton color="secondary" @click="visibleLiveDemo = false">
+        Close
+      </CButton>
+    </CModalFooter>
+  </CModal>
 </template>
 
 <script>
@@ -153,13 +234,21 @@ export default {
       last_page: 99,
       selected_user: null,
       loading: false,
-      pagination:{}
+      pagination: {},
+      dormitory: {},
+      visibleLiveDemo: false,
     }
   },
   mounted() {
     this.getDormitories()
   },
   methods: {
+    viewDetails: async function (id) {
+      await this.$axios.get(`/dormitories/info/${id}`).then((response) => {
+        this.dormitory = response.data
+        this.visibleLiveDemo = true
+      })
+    },
     nextPage: async function () {
       this.current_page = this.current_page + 1
       this.search.page = this.current_page
@@ -209,7 +298,9 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.post(`/dormitories/delete/${id}`).then(() => this.getDormitories())
+          this.$axios
+            .post(`/dormitories/delete/${id}`)
+            .then(() => this.getDormitories())
           swal('Dormitory has been deleted!', {
             icon: 'success',
           })

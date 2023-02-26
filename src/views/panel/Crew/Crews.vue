@@ -3,11 +3,11 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <div class="row">
-            <div class="col-md-10">
-              <strong>Crews</strong>
-            </div>
-            <div class="col-md-2">
+          <CRow>
+            <CCol :md="8" :sm="4">
+              <h3 class="mt-1">Crews</h3>
+            </CCol>
+            <CCol :md="4" :sm="8">
               <router-link
                 :to="{
                   name: 'Create_Crew',
@@ -31,24 +31,24 @@
                   <span>Create Crew</span>
                 </CButton>
               </router-link>
-            </div>
-          </div>
+            </CCol>
+          </CRow>
         </CCardHeader>
         <CCardBody>
           <CRow>
-            <CCol :md="2">
+            <CCol :md="2" :sm="6">
               <input
                 type="text"
-                class="form-control"
+                class="form-control mb-3"
                 v-model="search.fullname"
                 placeholder="Full Name"
                 @change="getCrews"
               />
             </CCol>
-            <CCol :md="2">
+            <CCol :md="2" :sm="6">
               <input
                 type="text"
-                class="form-control"
+                class="form-control mb-3"
                 v-model="search.id_type"
                 placeholder="ID Type"
                 @change="getCrews"
@@ -63,7 +63,7 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
-          <CTable v-if="!loading">
+          <CTable v-if="!loading" responsive hover class="cursor-pointer">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -78,10 +78,12 @@
                 <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Is Active</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Created At</CTableHeaderCell>
+                <CTableHeaderCell style="width:10%" :aria-colspan="2">Action</CTableHeaderCell>
+
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="crew in crews" :key="crew.id">
+              <CTableRow v-for="crew in crews" :key="crew.id" @click="viewDetails(crew.id)" v-c-tooltip="{content: 'View Detail.', placement: 'left'}">
                 <CTableHeaderCell scope="row">{{ crew.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ crew.user_id }}</CTableDataCell>
                 <CTableDataCell>{{ crew.fullname }}</CTableDataCell>
@@ -94,22 +96,30 @@
                 <CTableDataCell>{{ crew.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_no }}</CTableDataCell>
                 <CTableDataCell>{{ crew.dob }}</CTableDataCell>
-                <CTableDataCell>{{ crew.is_active }}</CTableDataCell>
+                <CTableDataCell>
+                  <CBadge :color="crew.is_active ? 'warning' : 'danger'" shape="rounded-pill">{{ crew.is_active ? 'Yes' : 'No'}}</CBadge>
+                </CTableDataCell>
                 <CTableDataCell>{{ crew.created_at }}</CTableDataCell>
                 <CTableDataCell>
+<!--                  <button-->
+<!--                    class="btn btn-sm btn-info text-white mx-1"-->
+<!--                    title="View details"-->
+<!--                    @click="viewDetails(crew.id)"-->
+<!--                  >-->
+<!--                    <ion-icon name="eye-outline"></ion-icon>-->
+<!--                  </button>-->
                   <router-link
                     :to="{
                       name: 'update_crew',
                       params: { id: this.$encrypt(crew.id) },
                     }"
                   >
-                    <CButton class="btn btn-warning text-white">Update</CButton>
+                    <CButton class="btn btn-sm btn-warning text-white m-1" :xl="0" title="Edit">
+                      <ion-icon name="create-outline"></ion-icon>
+                    </CButton>
                   </router-link>
-                  <button
-                    class="btn btn-danger text-white"
-                    @click="deleteCrew(crew.id)"
-                  >
-                    Delete
+                  <button class="btn btn-sm btn-danger text-white m-1" @click="deleteCrew(crew.id)" title="Delete">
+                    <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
               </CTableRow>
@@ -146,6 +156,75 @@
       </CCard>
     </CCol>
   </CRow>
+  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false">
+    <CModalHeader>
+      <CModalTitle>Crew Member Details</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CTable class="table table-responsive">
+        <CTableRow class="mt-3">
+          <CTableHeaderCell>ID:</CTableHeaderCell>
+          <CTableDataCell>{{ crew_member.id }}</CTableDataCell>
+          <CTableHeaderCell>Full Name:</CTableHeaderCell>
+          <CTableDataCell>{{ crew_member.fullname }}</CTableDataCell>
+        </CTableRow>
+
+        <CTableRow class="mt-3">
+          <CTableHeaderCell>Gender:</CTableHeaderCell>
+          <CTableDataCell>
+            {{ crew_member.gender === 1 ? 'Male' : 'Female' }}
+          </CTableDataCell>
+          <CTableHeaderCell>Profession:</CTableHeaderCell>
+          <CTableDataCell>{{ crew_member.profession_id }}</CTableDataCell>
+        </CTableRow>
+
+        <CTableRow class="mt-3">
+          <CTableHeaderCell>Country:</CTableHeaderCell>
+          <CTableDataCell>{{ crew_member.country_id }}</CTableDataCell>
+          <CTableHeaderCell>Phone:</CTableHeaderCell>
+          <CTableDataCell>{{ crew_member.phone }}</CTableDataCell>
+        </CTableRow>
+
+        <CTableRow class="mt-3">
+          <CTableHeaderCell>ID Type:</CTableHeaderCell>
+          <CTableDataCell>{{ crew_member.id_type }}</CTableDataCell>
+          <CTableHeaderCell>Is Active:</CTableHeaderCell>
+          <CTableDataCell>
+            <CBadge :color="crew_member.is_active ? 'warning' : 'danger'" shape="rounded-pill">{{ crew_member.is_active ? 'Yes' : 'No'}}</CBadge>
+          </CTableDataCell>
+        </CTableRow>
+
+        <CTableRow class="mt-3">
+          <CTableHeaderCell>Contact</CTableHeaderCell>
+          <CTableDataCell>{{ crew_member.country_id }}</CTableDataCell>
+          <CTableHeaderCell>Date Created:</CTableHeaderCell>
+          <CTableDataCell>{{ crew_member.created_at }}</CTableDataCell>
+        </CTableRow>
+
+        <CTableRow class="mt-3">
+          <CTableHeaderCell>Date Updated:</CTableHeaderCell>
+          <CTableDataCell>{{ crew_member.updated_at }}</CTableDataCell>
+         </CTableRow>
+
+         <CTableRow class="mt-3">
+          <CTableDataCell colspan="4">
+            <Contractable :endpoint="`/crews/update/${crew_member.id}`" />
+          </CTableDataCell>
+        </CTableRow>
+
+        <CTableRow class="mt-3">
+          <CTableDataCell colspan="4">
+            <Documentable :endpoint="`/crews/update/${crew_member.id}`" />
+          </CTableDataCell>
+        </CTableRow>
+      </CTable>
+    </CModalBody>
+    <CModalFooter>
+      <CButton color="secondary" @click="visibleLiveDemo = false">
+        Close
+      </CButton>
+    </CModalFooter>
+  </CModal>
 </template>
 
 <script>
@@ -159,6 +238,8 @@ export default {
     selected_user: null,
     loading: false,
     pagination: {},
+    crew_member: {},
+    visibleLiveDemo: false,
   }),
   methods: {
     nextPage: async function () {
@@ -217,6 +298,12 @@ export default {
             icon: 'success',
           })
         }
+      })
+    },
+    viewDetails: async function (id) {
+      await this.$axios.get(`/crews/info/${id}`).then((response) => {
+        this.crew_member = response.data
+        this.visibleLiveDemo = true
       })
     },
   },
