@@ -141,7 +141,7 @@
       </div>
 
       <div class="card-footer text-end">
-        <button class="btn text-white btn-primary" @click.prevent="addClient">
+        <button class="btn text-white btn-success" @click.prevent="addClient">
           <svg
             class="button-icon"
             clip-rule="evenodd"

@@ -13,7 +13,7 @@
                   name: 'Create_Crew',
                 }"
               >
-                <CButton color="primary" class="float-end">
+                <CButton color="success" class="float-end text-white">
                   <svg
                     clip-rule="evenodd"
                     class="button-icon"
@@ -101,13 +101,13 @@
                 </CTableDataCell>
                 <CTableDataCell>{{ crew.created_at }}</CTableDataCell>
                 <CTableDataCell>
-<!--                  <button-->
-<!--                    class="btn btn-sm btn-info text-white mx-1"-->
-<!--                    title="View details"-->
-<!--                    @click="viewDetails(crew.id)"-->
-<!--                  >-->
-<!--                    <ion-icon name="eye-outline"></ion-icon>-->
-<!--                  </button>-->
+                  <button
+                    class="btn btn-sm btn-info text-white mx-1"
+                    title="View details"
+                    @click="viewDetails(crew.id)"
+                  >
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </button>
                   <router-link
                     :to="{
                       name: 'update_crew',
