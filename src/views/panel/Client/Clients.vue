@@ -184,59 +184,6 @@
         </CCardBody>
       </CCard>
     </CCol>
-
-    <CModal
-      size="lg"
-      :visible="visibleLiveDemo"
-      @close="visibleLiveDemo = false"
-    >
-      <CModalHeader>
-        <CModalTitle>Client Details</CModalTitle>
-      </CModalHeader>
-      <CModalBody>
-        <CTable class="table table-responsive">
-          <CTableRow class="mt-3">
-            <CTableHeaderCell>ID:</CTableHeaderCell>
-            <CTableDataCell>{{ current_client.id }}</CTableDataCell>
-            <CTableHeaderCell>Full Name:</CTableHeaderCell>
-            <CTableDataCell>{{ current_client.fullname }}</CTableDataCell>
-          </CTableRow>
-
-          <CTableRow class="mt-3">
-            <CTableHeaderCell>Gender:</CTableHeaderCell>
-            <CTableDataCell>
-              {{ current_client.gender === 1 ? 'Male' : 'Female' }}
-            </CTableDataCell>
-            <CTableHeaderCell>Country:</CTableHeaderCell>
-            <CTableDataCell>{{ current_client.country_id }}</CTableDataCell>
-          </CTableRow>
-
-          <CTableRow class="mt-3">
-            <CTableHeaderCell>Phone Number:</CTableHeaderCell>
-            <CTableDataCell>{{ current_client.phone }}</CTableDataCell>
-            <CTableHeaderCell>ID Type:</CTableHeaderCell>
-            <CTableDataCell>{{ current_client.id_type }}</CTableDataCell>
-          </CTableRow>
-
-          <CTableRow class="mt-3">
-            <CTableHeaderCell>ID Number:</CTableHeaderCell>
-            <CTableDataCell>{{ current_client.id_no }}</CTableDataCell>
-            <CTableHeaderCell>Date of Birth:</CTableHeaderCell>
-            <CTableDataCell>{{ current_client.dob }}</CTableDataCell>
-          </CTableRow>
-
-          <CTableRow class="mt-3">
-            <CTableHeaderCell>Is Handicap?:</CTableHeaderCell>
-            <CTableDataCell>{{ current_client.is_handicap ? 'Yes' : 'No' }}</CTableDataCell>
-          </CTableRow>
-        </CTable>
-      </CModalBody>
-      <CModalFooter>
-        <CButton color="secondary" @click="visibleLiveDemo = false">
-          Close
-        </CButton>
-      </CModalFooter>
-    </CModal>
   </CRow>
 
   <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
