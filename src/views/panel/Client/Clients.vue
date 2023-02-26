@@ -125,12 +125,18 @@
                 <CTableDataCell>{{ client.id_no }}</CTableDataCell>
                 <CTableDataCell>{{ client.dob }}</CTableDataCell>
                 <CTableDataCell>
+                  <button
+                    class="btn btn-sm btn-info text-white mx-1"
+                    title="View details"
+                    @click="viewDetails(client.id)"
+                  >
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </button>
                   <router-link
                     :to="{
                       name: 'update_client',
                       params: { id: this.$encrypt(client.id) },
-                    }"
-                  >
+                    }">
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
                       title="Edit"
@@ -141,8 +147,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteClient(client.id, client.fullname)"
-                    title="Delete"
-                  >
+                    title="Delete">
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -180,6 +185,52 @@
       </CCard>
     </CCol>
   </CRow>
+
+  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
+    <CModalHeader>
+      <CModalTitle>Client Information</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CRow>
+        <CCol :md="12">
+          <CTable class="table table-responsive">
+            <CTableRow>
+              <CTableHeaderCell>ID:</CTableHeaderCell>
+              <CTableDataCell>{{ client.id }}</CTableDataCell>
+              <CTableHeaderCell>Full Name:</CTableHeaderCell>
+              <CTableDataCell>{{ client.fullname }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Gender:</CTableHeaderCell>
+              <CTableDataCell>{{ client.gender == 1 ? 'Male' : 'Female' }}</CTableDataCell>
+              <CTableHeaderCell>Country:</CTableHeaderCell>
+              <CTableDataCell>{{ client.country_id }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Phone:</CTableHeaderCell>
+              <CTableDataCell>
+                {{ client.phone}}
+              </CTableDataCell>
+              <CTableHeaderCell>Is Handicap:</CTableHeaderCell>
+              <CTableDataCell>
+                <CBadge :color="client.is_handicap === 1 ? 'success' : 'warning'" shape="rounded-pill">{{ client.is_handicap === 1 ? 'Yes' : 'No'}}</CBadge>
+              </CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>ID No:</CTableHeaderCell>
+              <CTableDataCell>{{ client.id_no }}</CTableDataCell>
+              <CTableHeaderCell>ID Type</CTableHeaderCell>
+              <CTableDataCell>{{ client.id_type }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Date Of Birth:</CTableHeaderCell>
+              <CTableDataCell>{{ client.dob }}</CTableDataCell>
+            </CTableRow>
+          </CTable>
+        </CCol>
+      </CRow>
+    </CModalBody>
+  </CModal>
 </template>
 
 <script>
@@ -199,6 +250,8 @@ export default {
     selected_user: null,
     loading: false,
     pagination: {},
+    client:{},
+    visibleLiveDemo: false,
   }),
   methods: {
     nextPage: async function () {
@@ -257,6 +310,12 @@ export default {
             icon: 'success',
           })
         }
+      })
+    },
+    viewDetails: async function (id) {
+      await this.$axios.get(`/clients/info/${id}`).then((response) => {
+        this.client = response.data
+        this.visibleLiveDemo = true
       })
     },
   },
