@@ -67,15 +67,15 @@
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">User</CTableHeaderCell>
+<!--                <CTableHeaderCell scope="col">User</CTableHeaderCell>-->
                 <CTableHeaderCell scope="col">Full Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Gender</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Profession</CTableHeaderCell>
+<!--                <CTableHeaderCell scope="col">Gender</CTableHeaderCell>-->
+<!--                <CTableHeaderCell scope="col">Profession</CTableHeaderCell>-->
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Phone</CTableHeaderCell>
                 <CTableHeaderCell scope="col">ID Type</CTableHeaderCell>
                 <CTableHeaderCell scope="col">ID Number</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>
+<!--                <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>-->
                 <CTableHeaderCell scope="col">Is Active</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Created At</CTableHeaderCell>
                 <CTableHeaderCell style="width:10%" :aria-colspan="2">Action</CTableHeaderCell>
@@ -85,19 +85,19 @@
             <CTableBody>
               <CTableRow v-for="crew in crews" :key="crew.id" @click="viewDetails(crew.id)" v-c-tooltip="{content: 'View Detail.', placement: 'left'}">
                 <CTableHeaderCell scope="row">{{ crew.id }}</CTableHeaderCell>
-                <CTableDataCell>{{ crew.user_id }}</CTableDataCell>
+<!--                <CTableDataCell>{{ crew.user_id }}</CTableDataCell>-->
                 <CTableDataCell>{{ crew.fullname }}</CTableDataCell>
-                <CTableDataCell>
-                  {{ crew.gender === 1 ? 'Male' : 'Female' }}
-                </CTableDataCell>
-                <CTableDataCell>{{ crew.profession_id }}</CTableDataCell>
+<!--                <CTableDataCell>-->
+<!--                  {{ crew.gender === 1 ? 'Male' : 'Female' }}-->
+<!--                </CTableDataCell>-->
+<!--                <CTableDataCell>{{ crew.profession_id }}</CTableDataCell>-->
                 <CTableDataCell>{{ crew.country_name }}</CTableDataCell>
                 <CTableDataCell>{{ crew.phone }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_no }}</CTableDataCell>
-                <CTableDataCell>{{ crew.dob }}</CTableDataCell>
+<!--                <CTableDataCell>{{ crew.dob }}</CTableDataCell>-->
                 <CTableDataCell>
-                  <CBadge :color="crew.is_active ? 'warning' : 'danger'" shape="rounded-pill">{{ crew.is_active ? 'Yes' : 'No'}}</CBadge>
+                  <CBadge :color="crew.is_active ? 'success' : 'warning'" shape="rounded-pill">{{ crew.is_active ? 'Yes' : 'No'}}</CBadge>
                 </CTableDataCell>
                 <CTableDataCell>{{ crew.created_at }}</CTableDataCell>
                 <CTableDataCell>
@@ -156,7 +156,8 @@
       </CCard>
     </CCol>
   </CRow>
-  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false">
+
+  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
     <CModalHeader>
       <CModalTitle>Crew Member Details</CModalTitle>
     </CModalHeader>
@@ -190,7 +191,7 @@
           <CTableDataCell>{{ crew_member.id_type }}</CTableDataCell>
           <CTableHeaderCell>Is Active:</CTableHeaderCell>
           <CTableDataCell>
-            <CBadge :color="crew_member.is_active ? 'warning' : 'danger'" shape="rounded-pill">{{ crew_member.is_active ? 'Yes' : 'No'}}</CBadge>
+            <CBadge :color="crew_member.is_active ? 'success' : 'warning'" shape="rounded-pill">{{ crew_member.is_active ? 'Yes' : 'No'}}</CBadge>
           </CTableDataCell>
         </CTableRow>
 
@@ -212,18 +213,13 @@
           </CTableDataCell>
         </CTableRow>
 
-        <CTableRow class="mt-3">
+        <CTableRow class="mt-0">
           <CTableDataCell colspan="4">
             <Documentable :endpoint="`/crews/update/${crew_member.id}`" />
           </CTableDataCell>
         </CTableRow>
       </CTable>
     </CModalBody>
-    <CModalFooter>
-      <CButton color="secondary" @click="visibleLiveDemo = false">
-        Close
-      </CButton>
-    </CModalFooter>
   </CModal>
 </template>
 

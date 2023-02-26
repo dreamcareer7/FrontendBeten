@@ -20,3 +20,17 @@ $enable-rtl: true;
 .cursor-pointer{
   cursor: pointer;
 }
+.modal-popup-detail .btn-close{
+  opacity: 1;
+  background-color: #fff;
+}
+.modal-popup-detail .modal-header{
+  background-color: #3c4b64;
+  color: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 17px 30px;
+}
+.modal-popup-detail .modal-content{
+  border-radius: 20px;
+}
+

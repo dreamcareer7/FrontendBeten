@@ -83,54 +83,31 @@
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow
-                v-for="user in users"
-                :key="user.id"
-                @click="viewDetails(this.$encrypt(user.id))"
-                v-c-tooltip="{ content: 'View Detail.', placement: 'left' }"
-              >
+              <CTableRow v-for="user in users" :key="user.id">
                 <CTableHeaderCell scope="row">{{ user.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ user.name }}</CTableDataCell>
                 <CTableDataCell>{{ user.username }}</CTableDataCell>
                 <CTableDataCell>{{ user.email }}</CTableDataCell>
                 <CTableDataCell>{{ user.contact }}</CTableDataCell>
-                <CTableDataCell>
-                  {{user.is_active ? 'Yes' : 'No'}}
-                </CTableDataCell>
+                <CTableDataCell><CBadge :color="user.is_active ? 'success' : 'warning'" shape="rounded-pill">{{ user.is_active ? 'Yes' : 'No'}}</CBadge></CTableDataCell>
                 <CTableDataCell>{{ user.created_at }}</CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
-                  <router-link
-                    :to="{
-                      name: 'User Details',
-                      params: { id: this.$encrypt(user.id) },
-                    }"
+                  <button
+                    class="btn btn-sm btn-info text-white mx-1"
+                    v-c-tooltip="{content: 'View Detail', placement: 'top'}"
+                    @click="fetchUserInfo(this.$encrypt(user.id))"
                   >
-                    <button
-                      class="btn btn-sm btn-info text-white m-1"
-                      title="View details"
-                    >
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-                  </router-link>
-                  <router-link
-                    :to="{
-                      name: 'Edit user',
-                      params: { id: this.$encrypt(user.id) },
-                    }"
-                  >
-                    <CButton
-                      class="btn btn-sm btn-warning text-white m-1"
-                      :xl="0"
-                      title="Edit"
-                    >
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </button>
+                  <router-link :to="{
+                    name: 'Edit user',
+                    params: { id: this.$encrypt(user.id) },
+                  }">
+                    <CButton class="btn btn-sm btn-warning text-white m-1"  v-c-tooltip="{content: 'Edit', placement: 'top'}" :xl="0" title="Edit">
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button
-                    class="btn btn-sm btn-danger text-white m-1"
-                    @click="deleteUser(user.id, user.name)"
-                    title="Delete"
-                  >
+                  <button class="btn btn-sm btn-danger text-white m-1" v-c-tooltip="{content: 'Delete', placement: 'top'}" @click="deleteUser(user.id, user.name)" title="Delete">
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -301,6 +278,53 @@
       </CModalFooter>
     </CModal>
   </CRow>
+
+  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
+    <CModalHeader>
+      <CModalTitle>User Information</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CRow>
+        <CCol :md="12">
+          <CTable class="table table-responsive">
+            <CTableRow>
+              <CTableHeaderCell>ID</CTableHeaderCell>
+              <CTableDataCell>{{ user.id }}</CTableDataCell>
+              <CTableHeaderCell>Name</CTableHeaderCell>
+              <CTableDataCell>{{ user.name }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Username</CTableHeaderCell>
+              <CTableDataCell>{{ user.username }}</CTableDataCell>
+              <CTableHeaderCell>Email</CTableHeaderCell>
+              <CTableDataCell>{{ user.email }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Is active:</CTableHeaderCell>
+              <CTableDataCell>
+                <CBadge :color="user.is_active ? 'success' : 'warning'" shape="rounded-pill">{{ user.is_active ? 'Yes' : 'No'}}</CBadge>
+              </CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Contact</CTableHeaderCell>
+              <CTableDataCell>{{ user.contact }}</CTableDataCell>
+              <CTableHeaderCell>Date created</CTableHeaderCell>
+              <CTableDataCell>{{ user.created_at }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Date updated</CTableHeaderCell>
+              <CTableDataCell>{{ user.updated_at }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableDataCell colspan="4">
+                <Documentable :endpoint="`/users/update/${user.id}`" />
+              </CTableDataCell>
+            </CTableRow>
+          </CTable>
+        </CCol>
+      </CRow>
+    </CModalBody>
+  </CModal>
 </template>
 
 <script>
@@ -319,7 +343,9 @@ export default {
     contracts: [],
     contractFile: [],
     documents: [],
-    documentFiles: []
+    documentFiles: [],
+    user: {},
+    visibleLiveDemo: false,
   }),
   methods: {
     nextPage: async function () {
@@ -379,9 +405,12 @@ export default {
       })
     },
     fetchUserInfo: async function (id) {
-      await this.$axios.get(`/users/show/${id}`).then((response) => {
-        console.log(response.data)
-      })
+      await this.$axios
+        .get(`/users/info/${this.$decrypt(id)}`)
+        .then((response) => {
+          this.user = response.data.data
+          this.visibleLiveDemo = true
+        })
     },
     async viewDetails(id) {
       await this.$axios
