@@ -14,11 +14,11 @@ axiosInstance.interceptors.request.use(
      * and set it as the Authorization header of axios if it exists
      * that is only if there isn't an Authorization header to begin with
      * before request is sent
-    */
+     */
     let token = localStorage.getItem('auth_token')
 
     if (token) {
-      config.headers['Authorization'] = `Bearer ${ token }`
+      config.headers['Authorization'] = `Bearer ${token}`
     }
     return config
   },
@@ -45,23 +45,30 @@ axiosInstance.interceptors.response.use(
      * Do something with response error
      * If error is is Unauthenticated, redirect to login
      */
-    if (error.response?.status === 401) { // Unauthenticated
-      router.push({
-          name: 'Login' // Redirect to login
-      })
-    } else {
-      swal({
-        title: error.code,
-        text: error.message,
-        icon: 'error',
-      }).then(() => {
-        if (!localStorage.getItem('auth_token')) {
-          router.push({
-            name: 'Login' // Redirect to login
-          })
-        }
-      })
+    switch (error.response?.status) {
+      case 401: // Unauthenticated
+        router.push({
+          name: 'Login', // Redirect to login
+        })
+        break
+      case 422: // Validation error
+        // Maybe don't do anything? let the frontend handle the validation??
+        break
+      default:
+        swal({
+          title: error.code,
+          text: error.message,
+          icon: 'error',
+        }).then(() => {
+          if (!localStorage.getItem('auth_token')) {
+            router.push({
+              name: 'Login', // Redirect to login
+            })
+          }
+        })
+        break
     }
+
     return Promise.reject(error)
   },
 )
