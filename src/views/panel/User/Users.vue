@@ -414,7 +414,7 @@ export default {
     },
     async viewDetails(id) {
       await this.$axios
-        .get(`/users/info/${this.$decrypt(id)}}`)
+        .get(`/users/info/${this.$decrypt(id)}`)
         .then((response) => (this.currentUser = response.data.data))
       this.showUserDetailModal = true
     },
