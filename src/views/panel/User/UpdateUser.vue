@@ -93,7 +93,7 @@ export default {
   methods: {
     updateInfo: async function () {
       await this.$axios
-        .post(`/users/update/${this.$route.params.id}`, this.user)
+        .post(`/users/update/${this.$decrypt(this.$route.params.id)}`, this.user)
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
