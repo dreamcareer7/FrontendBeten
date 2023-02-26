@@ -279,7 +279,7 @@
     </CModal>
   </CRow>
 
-  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
+  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail" data-backdrop="static" data-keyboard="false">
     <CModalHeader>
       <CModalTitle>User Information</CModalTitle>
     </CModalHeader>
@@ -317,7 +317,7 @@
             </CTableRow>
             <CTableRow>
               <CTableDataCell colspan="4">
-                <Documentable :endpoint="`/users/update/${user.id}`" />
+                <Documentable :endpoint="`/users/update/${user.id}`" type="user" :id="user.id" />
               </CTableDataCell>
             </CTableRow>
           </CTable>

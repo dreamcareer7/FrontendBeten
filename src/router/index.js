@@ -285,6 +285,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/home',
+    name: 'DefaultPage',
+    component: () => import('@/views/home/Home.vue'),
+  },
 ]
 
 const router = createRouter({
@@ -299,7 +304,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const auth_token = localStorage.getItem('auth_token')
   const reqAuth = to.matched.some((record) => record.meta.requiresAuth)
-  const loginQuery = { path: '/panel/login', query: {} }
+  const loginQuery = { path: '/home', query: {} }
 
   if (reqAuth && !auth_token) {
     next(loginQuery)
