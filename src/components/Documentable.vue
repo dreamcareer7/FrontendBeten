@@ -92,7 +92,7 @@ export default {
       await this.$axios.post(this.endpoint, formData)
         .then(() => {
           this.getDocuments()
-          this.message = 'File uploaded successfully.'
+          this.message = 'Document uploaded successfully.'
           this.showMessage = true
           this.$refs.inputFile.reset()
         })

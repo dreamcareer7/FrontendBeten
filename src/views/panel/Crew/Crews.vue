@@ -209,13 +209,13 @@
 
          <CTableRow class="mt-3">
           <CTableDataCell colspan="4">
-            <Contractable :endpoint="`/crews/update/${crew_member.id}`" />
+            <Contractable :endpoint="`/crews/update/${crew_member.id}`" type="crew" :id="crew_member.id"/>
           </CTableDataCell>
         </CTableRow>
 
         <CTableRow class="mt-0">
           <CTableDataCell colspan="4">
-            <Documentable :endpoint="`/crews/update/${crew_member.id}`" />
+            <Documentable :endpoint="`/crews/update/${crew_member.id}`" type="crew" :id="crew_member.id" />
           </CTableDataCell>
         </CTableRow>
       </CTable>
