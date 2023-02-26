@@ -28,8 +28,8 @@
             class="form-control"
             v-model="client.gender"
           >
-            <option value="0">Male</option>
-            <option value="1">Female</option>
+            <option value="1">Male</option>
+            <option value="0">Female</option>
           </select>
           <label for="gender">Gender</label>
           <div class="invalid-feedback"></div>
