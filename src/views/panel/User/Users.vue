@@ -279,7 +279,7 @@
     </CModal>
   </CRow>
 
-  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail" data-backdrop="static" data-keyboard="false">
+  <CModal size="md" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail" data-backdrop="static" data-keyboard="false">
     <CModalHeader>
       <CModalTitle>User Information</CModalTitle>
     </CModalHeader>
@@ -315,9 +315,16 @@
               <CTableHeaderCell>Date updated</CTableHeaderCell>
               <CTableDataCell>{{ user.updated_at }}</CTableDataCell>
             </CTableRow>
-            <CTableRow>
+
+            <CTableRow class="mt-3" v-if="user.is_contractable ?? false">
               <CTableDataCell colspan="4">
-                <Documentable :endpoint="`/users/update/${user.id}`" type="user" :id="user.id" />
+                <Contractable type="user" :id="user.id"/>
+              </CTableDataCell>
+            </CTableRow>
+
+            <CTableRow v-if="user.is_documentable ?? false">
+              <CTableDataCell colspan="4">
+                <Documentable type="user" :id="user.id" />
               </CTableDataCell>
             </CTableRow>
           </CTable>

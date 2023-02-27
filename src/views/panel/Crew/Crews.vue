@@ -157,7 +157,7 @@
     </CCol>
   </CRow>
 
-  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
+  <CModal size="md" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
     <CModalHeader>
       <CModalTitle>Crew Member Details</CModalTitle>
     </CModalHeader>
@@ -207,15 +207,15 @@
           <CTableDataCell>{{ crew_member.updated_at }}</CTableDataCell>
          </CTableRow>
 
-         <CTableRow class="mt-3">
+         <CTableRow class="mt-3" v-if="crew_member.is_contractable ?? false">
           <CTableDataCell colspan="4">
-            <Contractable :endpoint="`/crews/update/${crew_member.id}`" type="crew" :id="crew_member.id"/>
+            <Contractable type="crew" :id="crew_member.id"/>
           </CTableDataCell>
         </CTableRow>
 
-        <CTableRow class="mt-0">
+        <CTableRow class="mt-0" v-if="crew_member.is_documentable ?? false">
           <CTableDataCell colspan="4">
-            <Documentable :endpoint="`/crews/update/${crew_member.id}`" type="crew" :id="crew_member.id" />
+            <Documentable type="crew" :id="crew_member.id" />
           </CTableDataCell>
         </CTableRow>
       </CTable>

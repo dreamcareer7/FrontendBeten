@@ -3,19 +3,19 @@
   <CCol class="card bg-light border-top-3 border-top-dark p-0 mt-3">
     <CCardHeader class="font-weight-bold">Upload Documents</CCardHeader>
     <CForm class="p-2">
-      <CRow class="mt-3">
+      <CRow class="mt-1">
         <CCol xs="8" sm="9">
           <CFormInput type="file" ref="fileInput" @change="onFilePicked" multiple="multiple" id="formFileLg"/>
         </CCol>
         <CCol xs="4" sm="3">
-          <CButton type="button" color="info text-white" @click="submitFiles" shape="rounded-pill">Upload</CButton>
+          <CButton type="button" color="info text-white btn-sm" @click="submitFiles" shape="rounded-pill">Upload</CButton>
         </CCol>
       </CRow>
     </CForm>
-    <CCard class="mt-3">
+    <CCard class="mt-1">
       <CAlert color="success" class="m-2" v-show="showMessage">{{ message }} <span class="pull-right cursor-pointer" @click="showMessage=false">X</span></CAlert>
-       <CCardBody>
-         <CTable responsive hover class="cursor-pointer">
+     <CCardBody class="p-0">
+      <CTable responsive hover class="cursor-pointer">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -28,7 +28,7 @@
                 <CTableHeaderCell scope="row">{{index + 1}}</CTableHeaderCell>
                 <CTableDataCell><a v-c-tooltip="{content: 'View Document', placement: 'top'}" target="_blank"  :href="document.path">Open File</a></CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
-                  <button class="btn btn-sm btn-danger text-white m-1" @click="deleteFile(document.id, index)" v-c-tooltip="{content: 'Delete Document', placement: 'top'}">
+                  <button class="btn btn-sm btn-danger text-white m-1" @click="deleteFile(document.id, index)" title="Delete Document">
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -43,7 +43,7 @@
 <script>
 export default {
   name: 'Documentable',
-  props: ['endpoint', 'type', 'id'],
+  props: ['type', 'id'],
   data: () => ({
     documents: [],
     showMessage: false,

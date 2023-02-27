@@ -23,6 +23,9 @@ $enable-rtl: true;
 .modal-popup-detail .btn-close{
   opacity: 1;
   background-color: #fff;
+  width: 9px;
+  height: 9px;
+  background-size: 10px;
 }
 .modal-popup-detail .modal-header{
   background-color: #3c4b64;
@@ -35,5 +38,11 @@ $enable-rtl: true;
 }
 .pull-right{
   float: right;
+}
+.modal thead, .modal tbody, .modal tfoot, .modal tr, .modal td, .modal th {
+  font-size: 12px !important;
+}
+.modal .modal-title {
+  font-size: 1rem !important;
 }
 

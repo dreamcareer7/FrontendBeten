@@ -186,7 +186,7 @@
     </CCol>
   </CRow>
 
-  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
+  <CModal size="md" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
     <CModalHeader>
       <CModalTitle>Client Information</CModalTitle>
     </CModalHeader>
@@ -225,6 +225,18 @@
             <CTableRow>
               <CTableHeaderCell>Date Of Birth:</CTableHeaderCell>
               <CTableDataCell>{{ client.dob }}</CTableDataCell>
+            </CTableRow>
+
+            <CTableRow class="mt-3" v-if="client.is_contractable ?? false">
+              <CTableDataCell colspan="4">
+                <Contractable type="client" :id="client.id" />
+              </CTableDataCell>
+            </CTableRow>
+
+            <CTableRow class="mt-0" v-if="client.is_documentable ?? false">
+              <CTableDataCell colspan="4">
+                <Documentable type="client" :id="client.id" />
+              </CTableDataCell>
             </CTableRow>
           </CTable>
         </CCol>
