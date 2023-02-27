@@ -89,7 +89,7 @@ export default {
       /*
         Make the request to the POST /select-files URL
       */
-      await this.$axios.post(this.endpoint, formData)
+      await this.$axios.post(`/documents/${this.type}/${this.id}`, formData)
         .then(() => {
           this.getDocuments()
           this.message = 'Document uploaded successfully.'
