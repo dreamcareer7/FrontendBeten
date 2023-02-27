@@ -108,7 +108,7 @@
                   </button>
                   <router-link
                     :to="{
-                      name: 'update_dormitory',
+                      name: 'Update Dormitory',
                       params: { id: this.$encrypt(dormitory.id) },
                     }"
                   >

@@ -211,7 +211,7 @@ const routes = [
       },
       {
         path: 'dormitories/update/:id',
-        name: 'update_dormitory',
+        name: 'Update Dormitory',
         component: () => import('@/views/panel/Dormitory/UpdateDormitory'),
       },
       {
