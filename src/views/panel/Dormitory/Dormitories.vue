@@ -72,12 +72,11 @@
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Phone</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Country</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Phones</CTableHeaderCell>
                 <CTableHeaderCell scope="col">City</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Location</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Coordinate</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Is Active</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Active</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -87,12 +86,18 @@
                   dormitory.id
                 }}</CTableHeaderCell>
                 <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
-                <CTableDataCell>{{ dormitory.phone }}</CTableDataCell>
-                <CTableDataCell>{{ dormitory.country_name }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.phones }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.city_id }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.location }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.coordinate }}</CTableDataCell>
-                <CTableDataCell>{{ dormitory.is_active }}</CTableDataCell>
+                <CTableDataCell>
+                  <CBadge
+                    :color="dormitory.is_active ? 'success' : 'warning'"
+                    shape="rounded-pill"
+                  >
+                    {{ dormitory.is_active ? 'Yes' : 'No' }}
+                  </CBadge>
+                </CTableDataCell>
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
@@ -107,13 +112,15 @@
                       params: { id: this.$encrypt(dormitory.id) },
                     }"
                   >
-                    <CButton class="btn btn-warning text-white">Update</CButton>
+                    <CButton class="btn btn-sm btn-warning text-white m-1">
+                      <ion-icon name="create-outline"></ion-icon>
+                    </CButton>
                   </router-link>
                   <button
-                    class="btn btn-danger text-white"
+                    class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteDormitory(dormitory.id)"
                   >
-                    Delete
+                    <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
               </CTableRow>
@@ -171,10 +178,6 @@
           </CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Country</CTableDataCell>
-          <CTableDataCell>{{ dormitory.country }}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
           <CTableDataCell>City</CTableDataCell>
           <CTableDataCell>{{ dormitory.city_id }}</CTableDataCell>
         </CTableRow>
@@ -187,10 +190,15 @@
           <CTableDataCell>{{ dormitory.coordinate }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Is active?</CTableDataCell>
-          <CTableDataCell>{{
-            dormitory.is_active ? 'Yes' : 'No'
-          }}</CTableDataCell>
+          <CTableDataCell>Active</CTableDataCell>
+          <CTableDataCell>
+            <CBadge
+              :color="dormitory.is_active ? 'success' : 'warning'"
+              shape="rounded-pill"
+            >
+              {{ dormitory.is_active ? 'Yes' : 'No' }}
+            </CBadge>
+          </CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Date created</CTableDataCell>
@@ -200,19 +208,9 @@
           <CTableDataCell>Date updated</CTableDataCell>
           <CTableDataCell>{{ dormitory.updated_at }}</CTableDataCell>
         </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Upload contract</CTableDataCell>
-          <CTableDataCell>
-            <Contractable :endpoint="`/dormitories/update/${dormitory.id}`" />
-          </CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Upload documents</CTableDataCell>
-          <CTableDataCell>
-            <Documentable :endpoint="`/dormitories/update/${dormitory.id}`" />
-          </CTableDataCell>
-        </CTableRow>
       </CTable>
+      <Contractable type="dormitory" :id="dormitory.id" />
+      <Documentable type="dormitory" :id="dormitory.id" />
     </CModalBody>
     <CModalFooter>
       <CButton color="secondary" @click="visibleLiveDemo = false">
@@ -224,7 +222,7 @@
 
 <script>
 export default {
-  name: 'dormitories',
+  name: 'Dormitories',
   data() {
     return {
       dormitories: {},

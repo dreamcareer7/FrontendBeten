@@ -8,7 +8,7 @@
           <CFormInput type="file" ref="fileInput" @change="onFilePicked" multiple="multiple" id="formFileLg"/>
         </CCol>
         <CCol xs="4" sm="3">
-          <CButton type="button" color="info text-white btn-sm" @click="submitFiles" shape="rounded-pill">Upload</CButton>
+          <CButton type="button" color="info" class="text-white btn-sm" click="submitFiles" shape="rounded-pill">Upload</CButton>
         </CCol>
       </CRow>
     </CForm>

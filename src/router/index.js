@@ -201,7 +201,7 @@ const routes = [
       },
       {
         path: 'dormitories',
-        name: 'dormitories',
+        name: 'Dormitories',
         component: () => import('@/views/panel/Dormitory/Dormitories'),
       },
       {
