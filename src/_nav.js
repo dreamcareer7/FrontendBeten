@@ -75,7 +75,7 @@ export default [
     items: [
       {
         component: 'CNavItem',
-        name: 'All meals',
+        name: 'All Meals',
         to: '/meals',
       },
       {

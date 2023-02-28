@@ -161,171 +161,10 @@
         </CCardBody>
       </CCard>
     </CCol>
-
-    <!-- Table Detail Modal -->
-    <CModal
-      :visible="showUserDetailModal"
-      @close="showUserDetailModal = false"
-      size="lg"
-    >
-      <CModalHeader>
-        <CModalTitle>User Info</CModalTitle>
-      </CModalHeader>
-      <CModalBody>
-        <CTable responsive>
-          <CTableRow class="mt-3">
-            <CTableHeaderCell>ID:</CTableHeaderCell>
-            <CTableDataCell>{{ currentUser.id }}</CTableDataCell>
-            <CTableHeaderCell>Full Name:</CTableHeaderCell>
-            <CTableDataCell>{{ currentUser.name }}</CTableDataCell>
-          </CTableRow>
-
-          <CTableRow class="mt-3">
-            <CTableHeaderCell>Username:</CTableHeaderCell>
-            <CTableDataCell>{{ currentUser.username }}</CTableDataCell>
-            <CTableHeaderCell>Email:</CTableHeaderCell>
-            <CTableDataCell>{{ currentUser.email }}</CTableDataCell>
-          </CTableRow>
-
-          <CTableRow class="mt-3">
-            <CTableHeaderCell>Is Active?:</CTableHeaderCell>
-            <CTableDataCell>
-              {{ currentUser.is_active ? 'Yes' : 'No' }}
-            </CTableDataCell>
-            <CTableHeaderCell>Contact:</CTableHeaderCell>
-            <CTableDataCell>{{ currentUser.contact }}</CTableDataCell>
-          </CTableRow>
-
-          <CTableRow class="mt-3">
-            <CTableHeaderCell>Date Created:</CTableHeaderCell>
-            <CTableDataCell>{{ currentUser.created_at }}</CTableDataCell>
-            <CTableHeaderCell>Date Updated:</CTableHeaderCell>
-            <CTableDataCell>{{ currentUser.updated_at }}</CTableDataCell>
-          </CTableRow>
-        </CTable>
-        <CRow class="mb-1 mt-4">
-          <CFormLabel class="col-sm-4 col-form-label" style="font-weight: 600">
-            Contract
-          </CFormLabel>
-          <div class="col-sm-8">
-            <CInputGroup class="mb-3">
-              <CFormInput
-                type="file"
-                ref="uploadfile"
-                class="me-2"
-                @change="filesChange('contract', $event.target.files)"
-              />
-              <CButton
-                type="button"
-                color="success text-white"
-                @click="uploadFiles('contract')"
-                >Upload</CButton
-              >
-            </CInputGroup>
-          </div>
-          <div class="px-4">
-            <CTable responsive bordered small align="middle">
-              <CTableBody>
-                <CTableRow v-for="(contract, index) in contracts" :key="index">
-                  <CTableDataCell class="ps-2">
-                    <a
-                      :href="`http://localhost:8081/files/${contract.name}`"
-                      target="_blank"
-                    >
-                      {{ contract.name }}
-                    </a>
-                  </CTableDataCell>
-                  <CTableDataCell class="col-sm-2">
-                    <button
-                      class="btn btn-sm btn-info text-white m-1"
-                      title="View details"
-                    >
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-                    <button
-                      class="btn btn-sm btn-danger text-white m-1"
-                      title="Delete"
-                      @click="deleteFile('contract', index)"
-                    >
-                      <ion-icon name="trash-bin-outline"></ion-icon>
-                    </button>
-                  </CTableDataCell>
-                </CTableRow>
-              </CTableBody>
-            </CTable>
-          </div>
-        </CRow>
-        <CRow class="mb-1">
-          <CFormLabel
-            for="documents"
-            class="col-sm-4 col-form-label"
-            style="font-weight: 600"
-          >
-            Documents
-          </CFormLabel>
-          <div class="col-sm-8">
-            <CInputGroup class="mb-3">
-              <CFormInput
-                type="file"
-                class="me-2"
-                multiple
-                @change="filesChange('documents', $event.target.files)"
-              />
-              <CButton
-                type="button"
-                color="primary text-white"
-                @click="uploadFiles('document')"
-                >Upload</CButton
-              >
-            </CInputGroup>
-          </div>
-          <div class="px-4">
-            <CTable responsive bordered small align="middle">
-              <CTableBody>
-                <CTableRow v-for="(document, index) in documents" :key="index">
-                  <CTableDataCell>
-                    <a
-                      :href="`http://localhost:8081/files/${document.name}`"
-                      target="_blank"
-                    >
-                      {{ document.name }}
-                    </a>
-                  </CTableDataCell>
-                  <CTableDataCell class="col-sm-2">
-                    <button
-                      class="btn btn-sm btn-info text-white m-1"
-                      title="View details"
-                    >
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-                    <button
-                      class="btn btn-sm btn-danger text-white m-1"
-                      title="Delete"
-                      @click="deleteFile('document', index)"
-                    >
-                      <ion-icon name="trash-bin-outline"></ion-icon>
-                    </button>
-                  </CTableDataCell>
-                </CTableRow>
-              </CTableBody>
-            </CTable>
-          </div>
-        </CRow>
-      </CModalBody>
-      <CModalFooter>
-        <CButton
-          color="secondary"
-          class="text-white"
-          @click="() => (showUserDetailModal = false)"
-        >
-          Close
-        </CButton>
-      </CModalFooter>
-    </CModal>
   </CRow>
 
   <CModal
-    size="md"
+    size="lg"
     :visible="visibleLiveDemo"
     @close="visibleLiveDemo = false"
     class="modal-popup-detail"
@@ -392,7 +231,7 @@
 
 <script>
 export default {
-  name: 'users',
+  name: 'Users',
   data: () => ({
     users: '',
     search: {},
@@ -401,8 +240,6 @@ export default {
     last_page: 99,
     selected_user: null,
     loading: false,
-    showUserDetailModal: false,
-    currentUser: {},
     contracts: [],
     contractFile: [],
     documents: [],
@@ -474,12 +311,6 @@ export default {
           this.user = response.data.data
           this.visibleLiveDemo = true
         })
-    },
-    async viewDetails(id) {
-      await this.$axios
-        .get(`/users/info/${this.$decrypt(id)}`)
-        .then((response) => (this.currentUser = response.data.data))
-      this.showUserDetailModal = true
     },
     filesChange(fileType, fileList) {
       if (fileType === 'contract') {
