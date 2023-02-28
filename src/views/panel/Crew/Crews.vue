@@ -5,7 +5,7 @@
         <CCardHeader>
           <CRow>
             <CCol :md="8" :sm="4">
-              <h3 class="mt-1">Crews</h3>
+              <h3 class="mt-1">Crew members</h3>
             </CCol>
             <CCol :md="4" :sm="8">
               <router-link
@@ -67,37 +67,37 @@
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
-<!--                <CTableHeaderCell scope="col">User</CTableHeaderCell>-->
                 <CTableHeaderCell scope="col">Full Name</CTableHeaderCell>
-<!--                <CTableHeaderCell scope="col">Gender</CTableHeaderCell>-->
-<!--                <CTableHeaderCell scope="col">Profession</CTableHeaderCell>-->
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Phone</CTableHeaderCell>
                 <CTableHeaderCell scope="col">ID Type</CTableHeaderCell>
                 <CTableHeaderCell scope="col">ID Number</CTableHeaderCell>
-<!--                <CTableHeaderCell scope="col">Date of Birth</CTableHeaderCell>-->
-                <CTableHeaderCell scope="col">Is Active</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Created At</CTableHeaderCell>
-                <CTableHeaderCell style="width:10%" :aria-colspan="2">Action</CTableHeaderCell>
-
+                <CTableHeaderCell scope="col">Active</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Created</CTableHeaderCell>
+                <CTableHeaderCell style="width: 10%" :aria-colspan="2"
+                  >Action</CTableHeaderCell
+                >
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="crew in crews" :key="crew.id" @click="viewDetails(crew.id)" v-c-tooltip="{content: 'View Detail.', placement: 'left'}">
+              <CTableRow
+                v-for="crew in crews"
+                :key="crew.id"
+                @click="viewDetails(crew.id)"
+                v-c-tooltip="{ content: 'View Detail.', placement: 'left' }"
+              >
                 <CTableHeaderCell scope="row">{{ crew.id }}</CTableHeaderCell>
-<!--                <CTableDataCell>{{ crew.user_id }}</CTableDataCell>-->
                 <CTableDataCell>{{ crew.fullname }}</CTableDataCell>
-<!--                <CTableDataCell>-->
-<!--                  {{ crew.gender === 1 ? 'Male' : 'Female' }}-->
-<!--                </CTableDataCell>-->
-<!--                <CTableDataCell>{{ crew.profession_id }}</CTableDataCell>-->
                 <CTableDataCell>{{ crew.country_name }}</CTableDataCell>
                 <CTableDataCell>{{ crew.phone }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_no }}</CTableDataCell>
-<!--                <CTableDataCell>{{ crew.dob }}</CTableDataCell>-->
                 <CTableDataCell>
-                  <CBadge :color="crew.is_active ? 'success' : 'warning'" shape="rounded-pill">{{ crew.is_active ? 'Yes' : 'No'}}</CBadge>
+                  <CBadge
+                    :color="crew.is_active ? 'success' : 'warning'"
+                    shape="rounded-pill"
+                    >{{ crew.is_active ? 'Yes' : 'No' }}</CBadge
+                  >
                 </CTableDataCell>
                 <CTableDataCell>{{ crew.created_at }}</CTableDataCell>
                 <CTableDataCell>
@@ -114,11 +114,19 @@
                       params: { id: this.$encrypt(crew.id) },
                     }"
                   >
-                    <CButton class="btn btn-sm btn-warning text-white m-1" :xl="0" title="Edit">
+                    <CButton
+                      class="btn btn-sm btn-warning text-white m-1"
+                      :xl="0"
+                      title="Edit"
+                    >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button class="btn btn-sm btn-danger text-white m-1" @click="deleteCrew(crew.id)" title="Delete">
+                  <button
+                    class="btn btn-sm btn-danger text-white m-1"
+                    @click="deleteCrew(crew.id)"
+                    title="Delete"
+                  >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -157,7 +165,12 @@
     </CCol>
   </CRow>
 
-  <CModal size="md" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
+  <CModal
+    size="lg"
+    :visible="visibleLiveDemo"
+    @close="visibleLiveDemo = false"
+    class="modal-popup-detail"
+  >
     <CModalHeader>
       <CModalTitle>Crew Member Details</CModalTitle>
     </CModalHeader>
@@ -189,9 +202,13 @@
         <CTableRow class="mt-3">
           <CTableHeaderCell>ID Type:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.id_type }}</CTableDataCell>
-          <CTableHeaderCell>Is Active:</CTableHeaderCell>
+          <CTableHeaderCell>Active:</CTableHeaderCell>
           <CTableDataCell>
-            <CBadge :color="crew_member.is_active ? 'success' : 'warning'" shape="rounded-pill">{{ crew_member.is_active ? 'Yes' : 'No'}}</CBadge>
+            <CBadge
+              :color="crew_member.is_active ? 'success' : 'warning'"
+              shape="rounded-pill"
+              >{{ crew_member.is_active ? 'Yes' : 'No' }}</CBadge
+            >
           </CTableDataCell>
         </CTableRow>
 
@@ -205,20 +222,10 @@
         <CTableRow class="mt-3">
           <CTableHeaderCell>Date Updated:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.updated_at }}</CTableDataCell>
-         </CTableRow>
-
-         <CTableRow class="mt-3" v-if="crew_member.is_contractable ?? false">
-          <CTableDataCell colspan="4">
-            <Contractable type="crew" :id="crew_member.id"/>
-          </CTableDataCell>
-        </CTableRow>
-
-        <CTableRow class="mt-0" v-if="crew_member.is_documentable ?? false">
-          <CTableDataCell colspan="4">
-            <Documentable type="crew" :id="crew_member.id" />
-          </CTableDataCell>
         </CTableRow>
       </CTable>
+      <Contractable type="crew" :id="crew_member.id" />
+      <Documentable type="crew" :id="crew_member.id" />
     </CModalBody>
   </CModal>
 </template>

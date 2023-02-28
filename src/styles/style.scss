@@ -1,48 +1,62 @@
 // If you want to override variables do it here
-@import "variables";
+@import 'variables';
 
 $enable-ltr: true;
 $enable-rtl: true;
 
 // Import styles
-@import "~@coreui/coreui/scss/coreui";
+@import '~@coreui/coreui/scss/coreui';
 
 // Import Chart.js Tooltips
-@import "~@coreui/chartjs/scss/tooltips";
+@import '~@coreui/chartjs/scss/tooltips';
 
-@import "layout";
-@import "example";
+@import 'layout';
+@import 'example';
 
 // If you want to add something do it here
-@import "custom";
+@import 'custom';
 
-
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
-.modal-popup-detail .btn-close{
+.modal-popup-detail .btn-close {
   opacity: 1;
   background-color: #fff;
   width: 9px;
   height: 9px;
   background-size: 10px;
 }
-.modal-popup-detail .modal-header{
+.modal-popup-detail .modal-header {
   background-color: #3c4b64;
   color: #fff;
   border-radius: 20px 20px 0 0;
   padding: 17px 30px;
 }
-.modal-popup-detail .modal-content{
+.modal-popup-detail .modal-content {
   border-radius: 20px;
 }
-.pull-right{
+.pull-right {
   float: right;
 }
-.modal thead, .modal tbody, .modal tfoot, .modal tr, .modal td, .modal th {
-  font-size: 12px !important;
+.modal thead,
+.modal tbody,
+.modal tfoot,
+.modal tr,
+.modal td,
+.modal th {
+  font-size: 18px !important;
 }
 .modal .modal-title {
   font-size: 1rem !important;
 }
 
+// Vue's built-in transition component
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

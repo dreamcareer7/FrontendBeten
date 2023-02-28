@@ -157,7 +157,7 @@
       </CCard>
     </CCol>
   </CRow>
-  <CModal :visible="visibleLiveDemo" @close="visibleLiveDemo = false">
+  <CModal :visible="visibleLiveDemo" @close="visibleLiveDemo = false" size="lg">
     <CModalHeader>
       <CModalTitle>Dormitory details</CModalTitle>
     </CModalHeader>
@@ -242,7 +242,7 @@ export default {
   },
   methods: {
     viewDetails: async function (id) {
-      await this.$axios.get(`/dormitories/info/${id}`).then((response) => {
+      await this.$axios.get(`/dormitories/${id}`).then((response) => {
         this.dormitory = response.data
         this.visibleLiveDemo = true
       })

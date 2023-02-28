@@ -1,107 +1,170 @@
 <template>
-  <CCol class="card bg-light border-top-3 border-top-dark border-secondary p-0 mt-3">
-    <CCardHeader class="font-weight-bold">Upload Contract</CCardHeader>
-    <CForm class="p-2">
-      <CRow class="mt-1">
-        <CCol xs="8" sm="9">
-          <CFormInput type="file" class="sm" ref="fileInput" @change="onFilePicked"  multiple="multiple" id="formFileLg"/>
-        </CCol>
-        <CCol xs="4" sm="3">
-          <CButton type="button" color="info" class="text-white btn-sm" @click="submitFiles" shape="rounded-pill">Upload</CButton>
-        </CCol>
-      </CRow>
-    </CForm>
+  <CCol class="card bg-light border-top-3 border-secondary p-0 mt-3">
+    <CCardHeader class="font-weight-bold">Contracts</CCardHeader>
     <CCard class="mt-1">
-      <CAlert color="success" class="m-2" v-show="showMessage">{{ message }} <span class="pull-right cursor-pointer" @click="showMessage=false">X</span></CAlert>
+      <CAlert color="success" class="m-2" v-show="showMessage">
+        {{ message }}
+        <span class="pull-right cursor-pointer" @click="showMessage = false">
+          X
+        </span>
+      </CAlert>
       <CCardBody class="p-0">
         <CTable responsive hover class="cursor-pointer">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Path</CTableHeaderCell>
-              <CTableHeaderCell style="width: 20%;" scope="col" :aria-colspan="2">Actions</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Reference</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Documents</CTableHeaderCell>
+              <CTableHeaderCell
+                style="width: 20%"
+                scope="col"
+                :aria-colspan="2"
+              >
+                Delete
+              </CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            <CTableRow v-for="(contract, index) in contracts">
-              <CTableHeaderCell scope="row">{{index + 1}}</CTableHeaderCell>
-              <CTableDataCell><a v-c-tooltip="{content: 'View Contract', placement: 'top'}" target="_blank" :href="contract.url">Open File</a></CTableDataCell>
-              <CTableDataCell :aria-colspan="2">
-                <button class="btn btn-sm btn-danger text-white m-1" @click="deleteFile(contract.id, index)" title="Delete Contract">
-                  <ion-icon name="trash-bin-outline"></ion-icon>
-                </button>
-              </CTableDataCell>
-            </CTableRow>
+            <template v-for="contract in contracts" :key="contract.id">
+              <CTableRow>
+                <CTableHeaderCell scope="row">
+                  {{ contract.id }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="row">
+                  {{ contract.reference }}
+                </CTableHeaderCell>
+                <CTableDataCell>
+                  <CButton
+                    title="View Documents"
+                    @click="toggleDocumentsOfContract(contract.id)"
+                  >
+                    <ion-icon
+                      :name="
+                        contract_documents_shown[contract.id]
+                          ? 'caret-up-outline'
+                          : 'caret-down-outline'
+                      "
+                    >
+                    </ion-icon>
+                  </CButton>
+                </CTableDataCell>
+                <CTableDataCell :aria-colspan="2">
+                  <button
+                    class="btn btn-sm btn-danger text-white m-1"
+                    @click="deleteContract(contract.id)"
+                    title="Delete Contract"
+                  >
+                    <ion-icon name="trash-bin-outline"></ion-icon>
+                  </button>
+                </CTableDataCell>
+              </CTableRow>
+              <Transition name="fade">
+                <CTableRow v-if="contract_documents_shown[contract.id]">
+                  <CTableDataCell colspan="4">
+                    <Documentable type="contract" :id="contract.id" />
+                  </CTableDataCell>
+                </CTableRow>
+              </Transition>
+            </template>
           </CTableBody>
         </CTable>
       </CCardBody>
     </CCard>
+    <CForm class="p-2" @submit.prevent="upload">
+      <CRow class="mt-1">
+        <CCol xs="5" sm="5">
+          <input
+            type="text"
+            class="form-control sm"
+            placeholder="Reference"
+            required
+          />
+        </CCol>
+        <CCol xs="5" sm="5">
+          <input type="file" class="form-control sm" ref="docs" multiple />
+        </CCol>
+        <CCol xs="2" sm="2">
+          <CButton
+            type="submit"
+            color="info"
+            class="mt-1 text-white btn-sm"
+            shape="rounded-pill"
+            >Upload</CButton
+          >
+        </CCol>
+      </CRow>
+    </CForm>
   </CCol>
 </template>
 
 <script>
 export default {
   name: 'Contractable',
-  props: [ 'type', 'id'],
+  props: ['type', 'id'],
   data: () => ({
     contracts: [],
     showMessage: false,
     message: '',
-    files: [],
+    contract_documents_shown: [],
   }),
   methods: {
-    async onFilePicked(event) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        this.files.push( event.target.files[i] );
-      }
-      event.target.files.value = null
+    async deleteContract(contract_id) {
+      await this.$axios.delete(`/contracts/${contract_id}`).then(() => {
+        this.contracts = this.contracts.filter(
+          (contract) => contract.id !== contract_id,
+        )
+        this.message = 'Contract deleted successfully.'
+        this.showMessage = true
+      })
     },
-    async deleteFile(contractsID, rowIndex) {
-      await this.$axios.delete(`/contracts/${contractsID}`)
-        .then((response) => {
-          this.contracts.splice(this.contracts.indexOf(rowIndex), 1)
-          this.message = 'Contract deleted successfully.'
-          this.showMessage = true
-        })
-    },
-    getContracts: async function () {
-      await this.$axios.get(`/contracts/${this.type}/${this.id}`)
-        .then((response) => {
-          this.contracts = response.data
-        })
-    },
-    async submitFiles(){
+    async upload() {
       /*
         Initialize the form data
       */
-      let formData = new FormData();
-
+      let form_data = new FormData()
+      form_data.append(``)
+      console.log(this.$refs.docs.files)
+      return
       /*
         Iteate over any file sent over appending the files
         to the form data.
       */
-      for( let i = 0; i < this.files.length; i++ ){
-        let file = this.files[i];
-        formData.append(`contracts[${i}]`, file)
+      for (let i = 0; i < this.$refs.docs.files.length; i++) {
+        form_data.append(`contracts[${i}]`, this.$refs.docs.files[i])
       }
-
       /*
         Make the request to the POST /select-files URL
       */
-      await this.$axios.post(`/contracts/${this.type}/${this.id}`, formData)
+      await this.$axios
+        .post(`/contracts/${this.type}/${this.id}`, form_data)
         .then(() => {
-          this.getContracts()
-          this.message = 'Contract uploaded successfully.'
+          // Add the uploaded contracts to the existing list
+          this.message = 'Contracts uploaded successfully.'
           this.showMessage = true
-          this.$refs.inputFile.reset()
+          this.$refs.docs.reset()
         })
-        .catch(function(){
-          console.log('FAILURE!!');
-        });
+        .catch(function () {
+          // Really? the user will look at the console to see this?
+          console.log('FAILURE!!')
+        })
+    },
+    toggleDocumentsOfContract(contract_id) {
+      this.contract_documents_shown[contract_id] =
+        !this.contract_documents_shown[contract_id]
     },
   },
-  mounted() {
-    this.getContracts()
+  async mounted() {
+    await this.$axios
+      .get(`/contracts/${this.type}/${this.id}`)
+      .then((response) => {
+        this.contracts = response.data
+        // Iterate through the contracts, push an object, key is contract id
+        // value would be hardcoded false
+        // This array will be used to toggle the documents for each contract
+        response.data.forEach((contract) => {
+          this.contract_documents_shown[contract.id] = false
+        })
+      })
   },
 }
 </script>
