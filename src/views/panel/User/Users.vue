@@ -63,7 +63,13 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
-          <CTable v-if="!loading" responsive hover class="cursor-pointer" align="middle">
+          <CTable
+            v-if="!loading"
+            responsive
+            hover
+            class="cursor-pointer"
+            align="middle"
+          >
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -89,25 +95,44 @@
                 <CTableDataCell>{{ user.username }}</CTableDataCell>
                 <CTableDataCell>{{ user.email }}</CTableDataCell>
                 <CTableDataCell>{{ user.contact }}</CTableDataCell>
-                <CTableDataCell><CBadge :color="user.is_active ? 'success' : 'warning'" shape="rounded-pill">{{ user.is_active ? 'Yes' : 'No'}}</CBadge></CTableDataCell>
+                <CTableDataCell>
+                  <CBadge
+                    :color="user.is_active ? 'success' : 'warning'"
+                    shape="rounded-pill"
+                  >
+                    {{ user.is_active ? 'Yes' : 'No' }}
+                  </CBadge>
+                </CTableDataCell>
                 <CTableDataCell>{{ user.created_at }}</CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
-                    v-c-tooltip="{content: 'View Detail', placement: 'top'}"
+                    v-c-tooltip="{ content: 'View Detail', placement: 'top' }"
                     @click="fetchUserInfo(this.$encrypt(user.id))"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
-                  <router-link :to="{
-                    name: 'Edit user',
-                    params: { id: this.$encrypt(user.id) },
-                  }">
-                    <CButton class="btn btn-sm btn-warning text-white m-1"  v-c-tooltip="{content: 'Edit', placement: 'top'}" :xl="0" title="Edit">
+                  <router-link
+                    :to="{
+                      name: 'Edit user',
+                      params: { id: this.$encrypt(user.id) },
+                    }"
+                  >
+                    <CButton
+                      class="btn btn-sm btn-warning text-white m-1"
+                      v-c-tooltip="{ content: 'Edit', placement: 'top' }"
+                      :xl="0"
+                      title="Edit"
+                    >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button class="btn btn-sm btn-danger text-white m-1" v-c-tooltip="{content: 'Delete', placement: 'top'}" @click="deleteUser(user.id, user.name)" title="Delete">
+                  <button
+                    class="btn btn-sm btn-danger text-white m-1"
+                    v-c-tooltip="{ content: 'Delete', placement: 'top' }"
+                    @click="deleteUser(user.id, user.name)"
+                    title="Delete"
+                  >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -165,7 +190,7 @@
           <CTableRow class="mt-3">
             <CTableHeaderCell>Is Active?:</CTableHeaderCell>
             <CTableDataCell>
-              {{currentUser.is_active ? 'Yes' : 'No'}}
+              {{ currentUser.is_active ? 'Yes' : 'No' }}
             </CTableDataCell>
             <CTableHeaderCell>Contact:</CTableHeaderCell>
             <CTableDataCell>{{ currentUser.contact }}</CTableDataCell>
@@ -184,19 +209,29 @@
           </CFormLabel>
           <div class="col-sm-8">
             <CInputGroup class="mb-3">
-              <CFormInput type="file" ref="uploadfile" class="me-2" @change="filesChange('contract', $event.target.files);" />
-              <CButton type="button" color="success text-white" @click="uploadFiles('contract')">Upload</CButton>
+              <CFormInput
+                type="file"
+                ref="uploadfile"
+                class="me-2"
+                @change="filesChange('contract', $event.target.files)"
+              />
+              <CButton
+                type="button"
+                color="success text-white"
+                @click="uploadFiles('contract')"
+                >Upload</CButton
+              >
             </CInputGroup>
           </div>
           <div class="px-4">
             <CTable responsive bordered small align="middle">
               <CTableBody>
-                <CTableRow
-                  v-for="(contract, index) in contracts"
-                  :key="index"
-                >
+                <CTableRow v-for="(contract, index) in contracts" :key="index">
                   <CTableDataCell class="ps-2">
-                    <a :href="`http://localhost:8081/files/${contract.name}`" target="_blank">
+                    <a
+                      :href="`http://localhost:8081/files/${contract.name}`"
+                      target="_blank"
+                    >
                       {{ contract.name }}
                     </a>
                   </CTableDataCell>
@@ -230,19 +265,29 @@
           </CFormLabel>
           <div class="col-sm-8">
             <CInputGroup class="mb-3">
-              <CFormInput type="file" class="me-2" multiple @change="filesChange('documents', $event.target.files);" />
-              <CButton type="button" color="primary text-white" @click="uploadFiles('document')">Upload</CButton>
+              <CFormInput
+                type="file"
+                class="me-2"
+                multiple
+                @change="filesChange('documents', $event.target.files)"
+              />
+              <CButton
+                type="button"
+                color="primary text-white"
+                @click="uploadFiles('document')"
+                >Upload</CButton
+              >
             </CInputGroup>
           </div>
           <div class="px-4">
             <CTable responsive bordered small align="middle">
               <CTableBody>
-                <CTableRow
-                  v-for="(document, index) in documents"
-                  :key="index"
-                >
+                <CTableRow v-for="(document, index) in documents" :key="index">
                   <CTableDataCell>
-                    <a :href="`http://localhost:8081/files/${document.name}`" target="_blank">
+                    <a
+                      :href="`http://localhost:8081/files/${document.name}`"
+                      target="_blank"
+                    >
                       {{ document.name }}
                     </a>
                   </CTableDataCell>
@@ -271,7 +316,7 @@
         <CButton
           color="secondary"
           class="text-white"
-          @click="() => showUserDetailModal = false"
+          @click="() => (showUserDetailModal = false)"
         >
           Close
         </CButton>
@@ -279,7 +324,14 @@
     </CModal>
   </CRow>
 
-  <CModal size="lg" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
+  <CModal
+    size="md"
+    :visible="visibleLiveDemo"
+    @close="visibleLiveDemo = false"
+    class="modal-popup-detail"
+    data-backdrop="static"
+    data-keyboard="false"
+  >
     <CModalHeader>
       <CModalTitle>User Information</CModalTitle>
     </CModalHeader>
@@ -302,7 +354,11 @@
             <CTableRow>
               <CTableHeaderCell>Is active:</CTableHeaderCell>
               <CTableDataCell>
-                <CBadge :color="user.is_active ? 'success' : 'warning'" shape="rounded-pill">{{ user.is_active ? 'Yes' : 'No'}}</CBadge>
+                <CBadge
+                  :color="user.is_active ? 'success' : 'warning'"
+                  shape="rounded-pill"
+                  >{{ user.is_active ? 'Yes' : 'No' }}</CBadge
+                >
               </CTableDataCell>
             </CTableRow>
             <CTableRow>
@@ -315,9 +371,16 @@
               <CTableHeaderCell>Date updated</CTableHeaderCell>
               <CTableDataCell>{{ user.updated_at }}</CTableDataCell>
             </CTableRow>
-            <CTableRow>
+
+            <CTableRow class="mt-3" v-if="user.is_contractable ?? false">
               <CTableDataCell colspan="4">
-                <Documentable :endpoint="`/users/update/${user.id}`" />
+                <Contractable type="user" :id="user.id" />
+              </CTableDataCell>
+            </CTableRow>
+
+            <CTableRow v-if="user.is_documentable ?? false">
+              <CTableDataCell colspan="4">
+                <Documentable type="user" :id="user.id" />
               </CTableDataCell>
             </CTableRow>
           </CTable>
@@ -414,12 +477,12 @@ export default {
     },
     async viewDetails(id) {
       await this.$axios
-        .get(`/users/info/${this.$decrypt(id)}}`)
+        .get(`/users/info/${this.$decrypt(id)}`)
         .then((response) => (this.currentUser = response.data.data))
       this.showUserDetailModal = true
     },
     filesChange(fileType, fileList) {
-      if(fileType === 'contract') {
+      if (fileType === 'contract') {
         this.contractFile = fileList
       } else {
         this.documentFiles = fileList
@@ -428,13 +491,13 @@ export default {
     uploadFiles(fileType) {
       if (fileType === 'contract' && this.contractFile.length > 0) {
         this.contracts.push(this.contractFile[0])
-        this.contractFile = [];
-        this.$refs.uploadfile.value = null;
+        this.contractFile = []
+        this.$refs.uploadfile.value = null
       }
 
       if (fileType === 'document' && this.documentFiles.length > 0) {
         this.documents.push(...this.documentFiles)
-        this.documentFiles = [];
+        this.documentFiles = []
       }
     },
     deleteFile(fileType, index) {
@@ -443,7 +506,7 @@ export default {
       } else {
         this.documents.splice(index, 1)
       }
-    }
+    },
   },
   mounted() {
     this.getUsers()
