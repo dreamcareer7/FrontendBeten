@@ -1,7 +1,7 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">Create hospitality</div>
-    <form @submit.prevent="createHospitality">
+    <div class="card-header">Create a hospitality</div>
+    <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
           <input
@@ -49,6 +49,7 @@
             id="quantity"
             required
             autocomplete="off"
+            step=".01"
             v-model="hospitality.quantity"
             :disabled="disabled"
           />
@@ -129,7 +130,7 @@ export default {
     disabled: false,
   }),
   methods: {
-    createHospitality() {
+    create() {
       this.$axios
         .post('/hospitalities', this.hospitality)
         .then((response) => {

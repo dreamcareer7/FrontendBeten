@@ -227,13 +227,13 @@ const routes = [
       // Hospitalities Menu
       {
         path: '/hospitalities',
-        name: 'hospitalities',
+        name: 'Hospitalities',
         component: () =>
           import('@/views/panel/Hospitality/Hospitalities/Hospitalities'),
       },
       {
         path: '/hospitalities/create',
-        name: 'Create hospitality',
+        name: 'Create a hospitality',
         component: () =>
           import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
       },
