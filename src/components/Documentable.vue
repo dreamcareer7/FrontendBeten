@@ -46,7 +46,7 @@
               <CTableDataCell :aria-colspan="2">
                 <button
                   class="btn btn-sm btn-danger text-white m-1"
-                  @click="deleteFile(document.id)"
+                  @click="deleteDocument(document.id)"
                   title="Delete Document"
                 >
                   <ion-icon name="trash-bin-outline"></ion-icon>
@@ -100,11 +100,14 @@ export default {
       }
       event.target.files.value = null
     },
-    async deleteFile(documentID) {
-      await this.$axios.delete(`/documents/${documentID}`).then(() => {
-        // this.documents.splice(this.documents.indexOf(rowIndex), 1)
-        this.message = 'File deleted successfully.'
+    async deleteDocument(doc_id) {
+      await this.$axios.delete(`/documents/${doc_id}`).then(() => {
+        this.documents = this.documents.filter((doc) => doc.id !== doc_id)
+        this.message = 'Document deleted successfully.'
         this.showMessage = true
+        setTimeout(() => {
+          this.showMessage = false
+        }, 3000)
       })
     },
     getDocuments: async function () {
@@ -143,7 +146,7 @@ export default {
         .catch(function () {
           console.log('FAILURE!!')
         })
-    }
+    },
   },
   mounted() {
     this.getDocuments()
