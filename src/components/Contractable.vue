@@ -70,13 +70,14 @@
         </CTable>
       </CCardBody>
     </CCard>
-    <CForm class="p-2" @submit.prevent="upload">
+    <CForm class="p-2" @submit.prevent="upload" ref="uploadForm">
       <CRow class="mt-1">
         <CCol xs="5" sm="5">
           <input
             type="text"
             class="form-control sm"
             placeholder="Reference"
+            v-model="reference"
             required
           />
         </CCol>
@@ -106,25 +107,15 @@ export default {
     showMessage: false,
     message: '',
     contract_documents_shown: [],
+    reference: '',
   }),
   methods: {
-    async deleteContract(contract_id) {
-      await this.$axios.delete(`/contracts/${contract_id}`).then(() => {
-        this.contracts = this.contracts.filter(
-          (contract) => contract.id !== contract_id,
-        )
-        this.message = 'Contract deleted successfully.'
-        this.showMessage = true
-      })
-    },
     async upload() {
       /*
         Initialize the form data
       */
       let form_data = new FormData()
-      form_data.append(``)
-      console.log(this.$refs.docs.files)
-      return
+      form_data.append('reference', this.reference)
       /*
         Iteate over any file sent over appending the files
         to the form data.
@@ -137,20 +128,29 @@ export default {
       */
       await this.$axios
         .post(`/contracts/${this.type}/${this.id}`, form_data)
-        .then(() => {
+        .then((response) => {
           // Add the uploaded contracts to the existing list
-          this.message = 'Contracts uploaded successfully.'
+          // We already have the reference, we just need to get the ID
+          // from the response
+          this.contracts.push({id: response.data, reference: this.reference})
+          this.contract_documents_shown[response.data] = false
+          this.message = 'Contract uploaded successfully.'
           this.showMessage = true
-          this.$refs.docs.reset()
-        })
-        .catch(function () {
-          // Really? the user will look at the console to see this?
-          console.log('FAILURE!!')
+          this.$refs.uploadForm.$el.reset()
         })
     },
     toggleDocumentsOfContract(contract_id) {
       this.contract_documents_shown[contract_id] =
         !this.contract_documents_shown[contract_id]
+    },
+    async deleteContract(contract_id) {
+      await this.$axios.delete(`/contracts/${contract_id}`).then(() => {
+        this.contracts = this.contracts.filter(
+          (contract) => contract.id !== contract_id,
+        )
+        this.message = 'Contract deleted successfully.'
+        this.showMessage = true
+      })
     },
   },
   async mounted() {

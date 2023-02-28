@@ -30,12 +30,9 @@
               <CTableDataCell>
                 <a
                   class="btn btn-sm btn-info text-white m-1"
-                  v-c-tooltip="{
-                    content: 'Download Document',
-                    placement: 'top',
-                  }"
                   :href="`${api_url}/${document.path}`"
                   target="_blank"
+                  title="Download document"
                 >
                   <ion-icon name="cloud-download-outline"></ion-icon>
                 </a>
@@ -57,7 +54,7 @@
         </CTable>
       </CCardBody>
     </CCard>
-    <CForm class="p-2">
+    <CForm class="p-2" ref="uploadForm">
       <CRow class="mt-1">
         <CCol xs="8" sm="9">
           <CFormInput
