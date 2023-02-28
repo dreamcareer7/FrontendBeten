@@ -141,16 +141,15 @@
           </CTable>
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Page navigation example">
+              <nav aria-label="Users navigation">
                 <ul class="pagination">
                   <template v-for="page in pagination" :key="page">
-                    <li class="page-item">
+                    <li class="page-item" :class="{active: page.active}">
                       <a
                         @click.prevent="gotoPage(page.url)"
                         class="page-link"
-                        href="#"
+                        :class="{ disabled: !page.url }"
                         v-html="page.label"
-                        v-if="page.url"
                       ></a>
                     </li>
                   </template>
@@ -248,16 +247,6 @@ export default {
     visibleLiveDemo: false,
   }),
   methods: {
-    nextPage: async function () {
-      this.current_page = this.current_page + 1
-      this.search.page = this.current_page
-      this.getUsers()
-    },
-    previousPage: async function () {
-      this.current_page = this.current_page - 1
-      this.search.page = this.current_page
-      this.getUsers()
-    },
     getUsers: async function () {
       this.loading = true
       await this.$axios
@@ -344,3 +333,13 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.page-item {
+  cursor: pointer;
+}
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+</style>
