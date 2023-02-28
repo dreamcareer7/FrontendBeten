@@ -309,6 +309,8 @@ router.beforeEach((to, from, next) => {
   if (to.matched.length > 0) {
     if (reqAuth && !auth_token) {
       next(defaultQuery)
+    } else if (!reqAuth && auth_token) {
+      next('/dashboard')
     } else {
       next()
     }
