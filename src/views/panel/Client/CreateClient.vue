@@ -28,8 +28,8 @@
             class="form-control"
             v-model="client.gender"
           >
-            <option value="1">Male</option>
-            <option value="0">Female</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
           </select>
           <label for="gender">Gender</label>
           <div class="invalid-feedback"></div>
@@ -83,10 +83,23 @@
               <input
                 type="text"
                 class="form-control"
+                id="id_name"
+                name="id_name"
+                placeholder="ID Name..."
+                v-model="client.id_name"
+              />
+              <label for="id_name">ID Name</label>
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
                 id="id_number"
                 name="id_number"
                 placeholder="ID Number..."
-                v-model="client.id_no"
+                v-model="client.id_number"
               />
               <label for="phone">ID Number</label>
               <div class="invalid-feedback"></div>
