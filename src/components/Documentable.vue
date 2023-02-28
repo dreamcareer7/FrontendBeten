@@ -2,18 +2,18 @@
   <CCol class="card bg-light border-top-3 p-0 mt-3">
     <CCardHeader class="font-weight-bold">Documents</CCardHeader>
     <CCard class="mt-1">
-      <CAlert color="success" class="m-2" v-show="showMessage"
-        >{{ message }}
-        <span class="pull-right cursor-pointer" @click="showMessage = false"
-          >X</span
-        ></CAlert
-      >
+      <CAlert color="success" class="m-2" v-show="showMessage">
+        {{ message }}
+        <span class="pull-right cursor-pointer" @click="showMessage = false">
+          X
+        </span>
+      </CAlert>
       <CCardBody class="p-0">
         <CTable responsive hover class="cursor-pointer">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
-              <CTableHeaderCell scope="col">File name</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Title</CTableHeaderCell>
               <CTableHeaderCell scope="col">Download</CTableHeaderCell>
               <CTableHeaderCell scope="col">Created by</CTableHeaderCell>
               <CTableHeaderCell style="width: 20%" scope="col" :aria-colspan="2"
@@ -54,23 +54,25 @@
         </CTable>
       </CCardBody>
     </CCard>
-    <CForm class="p-2" ref="uploadForm">
+    <CForm class="p-2" @submit.prevent="upload" ref="uploadForm">
       <CRow class="mt-1">
-        <CCol xs="8" sm="9">
-          <CFormInput
-            type="file"
-            ref="fileInput"
-            @change="onFilePicked"
-            multiple="multiple"
-            id="formFileLg"
+        <CCol xs="5" sm="5">
+          <input
+            type="text"
+            class="form-control sm"
+            placeholder="Title"
+            v-model="title"
+            required
           />
         </CCol>
-        <CCol xs="4" sm="3">
+        <CCol xs="5" sm="5">
+          <input type="file" class="form-control sm" ref="docs" multiple />
+        </CCol>
+        <CCol xs="2" sm="2">
           <CButton
-            type="button"
+            type="submit"
             color="info"
-            class="text-white btn-sm"
-            click="submitFiles"
+            class="mt-1 text-white btn-sm"
             shape="rounded-pill"
             >Upload</CButton
           >
@@ -89,13 +91,35 @@ export default {
     showMessage: false,
     message: '',
     files: [],
+    title: '',
   }),
   methods: {
-    async onFilePicked(event) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        this.files.push(event.target.files[i])
+    async upload() {
+      /*
+        Initialize the form data
+      */
+      let form_data = new FormData()
+      form_data.append('title', this.title)
+
+      /*
+        Iteate over any file sent over appending the files
+        to the form data.
+      */
+      for (let i = 0; i < this.$refs.docs.files.length; i++) {
+        form_data.append(`documents[${i}]`, this.$refs.docs.files[i])
       }
-      event.target.files.value = null
+
+      /*
+        Make the request to the POST /select-files URL
+      */
+      await this.$axios
+        .post(`/documents/${this.type}/${this.id}`, form_data)
+        .then(() => {
+          this.getDocuments()
+          this.message = 'Document uploaded successfully.'
+          this.showMessage = true
+          this.$refs.uploadForm.$el.reset()
+        })
     },
     async deleteDocument(doc_id) {
       await this.$axios.delete(`/documents/${doc_id}`).then(() => {
@@ -107,41 +131,11 @@ export default {
         }, 3000)
       })
     },
-    getDocuments: async function () {
+    async getDocuments() {
       await this.$axios
         .get(`/documents/${this.type}/${this.id}`)
         .then((response) => {
           this.documents = response.data
-        })
-    },
-    async submitFiles() {
-      /*
-        Initialize the form data
-      */
-      let formData = new FormData()
-
-      /*
-        Iteate over any file sent over appending the files
-        to the form data.
-      */
-      for (let i = 0; i < this.files.length; i++) {
-        let file = this.files[i]
-        formData.append(`documents[${i}]`, file)
-      }
-
-      /*
-        Make the request to the POST /select-files URL
-      */
-      await this.$axios
-        .post(`/documents/${this.type}/${this.id}`, formData)
-        .then(() => {
-          this.getDocuments()
-          this.message = 'Document uploaded successfully.'
-          this.showMessage = true
-          this.$refs.inputFile.reset()
-        })
-        .catch(function () {
-          console.log('FAILURE!!')
         })
     },
   },

@@ -136,6 +136,7 @@ export default {
           this.contract_documents_shown[response.data] = false
           this.message = 'Contract uploaded successfully.'
           this.showMessage = true
+          this.reference = ''
           this.$refs.uploadForm.$el.reset()
         })
     },
