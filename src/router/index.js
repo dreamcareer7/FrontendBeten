@@ -181,7 +181,7 @@ const routes = [
 
       {
         path: '/groups',
-        name: 'groups',
+        name: 'Groups',
         component: () => import('@/views/panel/Group/Groups'),
       },
       {

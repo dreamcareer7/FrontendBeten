@@ -6,5 +6,5 @@ async function fetchCities() {
 }
 
 export default {
-  fetchCities
+  fetchCities,
 }
