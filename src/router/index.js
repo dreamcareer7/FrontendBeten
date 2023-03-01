@@ -191,7 +191,7 @@ const routes = [
       },
       {
         path: '/groups/edit/:id',
-        name: 'update_group',
+        name: 'Update Group',
         component: () => import('@/views/panel/Group/UpdateGroup'),
       },
       {

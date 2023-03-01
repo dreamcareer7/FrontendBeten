@@ -222,7 +222,7 @@ export default {
         })
     },
     fetchInfo: async function (id) {
-      await this.$axios.get(`/groups/info/` + id).then((response) => {
+      await this.$axios.get(`/groups/${id}`).then((response) => {
         this.group = response.data.group
         this.group_clients = response.data.clients
       })

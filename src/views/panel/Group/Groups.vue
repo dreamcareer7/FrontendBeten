@@ -68,12 +68,15 @@
                 <CTableDataCell>{{ group.title }}</CTableDataCell>
                 <CTableDataCell>{{ group.crew.fullname }}</CTableDataCell>
                 <CTableDataCell>
-                  <button class="btn btn-sm btn-info text-white">
-                    <ion-icon name="eye-outline"></ion-icon>
+                  <button
+                    class="btn btn-sm btn-info text-white mx-1"
+                    title="View Details"
+                    @click="fetchGroupInfo(group.id)">
+                      <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <router-link
                     :to="{
-                      name: 'update_group',
+                      name: 'Update Group',
                       params: { id: this.$encrypt(group.id) },
                     }"
                   >
@@ -117,6 +120,42 @@
       </CCard>
     </CCol>
   </CRow>
+
+  <CModal
+    size="lg"
+    :visible="is_group_modal_visible"
+    @close="is_group_modal_visible = false"
+    class="modal-popup-detail"
+    data-backdrop="static"
+    data-keyboard="false"
+  >
+    <CModalHeader>
+      <CModalTitle>Group Information</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CRow>
+        <CCol :md="12">
+          <CTable class="table table-responsive">
+            <CTableRow>
+              <CTableHeaderCell>ID</CTableHeaderCell>
+              <CTableDataCell>{{ group.id }}</CTableDataCell>
+              <CTableHeaderCell>Title</CTableHeaderCell>
+              <CTableDataCell>{{ group.title }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Crew member</CTableHeaderCell>
+              <CTableDataCell>{{ group.crew?.fullname }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow v-if="group.is_documentable">
+              <CTableDataCell colspan="4">
+                <Documentable type="group" :id="group.id" />
+              </CTableDataCell>
+            </CTableRow>
+          </CTable>
+        </CCol>
+      </CRow>
+    </CModalBody>
+  </CModal>
 </template>
 
 <script>
@@ -133,6 +172,8 @@ export default {
     },
     loading: false,
     pagination: [],
+    is_group_modal_visible: false,
+    group: {},
   }),
   methods: {
     getGroups: async function () {
@@ -149,6 +190,12 @@ export default {
     },
     filter: async function () {
       await this.debounceFn()
+    },
+    fetchGroupInfo: async function (id) {
+      await this.$axios.get(`/groups/${id}`).then((response) => {
+        this.group = response.data
+        this.is_group_modal_visible = true
+      })
     },
     gotoPage: async function (url) {
       this.loading = true
@@ -178,7 +225,7 @@ export default {
             )
           swal('Group has been deleted!', {
             icon: 'success',
-            timer: 3000
+            timer: 3000,
           })
         }
       })
