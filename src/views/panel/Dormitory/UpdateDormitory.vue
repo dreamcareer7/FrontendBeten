@@ -121,7 +121,7 @@ export default {
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
-            this.success = true
+            this.$router.push({ name: 'dormitories' })
           } else {
             this.success = false
           }

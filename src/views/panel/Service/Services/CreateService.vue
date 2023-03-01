@@ -101,7 +101,6 @@ export default {
     createService: async function () {
       await this.$axios
         .post('/services', this.service)
-        // TODO: Redirect back to index, is this the desired behavior?
         .then(() => this.$router.push({ name: 'Services' }))
         .catch((error) => {
           if (error.response) {

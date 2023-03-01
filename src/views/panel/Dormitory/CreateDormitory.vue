@@ -6,21 +6,43 @@
     <form method="post">
       <div class="card-body">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="title" name="title" placeholder="Title..." required autofocus
-            autocomplete="off" v-model="dormitory.title" />
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            placeholder="Title..."
+            required
+            autofocus
+            autocomplete="off"
+            v-model="dormitory.title"
+          />
           <label for="title">Title</label>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="phones" name="phones" placeholder="Phones..."
-            v-model="dormitory.phone" required autocomplete="off" />
+          <input
+            type="text"
+            class="form-control"
+            id="phones"
+            name="phones"
+            placeholder="Phones..."
+            v-model="dormitory.phone"
+            required
+            autocomplete="off"
+          />
           <label for="phones">Phones</label>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <select name="city" id="city" v-model="dormitory.city_id" class="form-control">
+          <select
+            name="city"
+            id="city"
+            v-model="dormitory.city_id"
+            class="form-control"
+          >
             <option>Choose City</option>
             <option value="1">City 1</option>
           </select>
@@ -28,7 +50,12 @@
           <div class="invalid-feedback"></div>
         </div>
         <div class="form-floating mb-3">
-          <select name="city" id="country" v-model="dormitory.country" class="form-control">
+          <select
+            name="city"
+            id="country"
+            v-model="dormitory.country"
+            class="form-control"
+          >
             <option>Choose Country</option>
             <template v-for="country in countries" :key="country.code">
               <option :value="country.id">{{ country.name }}</option>
@@ -39,15 +66,31 @@
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="location" name="location" placeholder="Location..." required
-            v-model="dormitory.location" autocomplete="off" />
+          <input
+            type="text"
+            class="form-control"
+            id="location"
+            name="location"
+            placeholder="Location..."
+            required
+            v-model="dormitory.location"
+            autocomplete="off"
+          />
           <label for="location">Location</label>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="coordinate" name="coordinate" placeholder="coordinate..." required
-            v-model="dormitory.coordinate" autocomplete="off" />
+          <input
+            type="text"
+            class="form-control"
+            id="coordinate"
+            name="coordinate"
+            placeholder="coordinate..."
+            required
+            v-model="dormitory.coordinate"
+            autocomplete="off"
+          />
           <label for="coordinate">Coordinate</label>
           <div class="invalid-feedback"></div>
         </div>
@@ -57,9 +100,18 @@
             <div class="border rounded px-1">
               <div class="form-switch">
                 <input type="hidden" value="0" name="is_active" />
-                <input class="form-check-input" type="checkbox" value="1" name="is_active" checked id="is_active"
-                  v-model="dormitory.is_active" />
-                <label class="form-check-label" for="is_active">Is Active</label>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="1"
+                  name="is_active"
+                  checked
+                  id="is_active"
+                  v-model="dormitory.is_active"
+                />
+                <label class="form-check-label" for="is_active"
+                  >Is Active</label
+                >
               </div>
             </div>
           </div>
@@ -108,10 +160,8 @@ export default {
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
-            this.success = true
-            this.dormitory = {}
-          }
-          else {
+            this.$router.push({ name: 'dormitories' })
+          } else {
             this.success = false
           }
         })
@@ -122,10 +172,8 @@ export default {
             this.message = error.message
           }
           this.success = false
-
         })
     },
   },
 }
 </script>
-

@@ -114,16 +114,7 @@ export default {
           // Feedback to the client
           this.message = response.data.message
           if (response.status == 201) { // If created
-            this.success = true
-            // Reset the service commit object
-            this.service_commit = {
-              service_id: null,
-              badge: '',
-              scheduled_at: '',
-              started_at: '',
-              location: '',
-              supervisor_id: null
-            }
+            this.$router.push({ name: 'Service Commits' })
           } else {
             this.success = false
           }

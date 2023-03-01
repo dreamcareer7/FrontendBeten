@@ -156,7 +156,7 @@ export default {
           this.message = response.data.message
           if (response.data.success) {
             this.success = true
-            this.user = {}
+            this.$router.push({name: 'Users'})
           } else {
             this.success = false
           }

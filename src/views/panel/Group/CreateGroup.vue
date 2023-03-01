@@ -152,9 +152,7 @@ export default {
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
-            this.success = true
-            this.group = {}
-            this.group_clients = {}
+            this.$router.push({ name: 'groups' })
           }
           else {
             this.success = false

@@ -135,11 +135,7 @@ export default {
         .post('/hospitalities', this.hospitality)
         .then((response) => {
           if (response.status === 201) {
-            // Created
-            this.message = 'Hospitality created'
-            this.success = true
-            // Reset the main data object for next creation
-            this.hospitality = {}
+            this.$router.push({ name: 'Hospitalities' })
           } else {
             this.message = response.data.message
             this.success = false

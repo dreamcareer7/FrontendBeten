@@ -106,8 +106,7 @@ export default {
         ).then((response) => {
           // Feedback to the client
           if (response.status == 204) { // If updated
-            this.success = true
-            this.message = 'Service commit updated'
+            this.$router.push({ name: 'Service Commits' })
           } else {
             this.success = false
           }

@@ -195,8 +195,7 @@ export default {
         .then((response) => {
           this.message = response.data.message
           if (response.data.success) {
-            this.success = true
-            this.client = {}
+            this.$router.push({name: 'Clients'})
           } else {
             this.success = false
           }
