@@ -173,7 +173,7 @@ const routes = [
       },
       {
         path: '/meals/:id',
-        name: 'Edit Type',
+        name: 'Edit Meal Type',
         component: () => import('@/views/panel/Meal/Types/UpdateType'),
       },
 

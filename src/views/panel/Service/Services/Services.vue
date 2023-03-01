@@ -33,8 +33,8 @@
               <CTableRow
                 v-for="service in services"
                 :key="service.id"
-                @click.prevent="fetchServiceInfo(this.$encrypt(service.id))"
-                v-c-tooltip="{ content: 'View Detail.', placement: 'left' }"
+                @click.prevent="fetchServiceInfo(service.id)"
+                title="View Detail"
               >
                 <CTableHeaderCell scope="row">
                   {{ service.id }}
@@ -47,7 +47,7 @@
                 <CTableDataCell :aria-colspan="2">
                   <button
                     class="btn btn-sm btn-info text-white"
-                    @click.stop="fetchServiceInfo(this.$encrypt(service.id))"
+                    @click.stop="fetchServiceInfo(service.id)"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -79,15 +79,19 @@
 
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Page navigation example">
+              <nav aria-label="Services navigation">
                 <ul class="pagination">
-                  <li class="page-item" v-for="page in pagination" :key="page">
+                  <li
+                    class="page-item"
+                    :class="{ active: page.active }"
+                    v-for="page in pagination"
+                    :key="page"
+                  >
                     <a
                       @click.prevent="gotoPage(page.url)"
                       class="page-link"
-                      href="#"
                       v-html="page.label"
-                      v-if="page.url"
+                      :class="{ disabled: !page.url }"
                     ></a>
                   </li>
                 </ul>
@@ -119,7 +123,7 @@
               <CTableDataCell>{{ service.id }}</CTableDataCell>
               <CTableHeaderCell>City</CTableHeaderCell>
               <CTableDataCell>{{
-                cities[service.city_id - 1].title
+                cities.filter((city) => city.id === service.city_id)[0].title
               }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
@@ -175,42 +179,45 @@ export default {
       })
     },
     gotoPage: async function (url) {
-      await this.$axios
-        .get(url)
-        .then((response) => {
-          this.services = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          this.pagination = response.data.links
-        })
-    },
-    fetchServiceInfo: async function (id) {
-      await this.$axios
-        .get(`/services/` + this.$decrypt(id))
-        .then((response) => {
-          this.service = {
-            ...response.data.data,
-            before_date: response.data.data.before_date?.substring(0, 10),
-            exact_date: response.data.data.exact_date?.substring(0, 10),
-            after_date: response.data.data.after_date?.substring(0, 10),
-          }
-          this.showServiceDetailModal = true
-        })
-    },
-    getServices: async function () {
-      await this.$axios.get('/services').then((response) => {
+      await this.$axios.get(url).then((response) => {
         this.services = response.data.data
         this.current_page = response.data.current_page
         this.last_page = response.data.last_page
         this.pagination = response.data.links
       })
-      cities.fetchCities().then((cities) => {
-        this.cities = cities
+    },
+    fetchServiceInfo: async function (id) {
+      await this.$axios.get(`/services/${id}`).then((response) => {
+        this.service = {
+          ...response.data.data,
+          before_date: response.data.data.before_date?.substring(0, 10),
+          exact_date: response.data.data.exact_date?.substring(0, 10),
+          after_date: response.data.data.after_date?.substring(0, 10),
+        }
+        this.showServiceDetailModal = true
       })
     },
   },
-  mounted() {
-    this.getServices()
+  async mounted() {
+    await this.$axios.get('/services').then((response) => {
+      this.services = response.data.data
+      this.current_page = response.data.current_page
+      this.last_page = response.data.last_page
+      this.pagination = response.data.links
+    })
+    cities.fetchCities().then((cities) => {
+      this.cities = cities
+    })
   },
 }
 </script>
+
+<style scoped>
+.page-item {
+  cursor: pointer;
+}
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+</style>

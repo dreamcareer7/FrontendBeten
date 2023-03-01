@@ -80,14 +80,16 @@
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
-                      v-c-tooltip="{ content: 'Edit', placement: 'top' }"
                       :xl="0"
                       title="Edit"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button class="btn btn-sm btn-danger text-white">
+                  <button
+                    class="btn btn-sm btn-danger text-white"
+                    @click="deleteGroup(group.id)"
+                  >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -137,7 +139,7 @@ export default {
       countries,
       groups: {},
       search: {
-        crew_id: '',
+        crew_id: 0,
       },
       current_page: 1,
       last_page: 99,

@@ -31,27 +31,31 @@
               <CTableRow
                 v-for="meal_type in meal_types"
                 :key="meal_type.id"
-                @click.prevent="fetchMealTypeInfo(this.$encrypt(meal_type.id))"
-                v-c-tooltip="{ content: 'View Detail.', placement: 'left' }"
+                @click.prevent="fetchMealTypeInfo(meal_type.id)"
+                title="View Detail"
               >
                 <CTableHeaderCell scope="row">{{
                   meal_type.id
                 }}</CTableHeaderCell>
                 <CTableDataCell>{{ meal_type.title }}</CTableDataCell>
                 <CTableDataCell>{{ meal_type.description }}</CTableDataCell>
-                <CTableDataCell>{{
-                  meal_type.has_documents ? 'Yes' : 'No'
-                }}</CTableDataCell>
+                <CTableDataCell>
+                  <CBadge
+                    :color="meal_type.has_documents ? 'success' : 'warning'"
+                    shape="rounded-pill"
+                    >{{ meal_type.has_documents ? 'Yes' : 'No' }}</CBadge
+                  >
+                </CTableDataCell>
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white"
-                    @click.stop="fetchMealTypeInfo(this.$encrypt(meal_type.id))"
+                    @click.stop="fetchMealTypeInfo(meal_type.id)"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <router-link
                     :to="{
-                      name: 'Edit Type',
+                      name: 'Edit Meal Type',
                       params: { id: this.$encrypt(meal_type.id) },
                     }"
                   >
@@ -77,15 +81,19 @@
 
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Page navigation example">
+              <nav aria-label="Meal types navigation">
                 <ul class="pagination">
-                  <li class="page-item" v-for="page in pagination" :key="page">
+                  <li
+                    class="page-item"
+                    v-for="page in pagination"
+                    :key="page"
+                    :class="{ active: page.active }"
+                  >
                     <a
                       @click.prevent="gotoPage(page.url)"
                       class="page-link"
-                      href="#"
                       v-html="page.label"
-                      v-if="page.url"
+                      :class="{ disabled: !page.url }"
                     ></a>
                   </li>
                 </ul>
@@ -148,11 +156,6 @@ export default {
     showMealTypeDetailModal: false,
     meal_type: {},
   }),
-  async mounted() {
-    await this.$axios
-      .get('/meal_types')
-      .then((response) => (this.meal_types = response.data.data))
-  },
   methods: {
     gotoPage: async function (url) {
       await this.$axios.get(url).then((response) => {
@@ -163,31 +166,49 @@ export default {
       })
     },
     fetchMealTypeInfo: async function (id) {
-      await this.$axios
-        .get(`/meal_types/` + this.$decrypt(id))
-        .then((response) => {
-          this.meal_type = response.data
-          this.showMealTypeDetailModal = true
-        })
+      await this.$axios.get(`/meal_types/${id}`).then((response) => {
+        this.meal_type = response.data
+        this.showMealTypeDetailModal = true
+      })
     },
     deleteMealType: async function (id) {
       await swal({
         title: 'Are you sure?',
-        text: 'Once deleted, you will not be able to recover this service!',
+        text: 'Once deleted, you will not be able to recover this meal type!',
         icon: 'warning',
         buttons: true,
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
           this.$axios.delete(`/meal_types/${id}`).then(() => {
-            this.meal_types = this.meal_types.filter((meal_type) => meal_type.id !== id)
+            this.meal_types = this.meal_types.filter(
+              (meal_type) => meal_type.id !== id,
+            )
           })
-          swal('Service has been deleted!', {
+          swal('Meal Type has been deleted!', {
             icon: 'success',
           })
         }
       })
     },
   },
+  async mounted() {
+    await this.$axios.get('/meal_types').then((response) => {
+      this.meal_types = response.data.data
+      this.current_page = response.data.current_page
+      this.last_page = response.data.last_page
+      this.pagination = response.data.links
+    })
+  },
 }
 </script>
+
+<style scoped>
+.page-item {
+  cursor: pointer;
+}
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+</style>

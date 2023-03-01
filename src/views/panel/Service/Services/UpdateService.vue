@@ -1,7 +1,7 @@
 <template>
   <div class="card border-success mb-4">
     <div class="card-header">Update Service</div>
-    <form>
+    <form @submit.prevent="updateService">
       <div class="card-body">
         <div class="form-floating mb-3">
           <input
@@ -9,7 +9,7 @@
             class="form-control"
             id="title"
             v-model="service.title"
-            placeholder="Title..."
+            label="Title..."
             required
             autofocus
             autocomplete="off"
@@ -35,44 +35,38 @@
           <input
             type="date"
             class="form-control"
-            id="before_date"
+            for="before_date"
             v-model="service.before_date"
-            name="before_date"
-            placeholder="Before date..."
+            label="Before date..."
           />
           <label for="phone">Before date</label>
-          <div class="invalid-feedback"></div>
         </div>
         <div class="form-floating mb-3">
           <input
             type="date"
             class="form-control"
-            id="exact_date"
+            for="exact_date"
             v-model="service.exact_date"
-            name="exact_date"
-            placeholder="Exact date..."
+            label="Exact date..."
           />
           <label for="phone">Exact Date</label>
-          <div class="invalid-feedback"></div>
         </div>
         <div class="form-floating mb-3">
           <input
             type="date"
             class="form-control"
-            id="after_date"
+            for="after_date"
             v-model="service.after_date"
-            name="after_date"
-            placeholder="After date..."
+            label="After date..."
           />
           <label for="phone">After date</label>
-          <div class="invalid-feedback"></div>
         </div>
         <CRow>
           <CCol :md="12">
-            <div v-show="message && !success" class="error_style">
+            <div v-show="message" class="error_style">
               {{ message }}
             </div>
-            <div v-show="message && success" class="alert alert-success">
+            <div v-show="message" class="alert alert-success">
               {{ message }}
             </div>
           </CCol>
@@ -80,7 +74,7 @@
       </div>
       <div class="card-footer text-end">
         <span class="float-start">* Required fields</span>
-        <button @click.prevent="updateService()" class="btn btn-success text-white">Save</button>
+        <button class="btn btn-success text-white" type="submit">Save</button>
       </div>
     </form>
   </div>
@@ -93,28 +87,14 @@ export default {
   name: 'UpdateService',
   data: () => ({
     message: '',
-    success: false,
     service: {},
-    service_id: null,
     cities: [],
   }),
   methods: {
     updateService: async function () {
-      let service = this.service;
-      await this.$axios.put(`/services/`+ this.service_id, service)
-        .then((response) => {
-          this.message = response.data.message
-          if (response.data.success) {
-            this.success = true
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            this.message = error.response.data.message
-          } else {
-            this.message = error.message
-          }
-        })
+      await this.$axios
+        .put(`/services/${this.service.id}`, this.service)
+        .then(() => this.$router.push({ name: 'Services' }))
     },
     fetchServiceInfo: async function (id) {
       await this.$axios.get(`/services/` + id).then((response) => {
@@ -122,17 +102,22 @@ export default {
           ...response.data.data,
           before_date: response.data.data.before_date?.substring(0, 10),
           exact_date: response.data.data.exact_date?.substring(0, 10),
-          after_date: response.data.data.after_date?.substring(0, 10)
+          after_date: response.data.data.after_date?.substring(0, 10),
         }
       })
     },
   },
-  mounted() {
-    cities.fetchCities().then((cities) => {
-      this.cities = cities
-    })
-    this.service_id = this.$decrypt(this.$route.params.id)
-    this.fetchServiceInfo(this.service_id)
+  async mounted() {
+    cities.fetchCities().then((cities) => this.cities = cities)
+    const service_id = this.$decrypt(this.$route.params.id)
+    await this.$axios.get(`/services/${service_id}`).then((response) => {
+        this.service = {
+          ...response.data.data,
+          before_date: response.data.data.before_date?.substring(0, 10),
+          exact_date: response.data.data.exact_date?.substring(0, 10),
+          after_date: response.data.data.after_date?.substring(0, 10),
+        }
+      })
   },
 }
 </script>
