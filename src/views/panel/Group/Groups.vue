@@ -13,7 +13,9 @@
                   name: 'Create Group',
                 }"
               >
-                <CButton color="primary" class="float-end"> Create Group</CButton>
+                <CButton color="primary" class="float-end">
+                  Create Group</CButton
+                >
               </router-link>
             </div>
           </div>
@@ -43,7 +45,6 @@
                 @change="getGroups"
               />
             </CCol>
-
           </CRow>
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
@@ -68,20 +69,26 @@
                 <CTableDataCell>{{ group.title }}</CTableDataCell>
                 <CTableDataCell>{{ group.crew.fullname }}</CTableDataCell>
                 <CTableDataCell>
-
+                  <button class="btn btn-sm btn-info text-white">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </button>
                   <router-link
                     :to="{
                       name: 'update_group',
                       params: { id: this.$encrypt(group.id) },
                     }"
                   >
-                    <CButton class="btn btn-warning text-white">Update</CButton>
+                    <CButton
+                      class="btn btn-sm btn-warning text-white m-1"
+                      v-c-tooltip="{ content: 'Edit', placement: 'top' }"
+                      :xl="0"
+                      title="Edit"
+                    >
+                      <ion-icon name="create-outline"></ion-icon>
+                    </CButton>
                   </router-link>
-                  <button
-                    class="btn btn-danger text-white"
-                    @click="deleteGroup(group.id)"
-                  >
-                    Delete
+                  <button class="btn btn-sm btn-danger text-white">
+                    <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
               </CTableRow>
@@ -121,7 +128,7 @@
 </template>
 
 <script>
-import countries from "@/store/countries";
+import countries from '@/store/countries'
 
 export default {
   name: 'clients',
@@ -130,8 +137,8 @@ export default {
       countries,
       groups: {},
       search: {
-        crew_id:'',
-       },
+        crew_id: '',
+      },
       current_page: 1,
       last_page: 99,
       selected_user: null,
