@@ -94,7 +94,9 @@
                       params: { id: this.$encrypt(vehicle.id) },
                     }"
                   >
-                    <CButton class="btn btn-sm btn-warning text-white m-1"><ion-icon name="create-outline"></ion-icon></CButton>
+                    <CButton class="btn btn-sm btn-warning text-white m-1"
+                      ><ion-icon name="create-outline"></ion-icon
+                    ></CButton>
                   </router-link>
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
@@ -127,7 +129,7 @@
       </CCard>
     </CCol>
   </CRow>
-  <CModal :visible="visibleLiveDemo" @close="visibleLiveDemo = false">
+  <CModal :visible="visibleLiveDemo" @close="visibleLiveDemo = false" size="lg">
     <CModalHeader>
       <CModalTitle>Vehicle details</CModalTitle>
     </CModalHeader>
@@ -167,16 +169,15 @@
           <CTableDataCell>Date updated</CTableDataCell>
           <CTableDataCell>{{ vehicle.updated_at }}</CTableDataCell>
         </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Upload contract</CTableDataCell>
-          <CTableDataCell>
-            <Contractable :endpoint="`vehicles/update/${vehicle.id}`" />
+        <CTableRow class="mt-3" v-if="vehicle.is_contractable ?? false">
+          <CTableDataCell colspan="4">
+            <Contractable type="vehicle" :id="vehicle.id" />
           </CTableDataCell>
         </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Upload documents</CTableDataCell>
-          <CTableDataCell>
-            <Documentable :endpoint="`/vehicles/update/${vehicle.id}`" />
+
+        <CTableRow v-if="vehicle.is_documentable ?? false">
+          <CTableDataCell colspan="4">
+            <Documentable type="vehicle" :id="vehicle.id" />
           </CTableDataCell>
         </CTableRow>
       </CTable>
