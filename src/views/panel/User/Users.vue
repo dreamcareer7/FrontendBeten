@@ -107,7 +107,7 @@
                 <CTableDataCell :aria-colspan="2">
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
-                    v-c-tooltip="{ content: 'View Detail', placement: 'top' }"
+                    title="View Details"
                     @click="fetchUserInfo(this.$encrypt(user.id))"
                   >
                     <ion-icon name="eye-outline"></ion-icon>

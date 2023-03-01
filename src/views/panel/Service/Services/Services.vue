@@ -17,7 +17,7 @@
           </div>
         </CCardHeader>
         <CCardBody>
-          <CTable>
+          <CTable hover responsive class="cursor-pointer">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -30,19 +30,44 @@
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="service in services" :key="service.id">
+              <CTableRow
+                v-for="service in services"
+                :key="service.id"
+                @click.prevent="fetchServiceInfo(service.id)"
+                title="View Detail"
+              >
                 <CTableHeaderCell scope="row">
                   {{ service.id }}
                 </CTableHeaderCell>
                 <CTableDataCell>{{ service.title }}</CTableDataCell>
-                <CTableDataCell>{{ service.city.title }}</CTableDataCell>
+                <CTableDataCell>{{ service.city?.title }}</CTableDataCell>
                 <CTableDataCell>{{ service.before_date }}</CTableDataCell>
                 <CTableDataCell>{{ service.exact_date }}</CTableDataCell>
                 <CTableDataCell>{{ service.after_date }}</CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
                   <button
+                    class="btn btn-sm btn-info text-white"
+                    @click.stop="fetchServiceInfo(service.id)"
+                  >
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </button>
+                  <router-link
+                    :to="{
+                      name: 'Update Service',
+                      params: { id: this.$encrypt(service.id) },
+                    }"
+                  >
+                    <CButton
+                      class="btn btn-sm btn-warning text-white m-1"
+                      :xl="0"
+                      title="Edit"
+                    >
+                      <ion-icon name="create-outline"></ion-icon>
+                    </CButton>
+                  </router-link>
+                  <button
                     class="btn btn-sm btn-danger text-white"
-                    @click="deleteService(service.id)"
+                    @click.stop="deleteService(service.id)"
                     title="Delete"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
@@ -51,17 +76,88 @@
               </CTableRow>
             </CTableBody>
           </CTable>
+
+          <CRow>
+            <CCol :md="12" class="text-center">
+              <nav aria-label="Services navigation">
+                <ul class="pagination">
+                  <li
+                    class="page-item"
+                    :class="{ active: page.active }"
+                    v-for="page in pagination"
+                    :key="page"
+                  >
+                    <a
+                      @click.prevent="gotoPage(page.url)"
+                      class="page-link"
+                      v-html="page.label"
+                      :class="{ disabled: !page.url }"
+                    ></a>
+                  </li>
+                </ul>
+              </nav>
+            </CCol>
+          </CRow>
         </CCardBody>
       </CCard>
     </CCol>
   </CRow>
+
+  <CModal
+    size="lg"
+    :visible="showServiceDetailModal"
+    @close="showServiceDetailModal = false"
+    class="modal-popup-detail"
+    data-backdrop="static"
+    data-keyboard="false"
+  >
+    <CModalHeader>
+      <CModalTitle>Service Information</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CRow>
+        <CCol :md="12">
+          <CTable class="table table-responsive">
+            <CTableRow>
+              <CTableHeaderCell>ID</CTableHeaderCell>
+              <CTableDataCell>{{ service.id }}</CTableDataCell>
+              <CTableHeaderCell>City</CTableHeaderCell>
+              <CTableDataCell>{{
+                cities.filter((city) => city.id === service.city_id)[0].title
+              }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Title</CTableHeaderCell>
+              <CTableDataCell>{{ service.title }}</CTableDataCell>
+              <CTableHeaderCell>After Date:</CTableHeaderCell>
+              <CTableDataCell>{{ service.after_date }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Before Date:</CTableHeaderCell>
+              <CTableDataCell>{{ service.before_date }}</CTableDataCell>
+              <CTableHeaderCell>Exact Date:</CTableHeaderCell>
+              <CTableDataCell>{{ service.exact_date }}</CTableDataCell>
+            </CTableRow>
+          </CTable>
+        </CCol>
+      </CRow>
+    </CModalBody>
+  </CModal>
 </template>
 
 <script>
+import cities from '@/store/cities'
+
 export default {
   name: 'Services',
   data: () => ({
     services: [],
+    current_page: 1,
+    pagination: {},
+    last_page: 99,
+    showServiceDetailModal: false,
+    service: {},
+    cities: [],
   }),
   methods: {
     deleteService: async function (id) {
@@ -82,10 +178,46 @@ export default {
         }
       })
     },
+    gotoPage: async function (url) {
+      await this.$axios.get(url).then((response) => {
+        this.services = response.data.data
+        this.current_page = response.data.current_page
+        this.last_page = response.data.last_page
+        this.pagination = response.data.links
+      })
+    },
+    fetchServiceInfo: async function (id) {
+      await this.$axios.get(`/services/${id}`).then((response) => {
+        this.service = {
+          ...response.data.data,
+          before_date: response.data.data.before_date?.substring(0, 10),
+          exact_date: response.data.data.exact_date?.substring(0, 10),
+          after_date: response.data.data.after_date?.substring(0, 10),
+        }
+        this.showServiceDetailModal = true
+      })
+    },
   },
   async mounted() {
-    await this.$axios.get('/services')
-      .then((response) => this.services = response.data)
+    await this.$axios.get('/services').then((response) => {
+      this.services = response.data.data
+      this.current_page = response.data.current_page
+      this.last_page = response.data.last_page
+      this.pagination = response.data.links
+    })
+    cities.fetchCities().then((cities) => {
+      this.cities = cities
+    })
   },
 }
 </script>
+
+<style scoped>
+.page-item {
+  cursor: pointer;
+}
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+</style>

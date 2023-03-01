@@ -79,6 +79,11 @@ const routes = [
         component: () => import('@/views/panel/Service/Services/CreateService'),
       },
       {
+        path: '/services/:id',
+        name: 'Update Service',
+        component: () => import('@/views/panel/Service/Services/UpdateService'),
+      },
+      {
         path: '/services/commits',
         name: 'Service Commits',
         component: () => import('@/views/panel/Service/Commits/Commits'),
@@ -166,12 +171,17 @@ const routes = [
         name: 'Create Type',
         component: () => import('@/views/panel/Meal/Types/CreateType'),
       },
+      {
+        path: '/meals/:id',
+        name: 'Edit Meal Type',
+        component: () => import('@/views/panel/Meal/Types/UpdateType'),
+      },
 
       // Meals Menu ends here
 
       {
         path: '/groups',
-        name: 'groups',
+        name: 'Groups',
         component: () => import('@/views/panel/Group/Groups'),
       },
       {
@@ -181,7 +191,7 @@ const routes = [
       },
       {
         path: '/groups/edit/:id',
-        name: 'update_group',
+        name: 'Update Group',
         component: () => import('@/views/panel/Group/UpdateGroup'),
       },
       {

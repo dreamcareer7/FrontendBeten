@@ -5,15 +5,15 @@
         <CCardHeader>
           <div class="row">
             <div class="col-md-10">
-              <strong>Groups</strong>
+              <strong>Groups</strong>&nbsp;
+              <ion-icon name="people-outline"></ion-icon>
             </div>
             <div class="col-md-2">
-              <router-link
-                :to="{
-                  name: 'Create Group',
-                }"
-              >
-                <CButton color="primary" class="float-end"> Create Group</CButton>
+              <router-link :to="{ name: 'Create Group' }">
+                <CButton color="primary" class="float-end">
+                  Create Group
+                  <ion-icon name="create-outline"></ion-icon>
+                </CButton>
               </router-link>
             </div>
           </div>
@@ -21,30 +21,25 @@
         <CCardBody>
           <CRow>
             <CCol :md="2">
-              <select
-                v-model="search.crew_id"
-                name="crew_id"
-                id="crew_id"
+              <input
+                type="text"
                 class="form-control"
-                @change="getGroups"
-              >
-                <option>Choose Crew</option>
-                <template v-for="crew in crews" :key="crew.id">
-                  <option :value="crew.id">{{ crew.fullname }}</option>
-                </template>
-              </select>
+                v-model="search.title"
+                placeholder="Search title"
+                @keyup="filter"
+              />
             </CCol>
             <CCol :md="2">
               <input
                 type="text"
                 class="form-control"
-                v-model="search.title"
-                placeholder="Group Title"
-                @change="getGroups"
+                v-model="search.crew_member"
+                placeholder="Search crew member"
+                @keyup="filter"
               />
             </CCol>
-
           </CRow>
+          <hr />
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
               <div class="spinner-border text-success" role="status"></div>
@@ -53,12 +48,17 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
-          <CTable v-if="!loading">
+          <CRow v-if="groups.length === 0 && !loading" class="mt-4">
+            <CCol :md="12" class="text-center">
+              <span class="sr-only">No results</span>
+            </CCol>
+          </CRow>
+          <CTable v-if="!loading && groups.length > 0">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                <CTableHeaderCell scope="col">ID #</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Crew</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Crew member</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -68,20 +68,31 @@
                 <CTableDataCell>{{ group.title }}</CTableDataCell>
                 <CTableDataCell>{{ group.crew.fullname }}</CTableDataCell>
                 <CTableDataCell>
-
+                  <button
+                    class="btn btn-sm btn-info text-white mx-1"
+                    title="View Details"
+                    @click="fetchGroupInfo(group.id)">
+                      <ion-icon name="eye-outline"></ion-icon>
+                  </button>
                   <router-link
                     :to="{
-                      name: 'update_group',
+                      name: 'Update Group',
                       params: { id: this.$encrypt(group.id) },
                     }"
                   >
-                    <CButton class="btn btn-warning text-white">Update</CButton>
+                    <CButton
+                      class="btn btn-sm btn-warning text-white m-1"
+                      :xl="0"
+                      title="Edit"
+                    >
+                      <ion-icon name="create-outline"></ion-icon>
+                    </CButton>
                   </router-link>
                   <button
-                    class="btn btn-danger text-white"
+                    class="btn btn-sm btn-danger text-white"
                     @click="deleteGroup(group.id)"
                   >
-                    Delete
+                    <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
               </CTableRow>
@@ -89,27 +100,18 @@
           </CTable>
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Page navigation example">
+              <nav aria-label="Groups navigation">
                 <ul class="pagination">
-                  <li class="page-item" v-if="current_page > 1">
-                    <a class="page-link" href="#" @click.prevent="previousPage"
-                      >Previous</a
-                    >
-                  </li>
-                  <li class="page-item" v-for="page in pagination" :key="page">
-                    <a
-                      @click.prevent="gotoPage(page.url)"
-                      class="page-link"
-                      href="#"
-                      v-html="page.label"
-                      v-if="page.url"
-                    ></a>
-                  </li>
-                  <li class="page-item" v-if="last_page > current_page">
-                    <a class="page-link" href="#" @click.prevent="nextPage">
-                      Next</a
-                    >
-                  </li>
+                  <template v-for="page in pagination" :key="page">
+                    <li class="page-item" :class="{ active: page.active }">
+                      <a
+                        @click.prevent="gotoPage(page.url)"
+                        class="page-link"
+                        :class="{ disabled: !page.url }"
+                        v-html="page.label"
+                      ></a>
+                    </li>
+                  </template>
                 </ul>
               </nav>
             </CCol>
@@ -118,47 +120,62 @@
       </CCard>
     </CCol>
   </CRow>
+
+  <CModal
+    size="lg"
+    :visible="is_group_modal_visible"
+    @close="is_group_modal_visible = false"
+    class="modal-popup-detail"
+    data-backdrop="static"
+    data-keyboard="false"
+  >
+    <CModalHeader>
+      <CModalTitle>Group Information</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CRow>
+        <CCol :md="12">
+          <CTable class="table table-responsive">
+            <CTableRow>
+              <CTableHeaderCell>ID</CTableHeaderCell>
+              <CTableDataCell>{{ group.id }}</CTableDataCell>
+              <CTableHeaderCell>Title</CTableHeaderCell>
+              <CTableDataCell>{{ group.title }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Crew member</CTableHeaderCell>
+              <CTableDataCell>{{ group.crew?.fullname }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow v-if="group.is_documentable">
+              <CTableDataCell colspan="4">
+                <Documentable type="group" :id="group.id" />
+              </CTableDataCell>
+            </CTableRow>
+          </CTable>
+        </CCol>
+      </CRow>
+    </CModalBody>
+  </CModal>
 </template>
 
 <script>
-import countries from "@/store/countries";
+import { debounce } from '@/utils/helper'
 
 export default {
-  name: 'clients',
-  data() {
-    return {
-      countries,
-      groups: {},
-      search: {
-        crew_id:'',
-       },
-      current_page: 1,
-      last_page: 99,
-      selected_user: null,
-      loading: false,
-      pagination: {},
-    }
-  },
-  mounted() {
-    this.getGroups()
-    this.getCrews()
-  },
+  name: 'Groups',
+  data: () => ({
+    debounceFn: null,
+    groups: [],
+    search: {
+      title: '',
+      crew_member: '',
+    },
+    loading: false,
+    pagination: [],
+    is_group_modal_visible: false,
+    group: {},
+  }),
   methods: {
-    getCrews: async function () {
-      await this.$axios.get(`/crews/all`).then((response) => {
-        this.crews = response.data
-      })
-    },
-    nextPage: async function () {
-      this.current_page = this.current_page + 1
-      this.search.page = this.current_page
-      await this.getGroups()
-    },
-    previousPage: async function () {
-      this.current_page = this.current_page - 1
-      this.search.page = this.current_page
-      await this.getGroups()
-    },
     getGroups: async function () {
       this.loading = true
       await this.$axios
@@ -167,12 +184,18 @@ export default {
         })
         .then((response) => {
           this.groups = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          this.total_pages = response.data.total / response.data.per_page
           this.pagination = response.data.links
+          this.loading = false
         })
-      this.loading = false
+    },
+    filter: async function () {
+      await this.debounceFn()
+    },
+    fetchGroupInfo: async function (id) {
+      await this.$axios.get(`/groups/${id}`).then((response) => {
+        this.group = response.data
+        this.is_group_modal_visible = true
+      })
     },
     gotoPage: async function (url) {
       this.loading = true
@@ -182,12 +205,9 @@ export default {
         })
         .then((response) => {
           this.groups = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          this.total_pages = response.data.total / response.data.per_page
           this.pagination = response.data.links
+          this.loading = false
         })
-      this.loading = false
     },
     deleteGroup: async function (id) {
       await swal({
@@ -198,13 +218,22 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.post(`/groups/delete/${id}`).then(() => this.getGroups())
+          this.$axios
+            .post(`/groups/delete/${id}`)
+            .then(
+              (this.groups = this.groups.filter((group) => group.id !== id)),
+            )
           swal('Group has been deleted!', {
             icon: 'success',
+            timer: 3000,
           })
         }
       })
     },
+  },
+  async mounted() {
+    await this.getGroups()
+    this.debounceFn = debounce(() => this.getGroups(), 500)
   },
 }
 </script>
