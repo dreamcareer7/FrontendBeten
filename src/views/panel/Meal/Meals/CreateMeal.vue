@@ -59,7 +59,8 @@
 
         <div class="form-floating mb-3">
           <input
-            type="date"
+            type="datetime-local"
+            step="1"
             class="form-control"
             id="sent_at"
             placeholder="Sent At..."
@@ -68,6 +69,13 @@
           />
           <label for="sent_at">Sent At</label>
         </div>
+        <CRow v-if="error_message">
+          <CCol :md="12">
+            <div class="error_style">
+              {{ error_message }}
+            </div>
+          </CCol>
+        </CRow>
       </div>
 
       <div class="card-footer text-end">
@@ -81,14 +89,23 @@
 export default {
   name: 'CreateMeal',
   data: () => ({
+    error_message: '',
     meal: {},
     meal_types: [],
   }),
   methods: {
     async create() {
+      this.meal.sent_at = this.meal.sent_at.replace('T', ' ')
       await this.$axios
         .post('/meals', this.meal)
         .then(() => this.$router.push({ name: 'All Meals' }))
+        .catch((error) => {
+          if (error.response) {
+            this.error_message = error.response.data.message
+          } else {
+            this.error_message = error.message
+          }
+        })
     },
   },
   async mounted() {

@@ -4,19 +4,15 @@
     <form @submit.prevent="update">
       <div class="card-body">
         <div class="form-floating mb-3">
-          <select
-            id="meal_type_id"
-            class="form-control"
+          <model-list-select
+            :list="meal_types"
+            option-value="id"
+            option-text="title"
             v-model="meal.meal_type_id"
-            autofocus
-            required
+            placeholder="Search for a meal type"
+            @searchchange="searchMealType"
           >
-            <option>Choose Meal Type</option>
-            <template v-for="meal_type in meal_types" :key="meal_type.id">
-              <option :value="meal_type.id">{{ meal_type.title }}</option>
-            </template>
-          </select>
-          <label for="meal_type_id">Meal Type</label>
+          </model-list-select>
         </div>
 
         <div class="form-floating mb-3">
@@ -59,7 +55,8 @@
 
         <div class="form-floating mb-3">
           <input
-            type="date"
+            type="datetime-local"
+            step="1"
             class="form-control"
             id="sent_at"
             placeholder="Sent At..."
@@ -68,6 +65,14 @@
           />
           <label for="sent_at">Sent At</label>
         </div>
+
+        <CRow v-if="error_message">
+          <CCol :md="12">
+            <div class="error_style">
+              {{ error_message }}
+            </div>
+          </CCol>
+        </CRow>
       </div>
 
       <div class="card-footer text-end">
@@ -81,28 +86,54 @@
 </template>
 
 <script>
+import { debounce } from '@/utils/helper'
+import { ModelListSelect } from 'vue-search-select'
+import 'vue-search-select/dist/VueSearchSelect.css'
+
 export default {
   name: 'UpdateMeal',
+  components: {
+    ModelListSelect,
+  },
   data: () => ({
+    debounceFn: null,
     meal: {},
     meal_types: [],
+    search: {
+      per_page: 6,
+      title: '',
+    },
+    error_message: '',
   }),
   methods: {
     update: async function () {
       await this.$axios
-        .post('/meals', this.meal)
+        .patch(`/meals/${this.meal.id}`, this.meal)
         .then(() => this.$router.push({ name: 'All Meals' }))
+        .catch((error) => {
+          if (error.response) {
+            this.error_message = error.response.data.message
+          } else {
+            this.error_message = error.message
+          }
+        })
+    },
+    searchMealType: async function (query) {
+      this.search.title = query
+      await this.debounceFn()
+    },
+    getMealTypes: async function () {
+      this.$axios
+        .get('/meal_types', { params: this.search })
+        .then((response) => (this.meal_types = response.data.data))
     },
   },
-  mounted() {
-    this.$axios
+  async mounted() {
+    await this.$axios
       .get(`/meals/${this.$decrypt(this.$route.params.id)}`)
       .then((response) => (this.meal = response.data))
-    this.$axios
-      .get('/meal_types')
-      // TODO: depending on how many meal types
-      // Remove pagination of meal types or implement a search
-      .then((response) => (this.meal_types = response.data.data))
+    this.getMealTypes()
+    this.debounceFn = debounce(() => this.getMealTypes(), 500)
   },
 }
 </script>

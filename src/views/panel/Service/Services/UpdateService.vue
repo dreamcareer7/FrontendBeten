@@ -61,13 +61,10 @@
           />
           <label for="phone">After date</label>
         </div>
-        <CRow>
+        <CRow v-if="error_message">
           <CCol :md="12">
-            <div v-show="message" class="error_style">
-              {{ message }}
-            </div>
-            <div v-show="message" class="alert alert-success">
-              {{ message }}
+            <div class="error_style">
+              {{ error_message }}
             </div>
           </CCol>
         </CRow>
@@ -86,15 +83,22 @@ import cities from '@/store/cities'
 export default {
   name: 'UpdateService',
   data: () => ({
-    message: '',
+    error_message: '',
     service: {},
     cities: [],
   }),
   methods: {
     updateService: async function () {
       await this.$axios
-        .put(`/services/${this.service.id}`, this.service)
+        .patch(`/services/${this.service.id}`, this.service)
         .then(() => this.$router.push({ name: 'Services' }))
+        .catch((error) => {
+          if (error.response) {
+            this.error_message = error.response.data.message
+          } else {
+            this.error_message = error.message
+          }
+        })
     },
     fetchServiceInfo: async function (id) {
       await this.$axios.get(`/services/` + id).then((response) => {

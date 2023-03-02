@@ -88,10 +88,10 @@
           </div>
         </div>
       </div>
-      <CRow>
+      <CRow v-if="error_message">
         <CCol :md="12">
-          <div v-show="message" class="error_style">
-            {{ message }}
+          <div class="error_style">
+            {{ error_message }}
           </div>
         </CCol>
       </CRow>
@@ -112,7 +112,7 @@
 export default {
   name: 'CreatePhase',
   data: () => ({
-    message: '',
+    error_message: '',
     service_titles: [],
     available_services: [],
     phase: {
@@ -157,9 +157,9 @@ export default {
         .then(() => this.$router.push({ name: 'Phases' }))
         .catch((error) => {
           if (error.response) {
-            this.message = error.response.data.message
+            this.error_message = error.response.data.message
           } else {
-            this.message = error.message
+            this.error_message = error.message
           }
         })
     },

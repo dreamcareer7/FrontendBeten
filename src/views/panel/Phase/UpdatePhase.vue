@@ -1,38 +1,36 @@
 <template>
-  <div class="card border-warning mb-4">
+  <form class="card border-warning mb-4" @submit.prevent="update">
     <div class="card-header">Update Phase</div>
     <div class="row mt-4">
       <div class="col-12">
-        <form @submit.prevent="update">
-          <div class="card-body">
-            <div class="form-floating mb-3">
+        <div class="card-body">
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              v-model="phase.title"
+              autocomplete="off"
+              required
+              autofocus
+            />
+            <label for="title">Title</label>
+          </div>
+          <div class="border rounded px-1">
+            <div class="form-check form-switch">
               <input
-                type="text"
-                class="form-control"
-                id="title"
-                v-model="phase.title"
-                autocomplete="off"
-                required
-                autofocus
+                class="form-check-input"
+                type="checkbox"
+                id="is_required"
+                v-model="phase.is_required"
+                :checked="phase.is_required"
               />
-              <label for="title">Title</label>
-            </div>
-            <div class="border rounded px-1">
-              <div class="form-check form-switch">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  id="is_required"
-                  v-model="phase.is_required"
-                  :checked="phase.is_required"
-                />
-                <label class="form-check-label" for="is_required">
-                  is required?
-                </label>
-              </div>
+              <label class="form-check-label" for="is_required">
+                is required?
+              </label>
             </div>
           </div>
-        </form>
+        </div>
       </div>
       <div class="col-12 text-center">
         <h6>Move services from left side to right side to assign</h6>
@@ -89,30 +87,27 @@
           </div>
         </div>
       </div>
-      <CRow>
+      <CRow v-if="error_message">
         <CCol :md="12">
-          <div v-show="message" class="error_style">
-            {{ message }}
+          <div class="error_style">
+            {{ error_message }}
           </div>
         </CCol>
       </CRow>
     </div>
     <div class="card-footer text-end">
-      <button
-        @click="create"
-        class="btn btn-warning text-white"
-      >
+      <button type="submit" class="btn btn-warning text-white">
         Save changes
       </button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
 export default {
   name: 'UpdatePhase',
   data: () => ({
-    message: '',
+    error_message: '',
     service_titles: [],
     available_services: [],
     phase: {},
@@ -143,26 +138,37 @@ export default {
         // Add the removed service back to the available services
         const title = this.service_titles[service_id]
         // TODO: should be put back at the same index where it was
-        this.available_services.unshift({id: service_id, title: title})
+        this.available_services.unshift({ id: service_id, title: title })
       }
     },
     async update() {
       await this.$axios
-        .post('/phases', this.phase)
+        .patch(`/phases/${this.phase.id}`, this.phase)
         // Redirect back to the list of phases after creation
         .then(() => this.$router.push({ name: 'Phases' }))
         .catch((error) => {
           if (error.response) {
-            this.message = error.response.data.message
+            this.error_message = error.response.data.message
           } else {
-            this.message = error.message
+            this.error_message = error.message
           }
         })
     },
   },
   mounted() {
-    this.$axios.get(`/phases/${this.$decrypt(this.$route.params.id)}`)
-      .then((response) => this.phase = response.data)
+    this.$axios
+      .get(`/phases/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => {
+        // Services come eager loaded in the phase
+        this.phase = response.data
+        // services property in the phase object is an array of object
+        // We need it to be an array of IDs
+        this.phase.services = this.phase.services.map((service) => {
+          // We also need to populate the services titles
+          this.service_titles[service.id] = service.title
+          return service.id
+        })
+      })
     this.$axios
       // TODO: Implement search of services instead of assigning first 50
       .get('/services')
