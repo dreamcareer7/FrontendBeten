@@ -21,7 +21,7 @@
             class="form-select"
             id="city"
             aria-label="Choose city"
-            v-model="service.city"
+            v-model="service.city_id"
             required
           >
             <option>Choose city</option>

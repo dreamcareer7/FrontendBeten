@@ -62,7 +62,7 @@ export default [
     items: [
       {
         component: 'CNavItem',
-        name: 'All Phases',
+        name: 'Phases',
         to: '/phases',
       }
     ],

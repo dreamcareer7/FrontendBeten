@@ -33,7 +33,7 @@
               <CTableRow v-for="meal in meals" :key="meal.id">
                 <CTableHeaderCell scope="row">{{ meal.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ meal.meal_type_id }}</CTableDataCell>
-                <CTableDataCell>{{ meal.quntity }}</CTableDataCell>
+                <CTableDataCell>{{ meal.quantity }}</CTableDataCell>
                 <CTableDataCell>{{ meal.to_model_type }}</CTableDataCell>
                 <CTableDataCell>{{ meal.to_model_id }}</CTableDataCell>
                 <CTableDataCell>{{ meal.sent_at }}</CTableDataCell>

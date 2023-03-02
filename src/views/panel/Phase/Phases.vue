@@ -5,13 +5,12 @@
         <CCardHeader>
           <div class="row">
             <div class="col-md-10">
-              <strong>Groups</strong>&nbsp;
-              <ion-icon name="people-outline"></ion-icon>
+              <strong>Phases</strong>
             </div>
             <div class="col-md-2">
-              <router-link :to="{ name: 'Create Group' }">
+              <router-link :to="{ name: 'Create Phase' }">
                 <CButton color="primary" class="float-end">
-                  Create Group
+                  Create Phase
                   <ion-icon name="create-outline"></ion-icon>
                 </CButton>
               </router-link>
@@ -29,15 +28,6 @@
                 @keyup="filter"
               />
             </CCol>
-            <CCol :md="2">
-              <input
-                type="text"
-                class="form-control"
-                v-model="search.crew_member"
-                placeholder="Search crew member"
-                @keyup="filter"
-              />
-            </CCol>
           </CRow>
           <hr />
           <CRow v-if="loading" class="mt-4">
@@ -48,43 +38,46 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
-          <CRow v-if="groups.length === 0 && !loading" class="mt-4">
+          <CRow v-if="phases.length === 0 && !loading" class="mt-4">
             <CCol :md="12" class="text-center">
               <span class="sr-only">No results</span>
             </CCol>
           </CRow>
-          <CTable v-if="!loading && groups.length > 0">
+          <CTable v-if="!loading && phases.length > 0">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">ID #</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Crew member</CTableHeaderCell>
-                <CTableHeaderCell
-                  style="width: 15%"
-                  scope="col"
-                  :aria-colspan="2"
-                >
+                <CTableHeaderCell scope="col">Required</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
                   Actions
                 </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="group in groups" :key="group.id">
-                <CTableHeaderCell scope="row">{{ group.id }}</CTableHeaderCell>
-                <CTableDataCell>{{ group.title }}</CTableDataCell>
-                <CTableDataCell>{{ group.crew.fullname }}</CTableDataCell>
+              <CTableRow v-for="phase in phases" :key="phase.id">
+                <CTableHeaderCell scope="row">{{ phase.id }}</CTableHeaderCell>
+                <CTableDataCell>{{ phase.title }}</CTableDataCell>
+                <CTableDataCell>
+                  <CBadge
+                    :color="phase.is_required ? 'success' : 'warning'"
+                    shape="rounded-pill"
+                  >
+                    {{ phase.is_required ? 'Yes' : 'No' }}
+                  </CBadge>
+                </CTableDataCell>
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View Details"
-                    @click="fetchGroupInfo(group.id)"
+                    @click="fetchPhaseInfo(phase.id)"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <router-link
                     :to="{
-                      name: 'Update Group',
-                      params: { id: this.$encrypt(group.id) },
+                      name: 'Update Phase',
+                      params: { id: this.$encrypt(phase.id) },
                     }"
                   >
                     <CButton
@@ -97,7 +90,7 @@
                   </router-link>
                   <button
                     class="btn btn-sm btn-danger text-white"
-                    @click="deleteGroup(group.id)"
+                    @click="deletePhase(phase.id)"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
@@ -107,7 +100,7 @@
           </CTable>
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Groups navigation">
+              <nav aria-label="Users navigation">
                 <ul class="pagination">
                   <template v-for="page in pagination" :key="page">
                     <li class="page-item" :class="{ active: page.active }">
@@ -127,40 +120,39 @@
       </CCard>
     </CCol>
   </CRow>
-
   <CModal
     size="lg"
-    :visible="is_group_modal_visible"
-    @close="is_group_modal_visible = false"
+    :visible="is_phase_modal_visible"
+    @close="is_phase_modal_visible = false"
     class="modal-popup-detail"
     data-backdrop="static"
     data-keyboard="false"
   >
     <CModalHeader>
-      <CModalTitle>Group Information</CModalTitle>
+      <CModalTitle>Phase Information</CModalTitle>
     </CModalHeader>
     <CModalBody>
-      <CRow>
-        <CCol :md="12">
-          <CTable class="table table-responsive">
-            <CTableRow>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableDataCell>{{ group.id }}</CTableDataCell>
-              <CTableHeaderCell>Title</CTableHeaderCell>
-              <CTableDataCell>{{ group.title }}</CTableDataCell>
-            </CTableRow>
-            <CTableRow>
-              <CTableHeaderCell>Crew member</CTableHeaderCell>
-              <CTableDataCell>{{ group.crew?.fullname }}</CTableDataCell>
-            </CTableRow>
-            <CTableRow v-if="group.is_documentable">
-              <CTableDataCell colspan="4">
-                <Documentable type="group" :id="group.id" />
-              </CTableDataCell>
-            </CTableRow>
-          </CTable>
-        </CCol>
-      </CRow>
+      <CTable class="table table-responsive">
+        <CTableRow>
+          <CTableHeaderCell>ID</CTableHeaderCell>
+          <CTableDataCell>{{ phase.id }}</CTableDataCell>
+          <CTableHeaderCell>Title</CTableHeaderCell>
+          <CTableDataCell>{{ phase.title }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableHeaderCell>Required</CTableHeaderCell>
+          <CTableDataCell>
+            <CBadge
+              :color="phase.is_required ? 'success' : 'warning'"
+              shape="rounded-pill"
+            >
+              {{ phase.is_required ? 'Yes' : 'No' }}
+            </CBadge>
+          </CTableDataCell>
+        </CTableRow>
+      </CTable>
+      <Contractable v-if="phase.is_contractable" type="phase" :id="phase.id" />
+      <Documentable v-if="phase.is_documentable" type="phase" :id="phase.id" />
     </CModalBody>
   </CModal>
 </template>
@@ -169,28 +161,27 @@
 import { debounce } from '@/utils/helper'
 
 export default {
-  name: 'Groups',
+  name: 'Phases',
   data: () => ({
     debounceFn: null,
-    groups: [],
+    phases: [],
     search: {
       title: '',
-      crew_member: '',
     },
     loading: false,
     pagination: [],
-    is_group_modal_visible: false,
-    group: {},
+    is_phase_modal_visible: false,
+    phase: {},
   }),
   methods: {
-    async getGroups() {
+    getPhases: async function () {
       this.loading = true
       await this.$axios
-        .get(`/groups/paginate`, {
+        .get('/phases', {
           params: this.search,
         })
         .then((response) => {
-          this.groups = response.data.data
+          this.phases = response.data.data
           this.pagination = response.data.links
           this.loading = false
         })
@@ -198,10 +189,10 @@ export default {
     filter: async function () {
       await this.debounceFn()
     },
-    fetchGroupInfo: async function (id) {
-      await this.$axios.get(`/groups/${id}`).then((response) => {
-        this.group = response.data
-        this.is_group_modal_visible = true
+    fetchPhaseInfo: async function (id) {
+      await this.$axios.get(`/phases/${id}`).then((response) => {
+        this.phase = response.data
+        this.is_phase_modal_visible = true
       })
     },
     gotoPage: async function (url) {
@@ -211,26 +202,26 @@ export default {
           params: this.search,
         })
         .then((response) => {
-          this.groups = response.data.data
+          this.phases = response.data.data
           this.pagination = response.data.links
           this.loading = false
         })
     },
-    deleteGroup: async function (id) {
+    deletePhase: async function (id) {
       await swal({
         title: 'Are you sure?',
-        text: 'Once deleted, you will not be able to recover this group!',
+        text: 'Once deleted, you will not be able to recover this phase!',
         icon: 'warning',
         buttons: true,
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.post(`/groups/delete/${id}`).then(
+          this.$axios.delete(`/phases/${id}`).then(() => {
             // TODO: remove item from the existing array
             // instead of reassigning
-            (this.groups = this.groups.filter((group) => group.id !== id)),
-          )
-          swal('Group has been deleted!', {
+            this.phases = this.phases.filter((phase) => phase.id !== id)
+          })
+          swal('Phase has been deleted!', {
             icon: 'success',
             timer: 3000,
           })
@@ -238,9 +229,9 @@ export default {
       })
     },
   },
-  async mounted() {
-    await this.getGroups()
-    this.debounceFn = debounce(() => this.getGroups(), 500)
+  mounted: async function () {
+    await this.getPhases()
+    this.debounceFn = debounce(() => this.getPhases(), 500)
   },
 }
 </script>

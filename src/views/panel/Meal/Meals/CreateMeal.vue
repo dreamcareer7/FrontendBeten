@@ -1,53 +1,77 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">
-      Create Meal
-    </div>
-
-    <div id="ialert" class="" role="alert"></div>
-    <form method="post">
+    <div class="card-header">Create Meal</div>
+    <form @submit.prevent="create">
       <div class="card-body">
-
         <div class="form-floating mb-3">
-          <select name="meal_type_id" id="meal_type_id" class="form-control">
+          <select
+            id="meal_type_id"
+            class="form-control"
+            required
+            v-model="meal.meal_type_id"
+            autofocus
+          >
             <option>Choose Meal Type</option>
-            <option value="1">Meal Type 1</option>
+            <template v-for="meal_type in meal_types" :key="meal_type.id">
+              <option :value="meal_type.id">{{ meal_type.title }}</option>
+            </template>
           </select>
           <label for="meal_type_id">Meal Type</label>
-          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity..." required
-            autocomplete="off">
+          <input
+            type="number"
+            class="form-control"
+            min="1"
+            id="quantity"
+            required
+            autocomplete="off"
+            v-model="meal.quantity"
+          />
           <label for="quantity">Quantity</label>
-          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="to_model_type" name="to_model_type" placeholder="To Model Type..."
-            required autocomplete="off">
+          <input
+            type="text"
+            class="form-control"
+            id="to_model_type"
+            required
+            autocomplete="off"
+            v-model="meal.to_model_type"
+          />
           <label for="to_model_type">To Model Type</label>
-          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="to_model_id" name="to_model_id" placeholder="To Model ID..."
-            required autocomplete="off">
+          <input
+            type="number"
+            min="1"
+            class="form-control"
+            id="to_model_id"
+            required
+            autocomplete="off"
+            v-model="meal.to_model_id"
+          />
           <label for="to_model_id">To Model ID</label>
-          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="sent_at" name="sent_at" placeholder="Sent At...">
+          <input
+            type="date"
+            class="form-control"
+            id="sent_at"
+            placeholder="Sent At..."
+            required
+            v-model="meal.sent_at"
+          />
           <label for="sent_at">Sent At</label>
-          <div class="invalid-feedback"></div>
         </div>
-
       </div>
 
       <div class="card-footer text-end">
-        <a class="btn btn-outline-success ajax">Save</a>
+        <button type="submit" class="btn btn-outline-success">Save</button>
       </div>
     </form>
   </div>
@@ -55,6 +79,22 @@
 
 <script>
 export default {
-  name: 'create_meal',
+  name: 'CreateMeal',
+  data: () => ({
+    meal: {},
+    meal_types: [],
+  }),
+  methods: {
+    async create() {
+      await this.$axios
+        .post('/meals', this.meal)
+        .then(() => this.$router.push({ name: 'All Meals' }))
+    },
+  },
+  async mounted() {
+    await this.$axios
+      .get('/meal_types')
+      .then((response) => (this.meal_types = response.data.data))
+  },
 }
 </script>

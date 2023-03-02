@@ -119,35 +119,19 @@ const routes = [
       // Phases Menu
       {
         path: '/phases',
-        name: 'All Phases',
-        component: () => import('@/views/panel/Phase/Phases/Phases'),
+        name: 'Phases',
+        component: () => import('@/views/panel/Phase/Phases'),
       },
       {
         path: '/phases/create',
         name: 'Create Phase',
-        component: () => import('@/views/panel/Phase/Phases/CreatePhase'),
+        component: () => import('@/views/panel/Phase/CreatePhase'),
       },
       {
         path: '/phases/update/:id',
-        name: 'update_phase',
-        component: () => import('@/views/panel/Phase/Phases/UpdatePhase'),
+        name: 'Update Phase',
+        component: () => import('@/views/panel/Phase/UpdatePhase'),
       },
-      {
-        path: '/phases/info/:id',
-        name: 'phase_info',
-        component: () => import('@/views/panel/Phase/Phases/PhaseInfo'),
-      },
-      {
-        path: '/phases/services',
-        name: 'Phases Services',
-        component: () => import('@/views/panel/Phase/Services/Services'),
-      },
-      {
-        path: '/phases/services/create',
-        name: 'Create Phase Service',
-        component: () => import('@/views/panel/Phase/Services/CreateService'),
-      },
-
       // Phases Menu ends here
 
       // Meals Menu
