@@ -237,6 +237,12 @@ const routes = [
           import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
       },
       {
+        path: '/hospitalities/update/:id',
+        name: 'Update Hospitality',
+        component: () =>
+          import('@/views/panel/Hospitality/Hospitalities/UpdateHospitality'),
+      },
+      {
         path: '/hospitalities/transactions',
         name: 'Transactions',
         component: () =>

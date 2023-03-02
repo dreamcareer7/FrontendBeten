@@ -60,6 +60,27 @@
                 </CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
                   <button
+                    class="btn btn-sm btn-info text-white mx-1"
+                    title="View Details"
+                    @click="fetchHospitalityInfo(hospitality.id)"
+                  >
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </button>
+                  <router-link
+                    :to="{
+                      name: 'Update Hospitality',
+                      params: { id: this.$encrypt(hospitality.id) },
+                    }"
+                  >
+                    <CButton
+                      class="btn btn-sm btn-warning text-white m-1"
+                      :xl="0"
+                      title="Edit"
+                    >
+                      <ion-icon name="create-outline"></ion-icon>
+                    </CButton>
+                  </router-link>
+                  <button
                     class="btn btn-sm btn-danger text-white"
                     @click="deleteHospitality(hospitality.id)"
                     title="Delete"
@@ -75,7 +96,7 @@
               <nav aria-label="Page navigation example">
                 <ul class="pagination">
                   <template v-for="page in pagination" :key="page">
-                    <li class="page-item" :class="{active: page.active}">
+                    <li class="page-item" :class="{ active: page.active }">
                       <a
                         @click.prevent="gotoPage(page.url)"
                         class="page-link"
@@ -92,6 +113,43 @@
       </CCard>
     </CCol>
   </CRow>
+
+  <CModal
+    size="lg"
+    :visible="is_hospitality_modal_visible"
+    @close="is_hospitality_modal_visible = false"
+    class="modal-popup-detail"
+    data-backdrop="static"
+    data-keyboard="false"
+  >
+    <CModalHeader>
+      <CModalTitle>Hospitality Information</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CRow>
+        <CCol :md="12">
+          <CTable class="table table-responsive">
+            <CTableRow>
+              <CTableHeaderCell>ID</CTableHeaderCell>
+              <CTableDataCell>{{ hospitality.id }}</CTableDataCell>
+              <CTableHeaderCell>Description</CTableHeaderCell>
+              <CTableDataCell>{{ hospitality.description }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>Required</CTableHeaderCell>
+              <CTableDataCell>{{ hospitality.required_date }}</CTableDataCell>
+              <CTableHeaderCell>Quantity</CTableHeaderCell>
+              <CTableDataCell>{{ hospitality.quantity }}</CTableDataCell>
+              <CTableHeaderCell>Received by</CTableHeaderCell>
+              <CTableDataCell>
+                {{ hospitality.receiver?.fullname }}
+              </CTableDataCell>
+            </CTableRow>
+          </CTable>
+        </CCol>
+      </CRow>
+    </CModalBody>
+  </CModal>
 </template>
 
 <script>
@@ -99,12 +157,18 @@ export default {
   name: 'Hospitalities',
   data: () => ({
     hospitalities: [],
-    pagination: {},
-    current_page: 1,
-    last_page: 99,
     loading: false,
+    pagination: [],
+    is_hospitality_modal_visible: false,
+    hospitality: {},
   }),
   methods: {
+    fetchHospitalityInfo: async function (id) {
+      await this.$axios.get(`/hospitalities/${id}`).then((response) => {
+        this.hospitality = response.data
+        this.is_hospitality_modal_visible = true
+      })
+    },
     async deleteHospitality(id) {
       await this.$axios
         .delete(`/hospitalities/${id}`)
@@ -125,8 +189,6 @@ export default {
       this.loading = true
       await this.$axios.get(url).then((response) => {
         this.hospitalities = response.data.data
-        this.current_page = response.data.current_page
-        this.last_page = response.data.last_page
         this.pagination = response.data.links
       })
       this.loading = false
@@ -138,8 +200,6 @@ export default {
       .get('/hospitalities')
       .then((response) => {
         this.hospitalities = response.data.data
-        this.current_page = response.data.current_page
-        this.last_page = response.data.last_page
         this.pagination = response.data.links
         this.loading = false
       })
