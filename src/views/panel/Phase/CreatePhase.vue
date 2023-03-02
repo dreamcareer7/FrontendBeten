@@ -38,7 +38,7 @@
         <div class="row ms-0 p-4" v-if="available_services.length !== 0">
           <!-- Left side -->
           <div class="col-6 p-3">
-            <h6>Available services</h6>
+            <h6>{{ available_services.length }} Available services</h6>
             <div
               class="row mt-3 no-bars ms-0 border-dark"
               style="height: 300px; overflow: scroll"
@@ -67,7 +67,7 @@
             class="col-6 p-3 no-bars"
             style="height: 300px; overflow: scroll"
           >
-            <h6>Assigned services</h6>
+            <h6>{{ phase.services.length }} Assigned services</h6>
             <div
               class="row mt-3 border p-2 mb-2"
               v-for="service_id in phase.services"
