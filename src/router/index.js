@@ -146,6 +146,11 @@ const routes = [
         component: () => import('@/views/panel/Meal/Meals/CreateMeal'),
       },
       {
+        path: '/meals/update/:id',
+        name: 'Update Meal',
+        component: () => import('@/views/panel/Meal/Meals/UpdateMeal'),
+      },
+      {
         path: '/meals/types',
         name: 'Types',
         component: () => import('@/views/panel/Meal/Types/Types'),
