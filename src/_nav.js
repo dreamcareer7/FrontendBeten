@@ -55,17 +55,10 @@ export default [
     ],
   },
   {
-    component: 'CNavGroup',
+    component: 'CNavItem',
     name: 'Phases',
     to: '/phases',
     icon: 'cil-media-step-forward',
-    items: [
-      {
-        component: 'CNavItem',
-        name: 'Phases',
-        to: '/phases',
-      }
-    ],
   },
   {
     component: 'CNavGroup',
