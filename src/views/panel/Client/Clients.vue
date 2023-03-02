@@ -156,27 +156,18 @@
           </CTable>
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Page navigation example">
+              <nav aria-label="Clients navigation">
                 <ul class="pagination">
-                  <li class="page-item" v-if="current_page > 1">
-                    <a class="page-link" href="#" @click.prevent="previousPage"
-                      >Previous</a
-                    >
-                  </li>
-                  <li class="page-item" v-for="page in pagination" :key="page">
-                    <a
-                      @click.prevent="gotoPage(page.url)"
-                      class="page-link"
-                      href="#"
-                      v-html="page.label"
-                      v-if="page.url"
-                    ></a>
-                  </li>
-                  <li class="page-item" v-if="last_page > current_page">
-                    <a class="page-link" href="#" @click.prevent="nextPage">
-                      Next</a
-                    >
-                  </li>
+                  <template v-for="page in pagination" :key="page">
+                    <li class="page-item" :class="{ active: page.active }">
+                      <a
+                        @click.prevent="gotoPage(page.url)"
+                        class="page-link"
+                        :class="{ disabled: !page.url }"
+                        v-html="page.label"
+                      ></a>
+                    </li>
+                  </template>
                 </ul>
               </nav>
             </CCol>
@@ -257,25 +248,13 @@ export default {
       gender: '',
       country: '',
     },
-    current_page: 1,
-    last_page: 99,
     selected_user: null,
     loading: false,
-    pagination: {},
+    pagination: [],
     client:{},
     visibleLiveDemo: false,
   }),
   methods: {
-    nextPage: async function () {
-      this.current_page = this.current_page + 1
-      this.search.page = this.current_page
-      await this.getClients()
-    },
-    previousPage: async function () {
-      this.current_page = this.current_page - 1
-      this.search.page = this.current_page
-      await this.getClients()
-    },
     getClients: async function () {
       this.loading = true
       await this.$axios
@@ -284,12 +263,9 @@ export default {
         })
         .then((response) => {
           this.clients = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          this.total_pages = response.data.total / response.data.per_page
           this.pagination = response.data.links
+          this.loading = false
         })
-      this.loading = false
     },
     gotoPage: async function (url) {
       this.loading = true
@@ -299,12 +275,9 @@ export default {
         })
         .then((response) => {
           this.clients = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          this.total_pages = response.data.total / response.data.per_page
           this.pagination = response.data.links
+          this.loading = false
         })
-      this.loading = false
     },
     deleteClient: async function (id, name) {
       await swal({

@@ -135,27 +135,18 @@
           </CTable>
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Page navigation example">
+              <nav aria-label="Groups navigation">
                 <ul class="pagination">
-                  <li class="page-item" v-if="current_page > 1">
-                    <a class="page-link" href="#" @click.prevent="previousPage"
-                      >Previous</a
-                    >
-                  </li>
-                  <li class="page-item" v-for="page in pagination" :key="page">
-                    <a
-                      @click.prevent="gotoPage(page.url)"
-                      class="page-link"
-                      href="#"
-                      v-html="page.label"
-                      v-if="page.url"
-                    ></a>
-                  </li>
-                  <li class="page-item" v-if="last_page > current_page">
-                    <a class="page-link" href="#" @click.prevent="nextPage">
-                      Next</a
-                    >
-                  </li>
+                  <template v-for="page in pagination" :key="page">
+                    <li class="page-item" :class="{ active: page.active }">
+                      <a
+                        @click.prevent="gotoPage(page.url)"
+                        class="page-link"
+                        :class="{ disabled: !page.url }"
+                        v-html="page.label"
+                      ></a>
+                    </li>
+                  </template>
                 </ul>
               </nav>
             </CCol>
@@ -236,25 +227,13 @@ export default {
   data: () => ({
     crews: {},
     search: {},
-    current_page: 1,
-    last_page: 99,
     selected_user: null,
     loading: false,
-    pagination: {},
+    pagination: [],
     crew_member: {},
     visibleLiveDemo: false,
   }),
   methods: {
-    nextPage: async function () {
-      this.current_page = this.current_page + 1
-      this.search.page = this.current_page
-      await this.getCrews()
-    },
-    previousPage: async function () {
-      this.current_page = this.current_page - 1
-      this.search.page = this.current_page
-      await this.getCrews()
-    },
     getCrews: async function () {
       this.loading = true
       await this.$axios
@@ -279,13 +258,9 @@ export default {
         })
         .then((response) => {
           this.crews = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          let total_pages = response.data.total / response.data.per_page
-          this.total_pages = total_pages
           this.pagination = response.data.links
+          this.loading = false
         })
-      this.loading = false
     },
     deleteCrew: async function (id) {
       await swal({
