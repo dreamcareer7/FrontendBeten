@@ -1,87 +1,93 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">
-      Create Commit
-    </div>
-
-    <div id="ialert" class="" role="alert"></div>
-    <form method="post">
+    <div class="card-header">Create Commit</div>
+    <form @submit.prevent="create">
       <div class="card-body">
-
         <div class="form-floating mb-3">
-          <select name="service_id" id="service_id" class="form-control" v-model="service_commit.service_id" autofocus
-            required>
-            <option :value="null">Choose Service</option>
-            <option v-for="service in services" :value="service.id">{{ service.title }}</option>
+          <select
+            id="service_id"
+            class="form-control"
+            v-model="commit.service_id"
+            autofocus
+            required
+          >
+            <option>Choose Service</option>
+            <option v-for="service in services" :value="service.id">
+              {{ service.title }}
+            </option>
           </select>
           <label for="service_id">Service</label>
-          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="badge" name="badge" placeholder="Badge..." required
-            autocomplete="off" v-model="service_commit.badge">
+          <input
+            type="text"
+            class="form-control"
+            id="badge"
+            autocomplete="off"
+            v-model="commit.badge"
+            required
+          />
           <label for="badge">Badge</label>
-          <div class="invalid-feedback"></div>
         </div>
-
 
         <div class="row g-1 mb-1">
           <div class="col">
             <div class="form-floating mb-3">
-              <input type="date" class="form-control" id="before_date" name="before_date" placeholder="Before date..."
-                v-model="service_commit.scheduled_at">
-              <label for="phone">Scheduled At</label>
-              <div class="invalid-feedback"></div>
+              <input
+                type="datetime-local"
+                step="1"
+                class="form-control"
+                id="scheduled_at"
+                v-model="commit.schedule_at"
+              />
+              <label for="scheduled_at">Scheduled At</label>
             </div>
-
-            <div class="form-floating mb-3">
-              <input type="date" class="form-control" id="exact_date" name="exact_date" placeholder="Exact date..."
-                v-model="service_commit.started_at">
-              <label for="phone">Started At</label>
-              <div class="invalid-feedback"></div>
-            </div>
-
           </div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="from_location" name="from_location" placeholder="From Location..."
-            required autocomplete="off" v-model="service_commit.location">
+          <input
+            type="text"
+            class="form-control"
+            id="from_location"
+            autocomplete="off"
+            v-model="commit.from_location"
+            required
+          />
           <label for="from_location">From Location</label>
-          <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <select name="supervisor_id" id="supervisor_id" class="form-control" v-model="service_commit.supervisor_id">
-            <option :value="null">Choose a supervisor</option>
-            <option v-for="crew_member in crew_members" :value="crew_member.id">
-              {{ crew_member.fullname }}
+          <select
+            id="supervisor_id"
+            class="form-control"
+            v-model="commit.supervisor_id"
+          >
+            <option>Choose a supervisor</option>
+            <option v-for="user in users" :value="user.id">
+              {{ user.name }}
             </option>
           </select>
           <label for="supervisor_id">Supervisor</label>
-          <div class="invalid-feedback"></div>
         </div>
-
-
-
       </div>
 
-      <CRow>
+      <CRow v-if="error_message">
         <CCol :md="12">
-          <div v-show="message && !success" class="error_style">
-            {{ message }}
-          </div>
-          <div v-show="message && success" class="alert alert-success">
-            {{ message }}
+          <div class="error_style">
+            {{ error_message }}
           </div>
         </CCol>
-
       </CRow>
 
       <div class="card-footer text-end">
-        <button @click.prevent="createCommit" class="btn text-white btn-success">
-          <span>Create service commit</span>
+        <button
+          type="submit"
+          class="btn text-white btn-success"
+        >
+          <ion-icon name="create"></ion-icon>&nbsp;
+          <span>Create</span>
         </button>
       </div>
     </form>
@@ -90,49 +96,35 @@
 
 <script>
 export default {
-  name: 'create_commit',
+  name: 'CreateCommit',
   data: () => ({
-    message: '',
-    success: false,
+    error_message: '',
     services: [],
     // A key/value pair of crew member name/id to select the supervisor
-    crew_members: [],
-    service_commit: {
-      service_id: null,
-      badge: '',
-      scheduled_at: '',
-      started_at: '',
-      location: '',
-      supervisor_id: null
-    }
+    users: [],
+    commit: {},
   }),
   methods: {
-    async createCommit() {
+    async create() {
       // Send the service commit object to the API for creation
-      await this.$axios.post('service/commits', this.service_commit)
-        .then((response) => {
-          // Feedback to the client
-          this.message = response.data.message
-          if (response.status == 201) { // If created
-            this.$router.push({ name: 'Service Commits' })
-          } else {
-            this.success = false
-          }
-        }).catch((error) => {
+      this.commit.schedule_at = this.commit.schedule_at.replace('T', ' ')
+      await this.$axios
+        .post('/service_commits', this.commit)
+        .then(() => this.$router.push({ name: 'Service Commits' }))
+        .catch((error) => {
           if (error.response) {
-            this.message = error.response.data.message
-          } else {
-            this.message = error.message
+            this.error_message = error.response?.data.message || error.message
           }
-          this.success = false
         })
-    }
+    },
   },
   mounted() {
-    this.$axios.get('service/list')
-      .then((response) => this.services = response.data);
-    this.$axios.get('crews/list')
-      .then((response) => this.crew_members = response.data);
-  }
+    this.$axios
+      .get('service/list')
+      .then((response) => (this.services = response.data))
+    this.$axios
+      .get('/users/paginate')
+      .then((response) => (this.users = response.data.data))
+  },
 }
 </script>

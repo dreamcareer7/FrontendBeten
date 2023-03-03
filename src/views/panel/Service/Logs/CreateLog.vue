@@ -32,10 +32,8 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <select name="role" id="role" class="form-control">
-                        <option>Choose Role</option>
-                        <option value="1">Role 1</option>
-                    </select>
+                <!-- Just to remember -->
+                    <input type="text"/>
                     <label for="role">Role</label>
                     <div class="invalid-feedback"></div>
                 </div>

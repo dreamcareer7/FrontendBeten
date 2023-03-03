@@ -24,8 +24,8 @@
                 <CTableHeaderCell scope="col">Service</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Badge</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Schedule At</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Started At</CTableHeaderCell>
-                <CTableHeaderCell scope="col">From Location</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Started</CTableHeaderCell>
+                <CTableHeaderCell scope="col">From</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Supervisor</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
@@ -35,10 +35,12 @@
                 <CTableHeaderCell scope="row">{{ commit.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ commit.service.title }}</CTableDataCell>
                 <CTableDataCell>{{ commit.badge }}</CTableDataCell>
-                <CTableDataCell>{{ commit.scheduled_at }}</CTableDataCell>
+                <CTableDataCell>{{ commit.schedule_at }}</CTableDataCell>
                 <CTableDataCell>{{ commit.started_at }}</CTableDataCell>
-                <CTableDataCell>{{ commit.location }}</CTableDataCell>
-                <CTableDataCell>{{ commit.supervisor?.fullname }}</CTableDataCell>
+                <CTableDataCell>{{ commit.from_location }}</CTableDataCell>
+                <CTableDataCell>{{
+                  commit.supervisor.name
+                }}</CTableDataCell>
                 <CTableDataCell>
                   <router-link
                     :to="{
@@ -85,7 +87,7 @@
 
 <script>
 export default {
-  name: 'service_commit',
+  name: 'Commits',
   data: () => ({
     commits: [],
   }),
@@ -120,7 +122,7 @@ export default {
   },
   async mounted() {
     await this.$axios
-      .get('/service/commits')
+      .get('/service_commits')
       .then((response) => (this.commits = response.data))
       .catch((error) => {
         swal({
