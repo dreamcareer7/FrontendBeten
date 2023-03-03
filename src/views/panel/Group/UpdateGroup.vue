@@ -1,44 +1,42 @@
 <template>
-  <div class="card border-warning mb-4">
+  <form class="card border-warning mb-4" @submit.prevent="updateGroup">
     <div class="card-header">Update Group</div>
 
     <div class="row mt-4">
       <div class="col-4">
-        <form method="post">
-          <div class="card-body">
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control"
-                id="title"
-                v-model="group.title"
-                name="title"
-                placeholder="Title..."
-                required
-                autofocus
-                autocomplete="off"
-              />
-              <label for="title">Title</label>
-              <div class="invalid-feedback"></div>
-            </div>
-
-            <div class="form-floating mb-3">
-              <select
-                v-model="group.crew_id"
-                name="crew_id"
-                id="crew_id"
-                class="form-control"
-              >
-                <option>Choose Crew</option>
-                <template v-for="crew in crews" :key="crew.id">
-                  <option :value="crew.id">{{ crew.fullname }}</option>
-                </template>
-              </select>
-              <label for="crew_id">Crew</label>
-              <div class="invalid-feedback"></div>
-            </div>
+        <div class="card-body">
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              v-model="group.title"
+              name="title"
+              placeholder="Title..."
+              required
+              autofocus
+              autocomplete="off"
+            />
+            <label for="title">Title</label>
+            <div class="invalid-feedback"></div>
           </div>
-        </form>
+
+          <div class="form-floating mb-3">
+            <select
+              v-model="group.crew_id"
+              name="crew_id"
+              id="crew_id"
+              class="form-control"
+            >
+              <option>Choose Crew</option>
+              <template v-for="crew in crews" :key="crew.id">
+                <option :value="crew.id">{{ crew.fullname }}</option>
+              </template>
+            </select>
+            <label for="crew_id">Crew</label>
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
       </div>
       <div class="col-8 text-center">
         <h6>Assigned Members to this Group</h6>
@@ -90,47 +88,31 @@
         </div>
       </div>
       <CRow>
-        <CCol :md="12">
-          <div v-show="message && !success" class="error_style">
-            {{ message }}
-          </div>
-          <div v-show="message && success" class="alert alert-success">
-            {{ message }}
+        <CCol v-if="error_message" :md="12">
+          <div class="error_style">
+            {{ error_message }}
           </div>
         </CCol>
       </CRow>
     </div>
     <div class="card-footer text-end">
-      <a @click.prevent="updateGroup()" class="btn btn-outline-success ajax"
-        >Save</a
-      >
+      <button type="submit" class="btn btn-outline-success">Save</button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
 export default {
-  name: 'create_group',
-  data() {
-    return {
-      message: '',
-      client_search: '',
-      searched_client: {},
-      success: false,
-      group: {
-        title: '',
-        crew_id: '',
-      },
-      crews: {},
-      group_clients: [],
-      group_id: '',
-    }
-  },
-  mounted() {
-    this.getCrews()
-    this.group_id = this.$decrypt(this.$route.params.id)
-    this.fetchInfo(this.group_id)
-  },
+  name: 'UpdateGroup',
+  data: () => ({
+    error_message: '',
+    client_search: '',
+    searched_client: {},
+    success: false,
+    group: {},
+    crews: {},
+    group_clients: [],
+  }),
   methods: {
     getCrews: async function () {
       await this.$axios.get(`/crews/all`).then((response) => {
@@ -179,21 +161,13 @@ export default {
     },
     updateGroup: async function () {
       await this.$axios
-        .post(`/groups/update/` + this.group_id, this.group)
-        .then((response) => {
-          this.message = response.data.message
-          if (response.data.success) {
-            this.success = true
-            this.assignClients()
-          } else {
-            this.success = false
-          }
-        })
+        .post(`/groups/update/${this.group.id}`, this.group)
+        .then(() => this.assignClients())
         .catch((error) => {
           if (error.response) {
-            this.message = error.response.data.message
+            this.error_message = error.response.data.message
           } else {
-            this.message = error.message
+            this.error_message = error.message
           }
           this.success = false
         })
@@ -201,7 +175,7 @@ export default {
     assignClients: async function () {
       this.group.clients = this.group_clients
       await this.$axios
-        .post(`/groups/assign_clients/` + this.group_id, {
+        .post(`/groups/assign_clients/${this.group.id}`, {
           clients: this.group_clients,
         })
         .then((response) => {
@@ -221,12 +195,15 @@ export default {
           this.success = false
         })
     },
-    fetchInfo: async function (id) {
-      await this.$axios.get(`/groups/${id}`).then((response) => {
-        this.group = response.data.group
+  },
+  async mounted() {
+    this.getCrews()
+    await this.$axios
+      .get(`/groups/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => {
+        this.group = response.data
         this.group_clients = response.data.clients
       })
-    },
   },
 }
 </script>
