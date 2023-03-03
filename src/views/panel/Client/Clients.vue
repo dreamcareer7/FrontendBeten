@@ -134,7 +134,7 @@
                   </button>
                   <router-link
                     :to="{
-                      name: 'update_client',
+                      name: 'Update client',
                       params: { id: this.$encrypt(client.id) },
                     }">
                     <CButton

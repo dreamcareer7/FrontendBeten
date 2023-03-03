@@ -53,7 +53,7 @@
                   </button>
                   <router-link
                     :to="{
-                      name: 'Update Service',
+                      name: 'Update service',
                       params: { id: this.$encrypt(service.id) },
                     }"
                   >

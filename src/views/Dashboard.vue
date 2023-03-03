@@ -1,6 +1,56 @@
 <template>
   <div>
     <WidgetsStatsA />
+    <CRow v-if="commits.length">
+      <CCol :xs="12">
+        <CCard class="mb-4">
+          <CCardHeader>
+            <div class="row">
+              <div class="col-md-10">
+                <strong>Service Commits</strong>
+              </div>
+            </div>
+          </CCardHeader>
+          <CCardBody>
+            <CTable>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Service</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Badge</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Schedule At</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                <CTableRow v-for="commit in commits" :key="commit.id">
+                  <CTableHeaderCell scope="row">
+                    {{ commit.id }}
+                  </CTableHeaderCell>
+                  <CTableDataCell>{{ commit.service.title }}</CTableDataCell>
+                  <CTableDataCell>{{ commit.badge }}</CTableDataCell>
+                  <CTableDataCell>{{ commit.schedule_at }}</CTableDataCell>
+                  <CTableDataCell>
+                    <router-link
+                      :to="{
+                        name: 'Service Commit details',
+                        params: { id: this.$encrypt(commit.id) },
+                      }"
+                    >
+                      <button
+                        class="btn btn-sm btn-info text-white mx-1"
+                        title="View"
+                      >
+                        <ion-icon name="eye-outline"></ion-icon>
+                      </button>
+                    </router-link>
+                  </CTableDataCell>
+                </CTableRow>
+              </CTableBody>
+            </CTable>
+          </CCardBody>
+        </CCard>
+      </CCol>
+    </CRow>
     <CRow>
       <CCol :md="12">
         <CCard class="mb-4">
@@ -244,8 +294,10 @@ export default {
     MainChartExample,
     ...Charts,
     WidgetsStatsA,
-    // WidgetsStatsD,
   },
+  data: () => ({
+    commits: []
+  }),
   setup() {
     const progressGroupExample1 = [
       { title: 'Monday', value1: 34, value2: 78 },
@@ -370,7 +422,9 @@ export default {
     }
   },
   async mounted() {
+    this.$axios.get('/my_service_commits')
+      .then((response) => this.commits = response.data)
     await this.$axios.get('/countries')
-  }
+  },
 }
 </script>

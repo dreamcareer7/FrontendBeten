@@ -8,11 +8,7 @@
               <h3 class="mt-1">Crew members</h3>
             </CCol>
             <CCol :md="4" :sm="8">
-              <router-link
-                :to="{
-                  name: 'Create_Crew',
-                }"
-              >
+              <router-link :to="{ name: 'Create crew' }">
                 <CButton color="success" class="float-end text-white">
                   <svg
                     clip-rule="evenodd"
@@ -110,7 +106,7 @@
                   </button>
                   <router-link
                     :to="{
-                      name: 'update_crew',
+                      name: 'Update crew',
                       params: { id: this.$encrypt(crew.id) },
                     }"
                   >

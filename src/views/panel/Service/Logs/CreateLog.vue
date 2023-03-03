@@ -1,56 +1,75 @@
 <template>
-    <div class="card border-success mb-4">
-        <div class="card-header">
-            Create Role
+  <div class="card border-success mb-4">
+    <div class="card-header">Create Log</div>
+    <form @submit.prevent="create">
+      <div class="card-body">
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="model_type"
+            autocomplete="off"
+            required
+            v-model="log.model_type"
+          />
+          <label for="model_type">Model Type</label>
         </div>
 
-        <div id="ialert" class="" role="alert"></div>
-        <form method="post">
-            <div class="card-body">
+        <div class="form-floating mb-3">
+          <input
+            type="number"
+            class="form-control"
+            id="model_id"
+            name="model_id"
+            required
+            autocomplete="off"
+            v-model="log.model_id"
+          />
 
-                <div class="form-floating mb-3">
-                    <select name="commit_id" id="commit_id" class="form-control">
-                        <option>Choose Service Commit</option>
-                        <option value="1">Commit 1</option>
-                    </select>
-                    <label for="commit_id">Service Commit</label>
-                    <div class="invalid-feedback"></div>
-                </div>
+          <label for="model_id">Model ID</label>
+          <div class="invalid-feedback"></div>
+        </div>
 
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="model_type" name="model_type" placeholder="Model Type..."
-                        required autocomplete="off">
-                    <label for="model_type">Model Type</label>
-                    <div class="invalid-feedback"></div>
-                </div>
+        <div class="form-floating mb-3">
+          <!-- Just to remember -->
+          <select name="" id="" v-model="log.roles" class="form-select">
+            <option value="mechanic">mechanic</option>
+            <option value="driver">driver</option>
+            <option value="valet">valet</option>
+            <option value="host">host</option>
+            <option value="guide">guide</option>
+          </select>
+          <label for="role">Role</label>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
 
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="model_id" name="model_id" placeholder="Model ID..." required
-                        autocomplete="off">
-                    <label for="model_id">Model ID</label>
-                    <div class="invalid-feedback"></div>
-                </div>
-
-                <div class="form-floating mb-3">
-                <!-- Just to remember -->
-                    <input type="text"/>
-                    <label for="role">Role</label>
-                    <div class="invalid-feedback"></div>
-                </div>
-
-
-
-            </div>
-
-            <div class="card-footer text-end">
-                <a class="btn btn-outline-success ajax">Save</a>
-            </div>
-        </form>
-    </div>
+      <div class="card-footer text-end">
+        <button type="submit" class="btn btn-outline-success">Save</button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'create_role',
+  name: 'CreateLog',
+  props: ['service_commit_id'],
+  emits: ['created'],
+  data() {
+    return {
+        log: {},
+    }
+  },
+  methods: {
+    create() {
+        this.log.service_commit_id = this.service_commit_id
+        this.$axios.post('/service_commit_log', this.log)
+            .then(() => {
+                this.log = {}
+                this.$emit('created')
+            })
+    }
+  }
 }
 </script>

@@ -33,11 +33,6 @@ const routes = [
         component: () => import('@/views/panel/User/UpdateUser'),
       },
       {
-        path: '/users/info/:id',
-        name: 'User Details',
-        component: () => import('@/views/panel/User/UserInfo'),
-      },
-      {
         path: '/clients',
         name: 'Clients',
         component: () => import('@/views/panel/Client/Clients'),
@@ -49,7 +44,7 @@ const routes = [
       },
       {
         path: '/clients/edit/:id',
-        name: 'update_client',
+        name: 'Update client',
         component: () => import('@/views/panel/Client/UpdateClient'),
       },
       {
@@ -59,12 +54,12 @@ const routes = [
       },
       {
         path: '/crews/create',
-        name: 'Create_Crew',
+        name: 'Create crew',
         component: () => import('@/views/panel/Crew/CreateCrew'),
       },
       {
         path: '/crews/edit/:id',
-        name: 'update_crew',
+        name: 'Update crew',
         component: () => import('@/views/panel/Crew/UpdateCrew'),
       },
       // Services menu
@@ -75,12 +70,12 @@ const routes = [
       },
       {
         path: '/services/create',
-        name: 'Create Service',
+        name: 'Create service',
         component: () => import('@/views/panel/Service/Services/CreateService'),
       },
       {
         path: '/services/:id',
-        name: 'Update Service',
+        name: 'Update service',
         component: () => import('@/views/panel/Service/Services/UpdateService'),
       },
       {
@@ -88,9 +83,10 @@ const routes = [
         name: 'Service Commits',
         component: () => import('@/views/panel/Service/Commits/Commits'),
       },
+      // Service Commit details
       {
         path: '/services/commits/:id',
-        name: 'service_commit_info',
+        name: 'Service Commit details',
         component: () => import('@/views/panel/Service/Commits/CommitInfo'),
       },
       {
