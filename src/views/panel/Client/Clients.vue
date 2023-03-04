@@ -8,26 +8,9 @@
               <h3 class="mt-1">Clients</h3>
             </div>
             <div class="col-md-4 col-sm-8">
-              <router-link
-                :to="{
-                  name: 'Create client',
-                }"
-              >
+              <router-link :to="{ name: 'Create client' }">
                 <CButton color="success" class="float-end text-white">
-                  <svg
-                    class="button-icon"
-                    clip-rule="evenodd"
-                    fill-rule="evenodd"
-                    stroke-linejoin="round"
-                    stroke-miterlimit="2"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m20 20h-15.25c-.414 0-.75.336-.75.75s.336.75.75.75h15.75c.53 0 1-.47 1-1v-15.75c0-.414-.336-.75-.75-.75s-.75.336-.75.75zm-1-17c0-.478-.379-1-1-1h-15c-.62 0-1 .519-1 1v15c0 .621.52 1 1 1h15c.478 0 1-.379 1-1zm-15.5.5h14v14h-14zm6.25 6.25h-3c-.414 0-.75.336-.75.75s.336.75.75.75h3v3c0 .414.336.75.75.75s.75-.336.75-.75v-3h3c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-3v-3c0-.414-.336-.75-.75-.75s-.75.336-.75.75z"
-                      fill-rule="nonzero"
-                    />
-                  </svg>
+                  <ion-icon name="person-add-outline"></ion-icon>&nbsp;
                   <span>Create Client</span>
                 </CButton>
               </router-link>
@@ -35,10 +18,10 @@
           </div>
         </CCardHeader>
         <CCardBody>
+          <!-- Start search filters -->
           <CRow>
             <CCol :md="2">
               <select
-                type="text"
                 class="form-control mb-3"
                 v-model="search.country"
                 @change="getClients"
@@ -51,28 +34,27 @@
             </CCol>
             <CCol :md="2">
               <select
-                type="text"
                 class="form-control mb-3"
                 v-model="search.gender"
                 @change="getClients"
               >
                 <option value="" selected disabled>Gender</option>
-                <option value="1">Male</option>
-                <option value="0">Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
             </CCol>
             <CCol :md="2">
               <input
                 type="text"
                 class="form-control mb-3"
-                v-model="search.name"
-                placeholder="Name"
+                v-model="search.fullname"
+                placeholder="Full Name"
                 @change="getClients"
               />
             </CCol>
             <CCol :md="2">
               <input
-                type="text"
+                type="number"
                 class="form-control mb-3"
                 v-model="search.phone"
                 placeholder="Phone"
@@ -81,14 +63,16 @@
             </CCol>
             <CCol :md="2">
               <input
-                type="text"
+                type="number"
                 class="form-control mb-3"
-                v-model="search.id_no"
-                placeholder="Id Number"
+                v-model="search.id_number"
+                placeholder="ID Number"
                 @change="getClients"
               />
             </CCol>
           </CRow>
+          <hr>
+          <!-- End filter -->
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
               <div class="spinner-border text-success" role="status"></div>
@@ -101,13 +85,12 @@
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Gender</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Full Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">phone</CTableHeaderCell>
                 <CTableHeaderCell scope="col">ID Type</CTableHeaderCell>
-                <CTableHeaderCell scope="col">ID No</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Date Of Birth</CTableHeaderCell>
+                <CTableHeaderCell scope="col">ID #</CTableHeaderCell>
+                <CTableHeaderCell scope="col">ID Name</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Gender</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -115,20 +98,16 @@
               <CTableRow v-for="client in clients" :key="client.id">
                 <CTableHeaderCell scope="row">{{ client.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
-                <CTableDataCell>
-                  <span v-if="client.gender === 1">Male</span>
-                  <span v-if="client.gender === 0">Female</span>
-                </CTableDataCell>
-                <CTableDataCell>{{ client.country_name }}</CTableDataCell>
-                <CTableDataCell>{{ client.phone }}</CTableDataCell>
+                <CTableDataCell>{{ client.country?.name }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
-                <CTableDataCell>{{ client.id_no }}</CTableDataCell>
-                <CTableDataCell>{{ client.dob }}</CTableDataCell>
+                <CTableDataCell>{{ client.id_number }}</CTableDataCell>
+                <CTableDataCell>{{ client.id_name }}</CTableDataCell>
+                <CTableDataCell>{{ client.gender }}</CTableDataCell>
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View details"
-                    @click="viewDetails(this.$encrypt(client.id))"
+                    @click="viewDetails(client.id)"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -136,7 +115,8 @@
                     :to="{
                       name: 'Update Client',
                       params: { id: this.$encrypt(client.id) },
-                    }">
+                    }"
+                  >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
                       title="Edit"
@@ -147,7 +127,8 @@
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteClient(client.id, client.fullname)"
-                    title="Delete">
+                    title="Delete"
+                  >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
@@ -177,7 +158,12 @@
     </CCol>
   </CRow>
 
-  <CModal size="md" :visible="visibleLiveDemo" @close="visibleLiveDemo = false" class="modal-popup-detail">
+  <CModal
+    size="lg"
+    :visible="visibleLiveDemo"
+    @close="visibleLiveDemo = false"
+    class="modal-popup-detail"
+  >
     <CModalHeader>
       <CModalTitle>Client Information</CModalTitle>
     </CModalHeader>
@@ -193,23 +179,29 @@
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell>Gender:</CTableHeaderCell>
-              <CTableDataCell>{{ client.gender == 1 ? 'Male' : 'Female' }}</CTableDataCell>
+              <CTableDataCell>{{
+                client.gender == 1 ? 'Male' : 'Female'
+              }}</CTableDataCell>
               <CTableHeaderCell>Country:</CTableHeaderCell>
               <CTableDataCell>{{ client.country_id }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell>Phone:</CTableHeaderCell>
               <CTableDataCell>
-                {{ client.phone}}
+                {{ client.phone }}
               </CTableDataCell>
               <CTableHeaderCell>Is Handicap:</CTableHeaderCell>
               <CTableDataCell>
-                <CBadge :color="client.is_handicap === 1 ? 'success' : 'warning'" shape="rounded-pill">{{ client.is_handicap === 1 ? 'Yes' : 'No'}}</CBadge>
+                <CBadge
+                  :color="client.is_handicap === 1 ? 'success' : 'warning'"
+                  shape="rounded-pill"
+                  >{{ client.is_handicap === 1 ? 'Yes' : 'No' }}</CBadge
+                >
               </CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell>ID No:</CTableHeaderCell>
-              <CTableDataCell>{{ client.id_no }}</CTableDataCell>
+              <CTableDataCell>{{ client.id_number }}</CTableDataCell>
               <CTableHeaderCell>ID Type</CTableHeaderCell>
               <CTableDataCell>{{ client.id_type }}</CTableDataCell>
             </CTableRow>
@@ -240,7 +232,7 @@
 import countries from '@/store/countries'
 
 export default {
-  name: 'Client',
+  name: 'Clients',
   data: () => ({
     countries: [],
     clients: {},
@@ -251,14 +243,14 @@ export default {
     selected_user: null,
     loading: false,
     pagination: [],
-    client:{},
+    client: {},
     visibleLiveDemo: false,
   }),
   methods: {
     getClients: async function () {
       this.loading = true
       await this.$axios
-        .get(`/clients/paginate`, {
+        .get(`/clients`, {
           params: this.search,
         })
         .then((response) => {
@@ -289,7 +281,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           this.$axios
-            .post(`/clients/delete/` + id)
+            .delete(`/clients/${id}`)
             .then(() => this.getClients())
           swal(`The client ${name} has been deleted!`, {
             icon: 'success',
@@ -298,10 +290,12 @@ export default {
       })
     },
     viewDetails: async function (id) {
-      await this.$axios.get(`/clients/info/${this.$decrypt(id)}`).then((response) => {
-        this.client = response.data
-        this.visibleLiveDemo = true
-      })
+      await this.$axios
+        .get(`/clients/${id}`)
+        .then((response) => {
+          this.client = response.data
+          this.visibleLiveDemo = true
+        })
     },
   },
   mounted() {

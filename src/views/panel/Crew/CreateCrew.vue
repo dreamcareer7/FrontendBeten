@@ -97,7 +97,7 @@
 
             <div class="form-floating mb-3">
               <input
-                v-model="crew.id_no"
+                v-model="crew.id_number"
                 type="text"
                 class="form-control"
                 id="id_number"
@@ -192,7 +192,7 @@ export default {
         country_id: '',
         phone: '',
         id_type: '',
-        id_no: '',
+        id_number: '',
         dob: '',
         is_handicap: false,
       },

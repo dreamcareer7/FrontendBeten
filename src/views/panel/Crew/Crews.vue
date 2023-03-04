@@ -87,7 +87,7 @@
                 <CTableDataCell>{{ crew.country_name }}</CTableDataCell>
                 <CTableDataCell>{{ crew.phone }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_type }}</CTableDataCell>
-                <CTableDataCell>{{ crew.id_no }}</CTableDataCell>
+                <CTableDataCell>{{ crew.id_number }}</CTableDataCell>
                 <CTableDataCell>
                   <CBadge
                     :color="crew.is_active ? 'success' : 'warning'"
