@@ -8,10 +8,10 @@
             type="text"
             class="form-control"
             id="title"
-            required
-            autofocus
             autocomplete="off"
             v-model="dormitory.title"
+            autofocus
+            required
           />
           <label for="title">Title</label>
         </div>
@@ -22,16 +22,15 @@
             class="form-control"
             id="phones"
             v-model="dormitory.phones"
-            required
             autocomplete="off"
+            required
           />
           <label for="phones">Phones</label>
         </div>
 
         <div class="form-floating mb-3">
           <select
-            name="city"
-            id="city"
+            id="city_id"
             v-model="dormitory.city_id"
             class="form-control"
           >
@@ -40,16 +39,16 @@
               {{ city.title }}
             </option>
           </select>
-          <label for="city">City</label>
+          <label for="city_id">City</label>
         </div>
         <div class="form-floating mb-3">
           <input
             type="text"
             class="form-control"
             id="location"
-            required
             v-model="dormitory.location"
             autocomplete="off"
+            required
           />
           <label for="location">Location</label>
         </div>
@@ -72,33 +71,26 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  value="1"
-                  name="is_active"
                   :checked="dormitory.is_active"
                   id="is_active"
                   v-model="dormitory.is_active"
-                />
-                <label class="form-check-label" for="is_active">
-                  Active
-                </label>
+                />&nbsp;
+                <label class="form-check-label" for="is_active">Active</label>
               </div>
             </div>
           </div>
         </div>
-        <CRow>
+        <CRow v-if="error_message">
           <CCol :md="12">
-            <div v-show="message && !success" class="error_style">
-              {{ message }}
-            </div>
-            <div v-show="message && success" class="alert alert-success">
-              {{ message }}
+            <div class="error_style">
+              {{ error_message }}
             </div>
           </CCol>
         </CRow>
       </div>
       <div class="card-footer text-end">
         <button class="btn btn-warning text-white" type="submit">
-          Save Changes
+          <ion-icon name="save-outline"></ion-icon>&nbsp; Save Changes
         </button>
       </div>
     </form>
@@ -109,8 +101,7 @@
 export default {
   name: 'UpdateDormitory',
   data: () => ({
-    message: '',
-    success: false,
+    error_message: '',
     dormitory: {},
     cities: [],
   }),
@@ -118,25 +109,16 @@ export default {
     update: async function () {
       await this.$axios
         .patch(`/dormitories/${this.dormitory.id}`, this.dormitory)
-        .then((response) => {
-          this.message = response.data.message
-          if (response.data.success) {
-            this.$router.push({ name: 'dormitories' })
-          } else {
-            this.success = false
-          }
-        }).catch((error) => {
-          if (error.response) {
-            this.message = error.response.data.message
-          } else {
-            this.message = error.message
-          }
-          this.success = false
-        })
+        .then(() => this.$router.push({ name: 'Dormitories' }))
+        .catch(
+          (error) =>
+            (this.error_message =
+              error.response?.data.message || error.message),
+        )
     },
   },
   async mounted() {
-    this.$axios.get('/cities').then((response) => this.cities = response.data)
+    this.$axios.get('/cities').then((response) => (this.cities = response.data))
     await this.$axios
       .get(`/dormitories/${this.$decrypt(this.$route.params.id)}`)
       .then((response) => {

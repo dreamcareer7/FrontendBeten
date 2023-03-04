@@ -8,45 +8,34 @@
               <strong>Dormitories</strong>
             </div>
             <div class="col-md-2">
-              <router-link
-                :to="{
-                  name: 'create_dormitory',
-                }"
-              >
-                <CButton color="primary" class="float-end">
-                  Create Dormitory</CButton
-                >
+              <router-link :to="{ name: 'Create Dormitory' }">
+                <CButton color="success" class="float-end text-white">
+                  <ion-icon name="bed-outline"></ion-icon>&nbsp; Create
+                  Dormitory
+                </CButton>
               </router-link>
             </div>
           </div>
         </CCardHeader>
         <CCardBody>
+          <!-- Search filters -->
           <CRow>
             <CCol :md="2">
               <input
                 type="text"
                 class="form-control"
                 v-model="search.title"
-                placeholder="title.."
-                @change="getDormitories"
+                placeholder="Title..."
+                @keyup="filter"
               />
             </CCol>
             <CCol :md="2">
               <input
                 type="text"
                 class="form-control"
-                v-model="search.phone"
-                placeholder="Phone.."
-                @change="getDormitories"
-              />
-            </CCol>
-            <CCol :md="2">
-              <input
-                type="text"
-                class="form-control"
-                v-model="search.country"
-                placeholder="Country"
-                @change="getDormitories"
+                v-model="search.phones"
+                placeholder="Phones..."
+                @keyup="filter"
               />
             </CCol>
             <CCol :md="2">
@@ -54,11 +43,14 @@
                 type="text"
                 class="form-control"
                 v-model="search.city"
-                placeholder="City"
-                @change="getDormitories"
+                placeholder="City..."
+                @keyup="filter"
               />
             </CCol>
           </CRow>
+          <!-- End search filters -->
+          <hr />
+          <!-- Loading spinner -->
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
               <div class="spinner-border text-success" role="status"></div>
@@ -67,7 +59,16 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
-          <CTable v-if="!loading">
+          <!-- End loading spinner -->
+
+          <!-- Handle no results -->
+          <CRow v-if="dormitories.length === 0 && !loading" class="mt-4">
+            <CCol :md="12" class="text-center">
+              <span class="sr-only">No results</span>
+            </CCol>
+          </CRow>
+          <!-- End no results -->
+          <CTable v-if="!loading && dormitories.length > 0">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -75,7 +76,6 @@
                 <CTableHeaderCell scope="col">Phones</CTableHeaderCell>
                 <CTableHeaderCell scope="col">City</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Location</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Coordinate</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Active</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
@@ -87,9 +87,8 @@
                 }}</CTableHeaderCell>
                 <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.phones }}</CTableDataCell>
-                <CTableDataCell>{{ dormitory.city_id }}</CTableDataCell>
+                <CTableDataCell>{{ dormitory.city?.title }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.location }}</CTableDataCell>
-                <CTableDataCell>{{ dormitory.coordinate }}</CTableDataCell>
                 <CTableDataCell>
                   <CBadge
                     :color="dormitory.is_active ? 'success' : 'warning'"
@@ -126,29 +125,20 @@
               </CTableRow>
             </CTableBody>
           </CTable>
-          <CRow>
+          <CRow v-show="!loading">
             <CCol :md="12" class="text-center">
-              <nav aria-label="Page navigation example">
+              <nav aria-label="Dormitories navigation">
                 <ul class="pagination">
-                  <li class="page-item" v-if="current_page > 1">
-                    <a class="page-link" href="#" @click.prevent="previousPage"
-                      >Previous</a
-                    >
-                  </li>
-                  <li class="page-item" v-for="page in pagination" :key="page">
-                    <a
-                      @click.prevent="gotoPage(page.url)"
-                      class="page-link"
-                      href="#"
-                      v-html="page.label"
-                      v-if="page.url"
-                    ></a>
-                  </li>
-                  <li class="page-item" v-if="last_page > current_page">
-                    <a class="page-link" href="#" @click.prevent="nextPage">
-                      Next</a
-                    >
-                  </li>
+                  <template v-for="page in pagination" :key="page">
+                    <li class="page-item" :class="{ active: page.active }">
+                      <a
+                        @click.prevent="gotoPage(page.url)"
+                        class="page-link"
+                        :class="{ disabled: !page.url }"
+                        v-html="page.label"
+                      ></a>
+                    </li>
+                  </template>
                 </ul>
               </nav>
             </CCol>
@@ -157,7 +147,14 @@
       </CCard>
     </CCol>
   </CRow>
-  <CModal :visible="visibleLiveDemo" @close="visibleLiveDemo = false" size="lg">
+  <CModal
+    size="lg"
+    :visible="is_dormitory_modal_shown"
+    @close="is_dormitory_modal_shown = false"
+    class="modal-popup-detail"
+    data-backdrop="static"
+    data-keyboard="false"
+  >
     <CModalHeader>
       <CModalTitle>Dormitory details</CModalTitle>
     </CModalHeader>
@@ -172,14 +169,14 @@
           <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Phone</CTableDataCell>
+          <CTableDataCell>Phones</CTableDataCell>
           <CTableDataCell>
-            {{ dormitory.phone }}
+            {{ dormitory.phones }}
           </CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>City</CTableDataCell>
-          <CTableDataCell>{{ dormitory.city_id }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.city?.title }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Location</CTableDataCell>
@@ -209,11 +206,23 @@
           <CTableDataCell>{{ dormitory.updated_at }}</CTableDataCell>
         </CTableRow>
       </CTable>
-      <Contractable type="dormitory" :id="dormitory.id" />
-      <Documentable type="dormitory" :id="dormitory.id" />
+      <Contractable
+        v-if="dormitory.is_contractable"
+        type="dormitory"
+        :id="dormitory.id"
+      />
+      <Documentable
+        v-if="dormitory.is_documentable"
+        type="dormitory"
+        :id="dormitory.id"
+      />
     </CModalBody>
     <CModalFooter>
-      <CButton color="secondary" @click="visibleLiveDemo = false">
+      <CButton
+        color="secondary"
+        class="text-white"
+        @click="is_dormitory_modal_shown = false"
+      >
         Close
       </CButton>
     </CModalFooter>
@@ -221,56 +230,40 @@
 </template>
 
 <script>
+import { debounce } from '@/utils/helper'
+
 export default {
   name: 'Dormitories',
-  data() {
-    return {
-      dormitories: {},
-      search: {},
-      current_page: 1,
-      total_pages: 1,
-      last_page: 99,
-      selected_user: null,
-      loading: false,
-      pagination: {},
-      dormitory: {},
-      visibleLiveDemo: false,
-    }
-  },
-  mounted() {
-    this.getDormitories()
-  },
+  data: () => ({
+    debounceFn: null,
+    dormitories: [],
+    search: {},
+    loading: false,
+    pagination: [],
+    is_dormitory_modal_shown: false,
+    dormitory: {},
+  }),
   methods: {
-    viewDetails: async function (id) {
-      await this.$axios.get(`/dormitories/${id}`).then((response) => {
-        this.dormitory = response.data
-        this.visibleLiveDemo = true
-      })
-    },
-    nextPage: async function () {
-      this.current_page = this.current_page + 1
-      this.search.page = this.current_page
-      await this.getDormitories()
-    },
-    previousPage: async function () {
-      this.current_page = this.current_page - 1
-      this.search.page = this.current_page
-      await this.getDormitories()
-    },
     getDormitories: async function () {
       this.loading = true
       await this.$axios
-        .get(`/dormitories/paginate`, {
+        .get('/dormitories', {
           params: this.search,
         })
         .then((response) => {
           this.dormitories = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          this.total_pages = response.data.total / response.data.per_page
           this.pagination = response.data.links
+          this.loading = false
         })
-      this.loading = false
+    },
+    filter: async function () {
+      await this.debounceFn()
+    },
+    viewDetails: async function (id) {
+      await this.$axios.get(`/dormitories/${id}`).then((response) => {
+        this.dormitory = response.data
+        this.is_dormitory_modal_shown = true
+      })
     },
     gotoPage: async function (url) {
       this.loading = true
@@ -280,9 +273,6 @@ export default {
         })
         .then((response) => {
           this.dormitories = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          this.total_pages = response.data.total / response.data.per_page
           this.pagination = response.data.links
         })
       this.loading = false
@@ -297,14 +287,26 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           this.$axios
-            .post(`/dormitories/delete/${id}`)
-            .then(() => this.getDormitories())
+            .delete(`/dormitories/${id}`)
+            .then(
+              () =>
+                // TODO: remove item from the existing array
+                // instead of reassigning
+                (this.dormitories = this.dormitories.filter(
+                  (dormitory) => dormitory.id !== id,
+                )),
+            )
           swal('Dormitory has been deleted!', {
             icon: 'success',
+            timer: 3000,
           })
         }
       })
     },
+  },
+  mounted: async function () {
+    await this.getDormitories()
+    this.debounceFn = debounce(() => this.getDormitories(), 500)
   },
 }
 </script>

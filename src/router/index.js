@@ -196,12 +196,12 @@ const routes = [
       },
       {
         path: '/dormitories',
-        name: 'dormitories',
+        name: 'Dormitories',
         component: () => import('@/views/panel/Dormitory/Dormitories'),
       },
       {
         path: '/dormitories/create',
-        name: 'create_dormitory',
+        name: 'Create Dormitory',
         component: () => import('@/views/panel/Dormitory/CreateDormitory'),
       },
       {
