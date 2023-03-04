@@ -44,7 +44,7 @@ const routes = [
       },
       {
         path: '/clients/edit/:id',
-        name: 'Update client',
+        name: 'Update Client',
         component: () => import('@/views/panel/Client/UpdateClient'),
       },
       {
