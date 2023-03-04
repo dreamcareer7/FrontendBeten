@@ -120,7 +120,7 @@
                   </router-link>
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
-                    @click="deleteCrew(crew.id)"
+                    @click.stop="deleteCrew(crew.id)"
                     title="Delete"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>

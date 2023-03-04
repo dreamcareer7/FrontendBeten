@@ -1,7 +1,6 @@
 <template>
   <form class="card border-warning mb-4" @submit.prevent="updateGroup">
     <div class="card-header">Update Group</div>
-
     <div class="row mt-4">
       <div class="col-4">
         <div class="card-body">
@@ -11,20 +10,16 @@
               class="form-control"
               id="title"
               v-model="group.title"
-              name="title"
-              placeholder="Title..."
+              autocomplete="off"
               required
               autofocus
-              autocomplete="off"
             />
             <label for="title">Title</label>
-            <div class="invalid-feedback"></div>
           </div>
 
           <div class="form-floating mb-3">
             <select
               v-model="group.crew_id"
-              name="crew_id"
               id="crew_id"
               class="form-control"
             >
@@ -34,7 +29,6 @@
               </template>
             </select>
             <label for="crew_id">Crew</label>
-            <div class="invalid-feedback"></div>
           </div>
         </div>
       </div>
@@ -45,7 +39,7 @@
             <h6>Search Client</h6>
             <input
               type="text"
-              v-model="client_search"
+              v-model="client_query"
               class="form-control"
               @change="searchClients"
             />
@@ -96,7 +90,7 @@
       </CRow>
     </div>
     <div class="card-footer text-end">
-      <button type="submit" class="btn btn-outline-success">Save</button>
+      <button type="submit" class="btn btn-warning text-white">Save</button>
     </div>
   </form>
 </template>
@@ -106,11 +100,10 @@ export default {
   name: 'UpdateGroup',
   data: () => ({
     error_message: '',
-    client_search: '',
-    searched_client: {},
-    success: false,
+    client_query: '',
+    searched_client: [],
     group: {},
-    crews: {},
+    crews: [],
     group_clients: [],
   }),
   methods: {
@@ -121,8 +114,8 @@ export default {
     },
     searchClients: async function () {
       await this.$axios
-        .get(`/clients/paginate`, {
-          params: { name: this.client_search, per_page: 500 },
+        .get(`/clients`, {
+          params: { fullname: this.client_query, per_page: 10 },
         })
         .then((response) => {
           this.searched_client = response.data.data
@@ -162,14 +155,16 @@ export default {
     updateGroup: async function () {
       await this.$axios
         .post(`/groups/update/${this.group.id}`, this.group)
-        .then(() => this.assignClients())
+        .then(() => {
+          this.assignClients()
+          this.$router.push({ name: 'Groups' })
+        })
         .catch((error) => {
           if (error.response) {
             this.error_message = error.response.data.message
           } else {
             this.error_message = error.message
           }
-          this.success = false
         })
     },
     assignClients: async function () {
@@ -178,21 +173,13 @@ export default {
         .post(`/groups/assign_clients/${this.group.id}`, {
           clients: this.group_clients,
         })
-        .then((response) => {
-          this.message = response.data.message
-          if (response.data.success) {
-            this.$router.push({ name: 'groups' })
-          } else {
-            this.success = false
-          }
-        })
+        .then(() => this.$router.push({ name: 'groups' }))
         .catch((error) => {
           if (error.response) {
-            this.message = error.response.data.message
+            this.error_message = error.response.data.message
           } else {
-            this.message = error.message
+            this.error_message = error.message
           }
-          this.success = false
         })
     },
   },
