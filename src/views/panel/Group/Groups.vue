@@ -29,7 +29,7 @@
                 @keyup="filter"
               />
             </CCol>
-            <CCol :md="2">
+            <CCol :md="4">
               <input
                 type="text"
                 class="form-control"
@@ -60,7 +60,7 @@
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Crew member</CTableHeaderCell>
                 <CTableHeaderCell
-                  style="width: 15%"
+                  style="width: 20%"
                   scope="col"
                   :aria-colspan="2"
                 >
@@ -128,8 +128,9 @@
     </CCol>
   </CRow>
 
+  <!-- Small modal size unless documents or contracts -->
   <CModal
-    size="lg"
+    :size="!group.is_documentable && !group.is_contractable ? 'sm' : 'lg'"
     :visible="is_group_modal_visible"
     @close="is_group_modal_visible = false"
     class="modal-popup-detail"
@@ -144,23 +145,38 @@
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableDataCell>{{ group.id }}</CTableDataCell>
-              <CTableHeaderCell>Title</CTableHeaderCell>
-              <CTableDataCell>{{ group.title }}</CTableDataCell>
+              <CTableDataCell>ID: {{ group.id }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>Crew member</CTableHeaderCell>
-              <CTableDataCell>{{ group.crew?.fullname }}</CTableDataCell>
+              <CTableDataCell>Title: {{ group.title }}</CTableDataCell>
             </CTableRow>
-            <CTableRow v-if="group.is_documentable">
-              <CTableDataCell colspan="4">
-                <Documentable type="group" :id="group.id" />
+            <CTableRow>
+              <CTableDataCell>
+                Crew member: {{ group.crew?.fullname }}
               </CTableDataCell>
             </CTableRow>
           </CTable>
         </CCol>
       </CRow>
+      <CRow>
+        <CCol :md="12">
+          <h3>Clients</h3>
+          <CTable class="table table-responsive">
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">ID</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Fullname</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableRow v-for="client in group.clients" :key="client.id">
+              <CTableDataCell>{{ client.id }}</CTableDataCell>
+              <CTableDataCell>{{ client.fullname }}</CTableDataCell>
+            </CTableRow>
+          </CTable>
+        </CCol>
+      </CRow>
+      <Documentable v-if="group.is_documentable" type="group" :id="group.id" />
+      <Contractable v-if="group.is_contractable" type="group" :id="group.id" />
     </CModalBody>
   </CModal>
 </template>
@@ -172,6 +188,7 @@ export default {
   name: 'Groups',
   data: () => ({
     debounceFn: null,
+    group: {},
     groups: [],
     search: {
       title: '',
@@ -180,13 +197,12 @@ export default {
     loading: false,
     pagination: [],
     is_group_modal_visible: false,
-    group: {},
   }),
   methods: {
     async getGroups() {
       this.loading = true
       await this.$axios
-        .get(`/groups/paginate`, {
+        .get(`/groups`, {
           params: this.search,
         })
         .then((response) => {
@@ -225,10 +241,11 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.post(`/groups/delete/${id}`).then(
-            // TODO: remove item from the existing array
-            // instead of reassigning
-            (this.groups = this.groups.filter((group) => group.id !== id)),
+          this.$axios.delete(`/groups/${id}`).then(
+            this.groups.splice(
+              this.groups.findIndex((group) => group.id === id),
+              1,
+            ),
           )
           swal('Group has been deleted!', {
             icon: 'success',

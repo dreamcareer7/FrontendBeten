@@ -1,5 +1,5 @@
 <template>
-  <form class="card border-warning mb-4" @submit.prevent="updateGroup">
+  <form class="card border-warning mb-4" @submit.prevent="update">
     <div class="card-header">Update Group</div>
     <div class="row mt-4">
       <div class="col-4">
@@ -18,11 +18,7 @@
           </div>
 
           <div class="form-floating mb-3">
-            <select
-              v-model="group.crew_id"
-              id="crew_id"
-              class="form-control"
-            >
+            <select v-model="group.crew_id" id="crew_id" class="form-control">
               <option>Choose Crew</option>
               <template v-for="crew in crews" :key="crew.id">
                 <option :value="crew.id">{{ crew.fullname }}</option>
@@ -64,17 +60,16 @@
             </div>
           </div>
           <div class="col-7">
-            <div class="row border p-2 mb-2" v-for="client in group_clients">
-              <div class="col-6">
+            <div class="row border p-2 mb-2" v-for="client in group.clients">
+              <div class="col-8">
                 <h6>{{ client.fullname }}</h6>
-                <span> {{ client.id }} </span>
               </div>
-              <div class="col-4">
+              <div class="col-2">
                 <button
                   class="btn btn-primary"
                   @click="removeClientFromGroup(client)"
                 >
-                  <ion-icon name="close-outline"></ion-icon>
+                  <ion-icon name="arrow-back-outline"></ion-icon>
                 </button>
               </div>
             </div>
@@ -90,7 +85,9 @@
       </CRow>
     </div>
     <div class="card-footer text-end">
-      <button type="submit" class="btn btn-warning text-white">Save</button>
+      <button type="submit" class="btn btn-warning text-white">
+        <ion-icon name="save-outline"></ion-icon>&nbsp;Save
+      </button>
     </div>
   </form>
 </template>
@@ -108,9 +105,8 @@ export default {
   }),
   methods: {
     getCrews: async function () {
-      await this.$axios.get(`/crews/all`).then((response) => {
-        this.crews = response.data
-      })
+      await this.$axios.get('/crews')
+        .then((response) => this.crews = response.data.data)
     },
     searchClients: async function () {
       await this.$axios
@@ -152,13 +148,10 @@ export default {
         this.searched_client.push(client)
       }
     },
-    updateGroup: async function () {
+    update: async function () {
       await this.$axios
-        .post(`/groups/update/${this.group.id}`, this.group)
-        .then(() => {
-          this.assignClients()
-          this.$router.push({ name: 'Groups' })
-        })
+        .patch(`/groups/${this.group.id}`, this.group)
+        .then(() => this.$router.push({ name: 'Groups' }))
         .catch((error) => {
           if (error.response) {
             this.error_message = error.response.data.message
@@ -189,7 +182,6 @@ export default {
       .get(`/groups/${this.$decrypt(this.$route.params.id)}`)
       .then((response) => {
         this.group = response.data
-        this.group_clients = response.data.clients
       })
   },
 }

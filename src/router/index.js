@@ -49,7 +49,7 @@ const routes = [
       },
       {
         path: '/crews',
-        name: 'crews',
+        name: 'Crews',
         component: () => import('@/views/panel/Crew/Crews'),
       },
       {

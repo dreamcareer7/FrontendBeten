@@ -9,9 +9,9 @@
             </div>
             <div class="col-md-2">
               <router-link :to="{ name: 'Create Phase' }">
-                <CButton color="primary" class="float-end">
+                <CButton color="success" class="float-end text-white">
+                  <ion-icon name="create-outline"></ion-icon>&nbsp;
                   Create Phase
-                  <ion-icon name="create-outline"></ion-icon>
                 </CButton>
               </router-link>
             </div>
@@ -70,7 +70,7 @@
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View Details"
-                    @click="fetchPhaseInfo(phase.id)"
+                    @click="viewDetails(phase.id)"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -154,6 +154,15 @@
       <Contractable v-if="phase.is_contractable" type="phase" :id="phase.id" />
       <Documentable v-if="phase.is_documentable" type="phase" :id="phase.id" />
     </CModalBody>
+    <CModalFooter>
+      <CButton
+        color="secondary"
+        class="text-white"
+        @click="is_phase_modal_visible = false"
+      >
+        Close
+      </CButton>
+    </CModalFooter>
   </CModal>
 </template>
 
@@ -189,7 +198,7 @@ export default {
     filter: async function () {
       await this.debounceFn()
     },
-    fetchPhaseInfo: async function (id) {
+    viewDetails: async function (id) {
       await this.$axios.get(`/phases/${id}`).then((response) => {
         this.phase = response.data
         this.is_phase_modal_visible = true

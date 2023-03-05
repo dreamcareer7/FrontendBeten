@@ -1,204 +1,82 @@
 <template>
-  <div class="card border-success mb-4">
+  <form class="card border-success mb-4" @submit.prevent="create">
     <div class="card-header">Create Group</div>
-
-    <div class="row mt-4">
-      <div class="col-4">
-        <form method="post">
-          <div class="card-body">
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control"
-                id="title"
-                v-model="group.title"
-                name="title"
-                placeholder="Title..."
-                required
-                autofocus
-                autocomplete="off"
-              />
-              <label for="title">Title</label>
-              <div class="invalid-feedback"></div>
-            </div>
-
-            <div class="form-floating mb-3">
-              <input
-                class="form-control"
-                list="crew_members"
-                id="crew_member"
-                @keyup="getCrews"
-                v-model="crew_member_search.fullname"
-              />
-              <datalist id="crew_members" ref="crew_data_list">
-                <template v-for="crew in crews" :key="crew.id">
-                  <option :value="crew.fullname" :data-value="crew.id"></option>
-                </template>
-              </datalist>
-              <label class="form-label" for="crew_member">Crew member</label>
-              <div class="invalid-feedback"></div>
-            </div>
-          </div>
-        </form>
+    <div class="card-body">
+      <div class="form-floating mb-3">
+        <input
+          id="title"
+          class="form-control"
+          type="text"
+          v-model="group.title"
+          autocomplete="off"
+          required
+          autofocus
+        />
+        <label for="title">Title</label>
       </div>
-      <div class="col-8 text-center">
-        <h6>Assigned Members to this Group</h6>
-        <div class="row">
-          <div class="col-4">
-            <h6>Search Client</h6>
-            <input
-              type="text"
-              v-model="client_search"
-              class="form-control"
-              @change="searchClients"
-            />
-            <div class="row mt-3">
-              <div
-                class="row border p-2 mb-2"
-                v-for="client in searched_client"
-              >
-                <div class="col-8">
-                  <h6>{{ client.fullname }}</h6>
-                  <span> {{ client.id }} </span>
-                </div>
-                <div class="col-4">
-                  <button
-                    class="btn btn-primary"
-                    @click="addClientToGroup(client)"
-                  >
-                    <ion-icon name="arrow-forward-outline"></ion-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-7">
-            <div class="row border p-2 mb-2" v-for="client in group_clients">
-              <div class="col-6">
-                <h6>{{ client.fullname }}</h6>
-                <span> {{ client.id }} </span>
-              </div>
-              <div class="col-4">
-                <button
-                  class="btn btn-primary"
-                  @click="removeClientFromGroup(client)"
-                >
-                  <ion-icon name="close-outline"></ion-icon>
-                </button>
-              </div>
-            </div>
-          </div>
+
+      <div class="form-floating mb-3">
+        <select
+          class="form-control"
+          id="crew_member"
+          v-model="group.crew_id"
+          required
+        >
+          <template v-for="crew in crew_members" :key="crew.id">
+            <option :value="crew.id">{{ crew.fullname }}</option>
+          </template>
+        </select>
+        <label class="form-label" for="crew_member">Crew member</label>
+      </div>
+    </div>
+    <CRow v-if="error_message">
+      <CCol :md="12">
+        <div class="error_style">
+          {{ error_message }}
         </div>
-      </div>
-      <CRow>
-        <CCol :md="12">
-          <div v-show="message && !success" class="error_style">
-            {{ message }}
-          </div>
-          <div v-show="message && success" class="alert alert-success">
-            {{ message }}
-          </div>
-        </CCol>
-      </CRow>
-    </div>
+      </CCol>
+    </CRow>
     <div class="card-footer text-end">
-      <a @click="createGroup()" class="btn btn-outline-success ajax">Save</a>
+      <button
+        class="btn btn-success text-white"
+        type="submit"
+        :disabled="create_button_disabled"
+      >
+        <ion-icon name="create-outline"></ion-icon>&nbsp;Create
+      </button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
 export default {
-  name: 'create_group',
-  data() {
-    return {
-      message: '',
-      crew_member_search: {
-        fullname: '',
-      },
-      client_search: '',
-      searched_client: {},
-      success: false,
-      group: {
-        title: '',
-        crew_id: '',
-      },
-      crews: {},
-      group_clients: [],
-    }
-  },
-  mounted() {
-    this.getCrews()
+  name: 'CreateGroup',
+  data: () => ({
+    error_message: '',
+    group: {},
+    crew_members: [],
+  }),
+  computed: {
+    create_button_disabled() {
+      return !this.group.title || !this.group.crew_id
+    },
   },
   methods: {
-    async isAdded(client) {
-      let added = false
-      this.group_clients.forEach((cln) => {
-        if (client.id === cln.id) {
-          added = true
-        }
-      })
-      return added
-    },
-    getCrews: async function () {
+    create: async function () {
       await this.$axios
-        .get(`/crews/all`, {
-          params: this.crew_member_search,
-        })
-        .then((response) => {
-          this.crews = response.data
-        })
+        .post('/groups', this.group)
+        .then(() => this.$router.push({ name: 'Groups' }))
+        .catch(
+          (error) =>
+            (this.error_message =
+              error.response?.data.message || error.message),
+        )
     },
-    searchClients: async function () {
-      await this.$axios
-        .get(`/clients/paginate`, {
-          params: { name: this.client_search, per_page: 500 },
-        })
-        .then((response) => {
-          this.searched_client = response.data.data
-        })
-    },
-    addClientToGroup(client) {
-      const index = this.searched_client.indexOf(client)
-      if (index > -1) {
-        // only splice array when item is found
-        this.searched_client.splice(index, 1) // 2nd parameter means remove one item only
-      }
-      if (!this.group_clients.includes(client)) {
-        this.group_clients.push(client)
-      }
-    },
-    removeClientFromGroup(client) {
-      const index = this.group_clients.indexOf(client)
-      if (index > -1) {
-        // only splice array when item is found
-        this.group_clients.splice(index, 1) // 2nd parameter means remove one item only
-      }
-      if (!this.searched_client.includes(client)) {
-        this.searched_client.push(client)
-      }
-    },
-    createGroup: async function () {
-      this.group.clients = this.group_clients
-      await this.$axios
-        .post(`/groups/add`, this.group)
-        .then((response) => {
-          this.message = response.data.message
-          if (response.data.success) {
-            this.$router.push({ name: 'groups' })
-          } else {
-            this.success = false
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            this.message = error.response.data.message
-          } else {
-            this.message = error.message
-          }
-          this.success = false
-        })
-    },
+  },
+  mounted: async function () {
+    await this.$axios
+      .get('/crews', { params: { per_page: 20 } })
+      .then((response) => (this.crew_members = response.data.data))
   },
 }
 </script>
