@@ -36,26 +36,35 @@
         </div>
 
         <div class="form-floating mb-3">
-            <select v-model="crew.country_id" name="country" id="country" class="form-control">
-                <option>Choose Country</option>
-                <template v-for="country in countries" :key="country.code">
-                  <option :value="country.id">{{ country.name }}</option>
-                </template>
-            </select>
-            <label for="country_id">Country</label>
-            <div class="invalid-feedback"></div>
+          <select
+            v-model="crew.country_id"
+            name="country"
+            id="country"
+            class="form-control"
+          >
+            <option>Choose Country</option>
+            <template v-for="country in countries" :key="country.code">
+              <option :value="country.id">{{ country.name }}</option>
+            </template>
+          </select>
+          <label for="country_id">Country</label>
+          <div class="invalid-feedback"></div>
         </div>
 
-
         <div class="form-floating mb-3">
-            <select v-model="crew.profession_id" name="profession" id="profession" class="form-control">
-                <option>Choose Profession</option>
-                <template v-for="profession in professions" :key="profession.id">
-                  <option :value="profession.id">{{ profession.title }}</option>
-                </template>
-            </select>
-            <label for="profession_id">Profession</label>
-            <div class="invalid-feedback"></div>
+          <select
+            v-model="crew.profession_id"
+            name="profession"
+            id="profession"
+            class="form-control"
+          >
+            <option>Choose Profession</option>
+            <template v-for="profession in professions" :key="profession.id">
+              <option :value="profession.id">{{ profession.title }}</option>
+            </template>
+          </select>
+          <label for="profession_id">Profession</label>
+          <div class="invalid-feedback"></div>
         </div>
 
         <div class="row g-1 mb-1">
@@ -102,7 +111,7 @@
             <div class="form-floating mb-3">
               <input
                 v-model="crew.dob"
-                type="date"
+                type="datetime-local"
                 class="form-control"
                 id="dob"
                 name="dob"
@@ -122,7 +131,12 @@
                   checked
                   id="is_handicap"
                 />
-                <label class="form-check-label" style="margin-left: .4em;" for="is_handicap">Is Handicap?</label>
+                <label
+                  class="form-check-label"
+                  style="margin-left: 0.4em"
+                  for="is_handicap"
+                  >Is Handicap?</label
+                >
               </div>
             </div>
           </div>
@@ -140,7 +154,12 @@
       </div>
 
       <div class="card-footer text-end">
-        <button @click.prevent="updateCrew()" class="btn btn-outline-success ajax">Save</button>
+        <button
+          @click.prevent="updateCrew()"
+          class="btn btn-outline-success ajax"
+        >
+          Save
+        </button>
       </div>
     </form>
   </div>
@@ -171,25 +190,25 @@ export default {
       professions: [
         {
           id: 1,
-          title: "Developer"
+          title: 'Developer',
         },
         {
           id: 2,
-          title: "Doctor"
+          title: 'Doctor',
         },
         {
           id: 3,
-          title: "Engineer"
+          title: 'Engineer',
         },
         {
           id: 4,
-          title: "Accountant"
+          title: 'Accountant',
         },
-      ]
+      ],
     }
   },
   mounted() {
-    this.countries = countries;
+    this.countries = countries
     this.crew_id = this.$decrypt(this.$route.params.id)
     countries.fetchCountries().then((countries) => {
       this.countries = countries
@@ -198,24 +217,35 @@ export default {
   },
   methods: {
     updateCrew: async function () {
-      let crew = this.crew;
-      await this.$axios.post(`/crews/update/`+ this.crew_id, crew)
-        .then((response) => {
-          this.message = response.data.message
-          if (response.data.success) {
-            this.$router.push({name: 'crews'})
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            this.message = error.response.data.message
-          } else {
-            this.message = error.message
-          }
-        })
+      let crew = this.crew
+      await swal({
+        title: 'Are you sure?',
+        text: 'Click confirm to update, this action is irreversible',
+        icon: 'warning',
+        buttons: ['Cancel', 'Confirm'],
+      }).then((willUpdate) => {
+        if (willUpdate) {
+          this.$axios
+            .patch(`/crews/` + this.crew_id, crew)
+            .then(() => {
+              this.$router.push({ name: 'Crews' })
+              swal('Updated successfully!', {
+                icon: 'success',
+                timer: 3000,
+              })
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.message = error.response.data.message
+              } else {
+                this.message = error.message
+              }
+            })
+        }
+      })
     },
     fetchCrewInfo: async function (id) {
-      await this.$axios.get(`/crews/info/` + id).then((response) => {
+      await this.$axios.get(`/crews/` + id).then((response) => {
         this.crew = response.data
       })
     },

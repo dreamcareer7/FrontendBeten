@@ -29,11 +29,7 @@
         </div>
 
         <div class="form-floating mb-3">
-          <select
-            id="city_id"
-            v-model="dormitory.city_id"
-            class="form-control"
-          >
+          <select id="city_id" v-model="dormitory.city_id" class="form-control">
             <option>Choose City</option>
             <option v-for="city in cities" :key="city.id" :value="city.id">
               {{ city.title }}
@@ -107,14 +103,29 @@ export default {
   }),
   methods: {
     update: async function () {
-      await this.$axios
-        .patch(`/dormitories/${this.dormitory.id}`, this.dormitory)
-        .then(() => this.$router.push({ name: 'Dormitories' }))
-        .catch(
-          (error) =>
-            (this.error_message =
-              error.response?.data.message || error.message),
-        )
+      await swal({
+        title: 'Are you sure?',
+        text: 'Click confirm to update, this action is irreversible',
+        icon: 'warning',
+        buttons: ['Cancel', 'Confirm'],
+      }).then((willUpdate) => {
+        if (willUpdate) {
+          this.$axios
+            .patch(`/dormitories/${this.dormitory.id}`, this.dormitory)
+            .then(() => {
+              this.$router.push({ name: 'Dormitories' })
+              swal('Updated successfully!', {
+                icon: 'success',
+                timer: 3000,
+              })
+            })
+            .catch(
+              (error) =>
+                (this.error_message =
+                  error.response?.data.message || error.message),
+            )
+        }
+      })
     },
   },
   async mounted() {

@@ -96,7 +96,7 @@
             </div>
             <div v-show="receivers.length === 0" class="alert alert-warning">
               There are no crew members to receive hospitalities, please
-              <router-link :to="{ name: 'Create_Crew' }"
+              <router-link :to="{ name: 'Create crew' }"
                 >create one</router-link
               >
               first
@@ -132,34 +132,48 @@ export default {
   }),
   methods: {
     update() {
-      this.$axios
-        .patch(`/hospitalities/${this.hospitality.id}`, this.hospitality)
-        .then((response) => {
-          if (response.status === 204) {
-            this.$router.push({ name: 'Hospitalities' })
-          } else {
-            this.message = response.data.message
-            this.success = false
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            this.message = error.response.data.message
-          } else {
-            this.message = error.message
-          }
-          this.success = false
-        })
+      swal({
+        title: 'Are you sure?',
+        text: 'Click confirm to update, this action is irreversible',
+        icon: 'warning',
+        buttons: ['Cancel', 'Confirm'],
+      }).then((willUpdate) => {
+        if (willUpdate) {
+          this.$axios
+            .patch(`/hospitalities/${this.hospitality.id}`, this.hospitality)
+            .then((response) => {
+              if (response.status === 204) {
+                this.$router.push({ name: 'Hospitalities' })
+                swal('Updated successfully!', {
+                  icon: 'success',
+                  timer: 3000,
+                })
+              } else {
+                this.message = response.data.message
+                this.success = false
+              }
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.message = error.response.data.message
+              } else {
+                this.message = error.message
+              }
+              this.success = false
+            })
+        }
+      })
     },
   },
   mounted() {
-    this.$axios.get(`/hospitalities/${this.$decrypt(this.$route.params.id)}`)
-      .then((response) => this.hospitality = response.data)
-    this.$axios.get('/crews/all').then((response) => {
+    this.$axios
+      .get(`/hospitalities/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => (this.hospitality = response.data))
+    this.$axios.get('/crews').then((response) => {
       if (response.data.length === 0) {
         this.disabled = true // Disable the entire form
       }
-      this.receivers = response.data
+      this.receivers = response.data.data
     })
   },
 }

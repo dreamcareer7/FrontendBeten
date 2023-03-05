@@ -58,14 +58,31 @@ export default {
   }),
   methods: {
     updateMealType: async function () {
-      await this.$axios
-        .put(`/meal_types/${this.meal_type.id}`, this.meal_type)
-        .then(() => this.$router.push({name: 'Types'}))
+      await swal({
+        title: 'Are you sure?',
+        text: 'Click confirm to update, this action is irreversible',
+        icon: 'warning',
+        buttons: ['Cancel', 'Confirm'],
+      }).then((willUpdate) => {
+        if (willUpdate) {
+          this.$axios
+            .patch(`/meal_types/${this.meal_type.id}`, this.meal_type)
+            .then(() => {
+              this.$router.push({ name: 'Types' })
+              swal('Updated successfully!', {
+                icon: 'success',
+                timer: 3000,
+              })
+            })
+        }
+      })
     },
   },
   async mounted() {
     const meal_type_id = this.$decrypt(this.$route.params.id)
-    await this.$axios.get(`/meal_types/${meal_type_id}`).then((response) => this.meal_type = response.data)
+    await this.$axios
+      .get(`/meal_types/${meal_type_id}`)
+      .then((response) => (this.meal_type = response.data))
   },
 }
 </script>

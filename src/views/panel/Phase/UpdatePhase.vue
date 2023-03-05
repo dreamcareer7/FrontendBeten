@@ -142,17 +142,32 @@ export default {
       }
     },
     async update() {
-      await this.$axios
-        .patch(`/phases/${this.phase.id}`, this.phase)
-        // Redirect back to the list of phases after creation
-        .then(() => this.$router.push({ name: 'Phases' }))
-        .catch((error) => {
-          if (error.response) {
-            this.error_message = error.response.data.message
-          } else {
-            this.error_message = error.message
-          }
-        })
+      await swal({
+        title: 'Are you sure?',
+        text: 'Click confirm to update, this action is irreversible',
+        icon: 'warning',
+        buttons: ['Cancel', 'Confirm'],
+      }).then((willUpdate) => {
+        if (willUpdate) {
+          this.$axios
+            .patch(`/phases/${this.phase.id}`, this.phase)
+            // Redirect back to the list of phases after creation
+            .then(() => {
+              this.$router.push({ name: 'Phases' })
+              swal('Updated successfully!', {
+                icon: 'success',
+                timer: 3000,
+              })
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.error_message = error.response.data.message
+              } else {
+                this.error_message = error.message
+              }
+            })
+        }
+      })
     },
   },
   mounted() {

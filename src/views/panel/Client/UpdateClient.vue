@@ -123,14 +123,29 @@ export default {
   }),
   methods: {
     updateClient: async function () {
-      await this.$axios
-        .patch(`/clients/${this.client.id}`, this.client)
-        .then(() => this.$router.push({ name: 'Clients' }))
-        .catch(
-          (error) =>
-            (this.error_message =
-              error.response?.data.message || error.message),
-        )
+      await swal({
+        title: 'Are you sure?',
+        text: 'Click confirm to update, this action is irreversible',
+        icon: 'warning',
+        buttons: ['Cancel', 'Confirm'],
+      }).then((willUpdate) => {
+        if (willUpdate) {
+          this.$axios
+            .patch(`/clients/${this.client.id}`, this.client)
+            .then(() => {
+              this.$router.push({ name: 'Clients' })
+              swal('Updated successfully!', {
+                icon: 'success',
+                timer: 3000,
+              })
+            })
+            .catch(
+              (error) =>
+                (this.error_message =
+                  error.response?.data.message || error.message),
+            )
+        }
+      })
     },
   },
   async mounted() {

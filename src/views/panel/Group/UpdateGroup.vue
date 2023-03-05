@@ -105,8 +105,9 @@ export default {
   }),
   methods: {
     getCrews: async function () {
-      await this.$axios.get('/crews')
-        .then((response) => this.crews = response.data.data)
+      await this.$axios
+        .get('/crews')
+        .then((response) => (this.crews = response.data.data))
     },
     searchClients: async function () {
       await this.$axios
@@ -149,16 +150,32 @@ export default {
       }
     },
     update: async function () {
-      await this.$axios
-        .patch(`/groups/${this.group.id}`, this.group)
-        .then(() => this.$router.push({ name: 'Groups' }))
-        .catch((error) => {
-          if (error.response) {
-            this.error_message = error.response.data.message
-          } else {
-            this.error_message = error.message
-          }
-        })
+      await swal({
+        title: 'Are you sure?',
+        text: 'Click confirm to update, this action is irreversible',
+        icon: 'warning',
+        buttons: ['Cancel', 'Confirm'],
+      }).then((willUpdate) => {
+        if (willUpdate) {
+          this.group.clients = this.group.clients.map((client) => client.id)
+          this.$axios
+            .patch(`/groups/${this.group.id}`, this.group)
+            .then(() => {
+              this.$router.push({ name: 'Groups' })
+              swal('Updated successfully!', {
+                icon: 'success',
+                timer: 3000,
+              })
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.error_message = error.response.data.message
+              } else {
+                this.error_message = error.message
+              }
+            })
+        }
+      })
     },
     assignClients: async function () {
       this.group.clients = this.group_clients

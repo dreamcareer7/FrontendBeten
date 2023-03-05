@@ -107,16 +107,31 @@ export default {
   }),
   methods: {
     update: async function () {
-      await this.$axios
-        .patch(`/meals/${this.meal.id}`, this.meal)
-        .then(() => this.$router.push({ name: 'All Meals' }))
-        .catch((error) => {
-          if (error.response) {
-            this.error_message = error.response.data.message
-          } else {
-            this.error_message = error.message
-          }
-        })
+      await swal({
+        title: 'Are you sure?',
+        text: 'Click confirm to update, this action is irreversible',
+        icon: 'warning',
+        buttons: ['Cancel', 'Confirm'],
+      }).then((willUpdate) => {
+        if (willUpdate) {
+          this.$axios
+            .patch(`/meals/${this.meal.id}`, this.meal)
+            .then(() => {
+              this.$router.push({ name: 'All Meals' })
+              swal('Updated successfully!', {
+                icon: 'success',
+                timer: 3000,
+              })
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.error_message = error.response.data.message
+              } else {
+                this.error_message = error.message
+              }
+            })
+        }
+      })
     },
     searchMealType: async function (query) {
       this.search.title = query

@@ -93,7 +93,9 @@
         </CCol>
       </CRow>
       <div class="card-footer text-end">
-        <a class="btn btn-outline-success ajax" @click="updateVehicle">Save Changes</a>
+        <a class="btn btn-outline-success ajax" @click="updateVehicle"
+          >Save Changes</a
+        >
       </div>
     </form>
   </div>
@@ -117,27 +119,37 @@ export default {
   },
   methods: {
     updateVehicle: async function () {
-      await this.$axios
-        .post(`/vehicles/update/` + this.vehicle_id, this.vehicle)
-        .then((response) => {
-          this.message = response.data.message
-          if (response.data.success) {
-            this.$router.push({ name: 'vehicles' })
-          }
-          else{
-            this.success=  false
-
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            this.message = error.response.data.message
-          } else {
-            this.message = error.message
-          }
-          this.success=  false
-
-        })
+      await swal({
+        title: 'Are you sure?',
+        text: 'Click confirm to update, this action is irreversible',
+        icon: 'warning',
+        buttons: ['Cancel', 'Confirm'],
+      }).then((willUpdate) => {
+        if (willUpdate) {
+          this.$axios
+            .post(`/vehicles/update/` + this.vehicle_id, this.vehicle)
+            .then((response) => {
+              this.message = response.data.message
+              if (response.data.success) {
+                this.$router.push({ name: 'vehicles' })
+                swal('Updated successfully!', {
+                  icon: 'success',
+                  timer: 3000,
+                })
+              } else {
+                this.success = false
+              }
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.message = error.response.data.message
+              } else {
+                this.message = error.message
+              }
+              this.success = false
+            })
+        }
+      })
     },
     fetchInfo: async function (id) {
       await this.$axios.get(`/vehicles/info/` + id).then((response) => {
@@ -147,4 +159,3 @@ export default {
   },
 }
 </script>
-
