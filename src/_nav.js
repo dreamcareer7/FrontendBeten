@@ -47,11 +47,6 @@ export default [
         name: 'Service Commits',
         to: '/services/commits',
       },
-      {
-        component: 'CNavItem',
-        name: 'Service Commit Logs',
-        to: '/services/logs',
-      },
     ],
   },
   {

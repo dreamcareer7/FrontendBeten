@@ -30,8 +30,8 @@
           <div class="col">
 
             <div class="form-floating mb-3">
-              <input type="date" class="form-control" id="before_date" name="before_date" placeholder="Before date..."
-                v-model="service_commit.scheduled_at">
+              <input type="datetime-local" class="form-control" id="before_date" name="before_date" placeholder="Before date..."
+                v-model="service_commit.schedule_at">
               <label for="phone">Scheduled At</label>
               <div class="invalid-feedback"></div>
             </div>
@@ -47,7 +47,7 @@
 
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="from_location" name="from_location" placeholder="From Location..."
-            required autocomplete="off" v-model="service_commit.location">
+            required autocomplete="off" v-model="service_commit.from_location">
           <label for="from_location">From Location</label>
           <div class="invalid-feedback"></div>
         </div>
@@ -101,7 +101,7 @@ export default {
       // Send the service commit object to the API for update
       await this.$axios
         .patch(
-          `service/commits/${this.$decrypt(this.$route.params.id)}`,
+          `service_commits/${this.$decrypt(this.$route.params.id)}`,
           this.service_commit
         ).then((response) => {
           // Feedback to the client
@@ -125,7 +125,7 @@ export default {
       .then((response) => this.services = response.data);
     this.$axios.get('users/list_supervisors')
       .then((response) => this.users = response.data);
-    this.$axios.get(`/service/commits/${this.$decrypt(this.$route.params.id)}`)
+    this.$axios.get(`/service_commits/${this.$decrypt(this.$route.params.id)}`)
       .then((response) => {
         this.service_commit = response.data
       })

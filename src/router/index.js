@@ -83,7 +83,7 @@ const routes = [
         name: 'Service Commits',
         component: () => import('@/views/panel/Service/Commits/Commits'),
       },
-      // Service Commit details
+      // Service Commits
       {
         path: '/services/commits/:id',
         name: 'Service Commit details',
@@ -100,17 +100,7 @@ const routes = [
         component: () =>
           import('@/views/panel/Service/Commits/UpdateServiceCommit'),
       },
-      {
-        path: '/services/logs',
-        name: 'Service Logs',
-        component: () => import('@/views/panel/Service/Logs/Logs'),
-      },
-      {
-        path: '/services/logs/create',
-        name: 'Create Log',
-        component: () => import('@/views/panel/Service/Logs/CreateLog'),
-      },
-      // Services Menu ends here
+      // Service commits end
 
       // Phases Menu
       {
