@@ -1,52 +1,49 @@
 <template>
   <CRow>
-    <CCol :xs="12">
-      <CCard class="mb-4">
+    <CCol>
+      <CCard>
         <CCardHeader>
-          <div class="row">
-            <div class="col-md-8 col-sm-4 col-xs-4">
-              <h3 class="mt-1">Users</h3>
-            </div>
-            <div class="col-md-4 col-sm-8 col-xs-8">
-              <router-link to="/users/create">
-                <CButton color="success" class="float-end text-white">
-                  <ion-icon name="person-add-outline"></ion-icon>&nbsp;
-                  <span>Create User</span>
-                </CButton>
-              </router-link>
-            </div>
-          </div>
+          <CCardTitle>Users</CCardTitle>
+          <router-link :to="{ name: 'Create user' }">
+            <CButton color="success" class="float-end text-white">
+              <ion-icon name="person-add"></ion-icon>&nbsp;Create User
+            </CButton>
+          </router-link>
         </CCardHeader>
         <CCardBody>
+          <!-- Search filters -->
           <CRow>
-            <CCol :md="2" :sm="4">
+            <CCol md="4" sm="4" lg="3">
               <input
                 type="text"
                 class="form-control mb-3"
                 v-model="search.name"
-                placeholder="Name"
-                @change="getUsers"
+                placeholder="Name..."
+                @keyup="filter"
+                autofocus
               />
             </CCol>
-            <CCol :md="2" :sm="4">
+            <CCol md="4" sm="4" lg="3">
               <input
                 type="text"
                 class="form-control mb-3"
                 v-model="search.email"
-                placeholder="Email"
-                @change="getUsers"
+                placeholder="Email..."
+                @keyup="filter"
               />
             </CCol>
-            <CCol :md="2" :sm="4">
+            <CCol md="4" sm="4" lg="3">
               <input
                 type="text"
                 class="form-control mb-3"
                 v-model="search.contact"
-                placeholder="Contact"
-                @change="getUsers"
+                placeholder="Contact..."
+                @keyup="filter"
               />
             </CCol>
           </CRow>
+          <!-- End search filters -->
+          <hr />
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
               <div class="spinner-border text-success" role="status"></div>
@@ -55,8 +52,15 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
+          <!-- No results -->
+          <CRow v-if="users.length === 0 && !loading" class="mt-4">
+            <CCol :md="12" class="text-center">
+              <span class="sr-only">No results</span>
+            </CCol>
+          </CRow>
+          <!-- End no results -->
           <CTable
-            v-if="!loading"
+            v-if="!loading && users.length > 0"
             responsive
             hover
             class="cursor-pointer"
@@ -66,27 +70,17 @@
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Username</CTableHeaderCell>
                 <CTableHeaderCell scope="col">E-mail</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Contact</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Active</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Date created</CTableHeaderCell>
-                <CTableHeaderCell
-                  style="width: 15%"
-                  scope="col"
-                  :aria-colspan="2"
-                >
-                  Actions
-                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Contact</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="user in users" :key="user.id">
-                <CTableHeaderCell scope="row">{{ user.id }}</CTableHeaderCell>
+                <CTableHeaderCell>{{ user.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ user.name }}</CTableDataCell>
-                <CTableDataCell>{{ user.username }}</CTableDataCell>
                 <CTableDataCell>{{ user.email }}</CTableDataCell>
-                <CTableDataCell>{{ user.contact }}</CTableDataCell>
                 <CTableDataCell>
                   <CBadge
                     :color="user.is_active ? 'success' : 'warning'"
@@ -95,12 +89,12 @@
                     {{ user.is_active ? 'Yes' : 'No' }}
                   </CBadge>
                 </CTableDataCell>
-                <CTableDataCell>{{ user.created_at }}</CTableDataCell>
+                <CTableDataCell>{{ user.contact }}</CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View Details"
-                    @click="fetchUserInfo(this.$encrypt(user.id))"
+                    @click="viewDetails(user.id)"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -112,7 +106,6 @@
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
-                      v-c-tooltip="{ content: 'Edit', placement: 'top' }"
                       :xl="0"
                       title="Edit"
                     >
@@ -121,8 +114,7 @@
                   </router-link>
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
-                    v-c-tooltip="{ content: 'Delete', placement: 'top' }"
-                    @click="deleteUser(user.id, user.name)"
+                    @click="deleteUser(user.id)"
                     title="Delete"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
@@ -136,7 +128,7 @@
               <nav aria-label="Users navigation">
                 <ul class="pagination">
                   <template v-for="page in pagination" :key="page">
-                    <li class="page-item" :class="{active: page.active}">
+                    <li class="page-item" :class="{ active: page.active }">
                       <a
                         @click.prevent="gotoPage(page.url)"
                         class="page-link"
@@ -156,8 +148,8 @@
 
   <CModal
     size="lg"
-    :visible="visibleLiveDemo"
-    @close="visibleLiveDemo = false"
+    :visible="is_user_modal_visible"
+    @close="is_user_modal_visible = false"
     class="modal-popup-detail"
     data-backdrop="static"
     data-keyboard="false"
@@ -166,92 +158,88 @@
       <CModalTitle>User Information</CModalTitle>
     </CModalHeader>
     <CModalBody>
-      <CRow>
-        <CCol :md="12">
-          <CTable class="table table-responsive">
-            <CTableRow>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableDataCell>{{ user.id }}</CTableDataCell>
-              <CTableHeaderCell>Name</CTableHeaderCell>
-              <CTableDataCell>{{ user.name }}</CTableDataCell>
-            </CTableRow>
-            <CTableRow>
-              <CTableHeaderCell>Username</CTableHeaderCell>
-              <CTableDataCell>{{ user.username }}</CTableDataCell>
-              <CTableHeaderCell>Email</CTableHeaderCell>
-              <CTableDataCell>{{ user.email }}</CTableDataCell>
-            </CTableRow>
-            <CTableRow>
-              <CTableHeaderCell>Is active:</CTableHeaderCell>
-              <CTableDataCell>
-                <CBadge
-                  :color="user.is_active ? 'success' : 'warning'"
-                  shape="rounded-pill"
-                  >{{ user.is_active ? 'Yes' : 'No' }}</CBadge
-                >
-              </CTableDataCell>
-            </CTableRow>
-            <CTableRow>
-              <CTableHeaderCell>Contact</CTableHeaderCell>
-              <CTableDataCell>{{ user.contact }}</CTableDataCell>
-              <CTableHeaderCell>Date created</CTableHeaderCell>
-              <CTableDataCell>{{ user.created_at }}</CTableDataCell>
-            </CTableRow>
-            <CTableRow>
-              <CTableHeaderCell>Date updated</CTableHeaderCell>
-              <CTableDataCell>{{ user.updated_at }}</CTableDataCell>
-            </CTableRow>
-
-            <CTableRow class="mt-3" v-if="user.is_contractable ?? false">
-              <CTableDataCell colspan="4">
-                <Contractable type="user" :id="user.id" />
-              </CTableDataCell>
-            </CTableRow>
-
-            <CTableRow v-if="user.is_documentable ?? false">
-              <CTableDataCell colspan="4">
-                <Documentable type="user" :id="user.id" />
-              </CTableDataCell>
-            </CTableRow>
-          </CTable>
-        </CCol>
-      </CRow>
+      <CTable class="table table-responsive">
+        <CTableRow>
+          <CTableHeaderCell>ID</CTableHeaderCell>
+          <CTableDataCell>{{ user.id }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableHeaderCell>Name</CTableHeaderCell>
+          <CTableDataCell>{{ user.name }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableHeaderCell>Email</CTableHeaderCell>
+          <CTableDataCell>{{ user.email }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableHeaderCell>Active</CTableHeaderCell>
+          <CTableDataCell>
+            <CBadge
+              :color="user.is_active ? 'success' : 'warning'"
+              shape="rounded-pill"
+            >
+              {{ user.is_active ? 'Yes' : 'No' }}
+            </CBadge>
+          </CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableHeaderCell>Contact</CTableHeaderCell>
+          <CTableDataCell>{{ user.contact }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableHeaderCell>Date created</CTableHeaderCell>
+          <CTableDataCell>{{ user.created_at }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableHeaderCell>Date updated</CTableHeaderCell>
+          <CTableDataCell>{{ user.updated_at }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableHeaderCell>Roles</CTableHeaderCell>
+          <CTableDataCell>{{ user.roles }}</CTableDataCell>
+        </CTableRow>
+      </CTable>
+      <Documentable v-if="user.is_documentable" type="user" :id="user.id" />
+      <Contractable v-if="user.is_contractable" type="user" :id="user.id" />
     </CModalBody>
   </CModal>
 </template>
 
 <script>
+import { debounce } from '@/utils/helper'
+
 export default {
   name: 'Users',
   data: () => ({
-    users: '',
+    debounceFn: null,
+    users: [],
     search: {},
-    pagination: {},
-    current_page: 1,
-    last_page: 99,
-    selected_user: null,
-    loading: false,
-    contracts: [],
-    contractFile: [],
-    documents: [],
-    documentFiles: [],
     user: {},
-    visibleLiveDemo: false,
+    pagination: {},
+    loading: false,
+    is_user_modal_visible: false,
   }),
   methods: {
     getUsers: async function () {
       this.loading = true
       await this.$axios
-        .get(`/users/paginate`, {
+        .get('/users', {
           params: this.search,
         })
         .then((response) => {
           this.users = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
           this.pagination = response.data.links
+          this.loading = false
         })
-      this.loading = false
+    },
+    filter: async function () {
+      await this.debounceFn()
+    },
+    viewDetails: async function (id) {
+      await this.$axios.get(`/users/${id}`).then((response) => {
+        this.user = response.data
+        this.is_user_modal_visible = true
+      })
     },
     gotoPage: async function (url) {
       this.loading = true
@@ -267,66 +255,42 @@ export default {
         })
       this.loading = false
     },
-    deleteUser: async function (id, name) {
+    deleteUser: async function (id) {
       await swal({
-        title: `Are you sure?`,
-        text: `Once deleted, you will not be able to recover ${name}!`,
+        title: 'Are you sure?',
+        text: 'Once deleted, you will not be able to recover!',
         icon: 'warning',
         buttons: true,
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.post(`/users/delete/${id}`).then(() => {
-            this.getUsers()
-          })
-          swal(`The user ${name} has been deleted!`, {
-            icon: 'success',
+          this.$axios.delete(`/users/${id}`).then(() => {
+            // Remove the user from the list
+            this.users.splice(
+              this.users.findIndex((user) => user.id === id),
+              1,
+            )
+            swal('The user has been deleted!', {
+              icon: 'success',
+              timer: 3000,
+            })
           })
         }
       })
     },
-    fetchUserInfo: async function (id) {
-      await this.$axios
-        .get(`/users/info/${this.$decrypt(id)}`)
-        .then((response) => {
-          this.user = response.data.data
-          this.visibleLiveDemo = true
-        })
-    },
-    filesChange(fileType, fileList) {
-      if (fileType === 'contract') {
-        this.contractFile = fileList
-      } else {
-        this.documentFiles = fileList
-      }
-    },
-    uploadFiles(fileType) {
-      if (fileType === 'contract' && this.contractFile.length > 0) {
-        this.contracts.push(this.contractFile[0])
-        this.contractFile = []
-        this.$refs.uploadfile.value = null
-      }
-
-      if (fileType === 'document' && this.documentFiles.length > 0) {
-        this.documents.push(...this.documentFiles)
-        this.documentFiles = []
-      }
-    },
-    deleteFile(fileType, index) {
-      if (fileType === 'contract') {
-        this.contracts.splice(index, 1)
-      } else {
-        this.documents.splice(index, 1)
-      }
-    },
   },
-  mounted() {
+  mounted: async function () {
     this.getUsers()
+    this.debounceFn = debounce(() => this.getUsers(), 500)
   },
 }
 </script>
 
 <style scoped>
+/* Align Users title with the Create User button */
+.card-title {
+  display: inline;
+}
 .page-item {
   cursor: pointer;
 }

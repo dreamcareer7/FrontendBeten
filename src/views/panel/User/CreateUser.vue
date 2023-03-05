@@ -1,11 +1,11 @@
 <template>
-  <div class="card border-success mb-4">
-    <div class="card-header">Create User</div>
-    <form @submit.prevent="addUser">
+  <div class="card border-success">
+    <div class="card-header">Create user</div>
+    <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-2">
           <select
-            class="form-select"
+            class="form-control"
             id="crew_member"
             v-model="user.crew_member_id"
           >
@@ -13,42 +13,33 @@
               v-for="crew_member in crew_members"
               :value="crew_member.id"
               :key="crew_member.id"
-            >{{ crew_member.fullname }}</option>
+            >
+              {{ crew_member.fullname }}
+            </option>
           </select>
           <label for="crew_member">Crew member</label>
         </div>
         <div class="form-floating mb-2">
           <input
+            id="name"
             type="text"
             class="form-control"
-            id="name"
-            required
-            autofocus
-            autocomplete="off"
+            autocomplete="name"
             v-model="user.name"
+            autofocus
+            required
           />
           <label for="name">Name</label>
-        </div>
-        <div class="form-floating mb-2">
-          <input
-            type="text"
-            class="form-control"
-            id="username"
-            required
-            autocomplete="off"
-            v-model="user.username"
-          />
-          <label for="username">Username</label>
         </div>
 
         <div class="form-floating mb-2">
           <input
+            id="email"
             type="email"
             class="form-control"
-            id="email"
-            required
-            autocomplete="off"
+            autocomplete="email"
             v-model="user.email"
+            required
           />
           <label for="email">Email Address</label>
         </div>
@@ -57,9 +48,9 @@
             type="text"
             class="form-control"
             id="contact"
-            required
             autocomplete="off"
             v-model="user.contact"
+            required
           />
           <label for="contact">Contact</label>
         </div>
@@ -74,6 +65,7 @@
                 autocomplete="new-password"
                 aria-autocomplete="list"
                 v-model="user.password"
+                required
               />
               <label for="password">Password</label>
             </div>
@@ -84,6 +76,7 @@
                 class="form-control"
                 id="password_confirmation"
                 v-model="user.password_confirmation"
+                required
               />
               <label for="password_confirmation">Confirm Password</label>
             </div>
@@ -93,14 +86,12 @@
                 <input
                   class="form-check-input"
                   type="checkbox"
-                  value="1"
-                  checked
                   id="is_active"
                   v-model="user.is_active"
                 />
-                <label class="form-check-label" for="is_active"
-                  >is active?</label
-                >
+                <label class="form-check-label" for="is_active">
+                  Active
+                </label>
               </div>
             </div>
           </div>
@@ -109,29 +100,26 @@
             <label class="form-label roles-select-label">User Roles</label>
             <CFormSelect
               :html-size="6"
-              multiple
               aria-label="Roles"
               v-model="user.roles"
               :options="roles_select_options"
+              multiple
             >
             </CFormSelect>
           </div>
         </div>
-        <CRow>
+        <CRow v-if="error_message">
           <CCol :md="12">
-            <div v-show="message && !success" class="error_style">
-              {{ message }}
-            </div>
-            <div v-show="message && success" class="alert alert-success">
-              {{ message }}
+            <div class="error_style">
+              {{ error_message }}
             </div>
           </CCol>
         </CRow>
       </div>
 
       <div class="card-footer text-end">
-        <button type="submit" class="btn text-white btn-success">
-          <span>Create user</span>
+        <button class="btn btn-success text-white" type="submit">
+          <ion-icon name="create-outline"></ion-icon>&nbsp;Create
         </button>
       </div>
     </form>
@@ -142,33 +130,24 @@
 export default {
   name: 'CreateUser',
   data: () => ({
-    message: '',
+    error_message: '',
     success: false,
-    user: {},
+    user: {
+      is_active: true,
+    },
     roles_select_options: [],
     crew_members: [],
   }),
   methods: {
-    async addUser() {
+    create: async function() {
       await this.$axios
-        .post('/users/add', this.user)
-        .then((response) => {
-          this.message = response.data.message
-          if (response.data.success) {
-            this.success = true
-            this.$router.push({name: 'Users'})
-          } else {
-            this.success = false
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            this.message = error.response.data.message
-          } else {
-            this.message = error.message
-          }
-          this.success = false
-        })
+        .post('/users', this.user)
+        .then(() => this.$router.push({ name: 'Users' }))
+        .catch(
+          (error) =>
+            (this.error_message =
+              error.response?.data.message || error.message),
+        )
     },
   },
   async mounted() {

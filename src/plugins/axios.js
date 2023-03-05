@@ -57,7 +57,7 @@ axiosInstance.interceptors.response.use(
       default:
         swal({
           title: error.code,
-          text: error.message,
+          text: error.response.data?.message || error.message,
           icon: 'error',
         }).then(() => {
           if (!localStorage.getItem('auth_token')) {
