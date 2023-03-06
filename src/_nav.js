@@ -81,7 +81,7 @@ export default [
   },
   {
     component: 'CNavItem',
-    name: 'Vehicle',
+    name: 'Vehicles',
     to: '/vehicles',
     icon: 'cil-car-alt',
   },

@@ -8,14 +8,11 @@
               <strong>Vehicles</strong>
             </div>
             <div class="col-md-2">
-              <router-link
-                :to="{
-                  name: 'create_vehicle',
-                }"
-              >
-                <CButton color="primary" class="float-end">
-                  Create Vehicle</CButton
-                >
+              <router-link :to="{ name: 'Create vehicle' }">
+                <CButton color="success" class="float-end text-white">
+                  <ion-icon name="add-circle-outline"></ion-icon>&nbsp; Create
+                  Vehicle
+                </CButton>
               </router-link>
             </div>
           </div>
@@ -50,6 +47,7 @@
               />
             </CCol>
           </CRow>
+          <hr />
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
               <div class="spinner-border text-success" role="status"></div>
@@ -110,17 +108,18 @@
           </CTable>
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Page navigation example">
+              <nav aria-label="Vehicles navigation">
                 <ul class="pagination">
-                  <li class="page-item" v-for="page in pagination" :key="page">
-                    <a
-                      @click.prevent="gotoPage(page.url)"
-                      class="page-link"
-                      href="#"
-                      v-html="page.label"
-                      v-if="page.url"
-                    ></a>
-                  </li>
+                  <template v-for="page in pagination" :key="page">
+                    <li class="page-item" :class="{ active: page.active }">
+                      <a
+                        @click.prevent="gotoPage(page.url)"
+                        class="page-link"
+                        :class="{ disabled: !page.url }"
+                        v-html="page.label"
+                      ></a>
+                    </li>
+                  </template>
                 </ul>
               </nav>
             </CCol>
@@ -129,7 +128,11 @@
       </CCard>
     </CCol>
   </CRow>
-  <CModal :visible="visibleLiveDemo" @close="visibleLiveDemo = false" size="lg">
+  <CModal
+    :visible="is_vehicle_modal_visible"
+    @close="is_vehicle_modal_visible = false"
+    size="lg"
+  >
     <CModalHeader>
       <CModalTitle>Vehicle details</CModalTitle>
     </CModalHeader>
@@ -169,21 +172,12 @@
           <CTableDataCell>Date updated</CTableDataCell>
           <CTableDataCell>{{ vehicle.updated_at }}</CTableDataCell>
         </CTableRow>
-        <CTableRow class="mt-3" v-if="vehicle.is_contractable ?? false">
-          <CTableDataCell colspan="4">
-            <Contractable type="vehicle" :id="vehicle.id" />
-          </CTableDataCell>
-        </CTableRow>
-
-        <CTableRow v-if="vehicle.is_documentable ?? false">
-          <CTableDataCell colspan="4">
-            <Documentable type="vehicle" :id="vehicle.id" />
-          </CTableDataCell>
-        </CTableRow>
       </CTable>
+      <Contractable v-if="vehicle.is_contractable" type="vehicle" :id="vehicle.id" />
+      <Documentable v-if="vehicle.is_documentable" type="vehicle" :id="vehicle.id" />
     </CModalBody>
     <CModalFooter>
-      <CButton color="secondary" @click="visibleLiveDemo = false">
+      <CButton color="secondary" @click="is_vehicle_modal_visible = false">
         Close
       </CButton>
     </CModalFooter>
@@ -192,34 +186,16 @@
 
 <script>
 export default {
-  name: 'users',
-  data() {
-    return {
-      vehicles: {},
-      search: {},
-      current_page: 1,
-      last_page: 99,
-      selected_user: null,
-      loading: false,
-      pagination: {},
-      vehicle: {},
-      visibleLiveDemo: false,
-    }
-  },
-  mounted() {
-    this.getVehicles()
-  },
+  name: 'Vehicles',
+  data: () => ({
+    vehicles: {},
+    search: {},
+    loading: false,
+    pagination: {},
+    vehicle: {},
+    is_vehicle_modal_visible: false,
+  }),
   methods: {
-    nextPage: async function () {
-      this.current_page = this.current_page + 1
-      this.search.page = this.current_page
-      await this.getVehicles()
-    },
-    previousPage: async function () {
-      this.current_page = this.current_page - 1
-      this.search.page = this.current_page
-      await this.getVehicles()
-    },
     getVehicles: async function () {
       this.loading = true
       await this.$axios
@@ -228,10 +204,6 @@ export default {
         })
         .then((response) => {
           this.vehicles = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          let total_pages = response.data.total / response.data.per_page
-          this.total_pages = total_pages
           this.pagination = response.data.links
         })
       this.loading = false
@@ -244,10 +216,6 @@ export default {
         })
         .then((response) => {
           this.vehicles = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          let total_pages = response.data.total / response.data.per_page
-          this.total_pages = total_pages
           this.pagination = response.data.links
         })
       this.loading = false
@@ -255,7 +223,7 @@ export default {
     viewDetails: async function (id) {
       await this.$axios.get(`/vehicles/info/${id}`).then((response) => {
         this.vehicle = response.data
-        this.visibleLiveDemo = true
+        this.is_vehicle_modal_visible = true
       })
     },
     deleteVehicle: async function (id) {
@@ -272,10 +240,14 @@ export default {
             .then(() => this.getVehicles())
           swal('Vehicle has been deleted!', {
             icon: 'success',
+            timer: 3000
           })
         }
       })
     },
+  },
+  mounted() {
+    this.getVehicles()
   },
 }
 </script>

@@ -93,7 +93,7 @@
         </CCol>
       </CRow>
       <div class="card-footer text-end">
-        <a class="btn btn-outline-success ajax" @click="updateVehicle"
+        <a class="btn btn-warning ajax text-white" @click="updateVehicle"
           >Save Changes</a
         >
       </div>
@@ -131,7 +131,7 @@ export default {
             .then((response) => {
               this.message = response.data.message
               if (response.data.success) {
-                this.$router.push({ name: 'vehicles' })
+                this.$router.push({ name: 'Vehicles' })
                 swal('Updated successfully!', {
                   icon: 'success',
                   timer: 3000,

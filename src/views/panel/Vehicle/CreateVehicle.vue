@@ -1,7 +1,7 @@
 <template>
   <div class="card border-success mb-4">
     <div class="card-header">
-      Create Group
+      Create Vehicle
     </div>
 
     <div id="ialert" class="" role="alert"></div>

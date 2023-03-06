@@ -171,12 +171,12 @@ const routes = [
       },
       {
         path: '/vehicles',
-        name: 'vehicles',
+        name: 'Vehicles',
         component: () => import('@/views/panel/Vehicle/Vehicles'),
       },
       {
         path: '/vehicles/create',
-        name: 'create_vehicle',
+        name: 'Create vehicle',
         component: () => import('@/views/panel/Vehicle/CreateVehicle'),
       },
       {
