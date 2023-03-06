@@ -1,17 +1,23 @@
 <template>
-  <div class="card border-success mb-4">
+  <div class="card border-success mb-4 mt-4">
     <div class="card-header">Create Log</div>
     <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
+          <select
             id="model_type"
-            autocomplete="off"
-            required
+            class="form-control"
             v-model="log.model_type"
-          />
+            @change="fetchEntities"
+            required
+          >
+            <option value="App\Models\Crew">Crew</option>
+            <option value="App\Models\Vehicle">Vehicle</option>
+            <option value="App\Models\Client">Client</option>
+            <option value="App\Models\Group">Group</option>
+            <option value="App\Models\Meal">Meal</option>
+            <option value="App\Models\Service">Service</option>
+          </select>
           <label for="model_type">Model Type</label>
         </div>
 
@@ -21,18 +27,18 @@
             class="form-control"
             id="model_id"
             name="model_id"
-            required
+            rdequired
             autocomplete="off"
             v-model="log.model_id"
           />
 
-          <label for="model_id">Model ID</label>
-          <div class="invalid-feedback"></div>
+          <label for="model_id">
+            Select an entity first
+          </label>
         </div>
 
         <div class="form-floating mb-3">
-          <!-- Just to remember -->
-          <select name="" id="" v-model="log.roles" class="form-select">
+          <select id="role" v-model="log.roles" class="form-select">
             <option value="mechanic">mechanic</option>
             <option value="driver">driver</option>
             <option value="valet">valet</option>
@@ -58,18 +64,22 @@ export default {
   emits: ['created'],
   data() {
     return {
-        log: {},
+      log: {},
     }
   },
   methods: {
     create() {
-        this.log.service_commit_id = this.service_commit_id
-        this.$axios.post('/service_commit_log', this.log)
-            .then(() => {
-                this.log = {}
-                this.$emit('created')
-            })
+      this.log.service_commit_id = this.service_commit_id
+      this.$axios.post('/service_commit_log', this.log).then(() => {
+        this.log = {}
+        this.$emit('created')
+      })
+    },
+
+    fetchEntities(event) {
+      console.log(event.target.value);
+      // this.$axios.get('/')
     }
-  }
+  },
 }
 </script>
