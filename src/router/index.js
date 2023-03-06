@@ -33,6 +33,10 @@ const routes = [
         component: () => import('@/views/panel/User/UpdateUser'),
       },
       {
+        path: '/settings',
+        component: () => import('@/views/Settings'),
+      },
+      {
         path: '/clients',
         name: 'Clients',
         component: () => import('@/views/panel/Client/Clients'),

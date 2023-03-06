@@ -27,7 +27,9 @@
         Settings
       </CDropdownHeader>
       <CDropdownItem> <CIcon icon="cil-user" /> Profile </CDropdownItem>
+      <router-link to="/settings">
       <CDropdownItem> <CIcon icon="cil-settings" /> Settings </CDropdownItem>
+      </router-link>
       <CDropdownItem>
         <CIcon icon="cil-dollar" /> Payments
         <CBadge color="secondary" class="ms-auto">{{ itemsCount }}</CBadge>
