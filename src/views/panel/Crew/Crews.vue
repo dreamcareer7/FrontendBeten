@@ -254,7 +254,7 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.post(`/crews/delete/${id}`).then(() => this.getCrews())
+          this.$axios.delete(`/crews/${id}`).then(() => this.getCrews())
           swal('Crew member has been deleted!', {
             icon: 'success',
           })
@@ -262,7 +262,7 @@ export default {
       })
     },
     viewDetails: async function (id) {
-      await this.$axios.get(`/crews/info/${id}`).then((response) => {
+      await this.$axios.get(`/crews/${id}`).then((response) => {
         this.crew_member = response.data
         this.visibleLiveDemo = true
       })

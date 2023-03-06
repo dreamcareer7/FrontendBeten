@@ -152,6 +152,7 @@ export default {
       .get(`/users/edit/${this.$decrypt(this.$route.params.id)}`)
       .then((response) => {
         this.user = response.data.user
+        this.user.id = Number(this.$decrypt(this.$route.params.id))
         this.roles = response.data.roles
         // Populate the roles select element options
         this.roles = response.data.roles.map(
