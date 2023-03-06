@@ -123,7 +123,7 @@ export default {
       .get('service/list')
       .then((response) => (this.services = response.data))
     this.$axios
-      .get('/users/paginate')
+      .get('/users')
       .then((response) => (this.users = response.data.data))
   },
 }
