@@ -159,7 +159,6 @@
               </CTableRow>
             </CTableHead>
             <CTableRow v-for="client in phase.services" :key="client.id">
-              <CTableDataCell>{{ client.id }}</CTableDataCell>
               <CTableDataCell>{{ client.title }}</CTableDataCell>
             </CTableRow>
           </CTable>
