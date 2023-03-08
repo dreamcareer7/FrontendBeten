@@ -18,42 +18,45 @@
         </div>
         <ul class="list-unstyled">
           <li class="item-selection">
-            <button class="btn btn-success btn-sm rounded-5" @click="getType('Daily')" id="btnDaily">Daily</button>
-            <div class="container d-none py-5 border">
-              <div class="input-group mb-1 daily-input-time">
-                <input type="time" name="time" class="form-control w-8" placeholder="time" v-model="form.dTime[0]" aria-label="time of day">
+            <button class="btn btn-success btn-sm rounded-5" @click="getType('Daily')">Daily</button>
+            <div class="container py-5 border" v-if="isDaily">
+              <template v-for="(daily,key) in appendDaily">
+                <div class="input-group mb-1 daily-input-time">
+                <input type="time" name="time" class="form-control w-8" placeholder="time" v-model="form.daily.time[key]" aria-label="time of day">
                 <span class="input-group-text w-4">+ -</span>
-                <input type="text" name="period_rate" class="form-control w-6" v-model="form.dMint[0]" placeholder="In Minutes" aria-label="minutes plus or minus">
-                <select class="form-select rows-2" v-model="form.dRoles[0]" name="roles[]">
-                  <template v-for="(role, index) in roles">
+                <input type="text" name="period_rate" class="form-control w-6" v-model="form.daily.mint[key]" placeholder="In Minutes" aria-label="minutes plus or minus">
+                <select class="form-select rows-2" v-model="form.daily.roles[key]" multiple>
+                  <template v-for="(role, index) in daily.dataRoles">
                     <option v-bind:value="role.id">{{role.name}}</option>
                   </template>
                 </select>
-                <select class="form-select rows-2" v-model="form.dUsers[0]">
-                  <template v-for="(user, index) in users">
+                <select class="form-select rows-2" v-model="form.daily.users[key]" multiple>
+                  <template v-for="(user, index) in daily.dataUsers">
                     <option :value="user.id">{{user.name}}</option>
                   </template>
                 </select>
-                <button class="btn btn-outline-success btn-icon btn-daily-input-time-add" type="button">+</button>
+                <button class="btn btn-outline-success btn-icon btn-daily-input-time-add" @click="addNewDailyRow()" type="button" v-if="key == 0">+</button>
+                <button class="btn btn-outline-danger btn-icon btn-daily-input-time-add" @click="removeRow(daily)" type="button" v-else>-</button>
               </div>
+              </template>
             </div>
           </li>
           <li class="item-selection">
-            <button class="btn btn-primary btn-sm rounded-5" @click="getType('Weekly')" id="btnWeekly">Weekly</button>
-              <div class="container d-none py-5 border">
+            <button class="btn btn-primary btn-sm rounded-5" @click="getType('Weekly')">Weekly</button>
+              <div class="container py-5 border" v-if="isWeekly">
                 <div class="mb-1 weekly-input-day">
                   <ul class="list-unstyled">
                     <li class="rounded-5 border px-3">
                       <div class="input-group">
                         <span class="pt-3 me-2 w-8">Saturday</span>
-                        <input type="hidden" v-model="form.wDay[0]">
-                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.wTime[0]" name="daily[]">
-                        <select class="form-select rows-2" v-model="form.wRoles[0]" name="roles[]">
+                        <input type="hidden" v-model="form.weekly.day[0]">
+                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.weekly.time[0]">
+                        <select class="form-select rows-2" v-model="form.weekly.roles[0]" name="roles[]">
                           <template v-for="(role, index) in roles">
                             <option :value="role.id">{{role.name}}</option>
                           </template>
                         </select>
-                        <select class="form-select rows-2" v-model="form.wUsers[0]">
+                        <select class="form-select rows-2" v-model="form.weekly.users[0]">
                           <template v-for="(user, index) in users">
                             <option :value="user.id">{{user.name}}</option>
                           </template>
@@ -63,14 +66,14 @@
                     <li class="rounded-5 border px-3">
                       <div class="input-group">
                         <span class="pt-3 me-2 w-8">Sunday</span>
-                        <input type="hidden" v-model="form.wDay[1]">
-                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.wTime[1]" name="daily[]">
-                        <select class="form-select rows-2" v-model="form.wRoles[1]">
+                        <input type="hidden" v-model="form.weekly.day[1]">
+                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.weekly.time[1]" name="daily[]">
+                        <select class="form-select rows-2" v-model="form.weekly.roles[1]">
                           <template v-for="(role, index) in roles">
                             <option :value="role.id">{{role.name}}</option>
                           </template>
                         </select>
-                        <select class="form-select rows-2" v-model="form.wUsers[1]">
+                        <select class="form-select rows-2" v-model="form.weekly.users[1]">
                           <template v-for="(user, index) in users">
                             <option :value="user.id">{{user.name}}</option>
                           </template>
@@ -80,14 +83,14 @@
                     <li class="rounded-5 border px-3">
                       <div class="input-group">
                         <span class="pt-3 me-2 w-8">Monday</span>
-                        <input type="hidden" v-model="form.wDay[2]">
-                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.wTime[2]" name="daily[]">
-                        <select class="form-select rows-2" v-model="form.wRoles[2]">
+                        <input type="hidden" v-model="form.weekly.day[2]">
+                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.weekly.time[2]" name="daily[]">
+                        <select class="form-select rows-2" v-model="form.weekly.roles[2]">
                           <template v-for="(role, index) in roles">
                             <option :value="role.id">{{role.name}}</option>
                           </template>
                         </select>
-                        <select class="form-select rows-2" v-model="form.wUsers[2]">
+                        <select class="form-select rows-2" v-model="form.weekly.users[2]">
                           <template v-for="(user, index) in users">
                             <option :value="user.id">{{user.name}}</option>
                           </template>
@@ -97,14 +100,14 @@
                     <li class="rounded-5 border px-3">
                       <div class="input-group">
                         <span class="pt-3 me-2 w-8">Tuesday</span>
-                        <input type="hidden" v-model="form.wDay[3]">
-                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.wTime[3]" name="daily[]">
-                        <select class="form-select rows-2" v-model="form.wRoles[3]">
+                        <input type="hidden" v-model="form.weekly.day[3]">
+                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.weekly.time[3]" name="daily[]">
+                        <select class="form-select rows-2" v-model="form.weekly.roles[3]">
                           <template v-for="(role, index) in roles">
                             <option :value="role.id">{{role.name}}</option>
                           </template>
                         </select>
-                        <select class="form-select rows-2" v-model="form.wUsers[3]">
+                        <select class="form-select rows-2" v-model="form.weekly.users[3]">
                           <template v-for="(user, index) in users">
                             <option :value="user.id">{{user.name}}</option>
                           </template>
@@ -114,14 +117,14 @@
                     <li class="rounded-5 border px-3">
                       <div class="input-group">
                         <span class="pt-3 me-2 w-8">Wednesday</span>
-                        <input type="hidden" v-model="form.wDay[4]">
-                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.wTime[4]" name="daily[]">
-                        <select class="form-select rows-2" v-model="form.wRoles[4]">
+                        <input type="hidden" v-model="form.weekly.day[4]">
+                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.weekly.time[4]" name="daily[]">
+                        <select class="form-select rows-2" v-model="form.weekly.roles[4]">
                           <template v-for="(role, index) in roles">
                             <option :value="role.id">{{role.name}}</option>
                           </template>
                         </select>
-                        <select class="form-select rows-2" v-model="form.wUsers[4]">
+                        <select class="form-select rows-2" v-model="form.weekly.users[4]">
                           <template v-for="(user, index) in users">
                             <option :value="user.id">{{user.name}}</option>
                           </template>
@@ -131,14 +134,14 @@
                     <li class="rounded-5 border px-3">
                       <div class="input-group">
                         <span class="pt-3 me-2 w-8">Thursday</span>
-                        <input type="hidden" v-model="form.wDay[5]">
-                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.wTime[5]" name="daily[]">
-                        <select class="form-select rows-2" v-model="form.wRoles[5]">
+                        <input type="hidden" v-model="form.weekly.day[5]">
+                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.weekly.time[5]" name="daily[]">
+                        <select class="form-select rows-2" v-model="form.weekly.roles[5]">
                           <template v-for="(role, index) in roles">
                             <option :value="role.id">{{role.name}}</option>
                           </template>
                         </select>
-                        <select class="form-select rows-2" v-model="form.wUsers[5]">
+                        <select class="form-select rows-2" v-model="form.weekly.users[5]">
                           <template v-for="(user, index) in users">
                             <option :value="user.id">{{user.name}}</option>
                           </template>
@@ -148,14 +151,14 @@
                     <li class="rounded-5 border px-3">
                       <div class="input-group">
                         <span class="pt-3 me-2 w-8">Friday</span>
-                        <input type="hidden" v-model="form.wDay[6]">
-                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.wTime[6]" name="daily[]">
-                        <select class="form-select rows-2" v-model="form.wRoles[6]">
+                        <input type="hidden" v-model="form.weekly.day[6]">
+                        <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.weekly.time[6]" name="daily[]">
+                        <select class="form-select rows-2" v-model="form.weekly.roles[6]">
                           <template v-for="(role, index) in roles">
                             <option :value="role.id">{{role.name}}</option>
                           </template>
                         </select>
-                        <select class="form-select rows-2" v-model="form.wUsers[6]" name="users[]">
+                        <select class="form-select rows-2" v-model="form.weekly.users[6]" name="users[]">
                           <template v-for="(user, index) in users">
                             <option :value="user.id">{{user.name}}</option>
                           </template>
@@ -176,7 +179,7 @@
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="model_id" v-model="form.modelId" name="model_id" placeholder="Model ID..." required
+          <input type="number" class="form-control" id="model_id" v-model="form.modelId" name="model_id" placeholder="Model ID..." required
             autocomplete="off">
           <label for="model_id">Model ID</label>
           <div class="invalid-feedback"></div>
@@ -186,13 +189,6 @@
           <input type="text" class="form-control" id="repeated_every" v-model="form.repeatedEvery" name="repeated_every"
             placeholder="Repeated Every..." required autocomplete="off">
           <label for="repeated_every">Repeated Every</label>
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="extra" name="extra" v-model="form.extra" placeholder="Extra..." required
-            autocomplete="off">
-          <label for="extra">Extra</label>
           <div class="invalid-feedback"></div>
         </div>
       </div>
@@ -210,22 +206,35 @@ export default {
   data: () => ({
     users: [],
     roles: [],
+    isWeekly: false,
+    isDaily: false,
+    appendDaily: [
+      {
+        dataUsers: [],
+        dataRoles: [],
+      }
+    ],
     form: {
       start_at: '',
       end_at: '',
-      dRoles: [],
-      dTime: [],
-      dMint: [],
-      dUsers: [],
-      wRoles: [],
-      wUsers: [],
-      wDay: ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'],
-      wTime: [],
+      daily: {
+        roles: [],
+        time: [],
+        mint: [],
+        users: [],
+        type: ''
+      },
+      weekly: {
+        roles: [],
+        users: [],
+        time: [],
+        day: ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'],
+        type:'',
+      },
       type: '',
       modelType: '',
       modelId: '',
       repeatedEvery: '',
-      extra: ''
     }
   }),
   methods: {
@@ -235,81 +244,53 @@ export default {
         .then((response) => {
           this.users = response.data.users;
           this.roles = response.data.roles;
+          console.log( this.appendDaily);
+          this.appendDaily[0].dataUsers = response.data.users;
+          this.appendDaily[0].dataRoles = response.data.roles;
         })
     },
     getType(type){
       this.form.type = type;
+      if(this.form.type == 'Daily'){
+        this.isWeekly = false;
+        this.isDaily = !this.isDaily;
+      }else{
+        this.isDaily = false;
+        this.isWeekly = !this.isWeekly;
+        
+      }
     },
+    addNewDailyRow: function(){
+      this.appendDaily.push({
+           dataRoles: this.roles,
+           dataUsers: this.users,
+          });
+    },
+    removeRow: function (row) {
+      this.appendDaily.splice(this.appendDaily.indexOf(row), 1);
+     },
     submitForm: async function () {
+      if(this.form.type == 'Daily'){
+        delete this.form.weekly;
+        this.form.daily.type = this.form.type;
+      }else{
+        delete this.form.daily;
+        this.form.weekly.type = this.form.type;
+      }
+      console.log(this.form);
       await this.$axios
         .post('/concurrent/add', this.form)
         .then((response) => {
           console.log(response);
+          this.$router.push('/concurrents')
         })
         .catch((error) => {
          
         })
-    }
+    },
   },
   mounted() {
     this.getUsersRoles();
-    const btnDailt = document.getElementById('btnDaily')
-    const btnWeekly = document.getElementById('btnWeekly')
-
-
-    btnDaily.addEventListener('click', event => {
-      const btn_daily = event.target // using event for dynamic [btn_daily equal btnDaily]
-      const currentContent = btn_daily.parentNode.querySelector('.container')
-      if (btn_daily.classList.contains('open')) {
-        btnWeekly.classList.toggle('disabled')
-        btn_daily.classList.toggle('open')
-        currentContent.classList.toggle('d-none')
-        return true
-      }
-      btn_daily.classList.toggle('open')
-      btnWeekly.classList.toggle('disabled')
-      currentContent.classList.toggle('d-none')
-      return true
-    })
-
-    document.querySelectorAll('.btn-icon').forEach(btn => {
-      btn.addEventListener('click', event => {
-        // btn add 
-        if (btn.classList.contains('btn-daily-input-time-add')) {
-          const inputGroup = btn.closest('.daily-input-time').cloneNode(true)
-          // remove the add class from it
-          const btnRemove = inputGroup.querySelector('.btn-daily-input-time-add')
-          btnRemove.classList.add('btn-daily-input-time-remove')
-          btnRemove.classList.remove('btn-daily-input-time-add')
-          btnRemove.classList.remove('btn-outline-success')
-          btnRemove.classList.add('btn-outline-danger')
-          btnRemove.innerText = "-"
-
-          btn.closest('.container').appendChild(inputGroup)
-          btnRemove.addEventListener('click', ev => {
-            btnRemove.closest('.daily-input-time').remove()
-          });
-        }
-
-      })
-    })
-
-    btnWeekly.addEventListener('click', event => {
-      const btn_weekly = event.target // using event for dynamic [btn_weekly equal btnWeekly]
-      const currentContent = btn_weekly.parentNode.querySelector('.container')
-      if (btn_weekly.classList.contains('open')) {
-        btnDaily.classList.toggle('disabled')
-        btn_weekly.classList.toggle('open')
-        currentContent.classList.toggle('d-none')
-        return true
-      }
-      btn_weekly.classList.toggle('open')
-      btnDaily.classList.toggle('disabled')
-      currentContent.classList.toggle('d-none')
-      return true
-
-    })
-
   }
 }
 </script>
