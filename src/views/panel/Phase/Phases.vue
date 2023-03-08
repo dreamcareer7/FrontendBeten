@@ -64,13 +64,17 @@
                   </CBadge>
                 </CTableDataCell>
                 <CTableDataCell>
+                  <router-link :to="{
+                    name: 'Phase details',
+                    params: { id: this.$encrypt(phase.id) }
+                  }">
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View Details"
-                    @click="viewDetails(phase.id)"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
+                  </router-link>
                   <router-link
                     :to="{
                       name: 'Update Phase',
@@ -154,12 +158,16 @@
           <CTable class="table table-responsive">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">ID</CTableHeaderCell>
                 <CTableHeaderCell scope="col">title</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableRow v-for="client in phase.services" :key="client.id">
               <CTableDataCell>{{ client.title }}</CTableDataCell>
+              <CTableDataCell>
+                <CButton color="info">
+                  Commit Service
+                </CButton>
+              </CTableDataCell>
             </CTableRow>
           </CTable>
         </CCol>
@@ -210,12 +218,6 @@ export default {
     },
     filter: async function () {
       await this.debounceFn()
-    },
-    viewDetails: async function (id) {
-      await this.$axios.get(`/phases/${id}`).then((response) => {
-        this.phase = response.data
-        this.is_phase_modal_visible = true
-      })
     },
     gotoPage: async function (url) {
       this.loading = true
