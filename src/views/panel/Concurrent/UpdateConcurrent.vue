@@ -1,34 +1,34 @@
 <template>
   <div class="card border-success mb-4">
     <div class="card-header">
-      Create Concurrent
+      Edit Concurrent
     </div>
-    <div id="ialert" class="" role="alert"></div>
     <CRow>
-      <CCol :md="12">
-        <div v-show="message && !success" class="error_style">
-          {{ message }}
-        </div>
-        <div v-show="message && success" class="alert alert-success">
-          {{ message }}
-        </div>
-      </CCol>
-    </CRow>
+        <CCol :md="12">
+          <div v-show="message && !success" class="error_style">
+            {{ message }}
+          </div>
+          <div v-show="message && success" class="alert alert-success">
+            {{ message }}
+          </div>
+        </CCol>
+      </CRow>
+    <div id="ialert" class="" role="alert"></div>
     <form method="post">
       <div class="card-body">
         <div class="cotainer m-3 p-2 rounded border bg-light">
         <div class="row">
           <div class="col-sm-6">
-            <div class="input-group mb-3"><span class="input-group-text">Start at</span><input type="date" class="form-control" v-model="form.start_at" name="Start_at"></div>
+            <div class="input-group mb-3"><span class="input-group-text">Start at</span><input type="date" class="form-control" v-model="form.starting_at" name="Start_at"></div>
           </div>
           <div class="col-sm-6">
-            <div class="input-group mb-3"><span class="input-group-text">Ends at</span><input type="date" class="form-control" v-model="form.end_at" name="end_at"></div>
+            <div class="input-group mb-3"><span class="input-group-text">Ends at</span><input type="date" class="form-control" v-model="form.ending_at" name="end_at"></div>
           </div>
         </div>
         <ul class="list-unstyled">
-          <li class="item-selection">
-            <button class="btn btn-success btn-sm rounded-5" @click="getType('Daily')">Daily</button>
-            <div class="container py-5 border" v-if="isDaily">
+          <li class="item-selection"  v-if="isDaily">
+            <span class="btn btn-success btn-sm rounded-5" @click="getType('Daily')">Daily</span>
+            <div class="container py-5 border">
               <template v-for="(daily,key) in appendDaily">
                 <div class="input-group mb-1 daily-input-time">
                 <input type="time" name="time" class="form-control w-8" placeholder="time" v-model="form.daily.time[key]" aria-label="time of day">
@@ -50,15 +50,15 @@
               </template>
             </div>
           </li>
-          <li class="item-selection">
-            <button class="btn btn-primary btn-sm rounded-5" @click="getType('Weekly')">Weekly</button>
-              <div class="container py-5 border" v-if="isWeekly">
+          <li class="item-selection"  v-if="isWeekly">
+            <span class="btn btn-primary btn-sm rounded-5" @click="getType('Weekly')">Weekly</span>
+              <div class="container py-5 border">
                 <div class="mb-1 weekly-input-day">
                   <ul class="list-unstyled">
                     <li class="rounded-5 border px-3">
                       <div class="input-group">
                         <span class="pt-3 me-2 w-8">Saturday</span>
-                        <input type="hidden" v-model="form.weekly.day[0]">
+                        <input type="hidden">
                         <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" v-model="form.weekly.time[0]">
                         <select class="form-select rows-2" v-model="form.weekly.roles[0]" multiple>
                           <template v-for="(role, index) in roles">
@@ -181,21 +181,21 @@
           </ul>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="model_type" v-model="form.modelType" name="model_type" placeholder="Model Type..." required
+          <input type="text" class="form-control" id="model_type" v-model="form.model_type" placeholder="Model Type..." required
             autocomplete="off">
           <label for="model_type">Model Type</label>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="model_id" v-model="form.modelId" name="model_id" placeholder="Model ID..." required
+          <input type="number" class="form-control" id="model_id" v-model="form.model_id" name="model_id" placeholder="Model ID..." required
             autocomplete="off">
           <label for="model_id">Model ID</label>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="repeated_every" v-model="form.repeatedEvery" name="repeated_every"
+          <input type="text" class="form-control" id="repeated_every" v-model="form.repeated_every" name="repeated_every"
             placeholder="Repeated Every..." required autocomplete="off">
           <label for="repeated_every">Repeated Every</label>
           <div class="invalid-feedback"></div>
@@ -203,9 +203,10 @@
       </div>
 
       <div class="card-footer text-end">
-        <button type="submit" class="btn btn-outline-success" @click.prevent="submitForm()">Save</button>
+        <a class="btn btn-outline-success ajax" @click.prevent="submitForm()">Save</a>
       </div>
     </form>
+    
   </div>
 </template>
 
@@ -219,34 +220,9 @@ export default {
     roles: [],
     isWeekly: false,
     isDaily: false,
-    appendDaily: [
-      {
-        dataUsers: [],
-        dataRoles: [],
-      }
-    ],
-    form: {
-      start_at: '',
-      end_at: '',
-      daily: {
-        roles: [],
-        time: [],
-        mint: [],
-        users: [],
-        type: ''
-      },
-      weekly: {
-        roles: [],
-        users: [],
-        time: [],
-        day: ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'],
-        type:'',
-      },
-      type: '',
-      modelType: '',
-      modelId: '',
-      repeatedEvery: '',
-    }
+    appendDaily: [],
+    form: {},
+    extra: {},
   }),
   methods: {
     getUsersRoles: async function () {
@@ -256,8 +232,6 @@ export default {
           this.users = response.data.users;
           this.roles = response.data.roles;
           console.log( this.appendDaily);
-          this.appendDaily[0].dataUsers = response.data.users;
-          this.appendDaily[0].dataRoles = response.data.roles;
         })
     },
     getType(type){
@@ -273,40 +247,71 @@ export default {
     },
     addNewDailyRow: function(){
       this.appendDaily.push({
-          dataRoles: this.roles,
-          dataUsers: this.users,
-        });
+           dataRoles: this.roles,
+           dataUsers: this.users,
+          });
     },
     removeRow: function (row) {
       this.appendDaily.splice(this.appendDaily.indexOf(row), 1);
      },
     submitForm: async function () {
-      if(this.form.type == 'Daily'){
-        delete this.form.weekly;
-        this.form.daily.type = this.form.type;
-      }else{
-        delete this.form.daily;
-        this.form.weekly.type = this.form.type;
-      }
+      
       console.log(this.form);
       await this.$axios
-        .post('/concurrent/add', this.form)
+      .post(`/concurrent/update/${this.$decrypt(this.$route.params.id)}`, this.form)
         .then((response) => {
           console.log(response);
-          this.$router.push('/concurrents')
+          this.message = response.data.message
+          if (response.data.success) {
+            this.success = true
+          }
         })
         .catch((error) => {
-          if (error.response) {
-            this.message = error.response.data.message
-          } else {
-            this.message = error.message
-          }
-          this.success = false
+         
         })
     },
   },
-  mounted() {
-    this.getUsersRoles();
+  async mounted() {
+    await this.getUsersRoles();
+    await this.$axios.get(`/concurrent/info/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => {
+        console.log(response);
+        let obj = {};
+        this.extra = JSON.parse(response.data.extra);
+        console.log(this.extra);
+        
+        if(this.extra.type == 'Daily'){
+          this.form.type = 'Daily';
+           this.isDaily = true;
+           obj = {
+            'daily': {
+              ...this.extra
+            }
+          } 
+        }else{
+          this.form.type = 'Weekly';
+          this.isWeekly = true;
+          obj = {
+            'weekly': {
+              ...this.extra
+            }
+          } 
+        }
+        let alldata = response.data;
+        this.form = {
+          ...alldata,
+          ...obj
+        };
+        console.log(this.form);
+        this.extra.roles.forEach((value, index) => {
+          this.appendDaily.push({
+           dataRoles: this.roles,
+           dataUsers: this.users,
+          });
+        });
+      
+       
+      })
   }
 }
 </script>

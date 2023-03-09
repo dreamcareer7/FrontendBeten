@@ -42,8 +42,16 @@
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" @click="showDetail(cocurrent)" class="btn btn-sm btn-info text-white">View</button>
+                    <router-link
+                    :to="{
+                      name: 'Concurrents Edit',
+                      params: { id: this.$encrypt(cocurrent.id) },
+                      }"
+                    >
                     <button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white">Update</button>
-                    <button class="btn btn-sm btn-danger text-white">Delete</button>
+                    </router-link>
+                    <button class="btn btn-sm btn-danger text-white" 
+                    v-c-tooltip="{ content: 'Delete', placement: 'top' }" @click="deleteCocurrent(cocurrent.id)">Delete</button>
                   </CTableDataCell>
           
                 </CTableRow>
@@ -94,15 +102,15 @@
                       <input type="time" name="time" class="form-control w-8" :value="daily" placeholder="time" aria-label="time of day">
                       <span class="input-group-text w-4">+ -</span>
                       <input type="text" name="period_rate" class="form-control w-6" :value="extra.mint[key]" placeholder="In Minutes" aria-label="minutes plus or minus">
-                      <select class="form-select rows-2" name="roles[]" multiple>
-                        <option value="">Admin</option>
-                        <option value="">Supervisor</option>
-                        <option value="">members</option>
+                      <select class="form-select rows-2" multiple>
+                        <template v-for="roles in extra.roles">
+                        <option value="" v-for="role in roles" >{{ role }}</option>
+                        </template>
                       </select>
-                      <select class="form-select rows-2" name="users[]" multiple>
-                        <option value="">Fateh</option>
-                        <option value="">John</option>
-                        <option value="">Sami</option>
+                      <select class="form-select rows-2" multiple>
+                        <template v-for="users in extra.users">
+                          <option value="" v-for="user in users">{{ user }}</option>
+                        </template>
                       </select>
                     </div>
                     </template>
@@ -118,20 +126,18 @@
                           <div class="input-group">
                             <span class="pt-3 me-2 w-8">{{ day }}</span>
                             <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" :value="extra.time[key]">
-                            <select class="form-select rows-2" name="roles[]" multiple>
-                              <option value="">Admin</option>
-                              <option value="">Supervisor</option>
-                              <option value="">members</option>
+                            <select class="form-select rows-2" multiple>
+                              <template v-for="roles in extra.roles">
+                              <option value="" v-for="role in roles" >{{ role }}</option>
+                              </template>
                             </select>
-
-                            <select class="form-select rows-2" name="users[]" multiple>
-                              <option value="">Fateh</option>
-                              <option value="">John</option>
-                              <option value="">Sami</option>
+                            <select class="form-select rows-2" multiple>
+                              <template v-for="users in extra.users">
+                                <option value="" v-for="user in users">{{ user }}</option>
+                              </template>
                             </select>
                           </div>
                         </li>
-                   
                       </ul>
                     </div>
                   </div>
@@ -178,7 +184,21 @@ export default {
       console.log(this.extra);
       this.concurrentDetail = data;
       this.showDetailModal = true;
-    }
+    }, 
+    deleteCocurrent: async function (id) {
+      await swal({
+        title: `Are you sure?`,
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          this.$axios.post(`/concurrent/delete/${id}`).then(() => {
+            this.getCocurrent()
+          })
+        }
+      })
+    },
   },
   mounted(){
    this.getCocurrent();

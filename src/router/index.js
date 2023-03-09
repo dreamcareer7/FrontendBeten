@@ -213,6 +213,11 @@ const routes = [
         name: 'Create Concurrent',
         component: () => import('@/views/panel/Concurrent/CreateConcurrent'),
       },
+      {
+        path: '/concurrents/edit/:id',
+        name: 'Concurrents Edit',
+        component: () => import('@/views/panel/Concurrent/UpdateConcurrent'),
+      },
       // Hospitalities Menu
       {
         path: '/hospitalities',
