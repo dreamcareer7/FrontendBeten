@@ -56,7 +56,7 @@
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
               <CTableHeaderCell scope="col">Model type</CTableHeaderCell>
               <CTableHeaderCell scope="col">Model id</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Roles</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Role</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableBody>
@@ -64,7 +64,7 @@
               <CTableHeaderCell scope="row">{{ log.id }}</CTableHeaderCell>
               <CTableDataCell>{{ log.model_type }}</CTableDataCell>
               <CTableDataCell>{{ log.model_type }}</CTableDataCell>
-              <CTableDataCell>{{ log.roles }}</CTableDataCell>
+              <CTableDataCell>{{ log.role }}</CTableDataCell>
             </CTableRow>
           </CTableBody>
         </CTable>

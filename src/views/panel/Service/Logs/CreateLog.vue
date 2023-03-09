@@ -37,13 +37,7 @@
         </div>
 
         <div class="form-floating mb-3">
-          <select id="role" v-model="log.roles" class="form-select">
-            <option value="mechanic">mechanic</option>
-            <option value="driver">driver</option>
-            <option value="valet">valet</option>
-            <option value="host">host</option>
-            <option value="guide">guide</option>
-          </select>
+          <input class="form-control" type="text" v-model="log.role">
           <label for="role">Role</label>
           <div class="invalid-feedback"></div>
         </div>
