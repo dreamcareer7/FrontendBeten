@@ -8,7 +8,6 @@
             id="model_type"
             class="form-control"
             v-model="log.model_type"
-            @change="fetchEntities"
             required
           >
             <option value="App\Models\Crew">Crew</option>
@@ -33,18 +32,12 @@
           />
 
           <label for="model_id">
-            Select an entity first
+            Model ID
           </label>
         </div>
 
         <div class="form-floating mb-3">
-          <select id="role" v-model="log.roles" class="form-select">
-            <option value="mechanic">mechanic</option>
-            <option value="driver">driver</option>
-            <option value="valet">valet</option>
-            <option value="host">host</option>
-            <option value="guide">guide</option>
-          </select>
+          <input class="form-control" type="text" v-model="log.role">
           <label for="role">Role</label>
           <div class="invalid-feedback"></div>
         </div>
@@ -75,11 +68,6 @@ export default {
         this.$emit('created')
       })
     },
-
-    fetchEntities(event) {
-      console.log(event.target.value);
-      // this.$axios.get('/')
-    }
   },
 }
 </script>

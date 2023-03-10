@@ -27,6 +27,7 @@
                 <CTableHeaderCell scope="col">Started</CTableHeaderCell>
                 <CTableHeaderCell scope="col">From</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Supervisor</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Phase</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -41,7 +42,21 @@
                 <CTableDataCell>{{
                   commit.supervisor.name
                 }}</CTableDataCell>
+                <CTableDataCell>{{ commit.phase?.title }}</CTableDataCell>
                 <CTableDataCell>
+                <router-link
+                      :to="{
+                        name: 'Service Commit details',
+                        params: { id: this.$encrypt(commit.id) },
+                      }"
+                    >
+                      <button
+                        class="btn btn-sm btn-info text-white mx-1"
+                        title="View"
+                      >
+                        <ion-icon name="eye-outline"></ion-icon>
+                      </button>
+                    </router-link>
                   <router-link
                     :to="{
                       name: 'Update Service Commit',

@@ -10,8 +10,7 @@
             <div class="col-md-2">
               <router-link :to="{ name: 'Create Phase' }">
                 <CButton color="success" class="float-end text-white">
-                  <ion-icon name="create-outline"></ion-icon>&nbsp;
-                  Create Phase
+                  <ion-icon name="create-outline"></ion-icon>&nbsp; Create Phase
                 </CButton>
               </router-link>
             </div>
@@ -49,9 +48,7 @@
                 <CTableHeaderCell scope="col">ID #</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Required</CTableHeaderCell>
-                <CTableHeaderCell scope="col">
-                  Actions
-                </CTableHeaderCell>
+                <CTableHeaderCell scope="col"> Actions </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -67,13 +64,17 @@
                   </CBadge>
                 </CTableDataCell>
                 <CTableDataCell>
+                  <router-link :to="{
+                    name: 'Phase details',
+                    params: { id: this.$encrypt(phase.id) }
+                  }">
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View Details"
-                    @click="viewDetails(phase.id)"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
+                  </router-link>
                   <router-link
                     :to="{
                       name: 'Update Phase',
@@ -151,6 +152,26 @@
           </CTableDataCell>
         </CTableRow>
       </CTable>
+      <CRow>
+        <CCol :md="12">
+          <h3>Assigned services</h3>
+          <CTable class="table table-responsive">
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">title</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableRow v-for="client in phase.services" :key="client.id">
+              <CTableDataCell>{{ client.title }}</CTableDataCell>
+              <CTableDataCell>
+                <CButton color="info">
+                  Commit Service
+                </CButton>
+              </CTableDataCell>
+            </CTableRow>
+          </CTable>
+        </CCol>
+      </CRow>
       <Contractable v-if="phase.is_contractable" type="phase" :id="phase.id" />
       <Documentable v-if="phase.is_documentable" type="phase" :id="phase.id" />
     </CModalBody>
@@ -197,12 +218,6 @@ export default {
     },
     filter: async function () {
       await this.debounceFn()
-    },
-    viewDetails: async function (id) {
-      await this.$axios.get(`/phases/${id}`).then((response) => {
-        this.phase = response.data
-        this.is_phase_modal_visible = true
-      })
     },
     gotoPage: async function (url) {
       this.loading = true
