@@ -50,7 +50,9 @@
             <CTableDataCell>{{ service_commit.from_location }}</CTableDataCell>
           </CTableRow>
         </CTable>
-        <CTable v-if="service_commit.service_commit_log?.length">
+        <div v-if="service_commit_logs?.length">
+          <CRow>
+          <CTable>
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -60,14 +62,32 @@
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            <CTableRow v-for="log in service_commit.service_commit_log">
+            <CTableRow v-for="log in service_commit_logs">
               <CTableHeaderCell scope="row">{{ log.id }}</CTableHeaderCell>
               <CTableDataCell>{{ log.model_type }}</CTableDataCell>
               <CTableDataCell>{{ log.model_type }}</CTableDataCell>
               <CTableDataCell>{{ log.role }}</CTableDataCell>
             </CTableRow>
           </CTableBody>
+          
         </CTable>
+          </CRow>
+          <CRow>
+        <CCol :md="12" class="text-center">
+          <nav aria-label="Service commits navigation">
+            <ul class="pagination">
+              <template v-for="page in pagination" :key="page">
+                <li class="page-item" :class="{ active: page.active }">
+                  <a @click.prevent="gotoPage(page.url)" class="page-link" :class="{ disabled: !page.url }"
+                    v-html="page.label"></a>
+                </li>
+              </template>
+            </ul>
+          </nav>
+        </CCol>
+      </CRow>
+        </div>
+        
         <button class="btn btn-primary" @click="show_add_log_form = true">
           Add logs
         </button>
@@ -95,13 +115,25 @@ export default {
   data: () => ({
     service_commit: {},
     show_add_log_form: false,
+    service_commit_logs: [],
+    pagination: [],
   }),
   methods: {
+    gotoPage: async function (url) {
+      await this.$axios
+        .get(url)
+        .then((response) => {
+          this.service_commit_logs = response.data.logs.data
+          this.pagination = response.data.logs.links
+        })
+    },
     getCommit() {
       this.$axios
         .get(`/service_commits/${this.$decrypt(this.$route.params.id)}`)
         .then((response) => {
-          this.service_commit = response.data
+          this.service_commit = response.data.commit
+          this.service_commit_logs = response.data.logs.data
+          this.pagination = response.data.logs.links
         })
     },
     initialize() {
