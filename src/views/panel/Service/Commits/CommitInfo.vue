@@ -94,12 +94,26 @@
         <button class="btn btn-primary" v-if="service_commit.service_commit_log?.length" @click="initialize">
           Initialize
         </button>
-        <CreateLog
-          v-if="show_add_log_form"
+        <CModal
+    size="sm"
+    :visible="show_add_log_form"
+    @close="show_add_log_form = false"
+    class="modal-popup-detail"
+    data-backdrop="static"
+    data-keyboard="false"
+  >
+    <CModalHeader>
+      <CModalTitle>Add log</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CreateLog
           :service_commit_id="service_commit.id"
           @created="getCommit"
         >
         </CreateLog>
+    </CModalBody>
+  </CModal>
+        
       </CCol>
     </CRow>
   </div>
