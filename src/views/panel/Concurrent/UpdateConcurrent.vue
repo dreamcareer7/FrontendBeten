@@ -14,15 +14,19 @@
         </CCol>
       </CRow>
     <div id="ialert" class="" role="alert"></div>
-    <form method="post">
+    <form @submit.prevent="submitForm()" method="post">
       <div class="card-body">
         <div class="cotainer m-3 p-2 rounded border bg-light">
         <div class="row">
           <div class="col-sm-6">
-            <div class="input-group mb-3"><span class="input-group-text">Start at</span><input type="date" class="form-control" v-model="form.starting_at" name="Start_at"></div>
+            <div class="input-group mb-3"><span class="input-group-text">Start at</span>
+              <input type="date" class="form-control" v-model="form.starting_at" name="Start_at" required>
+            </div>
           </div>
           <div class="col-sm-6">
-            <div class="input-group mb-3"><span class="input-group-text">Ends at</span><input type="date" class="form-control" v-model="form.ending_at" name="end_at"></div>
+            <div class="input-group mb-3"><span class="input-group-text">Ends at</span>
+              <input type="date" class="form-control" v-model="form.ending_at" name="end_at" required>
+            </div>
           </div>
         </div>
         <ul class="list-unstyled">
@@ -33,7 +37,7 @@
                 <div class="input-group mb-1 daily-input-time">
                 <input type="time" name="time" class="form-control w-8" placeholder="time" v-model="form.daily.time[key]" aria-label="time of day">
                 <span class="input-group-text w-4">+ -</span>
-                <input type="text" name="period_rate" class="form-control w-6" v-model="form.daily.mint[key]" placeholder="In Minutes" aria-label="minutes plus or minus">
+                <input type="number" name="period_rate" class="form-control w-6" v-model="form.daily.mint[key]" placeholder="In Minutes" aria-label="minutes plus or minus">
                 <select class="form-select rows-2" v-model="form.daily.roles[key]" multiple>
                   <template v-for="(role, index) in daily.dataRoles">
                     <option v-bind:value="role.name">{{role.name}}</option>
@@ -203,7 +207,7 @@
       </div>
 
       <div class="card-footer text-end">
-        <a class="btn btn-outline-success ajax" @click.prevent="submitForm()">Save</a>
+        <button type="submit" class="btn btn-success" style="color:white">Update</button>
       </div>
     </form>
     
