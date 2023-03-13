@@ -96,6 +96,7 @@
 
 <script>
 export default {
+  props: ['service'],
   name: 'CreateCommit',
   data: () => ({
     error_message: '',
@@ -125,6 +126,10 @@ export default {
     this.$axios
       .get('/users')
       .then((response) => (this.users = response.data.data))
+    if (this.$props.service) {
+      this.commit.service_id = this.service
+      this.commit.phase_id = this.$decrypt(this.$route.params.id)
+    }
   },
 }
 </script>
