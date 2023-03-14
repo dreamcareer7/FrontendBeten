@@ -47,6 +47,12 @@ axiosInstance.interceptors.response.use(
      */
     switch (error.response?.status) {
       case 401: // Unauthenticated
+        swal({
+          title: 'Unauthenticated',
+          text: 'Your session has expired. Please login again.',
+          icon: 'error',
+        })
+        localStorage.removeItem('auth_token')
         router.push({
           name: 'Login', // Redirect to login
         })
