@@ -85,6 +85,20 @@
       </CCard>
     </CCol>
   </CRow>
+  <CRow>
+        <CCol :md="12" class="text-center">
+          <nav aria-label="Service commits navigation">
+            <ul class="pagination">
+              <template v-for="page in pagination" :key="page">
+                <li class="page-item" :class="{ active: page.active }">
+                  <a @click.prevent="gotoPage(page.url)" class="page-link" :class="{ disabled: !page.url }"
+                    v-html="page.label"></a>
+                </li>
+              </template>
+            </ul>
+          </nav>
+        </CCol>
+      </CRow>
 </template>
 
 <script>
@@ -92,8 +106,18 @@ export default {
   name: 'Commits',
   data: () => ({
     commits: [],
+    pagination: [],
+
   }),
   methods: {
+    gotoPage: async function (url) {
+      await this.$axios
+        .get(url)
+        .then((response) => {
+          this.commits = response.data.data
+          this.pagination = response.data.links
+        })
+    },
     async deleteCommit(id) {
       await swal({
         title: 'Are you sure?',
@@ -125,7 +149,11 @@ export default {
   async mounted() {
     await this.$axios
       .get('/service_commits')
-      .then((response) => (this.commits = response.data))
+      .then((response) => {
+        this.commits = response.data.data
+        this.pagination = response.data.links
+      }
+        )
       .catch((error) => {
         swal({
           title: error.response.statusText,

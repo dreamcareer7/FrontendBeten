@@ -8,28 +8,23 @@
             id="model_type"
             class="form-control"
             v-model="log.model_type"
+            @change="getIds"
             required
           >
-            <option value="App\Models\Crew">Crew</option>
-            <option value="App\Models\Vehicle">Vehicle</option>
-            <option value="App\Models\Client">Client</option>
-            <option value="App\Models\Group">Group</option>
-            <option value="App\Models\Meal">Meal</option>
-            <option value="App\Models\Service">Service</option>
+            <option v-for="(model, key) in model_types" :value="key">{{ model }}</option>
           </select>
           <label for="model_type">Model Type</label>
         </div>
 
         <div class="form-floating mb-3">
-          <input
-            type="number"
-            class="form-control"
+           <select
             id="model_id"
-            name="model_id"
-            rdequired
-            autocomplete="off"
+            class="form-control"
             v-model="log.model_id"
-          />
+            required
+          >
+            <option v-for="model in model_ids" :value="model.id">{{ model.id }}</option>
+          </select>
 
           <label for="model_id">
             Model ID
@@ -58,6 +53,8 @@ export default {
   data() {
     return {
       log: {},
+      model_types: [],
+      model_ids: []
     }
   },
   methods: {
@@ -68,6 +65,14 @@ export default {
         this.$emit('created')
       })
     },
+    getIds() {
+      this.$axios.get('/ids_by_type/' + this.log.model_type)
+        .then((response) => this.model_ids = response.data)
+    }
   },
+  mounted() {
+    this.$axios.get('/model_types')
+        .then((response) => this.model_types = response.data)
+  }
 }
 </script>
