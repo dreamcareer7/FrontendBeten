@@ -29,7 +29,6 @@
                   <CTableHeaderCell scope="col">Model Type</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Model ID</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Repeated Every</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Extra</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
@@ -39,7 +38,6 @@
                   <CTableDataCell>{{cocurrent.model_type}}</CTableDataCell>
                   <CTableDataCell>{{cocurrent.model_id}}</CTableDataCell>
                   <CTableDataCell>{{cocurrent.repeated_every}}</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
                     <button style="margin-right: 1em;" @click="showDetail(cocurrent)" class="btn btn-sm btn-info text-white">View</button>
                     <router-link
@@ -123,7 +121,7 @@
                     <div class="mb-1 weekly-input-day">
                       <ul class="list-unstyled">
                         <li class="rounded-5 border px-3" v-for="(day,key) in extra.day">
-                          <div class="input-group">
+                          <div class="input-group"  v-if="extra.time[key]">
                             <span class="pt-3 me-2 w-8">{{ day }}</span>
                             <input type="time" class="form-control w-8" placeholder="time" aria-label="time of day" :value="extra.time[key]">
                             <select class="form-select rows-2" multiple>
