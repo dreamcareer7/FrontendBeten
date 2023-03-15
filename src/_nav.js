@@ -92,12 +92,6 @@ export default [
     icon: 'cil-door',
   },
   {
-    component: 'CNavItem',
-    name: 'Concurrents',
-    to: '/concurrents',
-    icon: 'cil-contrast',
-  },
-  {
     component: 'CNavGroup',
     name: 'Hospitalities',
     to: '/hospitalities',

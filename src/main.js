@@ -13,6 +13,7 @@ import { iconsSet as icons } from '@/assets/icons'
 import DocsExample from '@/components/DocsExample'
 import Contractable from '@/components/Contractable'
 import Documentable from '@/components/Documentable'
+import Concurrable from '@/components/Concurrable'
 
 const app = createApp(App)
 
@@ -26,6 +27,7 @@ app.component('CIcon', CIcon)
 app.component('DocsExample', DocsExample)
 app.component('Contractable', Contractable)
 app.component('Documentable', Documentable)
+app.component('Concurrable', Concurrable)
 
 app.config.compilerOptions.isCustomElement = (tag) => tag.includes('ion-icon')
 
