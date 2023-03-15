@@ -191,10 +191,11 @@
               <CTableHeaderCell>Is Handicap:</CTableHeaderCell>
               <CTableDataCell>
                 <CBadge
-                  :color="client.is_handicap === 1 ? 'success' : 'warning'"
+                  :color="client.is_handicap ? 'success' : 'warning'"
                   shape="rounded-pill"
-                  >{{ client.is_handicap === 1 ? 'Yes' : 'No' }}</CBadge
                 >
+                  {{ client.is_handicap ? 'Yes' : 'No' }}
+                </CBadge>
               </CTableDataCell>
             </CTableRow>
             <CTableRow>
