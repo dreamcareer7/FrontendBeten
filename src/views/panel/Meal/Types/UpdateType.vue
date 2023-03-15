@@ -44,6 +44,9 @@
       </div>
 
       <div class="card-footer text-end">
+      <button class="btn btn-warning text-white" @click.prevent="$router.go(-1)">
+        Go Back
+      </button>&nbsp;
         <button class="btn btn-outline-success" type="submit">Save</button>
       </div>
     </form>

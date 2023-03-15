@@ -96,6 +96,9 @@
       </CRow>
     </div>
     <div class="card-footer text-end">
+    <button class="btn btn-warning text-white" @click.prevent="$router.go(-1)">
+        Go Back
+      </button>&nbsp;
       <button type="submit" class="btn btn-warning text-white">
         Save changes
       </button>
