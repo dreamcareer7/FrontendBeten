@@ -26,9 +26,9 @@
                 v-model="search.country"
                 @change="getClients"
               >
-                <option value="" selected disabled>Country</option>
+                <option value="" selected>Any Country</option>
                 <template v-for="country in countries" :key="country.code">
-                  <option :value="country.id">{{ country.name }}</option>
+                  <option :value="country.id">{{ country.title }}</option>
                 </template>
               </select>
             </CCol>
@@ -98,7 +98,7 @@
               <CTableRow v-for="client in clients" :key="client.id">
                 <CTableHeaderCell scope="row">{{ client.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
-                <CTableDataCell>{{ client.country?.name }}</CTableDataCell>
+                <CTableDataCell>{{ client.country?.title }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_number }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_name }}</CTableDataCell>
