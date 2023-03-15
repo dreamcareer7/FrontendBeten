@@ -32,8 +32,8 @@
               <input
                 type="text"
                 class="form-control mb-3"
-                v-model="search.id_type"
-                placeholder="ID Type"
+                v-model="search.id_number"
+                placeholder="ID Number"
                 @change="getCrews"
               />
             </CCol>
