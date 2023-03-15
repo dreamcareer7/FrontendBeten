@@ -179,9 +179,7 @@
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell>Gender:</CTableHeaderCell>
-              <CTableDataCell>{{
-                client.gender == 1 ? 'Male' : 'Female'
-              }}</CTableDataCell>
+              <CTableDataCell>{{ client.gender }}</CTableDataCell>
               <CTableHeaderCell>Country:</CTableHeaderCell>
               <CTableDataCell>{{ client.country_id }}</CTableDataCell>
             </CTableRow>
