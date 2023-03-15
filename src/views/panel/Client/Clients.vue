@@ -21,6 +21,15 @@
           <!-- Start search filters -->
           <CRow>
             <CCol :md="2">
+              <input
+                type="text"
+                class="form-control mb-3"
+                v-model="search.fullname"
+                placeholder="Full Name"
+                @change="getClients"
+              />
+            </CCol>
+            <CCol :md="2">
               <select
                 class="form-control mb-3"
                 v-model="search.country"
@@ -45,15 +54,6 @@
             </CCol>
             <CCol :md="2">
               <input
-                type="text"
-                class="form-control mb-3"
-                v-model="search.fullname"
-                placeholder="Full Name"
-                @change="getClients"
-              />
-            </CCol>
-            <CCol :md="2">
-              <input
                 type="number"
                 class="form-control mb-3"
                 v-model="search.phone"
@@ -71,7 +71,7 @@
               />
             </CCol>
           </CRow>
-          <hr>
+          <hr />
           <!-- End filter -->
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
@@ -280,9 +280,7 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios
-            .delete(`/clients/${id}`)
-            .then(() => this.getClients())
+          this.$axios.delete(`/clients/${id}`).then(() => this.getClients())
           swal(`The client ${name} has been deleted!`, {
             icon: 'success',
           })
@@ -290,12 +288,10 @@ export default {
       })
     },
     viewDetails: async function (id) {
-      await this.$axios
-        .get(`/clients/${id}`)
-        .then((response) => {
-          this.client = response.data
-          this.visibleLiveDemo = true
-        })
+      await this.$axios.get(`/clients/${id}`).then((response) => {
+        this.client = response.data
+        this.visibleLiveDemo = true
+      })
     },
   },
   mounted() {
