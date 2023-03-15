@@ -208,21 +208,6 @@ const routes = [
         name: 'Update Dormitory',
         component: () => import('@/views/panel/Dormitory/UpdateDormitory'),
       },
-      {
-        path: '/concurrents',
-        name: 'concurrents',
-        component: () => import('@/views/panel/Concurrent/Concurrents'),
-      },
-      {
-        path: '/concurrents/create',
-        name: 'Create Concurrent',
-        component: () => import('@/views/panel/Concurrent/CreateConcurrent'),
-      },
-      {
-        path: '/concurrents/edit/:id',
-        name: 'Concurrents Edit',
-        component: () => import('@/views/panel/Concurrent/UpdateConcurrent'),
-      },
       // Hospitalities Menu
       {
         path: '/hospitalities',
