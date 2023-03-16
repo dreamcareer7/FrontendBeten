@@ -30,6 +30,7 @@
     "core-js": "^3.26.1",
     "crypto-js": "^4.1.1",
     "sweetalert": "^2.1.2",
+    "v-idle-3": "^0.3.14",
     "vue": "^3.2.45",
     "vue-axios": "^3.5.2",
     "vue-jwt-decode": "^0.1.0",

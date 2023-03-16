@@ -15,11 +15,14 @@ import Contractable from '@/components/Contractable'
 import Documentable from '@/components/Documentable'
 import Concurrable from '@/components/Concurrable'
 
+import Vidle from 'v-idle-3'
+
 const app = createApp(App)
 
 app.use(store)
 app.use(router)
 app.use(CoreuiVue)
+app.use(Vidle)
 
 app.provide('icons', icons)
 
