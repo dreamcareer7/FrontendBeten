@@ -182,12 +182,7 @@ export default {
     },
     fetchServiceInfo: async function (id) {
       await this.$axios.get(`/services/${id}`).then((response) => {
-        this.service = {
-          ...response.data.data,
-          before_date: response.data.data.before_date?.substring(0, 10),
-          exact_date: response.data.data.exact_date?.substring(0, 10),
-          after_date: response.data.data.after_date?.substring(0, 10),
-        }
+        this.service = response.data
         this.showServiceDetailModal = true
       })
     },
