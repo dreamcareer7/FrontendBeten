@@ -180,14 +180,6 @@
           <CTableDataCell>{{ user.contact }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableHeaderCell>Date created</CTableHeaderCell>
-          <CTableDataCell>{{ user.created_at }}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableHeaderCell>Date updated</CTableHeaderCell>
-          <CTableDataCell>{{ user.updated_at }}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
           <CTableHeaderCell>Roles</CTableHeaderCell>
           <CTableDataCell>{{ user.roles }}</CTableDataCell>
         </CTableRow>
