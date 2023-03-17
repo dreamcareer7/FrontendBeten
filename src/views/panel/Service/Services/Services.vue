@@ -131,9 +131,9 @@
         </CCol>
       </CRow>
       <Concurrable
-        v-if="dormitory.is_concurrable"
-        type="dormitory"
-        :id="dormitory.id"
+        v-if="service.is_concurrable"
+        type="service"
+        :id="service.id"
       />
     </CModalBody>
   </CModal>
