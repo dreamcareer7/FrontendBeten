@@ -25,7 +25,28 @@
                 class="form-control mb-3"
                 v-model="search.fullname"
                 placeholder="Full Name"
-                @change="getCrews"
+                @keyup="filter(search.fullname)"
+              />
+            </CCol>
+            <CCol :md="2">
+              <select
+                class="form-control mb-3"
+                v-model="search.country"
+                @change="filter('¯\_(ツ)_/¯')"
+              >
+                <option value="" selected>Any Country</option>
+                <template v-for="country in countries" :key="country.code">
+                  <option :value="country.id">{{ country.title }}</option>
+                </template>
+              </select>
+            </CCol>
+            <CCol :md="2" :sm="6">
+              <input
+                type="text"
+                class="form-control mb-3"
+                v-model="search.phone"
+                placeholder="Phone number"
+                @keyup="filter(search.phone)"
               />
             </CCol>
             <CCol :md="2" :sm="6">
@@ -34,7 +55,7 @@
                 class="form-control mb-3"
                 v-model="search.id_number"
                 placeholder="ID Number"
-                @change="getCrews"
+                @keyup="filter(search.id_number)"
               />
             </CCol>
           </CRow>
@@ -196,11 +217,21 @@
 </template>
 
 <script>
+import { debounce } from '@/utils/helper'
+import countries from '@/store/countries'
+
 export default {
   name: 'CrewMembers',
   data: () => ({
+    debounceFn: null,
+    countries: [],
     crews: {},
-    search: {},
+    search: {
+      fullname: '',
+      country: '',
+      phone: '',
+      id_number: ''
+    },
     selected_user: null,
     loading: false,
     pagination: [],
@@ -223,6 +254,11 @@ export default {
           this.pagination = response.data.links ? response.data.links : {}
         })
       this.loading = false
+    },
+    filter: async function (value) {
+      if (value.length > 2) {
+        await this.debounceFn()
+      }
     },
     gotoPage: async function (url) {
       this.loading = true
@@ -259,8 +295,12 @@ export default {
       })
     },
   },
-  mounted() {
-    this.getCrews()
+  mounted: async function () {
+    await this.getCrews()
+    this.debounceFn = debounce(() => this.getCrews(), 500)
+    countries.fetchCountries().then((countries) => {
+      this.countries = countries
+    })
   },
 }
 </script>
