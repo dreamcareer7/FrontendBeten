@@ -14,8 +14,9 @@
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
               <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Download</CTableHeaderCell>
               <CTableHeaderCell scope="col">Created by</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Download</CTableHeaderCell>
+              <CTableHeaderCell scope="col">View</CTableHeaderCell>
               <CTableHeaderCell style="width: 20%" scope="col" :aria-colspan="2"
                 >Delete</CTableHeaderCell
               >
@@ -27,18 +28,29 @@
               <CTableDataCell scope="row">
                 {{ document.title }}
               </CTableDataCell>
+              <CTableDataCell scope="row">
+                {{ document.created_by }}
+              </CTableDataCell>
               <CTableDataCell>
                 <a
                   class="btn btn-sm btn-info text-white m-1"
-                  :href="`${api_url}/${document.path}`"
-                  target="_blank"
+                  :href="`${document.path}`"
                   title="Download document"
+                  :download="document.title"
+                  target="_blank"
                 >
                   <ion-icon name="cloud-download-outline"></ion-icon>
                 </a>
               </CTableDataCell>
-              <CTableDataCell scope="row">
-                {{ document.created_by }}
+              <CTableDataCell>
+                <a
+                  class="btn btn-sm btn-info text-white m-1"
+                  :href="`${document.path}`"
+                  title="View document"
+                  target="_blank"
+                >
+                  <ion-icon name="eye-outline"></ion-icon>
+                </a>
               </CTableDataCell>
               <CTableDataCell :aria-colspan="2">
                 <button
