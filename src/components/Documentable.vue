@@ -23,6 +23,7 @@
             </CTableRow>
           </CTableHead>
           <CTableBody>
+            <CTableRow v-if="documents.length === 0" class="pt-1 text-center">No documents</CTableRow>
             <CTableRow v-for="document in documents" :key="document.id">
               <CTableDataCell scope="row">{{ document.id }}</CTableDataCell>
               <CTableDataCell scope="row">

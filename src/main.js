@@ -13,12 +13,16 @@ import { iconsSet as icons } from '@/assets/icons'
 import DocsExample from '@/components/DocsExample'
 import Contractable from '@/components/Contractable'
 import Documentable from '@/components/Documentable'
+import Concurrable from '@/components/Concurrable'
+
+import Vidle from 'v-idle-3'
 
 const app = createApp(App)
 
 app.use(store)
 app.use(router)
 app.use(CoreuiVue)
+app.use(Vidle)
 
 app.provide('icons', icons)
 
@@ -26,6 +30,7 @@ app.component('CIcon', CIcon)
 app.component('DocsExample', DocsExample)
 app.component('Contractable', Contractable)
 app.component('Documentable', Documentable)
+app.component('Concurrable', Concurrable)
 
 app.config.compilerOptions.isCustomElement = (tag) => tag.includes('ion-icon')
 

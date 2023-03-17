@@ -93,6 +93,9 @@
         </CCol>
       </CRow>
       <div class="card-footer text-end">
+      <button class="btn btn-warning text-white" @click.prevent="$router.go(-1)">
+        Go Back
+      </button>&nbsp;
         <a class="btn btn-warning ajax text-white" @click="updateVehicle"
           >Save Changes</a
         >

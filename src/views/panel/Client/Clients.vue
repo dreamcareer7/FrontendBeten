@@ -21,14 +21,23 @@
           <!-- Start search filters -->
           <CRow>
             <CCol :md="2">
+              <input
+                type="text"
+                class="form-control mb-3"
+                v-model="search.fullname"
+                placeholder="Full Name"
+                @change="getClients"
+              />
+            </CCol>
+            <CCol :md="2">
               <select
                 class="form-control mb-3"
                 v-model="search.country"
                 @change="getClients"
               >
-                <option value="" selected disabled>Country</option>
+                <option value="" selected>Any Country</option>
                 <template v-for="country in countries" :key="country.code">
-                  <option :value="country.id">{{ country.name }}</option>
+                  <option :value="country.id">{{ country.title }}</option>
                 </template>
               </select>
             </CCol>
@@ -42,15 +51,6 @@
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
-            </CCol>
-            <CCol :md="2">
-              <input
-                type="text"
-                class="form-control mb-3"
-                v-model="search.fullname"
-                placeholder="Full Name"
-                @change="getClients"
-              />
             </CCol>
             <CCol :md="2">
               <input
@@ -71,7 +71,7 @@
               />
             </CCol>
           </CRow>
-          <hr>
+          <hr />
           <!-- End filter -->
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
@@ -98,7 +98,7 @@
               <CTableRow v-for="client in clients" :key="client.id">
                 <CTableHeaderCell scope="row">{{ client.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
-                <CTableDataCell>{{ client.country?.name }}</CTableDataCell>
+                <CTableDataCell>{{ client.country?.title }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_number }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_name }}</CTableDataCell>
@@ -179,9 +179,7 @@
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell>Gender:</CTableHeaderCell>
-              <CTableDataCell>{{
-                client.gender == 1 ? 'Male' : 'Female'
-              }}</CTableDataCell>
+              <CTableDataCell>{{ client.gender }}</CTableDataCell>
               <CTableHeaderCell>Country:</CTableHeaderCell>
               <CTableDataCell>{{ client.country_id }}</CTableDataCell>
             </CTableRow>
@@ -193,10 +191,11 @@
               <CTableHeaderCell>Is Handicap:</CTableHeaderCell>
               <CTableDataCell>
                 <CBadge
-                  :color="client.is_handicap === 1 ? 'success' : 'warning'"
+                  :color="client.is_handicap ? 'success' : 'warning'"
                   shape="rounded-pill"
-                  >{{ client.is_handicap === 1 ? 'Yes' : 'No' }}</CBadge
                 >
+                  {{ client.is_handicap ? 'Yes' : 'No' }}
+                </CBadge>
               </CTableDataCell>
             </CTableRow>
             <CTableRow>
@@ -280,9 +279,7 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios
-            .delete(`/clients/${id}`)
-            .then(() => this.getClients())
+          this.$axios.delete(`/clients/${id}`).then(() => this.getClients())
           swal(`The client ${name} has been deleted!`, {
             icon: 'success',
           })
@@ -290,12 +287,10 @@ export default {
       })
     },
     viewDetails: async function (id) {
-      await this.$axios
-        .get(`/clients/${id}`)
-        .then((response) => {
-          this.client = response.data
-          this.visibleLiveDemo = true
-        })
+      await this.$axios.get(`/clients/${id}`).then((response) => {
+        this.client = response.data
+        this.visibleLiveDemo = true
+      })
     },
   },
   mounted() {

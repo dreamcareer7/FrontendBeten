@@ -154,6 +154,9 @@
       </div>
 
       <div class="card-footer text-end">
+      <button class="btn btn-warning text-white" @click.prevent="$router.go(-1)">
+        Go Back
+      </button>&nbsp;
         <button
           @click.prevent="updateCrew()"
           class="btn btn-outline-success ajax"

@@ -1,6 +1,6 @@
 <template>
   <CCol class="card bg-light border-top-3 border-secondary p-0 mt-3">
-    <CCardHeader class="font-weight-bold">Contracts</CCardHeader>
+    <CCardHeader class="font-weight-bold">Concurrents</CCardHeader>
     <CCard class="mt-1">
       <CAlert color="success" class="m-2" v-show="showMessage">
         {{ message }}
@@ -10,6 +10,20 @@
       </CAlert>
       <CCardBody class="p-0">
         <CTable responsive hover class="cursor-pointer">
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell scope="col">#</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Reference</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Documents</CTableHeaderCell>
+              <CTableHeaderCell
+                style="width: 20%"
+                scope="col"
+                :aria-colspan="2"
+              >
+                Delete
+              </CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
           <CTableBody>
             <template v-for="contract in contracts" :key="contract.id">
               <CTableRow>
@@ -22,14 +36,16 @@
                 <CTableDataCell>
                   <CButton
                     title="View Documents"
-                    class="btn btn-sm btn-info text-white mx-1"
                     @click="toggleDocumentsOfContract(contract.id)"
                   >
                     <ion-icon
-                      :name="`eye-${
-                        contract_documents_shown[contract.id] ? 'off-' : ''
-                      }outline`"
-                    ></ion-icon>
+                      :name="
+                        contract_documents_shown[contract.id]
+                          ? 'caret-up-outline'
+                          : 'caret-down-outline'
+                      "
+                    >
+                    </ion-icon>
                   </CButton>
                 </CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
@@ -84,7 +100,7 @@
 
 <script>
 export default {
-  name: 'Contractable',
+  name: 'Concurrable',
   props: ['type', 'id'],
   data: () => ({
     contracts: [],
@@ -116,7 +132,7 @@ export default {
           // Add the uploaded contracts to the existing list
           // We already have the reference, we just need to get the ID
           // from the response
-          this.contracts.push({ id: response.data, reference: this.reference })
+          this.contracts.push({id: response.data, reference: this.reference})
           this.contract_documents_shown[response.data] = false
           this.message = 'Contract uploaded successfully.'
           this.showMessage = true

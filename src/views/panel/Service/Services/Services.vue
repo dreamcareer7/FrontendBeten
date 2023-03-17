@@ -141,6 +141,11 @@
           </CTable>
         </CCol>
       </CRow>
+      <Concurrable
+        v-if="dormitory.is_concurrable"
+        type="dormitory"
+        :id="dormitory.id"
+      />
     </CModalBody>
   </CModal>
 </template>

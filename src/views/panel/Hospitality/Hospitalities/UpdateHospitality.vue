@@ -109,6 +109,12 @@
         <span class="float-start">* Required fields</span>
         <button
           class="btn btn-warning text-white"
+          @click.prevent="$router.go(-1)"
+        >
+          Go Back</button
+        >&nbsp;
+        <button
+          class="btn btn-warning text-white"
           type="submit"
           :disabled="disabled"
         >
