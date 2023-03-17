@@ -26,7 +26,7 @@
                 class="form-control"
                 v-model="search.title"
                 placeholder="Search title"
-                @keyup="filter"
+                @keyup="filter(search.title)"
               />
             </CCol>
             <CCol :md="4">
@@ -35,7 +35,7 @@
                 class="form-control"
                 v-model="search.crew_member"
                 placeholder="Search crew member"
-                @keyup="filter"
+                @keyup="filter(search.crew_member)"
               />
             </CCol>
           </CRow>
@@ -204,8 +204,10 @@ export default {
           this.loading = false
         })
     },
-    filter: async function () {
-      await this.debounceFn()
+    filter: async function (value) {
+      if (value.length > 2) {
+        await this.debounceFn()
+      }
     },
     fetchGroupInfo: async function (id) {
       await this.$axios.get(`/groups/${id}`).then((response) => {

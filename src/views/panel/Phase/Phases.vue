@@ -24,7 +24,7 @@
                 class="form-control"
                 v-model="search.title"
                 placeholder="Search title"
-                @keyup="filter"
+                @keyup="filter(search.title)"
               />
             </CCol>
           </CRow>
@@ -212,8 +212,10 @@ export default {
           this.loading = false
         })
     },
-    filter: async function () {
-      await this.debounceFn()
+    filter: async function (value) {
+      if (value.length > 2) {
+        await this.debounceFn()
+      }
     },
     gotoPage: async function (url) {
       this.loading = true

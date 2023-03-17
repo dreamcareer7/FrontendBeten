@@ -26,7 +26,7 @@
                 class="form-control"
                 v-model="search.title"
                 placeholder="Title..."
-                @keyup="filter"
+                @keyup="filter(search.title)"
               />
             </CCol>
             <CCol :md="2">
@@ -35,7 +35,7 @@
                 class="form-control"
                 v-model="search.phones"
                 placeholder="Phones..."
-                @keyup="filter"
+                @keyup="filter(search.phones)"
               />
             </CCol>
             <CCol :md="2">
@@ -44,7 +44,7 @@
                 class="form-control"
                 v-model="search.city"
                 placeholder="City..."
-                @keyup="filter"
+                @keyup="filter(search.city)"
               />
             </CCol>
           </CRow>
@@ -250,8 +250,10 @@ export default {
           this.loading = false
         })
     },
-    filter: async function () {
-      await this.debounceFn()
+    filter: async function (value) {
+      if (value.length > 2) {
+        await this.debounceFn()
+      }
     },
     viewDetails: async function (id) {
       await this.$axios.get(`/dormitories/${id}`).then((response) => {

@@ -19,7 +19,7 @@
                 class="form-control mb-3"
                 v-model="search.name"
                 placeholder="Name..."
-                @keyup="filter"
+                @keyup="filter(search.name)"
                 autofocus
               />
             </CCol>
@@ -29,7 +29,7 @@
                 class="form-control mb-3"
                 v-model="search.email"
                 placeholder="Email..."
-                @keyup="filter"
+                @keyup="filter(search.email)"
               />
             </CCol>
             <CCol md="4" sm="4" lg="3">
@@ -38,7 +38,7 @@
                 class="form-control mb-3"
                 v-model="search.contact"
                 placeholder="Contact..."
-                @keyup="filter"
+                @keyup="filter(search.contact)"
               />
             </CCol>
           </CRow>
@@ -226,8 +226,10 @@ export default {
           this.loading = false
         })
     },
-    filter: async function () {
-      await this.debounceFn()
+    filter: async function (value) {
+      if (value.length > 2) {
+        await this.debounceFn()
+      }
     },
     viewDetails: async function (id) {
       await this.$axios.get(`/users/${id}`).then((response) => {
