@@ -9,11 +9,11 @@
         </span>
       </CAlert>
       <CCardBody class="p-0">
-        <CTable responsive hover class="cursor-pointer">
+        <CTable responsive hover class="cursor-pointer mb-0">
           <CTableBody>
             <CTableRow
               v-if="documents.length === 0"
-              class="text-center d-block pt-3"
+              class="text-center d-block p-3"
             >
               No documents
             </CTableRow>
