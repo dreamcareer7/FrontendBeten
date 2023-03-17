@@ -11,24 +11,40 @@
       <CCardBody class="p-0">
         <CTable responsive hover class="cursor-pointer">
           <CTableBody>
-            <CTableRow v-if="documents.length === 0" class="pt-1 text-center">No documents</CTableRow>
+            <CTableRow
+              v-if="documents.length === 0"
+              class="text-center d-block pt-3"
+            >
+              No documents
+            </CTableRow>
             <CTableRow v-for="document in documents" :key="document.id">
               <CTableDataCell scope="row">{{ document.id }}</CTableDataCell>
               <CTableDataCell scope="row">
                 {{ document.title }}
               </CTableDataCell>
+              <CTableDataCell scope="row">
+                {{ document.created_by }}
+              </CTableDataCell>
               <CTableDataCell>
                 <a
                   class="btn btn-sm btn-info text-white m-1"
-                  :href="`${api_url}/${document.path}`"
-                  target="_blank"
+                  :href="document.path"
                   title="Download document"
+                  :download="document.title"
+                  target="_blank"
                 >
                   <ion-icon name="cloud-download-outline"></ion-icon>
                 </a>
               </CTableDataCell>
-              <CTableDataCell scope="row">
-                {{ document.created_by }}
+              <CTableDataCell>
+                <a
+                  class="btn btn-sm btn-info text-white m-1"
+                  :href="document.path"
+                  title="View document"
+                  target="_blank"
+                >
+                  <ion-icon name="eye-outline"></ion-icon>
+                </a>
               </CTableDataCell>
               <CTableDataCell :aria-colspan="2">
                 <button
@@ -64,8 +80,9 @@
             color="info"
             class="mt-1 text-white btn-sm"
             shape="rounded-pill"
-            >Upload</CButton
-          >
+            >
+            Upload
+          </CButton>
         </CCol>
       </CRow>
     </CForm>
