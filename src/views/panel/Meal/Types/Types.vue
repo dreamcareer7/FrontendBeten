@@ -20,7 +20,6 @@
           <CTable hover responsive class="cursor-pointer">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Description</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Has Documents</CTableHeaderCell>
@@ -34,9 +33,6 @@
                 @click.prevent="fetchMealTypeInfo(meal_type.id)"
                 title="View Detail"
               >
-                <CTableHeaderCell scope="row">{{
-                  meal_type.id
-                }}</CTableHeaderCell>
                 <CTableDataCell>{{ meal_type.title }}</CTableDataCell>
                 <CTableDataCell>{{ meal_type.description }}</CTableDataCell>
                 <CTableDataCell>
@@ -121,8 +117,6 @@
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableDataCell>{{ meal_type.id }}</CTableDataCell>
               <CTableHeaderCell>Title</CTableHeaderCell>
               <CTableDataCell>{{ meal_type.title }}</CTableDataCell>
             </CTableRow>

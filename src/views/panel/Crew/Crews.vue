@@ -49,7 +49,6 @@
           <CTable v-if="!loading" responsive hover class="cursor-pointer">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Full Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Phone</CTableHeaderCell>
@@ -69,7 +68,6 @@
                 @click="viewDetails(crew.id)"
                 v-c-tooltip="{ content: 'View Detail.', placement: 'left' }"
               >
-                <CTableHeaderCell scope="row">{{ crew.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ crew.fullname }}</CTableDataCell>
                 <CTableDataCell>{{ crew.country?.title }}</CTableDataCell>
                 <CTableDataCell>{{ crew.phone }}</CTableDataCell>
@@ -151,8 +149,6 @@
     <CModalBody>
       <CTable class="table table-responsive">
         <CTableRow class="mt-3">
-          <CTableHeaderCell>ID:</CTableHeaderCell>
-          <CTableDataCell>{{ crew_member.id }}</CTableDataCell>
           <CTableHeaderCell>Full Name:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.fullname }}</CTableDataCell>
         </CTableRow>

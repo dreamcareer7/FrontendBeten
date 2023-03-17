@@ -14,9 +14,6 @@
             <template v-for="contract in contracts" :key="contract.id">
               <CTableRow>
                 <CTableHeaderCell scope="row">
-                  {{ contract.id }}
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="row">
                   {{ contract.reference }}
                 </CTableHeaderCell>
                 <CTableDataCell>

@@ -20,7 +20,6 @@
           <CTable>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Meal Type</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Quantity</CTableHeaderCell>
                 <CTableHeaderCell scope="col">To Model Type</CTableHeaderCell>
@@ -31,7 +30,6 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="meal in meals" :key="meal.id">
-                <CTableHeaderCell scope="row">{{ meal.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ meal.meal_type_id }}</CTableDataCell>
                 <CTableDataCell>{{ meal.quantity }}</CTableDataCell>
                 <CTableDataCell>{{ meal.to_model_type }}</CTableDataCell>
@@ -91,8 +89,6 @@
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableDataCell>{{ meal.id }}</CTableDataCell>
               <CTableHeaderCell>Meal Type ID</CTableHeaderCell>
               <CTableDataCell>{{ meal.meal_type_id }}</CTableDataCell>
             </CTableRow>

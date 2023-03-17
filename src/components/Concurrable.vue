@@ -12,7 +12,6 @@
         <CTable responsive hover class="cursor-pointer">
           <CTableHead>
             <CTableRow>
-              <CTableHeaderCell scope="col">#</CTableHeaderCell>
               <CTableHeaderCell scope="col">Reference</CTableHeaderCell>
               <CTableHeaderCell scope="col">Documents</CTableHeaderCell>
               <CTableHeaderCell
@@ -27,9 +26,6 @@
           <CTableBody>
             <template v-for="contract in contracts" :key="contract.id">
               <CTableRow>
-                <CTableHeaderCell scope="row">
-                  {{ contract.id }}
-                </CTableHeaderCell>
                 <CTableHeaderCell scope="row">
                   {{ contract.reference }}
                 </CTableHeaderCell>

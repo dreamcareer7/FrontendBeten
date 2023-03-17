@@ -55,7 +55,6 @@
           <CTable>
           <CTableHead>
             <CTableRow>
-              <CTableHeaderCell scope="col">#</CTableHeaderCell>
               <CTableHeaderCell scope="col">Model type</CTableHeaderCell>
               <CTableHeaderCell scope="col">Model id</CTableHeaderCell>
               <CTableHeaderCell scope="col">Role</CTableHeaderCell>
@@ -63,7 +62,6 @@
           </CTableHead>
           <CTableBody>
             <CTableRow v-for="log in service_commit_logs">
-              <CTableHeaderCell scope="row">{{ log.id }}</CTableHeaderCell>
               <CTableDataCell>{{ log.model_type }}</CTableDataCell>
               <CTableDataCell>{{ log.model_type }}</CTableDataCell>
               <CTableDataCell>{{ log.role }}</CTableDataCell>

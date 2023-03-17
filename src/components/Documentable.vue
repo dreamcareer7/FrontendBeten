@@ -18,7 +18,6 @@
               No documents
             </CTableRow>
             <CTableRow v-for="document in documents" :key="document.id">
-              <CTableDataCell scope="row">{{ document.id }}</CTableDataCell>
               <CTableDataCell scope="row">
                 {{ document.title }}
               </CTableDataCell>

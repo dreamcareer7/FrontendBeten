@@ -20,7 +20,6 @@
           <CTable hover responsive class="cursor-pointer">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
                 <CTableHeaderCell scope="col">City</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Before Date</CTableHeaderCell>
@@ -36,9 +35,6 @@
                 @click.prevent="fetchServiceInfo(service.id)"
                 title="View Detail"
               >
-                <CTableHeaderCell scope="row">
-                  {{ service.id }}
-                </CTableHeaderCell>
                 <CTableDataCell>{{ service.title }}</CTableDataCell>
                 <CTableDataCell>{{ service.city?.title }}</CTableDataCell>
                 <CTableDataCell>{{ service.before_date }}</CTableDataCell>
@@ -119,8 +115,6 @@
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableDataCell>{{ service.id }}</CTableDataCell>
               <CTableHeaderCell>City</CTableHeaderCell>
               <CTableDataCell>{{
                 cities.filter((city) => city.id === service.city_id)[0].title

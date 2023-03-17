@@ -56,7 +56,6 @@
           <CTable v-if="!loading && groups.length > 0">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">ID #</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Crew member</CTableHeaderCell>
                 <CTableHeaderCell
@@ -70,7 +69,6 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="group in groups" :key="group.id">
-                <CTableHeaderCell scope="row">{{ group.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ group.title }}</CTableDataCell>
                 <CTableDataCell>{{ group.crew.fullname }}</CTableDataCell>
                 <CTableDataCell>
@@ -145,9 +143,6 @@
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableDataCell>ID: {{ group.id }}</CTableDataCell>
-            </CTableRow>
-            <CTableRow>
               <CTableDataCell>Title: {{ group.title }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
@@ -164,12 +159,10 @@
           <CTable class="table table-responsive">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">ID</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Fullname</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableRow v-for="client in group.clients" :key="client.id">
-              <CTableDataCell>{{ client.id }}</CTableDataCell>
               <CTableDataCell>{{ client.fullname }}</CTableDataCell>
             </CTableRow>
           </CTable>

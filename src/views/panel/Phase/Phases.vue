@@ -45,7 +45,6 @@
           <CTable v-if="!loading && phases.length > 0">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">ID #</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Required</CTableHeaderCell>
                 <CTableHeaderCell scope="col"> Actions </CTableHeaderCell>
@@ -53,7 +52,6 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="phase in phases" :key="phase.id">
-                <CTableHeaderCell scope="row">{{ phase.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ phase.title }}</CTableDataCell>
                 <CTableDataCell>
                   <CBadge
@@ -135,8 +133,6 @@
     <CModalBody>
       <CTable class="table table-responsive">
         <CTableRow>
-          <CTableHeaderCell>ID</CTableHeaderCell>
-          <CTableDataCell>{{ phase.id }}</CTableDataCell>
           <CTableHeaderCell>Title</CTableHeaderCell>
           <CTableDataCell>{{ phase.title }}</CTableDataCell>
         </CTableRow>

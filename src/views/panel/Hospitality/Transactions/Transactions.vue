@@ -25,7 +25,6 @@
             <CTable>
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Hospitality</CTableHeaderCell>
                   <CTableHeaderCell scope="col">To Model Type</CTableHeaderCell>
                   <CTableHeaderCell scope="col">To Model ID</CTableHeaderCell>

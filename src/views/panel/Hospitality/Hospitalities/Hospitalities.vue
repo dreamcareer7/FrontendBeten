@@ -34,7 +34,6 @@
           >
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Description</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Required</CTableHeaderCell>
@@ -48,9 +47,6 @@
                 v-for="hospitality in hospitalities"
                 :key="hospitality.id"
               >
-                <CTableHeaderCell scope="row">
-                  {{ hospitality.id }}
-                </CTableHeaderCell>
                 <CTableDataCell>{{ hospitality.title }}</CTableDataCell>
                 <CTableDataCell>{{ hospitality.description }}</CTableDataCell>
                 <CTableDataCell>{{ hospitality.required_date }}</CTableDataCell>
@@ -130,8 +126,6 @@
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>ID</CTableHeaderCell>
-              <CTableDataCell>{{ hospitality.id }}</CTableDataCell>
               <CTableHeaderCell>Description</CTableHeaderCell>
               <CTableDataCell>{{ hospitality.description }}</CTableDataCell>
             </CTableRow>

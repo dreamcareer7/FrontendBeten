@@ -84,7 +84,6 @@
           <CTable v-if="!loading" responsive>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Full Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Country</CTableHeaderCell>
                 <CTableHeaderCell scope="col">ID Type</CTableHeaderCell>
@@ -96,7 +95,6 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="client in clients" :key="client.id">
-                <CTableHeaderCell scope="row">{{ client.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
                 <CTableDataCell>{{ client.country?.title }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
@@ -172,8 +170,6 @@
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>ID:</CTableHeaderCell>
-              <CTableDataCell>{{ client.id }}</CTableDataCell>
               <CTableHeaderCell>Full Name:</CTableHeaderCell>
               <CTableDataCell>{{ client.fullname }}</CTableDataCell>
             </CTableRow>

@@ -71,7 +71,6 @@
           <CTable v-if="!loading && dormitories.length > 0">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Phones</CTableHeaderCell>
                 <CTableHeaderCell scope="col">City</CTableHeaderCell>
@@ -82,9 +81,6 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="dormitory in dormitories" :key="dormitory.id">
-                <CTableHeaderCell scope="row">{{
-                  dormitory.id
-                }}</CTableHeaderCell>
                 <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.phones }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.city?.title }}</CTableDataCell>
@@ -161,8 +157,6 @@
     <CModalBody>
       <CTable class="table table-responsive">
         <CTableRow>
-          <CTableDataCell>ID</CTableDataCell>
-          <CTableDataCell>{{ dormitory.id }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Title</CTableDataCell>

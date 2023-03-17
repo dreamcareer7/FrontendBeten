@@ -15,7 +15,6 @@
             <CTable>
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Service</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Badge</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Schedule At</CTableHeaderCell>
@@ -23,9 +22,6 @@
               </CTableHead>
               <CTableBody>
                 <CTableRow v-for="commit in commits" :key="commit.id">
-                  <CTableHeaderCell scope="row">
-                    {{ commit.id }}
-                  </CTableHeaderCell>
                   <CTableDataCell>{{ commit.service.title }}</CTableDataCell>
                   <CTableDataCell>{{ commit.badge }}</CTableDataCell>
                   <CTableDataCell>{{ commit.schedule_at }}</CTableDataCell>

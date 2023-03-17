@@ -68,7 +68,6 @@
           >
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Name</CTableHeaderCell>
                 <CTableHeaderCell scope="col">E-mail</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Active</CTableHeaderCell>
@@ -78,7 +77,6 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="user in users" :key="user.id">
-                <CTableHeaderCell>{{ user.id }}</CTableHeaderCell>
                 <CTableDataCell>{{ user.name }}</CTableDataCell>
                 <CTableDataCell>{{ user.email }}</CTableDataCell>
                 <CTableDataCell>
@@ -159,10 +157,6 @@
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
-        <CTableRow>
-          <CTableHeaderCell>ID</CTableHeaderCell>
-          <CTableDataCell>{{ user.id }}</CTableDataCell>
-        </CTableRow>
         <CTableRow>
           <CTableHeaderCell>Name</CTableHeaderCell>
           <CTableDataCell>{{ user.name }}</CTableDataCell>

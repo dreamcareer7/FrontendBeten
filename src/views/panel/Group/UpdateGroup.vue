@@ -46,7 +46,6 @@
               >
                 <div class="col-8">
                   <h6>{{ client.fullname }}</h6>
-                  <span> {{ client.id }} </span>
                 </div>
                 <div class="col-4">
                   <button

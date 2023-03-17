@@ -59,7 +59,6 @@
           <CTable v-if="!loading">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Model</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Registration</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Manufacturer</CTableHeaderCell>
@@ -70,9 +69,6 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="vehicle in vehicles" :key="vehicle.id">
-                <CTableHeaderCell scope="row">{{
-                  vehicle.id
-                }}</CTableHeaderCell>
                 <CTableDataCell>{{ vehicle.model }}</CTableDataCell>
                 <CTableDataCell>{{ vehicle.registration }}</CTableDataCell>
                 <CTableDataCell>{{ vehicle.manufacturer }}</CTableDataCell>
@@ -138,10 +134,6 @@
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
-        <CTableRow>
-          <CTableDataCell>ID</CTableDataCell>
-          <CTableDataCell>{{ vehicle.id }}</CTableDataCell>
-        </CTableRow>
         <CTableRow>
           <CTableDataCell>Model</CTableDataCell>
           <CTableDataCell>{{ vehicle.model }}</CTableDataCell>
