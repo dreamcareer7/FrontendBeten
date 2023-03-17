@@ -10,18 +10,6 @@
       </CAlert>
       <CCardBody class="p-0">
         <CTable responsive hover class="cursor-pointer">
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell scope="col">#</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Created by</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Download</CTableHeaderCell>
-              <CTableHeaderCell scope="col">View</CTableHeaderCell>
-              <CTableHeaderCell style="width: 20%" scope="col" :aria-colspan="2"
-                >Delete</CTableHeaderCell
-              >
-            </CTableRow>
-          </CTableHead>
           <CTableBody>
             <CTableRow v-if="documents.length === 0" class="pt-1 text-center">No documents</CTableRow>
             <CTableRow v-for="document in documents" :key="document.id">
@@ -35,7 +23,7 @@
               <CTableDataCell>
                 <a
                   class="btn btn-sm btn-info text-white m-1"
-                  :href="`${document.path}`"
+                  :href="document.path"
                   title="Download document"
                   :download="document.title"
                   target="_blank"
@@ -46,7 +34,7 @@
               <CTableDataCell>
                 <a
                   class="btn btn-sm btn-info text-white m-1"
-                  :href="`${document.path}`"
+                  :href="document.path"
                   title="View document"
                   target="_blank"
                 >
