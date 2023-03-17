@@ -80,8 +80,9 @@
             color="info"
             class="mt-1 text-white btn-sm"
             shape="rounded-pill"
-            >Upload</CButton
-          >
+            >
+            Upload
+          </CButton>
         </CCol>
       </CRow>
     </CForm>
