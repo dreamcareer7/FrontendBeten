@@ -17,7 +17,7 @@
           </div>
         </CCardHeader>
         <CCardBody>
-          <CTable hover responsive class="cursor-pointer">
+          <CTable hover responsive>
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
@@ -27,12 +27,7 @@
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow
-                v-for="meal_type in meal_types"
-                :key="meal_type.id"
-                @click.prevent="fetchMealTypeInfo(meal_type.id)"
-                title="View Detail"
-              >
+              <CTableRow v-for="meal_type in meal_types" :key="meal_type.id">
                 <CTableDataCell>{{ meal_type.title }}</CTableDataCell>
                 <CTableDataCell>{{ meal_type.description }}</CTableDataCell>
                 <CTableDataCell>

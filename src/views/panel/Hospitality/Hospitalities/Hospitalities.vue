@@ -29,7 +29,6 @@
             v-if="!loading"
             responsive
             hover
-            class="cursor-pointer"
             align="middle"
           >
             <CTableHead>

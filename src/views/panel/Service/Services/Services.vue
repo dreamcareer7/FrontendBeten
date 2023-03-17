@@ -17,7 +17,7 @@
           </div>
         </CCardHeader>
         <CCardBody>
-          <CTable hover responsive class="cursor-pointer">
+          <CTable hover responsive>
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>
@@ -29,12 +29,7 @@
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow
-                v-for="service in services"
-                :key="service.id"
-                @click.prevent="fetchServiceInfo(service.id)"
-                title="View Detail"
-              >
+              <CTableRow v-for="service in services" :key="service.id">
                 <CTableDataCell>{{ service.title }}</CTableDataCell>
                 <CTableDataCell>{{ service.city?.title }}</CTableDataCell>
                 <CTableDataCell>{{ service.before_date }}</CTableDataCell>

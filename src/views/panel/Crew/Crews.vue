@@ -46,7 +46,7 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
-          <CTable v-if="!loading" responsive hover class="cursor-pointer">
+          <CTable v-if="!loading" responsive hover>
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">Full Name</CTableHeaderCell>
@@ -62,12 +62,7 @@
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow
-                v-for="crew in crews"
-                :key="crew.id"
-                @click="viewDetails(crew.id)"
-                v-c-tooltip="{ content: 'View Detail.', placement: 'left' }"
-              >
+              <CTableRow v-for="crew in crews" :key="crew.id">
                 <CTableDataCell>{{ crew.fullname }}</CTableDataCell>
                 <CTableDataCell>{{ crew.country?.title }}</CTableDataCell>
                 <CTableDataCell>{{ crew.phone }}</CTableDataCell>

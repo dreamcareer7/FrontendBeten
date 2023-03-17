@@ -63,7 +63,6 @@
             v-if="!loading && users.length > 0"
             responsive
             hover
-            class="cursor-pointer"
             align="middle"
           >
             <CTableHead>
