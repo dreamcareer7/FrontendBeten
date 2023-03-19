@@ -3,16 +3,9 @@
     position="fixed"
     :unfoldable="sidebarUnfoldable"
     :visible="sidebarVisible"
-    @visible-change="
-      (event) =>
-        $store.commit({
-          type: 'updateSidebarVisible',
-          value: event,
-        })
-    "
   >
     <CSidebarBrand>
-      <span style="font-family: Scripto; font-size: 2rem;">Murafiq</span>
+      <router-link to="/">Murafiq</router-link>
     </CSidebarBrand>
     <AppSidebarNav />
     <CSidebarToggler
@@ -23,24 +16,29 @@
 </template>
 
 <script>
+import store from '../store'
 import { computed } from 'vue'
-import { useStore } from 'vuex'
 import { AppSidebarNav } from './AppSidebarNav'
-import { logoNegative } from '@/assets/brand/logo-negative'
-import { sygnet } from '@/assets/brand/sygnet'
+
 export default {
   name: 'AppSidebar',
   components: {
     AppSidebarNav,
   },
   setup() {
-    const store = useStore()
     return {
-      logoNegative,
-      sygnet,
       sidebarUnfoldable: computed(() => store.state.sidebarUnfoldable),
       sidebarVisible: computed(() => store.state.sidebarVisible),
     }
   },
 }
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+  font-family: Scripto;
+  font-size: 2rem;
+  color: white;
+}
+</style>
