@@ -205,11 +205,8 @@ export default {
         })
     },
     filter: async function (value) {
-      if (value.length > 2 || value.length == 3) {
-        await this.getGroups()
-      }
-      if(value.length == 0){
-        await this.getGroups()
+      if (value.length > 2) {
+        await this.debounceFn()
       }
     },
     fetchGroupInfo: async function (id) {

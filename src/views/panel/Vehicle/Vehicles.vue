@@ -25,8 +25,7 @@
                 class="form-control"
                 v-model="search.model"
                 placeholder="model"
-                @keyup="filter(search.model)"
-
+                @change="getVehicles"
               />
             </CCol>
             <CCol :md="2">
@@ -189,15 +188,6 @@ export default {
     is_vehicle_modal_visible: false,
   }),
   methods: {
-    filter: async function (value) {
-      if (value.length > 2 || value.length == 3) {
-        await this.getVehicles()
-      }
-      if(value.length == 0){
-        await this.getVehicles()
-      }
-    },
-
     getVehicles: async function () {
       this.loading = true
       await this.$axios

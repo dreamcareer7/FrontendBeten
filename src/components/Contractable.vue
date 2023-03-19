@@ -119,7 +119,6 @@ export default {
           this.showMessage = true
           this.reference = ''
           this.$refs.uploadForm.$el.reset()
-          this.fetchcontacts()
         })
     },
     toggleDocumentsOfContract(contract_id) {
@@ -135,8 +134,9 @@ export default {
         this.showMessage = true
       })
     },
-    async fetchcontacts(){
-      await this.$axios
+  },
+  async mounted() {
+    await this.$axios
       .get(`/contracts/${this.type}/${this.id}`)
       .then((response) => {
         this.contracts = response.data
@@ -147,10 +147,6 @@ export default {
           this.contract_documents_shown[contract.id] = false
         })
       })
-    },
-  },
-   mounted() {
-    this.fetchcontacts();
   },
 }
 </script>

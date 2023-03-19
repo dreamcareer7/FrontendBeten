@@ -26,7 +26,7 @@
                 class="form-control mb-3"
                 v-model="search.fullname"
                 placeholder="Full Name"
-                @keyup="filter(search.fullname)"
+                @change="getClients"
               />
             </CCol>
             <CCol :md="2">
@@ -253,14 +253,6 @@ export default {
           this.pagination = response.data.links
           this.loading = false
         })
-    },
-    filter: async function (value) {
-      if (value.length > 2 || value.length == 3) {
-        await this.getClients()
-      }
-      if(value.length == 0){
-        await this.getClients()
-      }
     },
     gotoPage: async function (url) {
       this.loading = true

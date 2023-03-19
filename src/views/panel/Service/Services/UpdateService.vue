@@ -61,9 +61,9 @@
           />
           <label for="phone">After date</label>
         </div>
-        <CRow v-if="true">
+        <CRow v-if="error_message">
           <CCol :md="12">
-            <div v-show="error_message" class="error_style">
+            <div class="error_style">
               {{ error_message }}
             </div>
           </CCol>
@@ -89,27 +89,35 @@ export default {
     error_message: '',
     service: {},
     cities: [],
-    counter:0,
   }),
   methods: {
     updateService: async function () {
-        this.$axios
-          .patch(`/services/${this.service.id}`, this.service)
-          .then(() => {
-            this.$router.push({ name: 'Services' })
-            swal('Updated successfully!', {
-              icon: 'success',
-              timer: 3000,
+      await swal({
+        title: 'Are you sure?',
+        text: 'Click confirm to update, this action is irreversible',
+        icon: 'warning',
+        buttons: ['Cancel', 'Confirm'],
+      }).then((willUpdate) => {
+        if (willUpdate) {
+          this.$axios
+            .patch(`/services/${this.service.id}`, this.service)
+            .then(() => {
+              this.$router.push({ name: 'Services' })
+              swal('Updated successfully!', {
+                icon: 'success',
+                timer: 3000,
+              })
             })
-          })
-          .catch((error) => {
-            if (error.response) {
-              this.error_message = error.response.data.message
-            } else {
-              this.error_message = error.message
-            }
-        })
-      },
+            .catch((error) => {
+              if (error.response) {
+                this.error_message = error.response.data.message
+              } else {
+                this.error_message = error.message
+              }
+            })
+        }
+      })
+    },
   },
   async mounted() {
     cities.fetchCities().then((cities) => (this.cities = cities))
@@ -118,40 +126,5 @@ export default {
       this.service = response.data
     })
   },
-  watch:{
-    immediate: true,
-    deep: true,
-    'service.before_date' :function(newVal , oldVal){
-      debugger
-        if(this.counter < 3){
-          this.counter = this.counter + 1
-        }else{
-          if((oldVal == null || oldVal == undefined )){
-          this.service.before_date  = null
-            this.error_message="you are not allow to use new date type"
-          }
-        }
-    },
-    'service.exact_date' :function(newVal , oldVal){
-      if(this.counter  < 3){
-          this.counter = this.counter + 1
-      }else{
-        if((oldVal == null || oldVal == undefined )){
-          this.service.exact_date  = null
-          this.error_message="you are not allow to use new date type"
-        }
-      }
-    },
-    'service.after_date' :function(newVal , oldVal){
-      if(this.counter  < 3){
-          this.counter = this.counter + 1
-      }else{
-        if((oldVal == null || oldVal == undefined )){
-          this.service.after_date  = null
-          this.error_message="you are not allow to use new date type"
-        }
-      }
-    }
-  }
 }
 </script>
