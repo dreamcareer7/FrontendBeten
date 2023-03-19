@@ -1,3 +1,5 @@
+const permissions = JSON.parse(localStorage.getItem('permissions'))
+
 export default [
   {
     component: 'CNavItem',
@@ -8,24 +10,28 @@ export default [
   {
     component: 'CNavTitle',
     name: 'User Management',
+    visible: permissions.includes('users.browse')
   },
   {
     component: 'CNavItem',
     name: 'Users',
     to: '/users',
     icon: 'cil-people',
+    visible: permissions.includes('users.browse'),
   },
   {
     component: 'CNavItem',
     name: 'Clients',
     to: '/clients',
     icon: 'cil-contact',
+    visible: permissions.includes('clients.index'),
   },
   {
     component: 'CNavItem',
     name: 'Crew',
     to: '/crews',
     icon: 'cil-address-book',
+    visible: permissions.includes('crew.index'),
   },
   {
     component: 'CNavTitle',
@@ -34,12 +40,12 @@ export default [
   {
     component: 'CNavGroup',
     name: 'Services',
-    to: '/pages',
     icon: 'cil-window',
+    visible: permissions.includes('services.index'),
     items: [
       {
         component: 'CNavItem',
-        name: 'All Services',
+        name: 'Services',
         to: '/services',
       },
       {
@@ -78,12 +84,14 @@ export default [
     name: 'Groups',
     to: '/groups',
     icon: 'cil-wc',
+    visible: permissions.includes('groups.index'),
   },
   {
     component: 'CNavItem',
     name: 'Vehicles',
     to: '/vehicles',
     icon: 'cil-car-alt',
+    visible: permissions.includes('vehicles.index'),
   },
   {
     component: 'CNavItem',

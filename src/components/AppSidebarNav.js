@@ -136,7 +136,11 @@ const AppSidebarNav = defineComponent({
         CSidebarNav,
         {},
         {
-          default: () => nav.map((item) => renderItem(item)),
+          default: () => nav.map((item) => {
+            if (JSON.parse(localStorage.getItem('user')).is_admin || item.visible) {
+              return renderItem(item)
+            }
+          }),
         },
       )
   },

@@ -14,11 +14,11 @@
                   <CInputGroup class="mb-3">
                     <CInputGroupText>@</CInputGroupText>
                     <CFormInput
-                        type="email"
-                        placeholder="Email"
-                        v-model="form.email"
-                        autocomplete="email"
-                      />
+                      type="email"
+                      placeholder="Email"
+                      v-model="form.email"
+                      autocomplete="email"
+                    />
                   </CInputGroup>
                   <CInputGroup class="mb-4">
                     <CInputGroupText>
@@ -76,6 +76,8 @@ export default {
         .post('/login', this.form)
         .then((response) => {
           localStorage.setItem('auth_token', response.data.token)
+          localStorage.setItem('user', JSON.stringify(response.data.user))
+          localStorage.setItem('permissions', JSON.stringify(response.data.permissions))
           this.$router.push({ name: 'Dashboard' })
         })
         .catch(
