@@ -2,15 +2,25 @@
   <CCol class="card bg-light border-top-3 border-secondary p-0 mt-3">
     <CCardHeader class="font-weight-bold">Contracts</CCardHeader>
     <CCard class="mt-1">
-      <CAlert color="success" class="m-2" v-show="showMessage">
+      <CAlert color="success" class="m-2" v-show="message">
         {{ message }}
-        <span class="pull-right cursor-pointer" @click="showMessage = false">
+        <span class="pull-right cursor-pointer" @click="message = ''"> X </span>
+      </CAlert>
+      <CAlert color="danger" class="m-2" v-show="error_message">
+        {{ error_message }}
+        <span class="pull-right cursor-pointer" @click="error_message = ''">
           X
         </span>
       </CAlert>
       <CCardBody class="p-0">
-        <CTable responsive hover class="cursor-pointer">
+        <CTable responsive hover>
           <CTableBody>
+            <CTableRow
+              v-if="contracts.length === 0"
+              class="text-center d-block pt-3 pb-1"
+            >
+              No contracts
+            </CTableRow>
             <template v-for="contract in contracts" :key="contract.id">
               <CTableRow>
                 <CTableHeaderCell scope="row">
@@ -63,7 +73,13 @@
           />
         </CCol>
         <CCol xs="5" sm="5">
-          <input type="file" class="form-control sm" ref="docs" multiple />
+          <input
+            type="file"
+            accept="image/*,.pdf"
+            class="form-control sm"
+            ref="docs"
+            multiple
+          />
         </CCol>
         <CCol xs="2" sm="2">
           <CButton
@@ -85,7 +101,7 @@ export default {
   props: ['type', 'id'],
   data: () => ({
     contracts: [],
-    showMessage: false,
+    error_message: '',
     message: '',
     contract_documents_shown: [],
     reference: '',
@@ -101,24 +117,29 @@ export default {
         Iteate over any file sent over appending the files
         to the form data.
       */
-      for (let i = 0; i < this.$refs.docs.files.length; i++) {
-        form_data.append(`contracts[${i}]`, this.$refs.docs.files[i])
+      for (
+        let file_index = 0;
+        file_index < this.$refs.docs.files.length;
+        file_index++
+      ) {
+        form_data.append(
+          `contracts[${file_index}]`,
+          this.$refs.docs.files[file_index],
+        )
       }
       /*
         Make the request to the POST /select-files URL
       */
       await this.$axios
         .post(`/contracts/${this.type}/${this.id}`, form_data)
-        .then((response) => {
-          // Add the uploaded contracts to the existing list
-          // We already have the reference, we just need to get the ID
-          // from the response
-          this.contracts.push({ id: response.data, reference: this.reference })
-          this.contract_documents_shown[response.data] = false
+        .then(() => {
           this.message = 'Contract uploaded successfully.'
-          this.showMessage = true
           this.reference = ''
           this.$refs.uploadForm.$el.reset()
+          this.getContracts()
+        })
+        .catch((error) => {
+          this.error_message = error.response.data.message
         })
     },
     toggleDocumentsOfContract(contract_id) {
@@ -134,9 +155,8 @@ export default {
         this.showMessage = true
       })
     },
-  },
-  async mounted() {
-    await this.$axios
+    getContracts() {
+      this.$axios
       .get(`/contracts/${this.type}/${this.id}`)
       .then((response) => {
         this.contracts = response.data
@@ -147,6 +167,10 @@ export default {
           this.contract_documents_shown[contract.id] = false
         })
       })
+    }
+  },
+  async mounted() {
+    this.getContracts()
   },
 }
 </script>

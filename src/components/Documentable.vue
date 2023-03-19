@@ -2,14 +2,18 @@
   <CCol class="card bg-light border-top-3 p-0 mt-3">
     <CCardHeader class="font-weight-bold">Documents</CCardHeader>
     <CCard class="mt-1">
-      <CAlert color="success" class="m-2" v-show="showMessage">
+      <CAlert color="success" class="m-2" v-show="message">
         {{ message }}
-        <span class="pull-right cursor-pointer" @click="showMessage = false">
+        <span class="pull-right cursor-pointer" @click="message = ''"> X </span>
+      </CAlert>
+      <CAlert color="danger" class="m-2" v-show="error_message">
+        {{ error_message }}
+        <span class="pull-right cursor-pointer" @click="error_message = ''">
           X
         </span>
       </CAlert>
       <CCardBody class="p-0">
-        <CTable responsive hover class="cursor-pointer mb-0">
+        <CTable responsive hover class="mb-0">
           <CTableBody>
             <CTableRow
               v-if="documents.length === 0"
@@ -71,7 +75,13 @@
           />
         </CCol>
         <CCol xs="5" sm="5">
-          <input type="file" class="form-control sm" ref="docs" multiple />
+          <input
+            type="file"
+            accept="image/*,.pdf"
+            class="form-control sm"
+            ref="docs"
+            multiple
+          />
         </CCol>
         <CCol xs="2" sm="2">
           <CButton
@@ -79,7 +89,7 @@
             color="info"
             class="mt-1 text-white btn-sm"
             shape="rounded-pill"
-            >
+          >
             Upload
           </CButton>
         </CCol>
@@ -94,7 +104,7 @@ export default {
   props: ['type', 'id'],
   data: () => ({
     documents: [],
-    showMessage: false,
+    error_message: '',
     message: '',
     files: [],
     title: '',
@@ -121,19 +131,21 @@ export default {
       await this.$axios
         .post(`/documents/${this.type}/${this.id}`, form_data)
         .then(() => {
+          this.error_message = '' // Hide previous error message if any
           this.getDocuments()
           this.message = 'Document uploaded successfully.'
-          this.showMessage = true
           this.$refs.uploadForm.$el.reset()
+        })
+        .catch((error) => {
+          this.error_message = error.response.data.message
         })
     },
     async deleteDocument(doc_id) {
       await this.$axios.delete(`/documents/${doc_id}`).then(() => {
         this.documents = this.documents.filter((doc) => doc.id !== doc_id)
         this.message = 'Document deleted successfully.'
-        this.showMessage = true
         setTimeout(() => {
-          this.showMessage = false
+          this.message = ''
         }, 3000)
       })
     },

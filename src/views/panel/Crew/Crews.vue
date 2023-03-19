@@ -76,7 +76,6 @@
                 <CTableHeaderCell scope="col">ID Type</CTableHeaderCell>
                 <CTableHeaderCell scope="col">ID Number</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Active</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Created</CTableHeaderCell>
                 <CTableHeaderCell style="width: 10%" :aria-colspan="2"
                   >Action</CTableHeaderCell
                 >
@@ -96,7 +95,6 @@
                     >{{ crew.is_active ? 'Yes' : 'No' }}</CBadge
                   >
                 </CTableDataCell>
-                <CTableDataCell>{{ crew.created_at }}</CTableDataCell>
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
@@ -196,18 +194,6 @@
               >{{ crew_member.is_active ? 'Yes' : 'No' }}</CBadge
             >
           </CTableDataCell>
-        </CTableRow>
-
-        <CTableRow class="mt-3">
-          <CTableHeaderCell>Contact</CTableHeaderCell>
-          <CTableDataCell>{{ crew_member.country_id }}</CTableDataCell>
-          <CTableHeaderCell>Date Created:</CTableHeaderCell>
-          <CTableDataCell>{{ crew_member.created_at }}</CTableDataCell>
-        </CTableRow>
-
-        <CTableRow class="mt-3">
-          <CTableHeaderCell>Date Updated:</CTableHeaderCell>
-          <CTableDataCell>{{ crew_member.updated_at }}</CTableDataCell>
         </CTableRow>
       </CTable>
       <Contractable type="crew" :id="crew_member.id" />
