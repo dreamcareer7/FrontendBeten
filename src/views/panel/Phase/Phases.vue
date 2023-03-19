@@ -213,7 +213,10 @@ export default {
         })
     },
     filter: async function (value) {
-      if (value.length > 2) {
+      if (value.length > 2 || value.length == 3) {
+        await this.debounceFn()
+      }
+      if(value.length == 0){
         await this.debounceFn()
       }
     },
