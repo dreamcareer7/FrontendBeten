@@ -6,6 +6,7 @@ export default [
     name: 'Dashboard',
     to: '/dashboard',
     icon: 'cil-speedometer',
+    visible: true,
   },
   {
     component: 'CNavTitle',
