@@ -5,7 +5,7 @@
     :visible="sidebarVisible"
   >
     <CSidebarBrand>
-      <router-link to="/">Murafiq</router-link>
+      <router-link to="/">{{ sidebarUnfoldable ? 'M' : 'Murafiq' }}</router-link>
     </CSidebarBrand>
     <AppSidebarNav />
     <CSidebarToggler
