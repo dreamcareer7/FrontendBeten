@@ -81,7 +81,7 @@
             </div>
           </div>
         </div>
-        <div class="col">
+        <div class="col" v-if="roles.length > 0">
           <label class="form-label roles-select-label">User Roles</label>
           <CFormSelect
             :html-size="roles.length + 1"
@@ -102,9 +102,12 @@
       </CCol>
     </CRow>
     <div class="card-footer text-end">
-      <button class="btn btn-warning text-white" @click.prevent="$router.go(-1)">
-        Go Back
-      </button>&nbsp;
+      <button
+        class="btn btn-warning text-white"
+        @click.prevent="$router.go(-1)"
+      >
+        Go Back</button
+      >&nbsp;
       <button type="submit" class="btn btn-warning text-white">
         <ion-icon name="save-outline"></ion-icon>&nbsp;Save
       </button>
@@ -156,10 +159,10 @@ export default {
       .then((response) => {
         this.user = response.data.user
         this.user.id = Number(this.$decrypt(this.$route.params.id))
-        this.roles = response.data.roles
-        // Populate the roles select element options
-        this.roles = response.data.roles.map(
-          (role) => {
+        if (response.data.roles) {
+          this.roles = response.data.roles
+          // Populate the roles select element options
+          this.roles = response.data.roles.map((role) => {
             return {
               value: role.name,
               label: role.name,
@@ -167,8 +170,8 @@ export default {
                 (user_role) => user_role.name === role.name,
               ),
             }
-          },
-        )
+          })
+        }
       })
   },
 }
