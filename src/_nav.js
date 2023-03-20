@@ -1,4 +1,4 @@
-const permissions = JSON.parse(localStorage.getItem('permissions'))
+import can from '@/plugins/gate'
 
 export default [
   {
@@ -11,28 +11,28 @@ export default [
   {
     component: 'CNavTitle',
     name: 'User Management',
-    visible: permissions?.includes('users.browse')
+    visible: can('users.browse')
   },
   {
     component: 'CNavItem',
     name: 'Users',
     to: '/users',
     icon: 'cil-people',
-    visible: permissions?.includes('users.browse'),
+    visible: can('users.browse'),
   },
   {
     component: 'CNavItem',
     name: 'Clients',
     to: '/clients',
     icon: 'cil-contact',
-    visible: permissions?.includes('clients.index'),
+    visible: can('clients.index'),
   },
   {
     component: 'CNavItem',
     name: 'Crew',
     to: '/crews',
     icon: 'cil-address-book',
-    visible: permissions?.includes('crews.index'),
+    visible: can('crews.index'),
   },
   {
     component: 'CNavTitle',
@@ -42,19 +42,19 @@ export default [
     component: 'CNavGroup',
     name: 'Services',
     icon: 'cil-window',
-    visible: permissions?.includes('services.index'),
+    visible: can('services.index'),
     items: [
       {
         component: 'CNavItem',
         name: 'Services',
         to: '/services',
-        visible: permissions?.includes('services.index'),
+        visible: can('services.index'),
       },
       {
         component: 'CNavItem',
         name: 'Service Commits',
         to: '/services/commits',
-        visible: permissions?.includes('commits.index'),
+        visible: can('commits.index'),
       },
     ],
   },
@@ -63,26 +63,26 @@ export default [
     name: 'Phases',
     to: '/phases',
     icon: 'cil-media-step-forward',
-    visible: permissions?.includes('phases.index'),
+    visible: can('phases.index'),
   },
   {
     component: 'CNavGroup',
     name: 'Meals',
     to: '/meals',
     icon: 'cil-fastfood',
-    visible: permissions?.includes('meals.index'),
+    visible: can('meals.index'),
     items: [
       {
         component: 'CNavItem',
         name: 'All Meals',
         to: '/meals',
-        visible: permissions?.includes('meals.index'),
+        visible: can('meals.index'),
       },
       {
         component: 'CNavItem',
         name: 'Types',
         to: '/meals/types',
-        visible: permissions?.includes('types.index'),
+        visible: can('types.index'),
       },
     ],
   },
@@ -91,40 +91,40 @@ export default [
     name: 'Groups',
     to: '/groups',
     icon: 'cil-wc',
-    visible: permissions?.includes('groups.index'),
+    visible: can('groups.index'),
   },
   {
     component: 'CNavItem',
     name: 'Vehicles',
     to: '/vehicles',
     icon: 'cil-car-alt',
-    visible: permissions?.includes('vehicles.index'),
+    visible: can('vehicles.index'),
   },
   {
     component: 'CNavItem',
     name: 'Dormitories',
     to: '/dormitories',
     icon: 'cil-door',
-    visible: permissions?.includes('vehicles.index'),
+    visible: can('vehicles.index'),
   },
   {
     component: 'CNavGroup',
     name: 'Hospitalities',
     to: '/hospitalities',
     icon: 'cil-mood-good',
-    visible: permissions?.includes('hospitalities.index'),
+    visible: can('hospitalities.index'),
     items: [
       {
         component: 'CNavItem',
         name: 'All Hospitalities',
         to: '/hospitalities',
-        visible: permissions?.includes('hospitalities.index'),
+        visible: can('hospitalities.index'),
       },
       {
         component: 'CNavItem',
         name: 'Transactions',
         to: '/hospitalities/transactions',
-        visible: permissions?.includes('transactions.index'),
+        visible: can('transactions.index'),
       },
     ],
   },
