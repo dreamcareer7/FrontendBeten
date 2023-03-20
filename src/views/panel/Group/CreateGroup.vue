@@ -1,6 +1,6 @@
 <template>
   <form class="card border-success mb-4" @submit.prevent="create">
-    <div class="card-header">Create Group</div>
+    <div class="card-header">Create group</div>
     <div class="card-body">
       <div class="form-floating mb-3">
         <input

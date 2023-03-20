@@ -3,18 +3,12 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <div class="row">
-            <div class="col-md-10">
-              <strong>Service Commits</strong>
-            </div>
-            <div class="col-md-2" v-if="$can('commits.create')">
-              <router-link to="/services/commits/create">
-                <CButton color="primary" class="float-end">
-                  Create Commit
-                </CButton>
-              </router-link>
-            </div>
-          </div>
+          <CCardTitle>Service commits</CCardTitle>
+          <router-link :to="{ name: 'Create commit' }" v-if="$can('commits.create')">
+            <CButton color="success" class="float-end text-white">
+              <ion-icon name="create-outline"></ion-icon>&nbsp;Create commit
+            </CButton>
+          </router-link>
         </CCardHeader>
         <CCardBody>
           <CTable>

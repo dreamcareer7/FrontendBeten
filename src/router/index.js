@@ -100,7 +100,7 @@ const routes = [
       },
       {
         path: '/services/commits/create',
-        name: 'Create Commit',
+        name: 'Create commit',
         component: () => import('@/views/panel/Service/Commits/CreateCommit'),
       },
       {
@@ -119,7 +119,7 @@ const routes = [
       },
       {
         path: '/phases/create',
-        name: 'Create Phase',
+        name: 'Create phase',
         component: () => import('@/views/panel/Phase/CreatePhase'),
       },
       {
@@ -137,7 +137,7 @@ const routes = [
       },
       {
         path: '/meals/create',
-        name: 'Create Meal',
+        name: 'Create meal',
         component: () => import('@/views/panel/Meal/Meals/CreateMeal'),
       },
       {
@@ -152,7 +152,7 @@ const routes = [
       },
       {
         path: '/meals/types/create',
-        name: 'Create Type',
+        name: 'Create type',
         component: () => import('@/views/panel/Meal/Types/CreateType'),
       },
       {
@@ -170,7 +170,7 @@ const routes = [
       },
       {
         path: '/groups/create',
-        name: 'Create Group',
+        name: 'Create group',
         component: () => import('@/views/panel/Group/CreateGroup'),
       },
       {
@@ -200,7 +200,7 @@ const routes = [
       },
       {
         path: '/dormitories/create',
-        name: 'Create Dormitory',
+        name: 'Create dormitory',
         component: () => import('@/views/panel/Dormitory/CreateDormitory'),
       },
       {
@@ -217,7 +217,7 @@ const routes = [
       },
       {
         path: '/hospitalities/create',
-        name: 'Create a hospitality',
+        name: 'Create hospitality',
         component: () =>
           import('@/views/panel/Hospitality/Hospitalities/CreateHospitality'),
       },

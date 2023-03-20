@@ -3,19 +3,15 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <div class="row">
-            <div class="col-md-10">
-              <strong>Dormitories</strong>
-            </div>
-            <div class="col-md-2">
-              <router-link :to="{ name: 'Create Dormitory' }" v-if="$can('dormitories.create')">
-                <CButton color="success" class="float-end text-white">
-                  <ion-icon name="bed-outline"></ion-icon>&nbsp; Create
-                  Dormitory
-                </CButton>
-              </router-link>
-            </div>
-          </div>
+          <CCardTitle>Dormitories</CCardTitle>
+          <router-link
+            :to="{ name: 'Create dormitory' }"
+            v-if="$can('dormitories.create')"
+          >
+            <CButton color="success" class="float-end text-white">
+              <ion-icon name="bed-outline"></ion-icon>&nbsp;Create dormitory
+            </CButton>
+          </router-link>
         </CCardHeader>
         <CCardBody>
           <!-- Search filters -->

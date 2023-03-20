@@ -277,10 +277,6 @@ export default {
 </script>
 
 <style scoped>
-/* Align Users title with the Create User button */
-.card-title {
-  display: inline;
-}
 .page-item {
   cursor: pointer;
 }

@@ -3,18 +3,16 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <div class="row">
-            <div class="col-md-10">
-              <strong>Meals</strong>
-            </div>
-            <div class="col-md-2" v-if="$can('meals.create')">
-              <router-link to="/meals/create">
-                <CButton color="primary" class="float-end">
-                  Create Meal
-                </CButton>
-              </router-link>
-            </div>
-          </div>
+          <CCardTitle>Meals</CCardTitle>
+          <router-link
+            :to="{ name: 'Create meal' }"
+            v-if="$can('meals.create')"
+          >
+            <CButton color="success" class="float-end text-white">
+              <ion-icon name="fast-food-outline"></ion-icon>&nbsp;
+              Create meal
+            </CButton>
+          </router-link>
         </CCardHeader>
         <CCardBody>
           <CTable>
@@ -165,13 +163,11 @@ export default {
   },
   async mounted() {
     this.loading = true
-    await this.$axios
-      .get('/meals')
-      .then((response) => {
-        this.meals = response.data.data
-        this.pagination = response.data.links
-        this.loading = false
-      })
+    await this.$axios.get('/meals').then((response) => {
+      this.meals = response.data.data
+      this.pagination = response.data.links
+      this.loading = false
+    })
   },
 }
 </script>

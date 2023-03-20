@@ -96,7 +96,7 @@
             </div>
             <div v-show="receivers.length === 0" class="alert alert-warning">
               There are no crew members to receive hospitalities, please
-              <router-link :to="{ name: 'Create_Crew' }"
+              <router-link :to="{ name: 'Create crew' }"
                 >create one</router-link
               >
               first

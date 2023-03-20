@@ -3,18 +3,16 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <div class="row">
-            <div class="col-md-10">
-              <strong>Phases</strong>
-            </div>
-            <div class="col-md-2" v-if="$can('phases.create')">
-              <router-link :to="{ name: 'Create Phase' }">
-                <CButton color="success" class="float-end text-white">
-                  <ion-icon name="create-outline"></ion-icon>&nbsp; Create Phase
-                </CButton>
-              </router-link>
-            </div>
-          </div>
+          <CCardTitle>Phases</CCardTitle>
+          <router-link
+            :to="{ name: 'Create phase' }"
+            v-if="$can('phases.create')"
+          >
+            <CButton color="success" class="float-end text-white">
+              <ion-icon name="play-skip-forward-outline"></ion-icon>&nbsp;
+              Create phase
+            </CButton>
+          </router-link>
         </CCardHeader>
         <CCardBody>
           <CRow>
@@ -62,16 +60,18 @@
                   </CBadge>
                 </CTableDataCell>
                 <CTableDataCell>
-                  <router-link :to="{
-                    name: 'Phase details',
-                    params: { id: this.$encrypt(phase.id) }
-                  }">
-                  <button
-                    class="btn btn-sm btn-info text-white mx-1"
-                    title="View Details"
+                  <router-link
+                    :to="{
+                      name: 'Phase details',
+                      params: { id: this.$encrypt(phase.id) },
+                    }"
                   >
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </button>
+                    <button
+                      class="btn btn-sm btn-info text-white mx-1"
+                      title="View Details"
+                    >
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </button>
                   </router-link>
                   <router-link
                     :to="{
@@ -160,9 +160,7 @@
             <CTableRow v-for="client in phase.services" :key="client.id">
               <CTableDataCell>{{ client.title }}</CTableDataCell>
               <CTableDataCell>
-                <CButton color="info">
-                  Commit Service
-                </CButton>
+                <CButton color="info"> Commit Service </CButton>
               </CTableDataCell>
             </CTableRow>
           </CTable>

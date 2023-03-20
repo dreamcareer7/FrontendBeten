@@ -3,23 +3,16 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <div class="row">
-            <div class="col-md-10">
-              <strong>Transactions</strong>
-            </div>
-            <div class="col-md-2" v-if="$can('transactions.create')">
-              <router-link
-                to="/hospitalities/transactions/create"
-              >
-                <CButton
-                  color="primary"
-                  class="float-end"
-                >
-                  Create Transaction
-                </CButton>
-              </router-link>
-            </div>
-          </div>
+          <CCardTitle>Transactions</CCardTitle>
+          <router-link
+            :to="{ name: 'Create transaction' }"
+            v-if="$can('transactions.create')"
+          >
+            <CButton color="success" class="float-end text-white">
+              <ion-icon name="swap-horizontal-outline"></ion-icon>&nbsp;
+              Create transaction
+            </CButton>
+          </router-link>
         </CCardHeader>
         <CCardBody>
             <CTable>

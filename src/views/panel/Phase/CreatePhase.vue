@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">Create Phase</div>
+    <div class="card-header">Create phase</div>
     <div class="row mt-4">
       <div class="col-12">
         <form @submit.prevent="create">

@@ -3,20 +3,15 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <div class="row">
-            <div class="col-md-10">
-              <strong>Groups</strong>&nbsp;
-              <ion-icon name="people-outline"></ion-icon>
-            </div>
-            <div class="col-md-2" v-if="$can('groups.create')">
-              <router-link :to="{ name: 'Create Group' }">
-                <CButton color="primary" class="float-end">
-                  Create Group
-                  <ion-icon name="create-outline"></ion-icon>
-                </CButton>
-              </router-link>
-            </div>
-          </div>
+          <CCardTitle>Groups</CCardTitle>
+          <router-link
+            :to="{ name: 'Create group' }"
+            v-if="$can('groups.create')"
+          >
+            <CButton color="success" class="float-end text-white">
+              <ion-icon name="people-outline"></ion-icon>&nbsp;Create group
+            </CButton>
+          </router-link>
         </CCardHeader>
         <CCardBody>
           <CRow>

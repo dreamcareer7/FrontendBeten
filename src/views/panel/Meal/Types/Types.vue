@@ -3,18 +3,15 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <div class="row">
-            <div class="col-md-10">
-              <strong>Types</strong>
-            </div>
-            <div class="col-md-2" v-if="$can('types.create')">
-              <router-link to="/meals/types/create">
-                <CButton color="primary" class="float-end">
-                  Create Type
-                </CButton>
-              </router-link>
-            </div>
-          </div>
+          <CCardTitle>Types</CCardTitle>
+          <router-link
+            :to="{ name: 'Create type' }"
+            v-if="$can('types.create')"
+          >
+            <CButton color="success" class="float-end text-white">
+              &nbsp;Create type
+            </CButton>
+          </router-link>
         </CCardHeader>
         <CCardBody>
           <CTable hover responsive>

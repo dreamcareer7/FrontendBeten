@@ -36,10 +36,10 @@
     data-keyboard="false"
   >
     <CModalHeader>
-      <CModalTitle>Create Commit</CModalTitle>
+      <CModalTitle>Create commit</CModalTitle>
     </CModalHeader>
     <CModalBody>
-      <CreateCommit :service="service"></CreateCommit>
+      <CreateCommit :service="service" />
     </CModalBody>
     <CModalFooter>
       <CButton
@@ -58,7 +58,7 @@
 import CreateCommit from '../Commits/CreateCommit.vue'
 
 export default {
-    name: "update_user",
+    name: "PhaseDetails",
     data() {
         return {
             message: "",
