@@ -120,6 +120,11 @@
       </CCol>
     </CRow>
   </div>
+  <Concurrable
+    v-if="service_commit.is_concurrable"
+    type="ServiceCommit"
+    :id="service_commit.id"
+  />
 </template>
 
 <script>
