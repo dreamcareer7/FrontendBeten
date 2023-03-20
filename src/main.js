@@ -8,6 +8,7 @@ import store from './store'
 import axiosInstance from './plugins/axios'
 import swalInstance from './plugins/swal'
 import { encrypt, decrypt } from '@/plugins/crypto'
+import can from '@/plugins/gate'
 
 import { iconsSet as icons } from '@/assets/icons'
 import DocsExample from '@/components/DocsExample'
@@ -38,6 +39,7 @@ app.config.globalProperties.$swal = swalInstance
 app.config.globalProperties.$axios = axiosInstance
 app.config.globalProperties.$encrypt = encrypt
 app.config.globalProperties.$decrypt = decrypt
+app.config.globalProperties.$can = can
 app.config.globalProperties.api_url = process.env.VUE_APP_BASE_API_URL
 
 app.mount('#app')

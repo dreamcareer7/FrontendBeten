@@ -57,14 +57,14 @@ axiosInstance.interceptors.response.use(
           name: 'Login', // Redirect to login
         })
         break
-      case 403: // Unauthorized
-        swal({
-          title: "You do not have permission",
-          text: error.response.data?.message || error.message,
-          icon: 'warning',
-        })
-        router.go(-1)
-        break
+      // case 403: // Unauthorized
+      //   swal({
+      //     title: "You do not have permission",
+      //     text: error.response.data?.message || error.message,
+      //     icon: 'warning',
+      //   })
+      //   router.go(-1)
+      //   break
       case 422: // Validation error
         // Maybe don't do anything? let the frontend handle the validation??
         break

@@ -7,7 +7,7 @@
             <div class="col-md-10">
               <strong>Meals</strong>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" v-if="$can('meals.create')">
               <router-link to="/meals/create">
                 <CButton color="primary" class="float-end">
                   Create Meal

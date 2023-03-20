@@ -7,7 +7,7 @@
             <div class="col-md-10">
               <strong>Transactions</strong>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" v-if="$can('transactions.create')">
               <router-link
                 to="/hospitalities/transactions/create"
               >

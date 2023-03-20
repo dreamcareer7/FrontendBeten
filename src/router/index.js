@@ -190,7 +190,7 @@ const routes = [
       },
       {
         path: '/vehicles/update/:id',
-        name: 'update_vehicle',
+        name: 'Update Vehicle',
         component: () => import('@/views/panel/Vehicle/UpdateVehicle'),
       },
       {

@@ -7,7 +7,7 @@
             <div class="col-md-10">
               <strong>Phases</strong>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" v-if="$can('phases.create')">
               <router-link :to="{ name: 'Create Phase' }">
                 <CButton color="success" class="float-end text-white">
                   <ion-icon name="create-outline"></ion-icon>&nbsp; Create Phase

@@ -4,9 +4,9 @@
       <CCard>
         <CCardHeader>
           <CCardTitle>Users</CCardTitle>
-          <router-link :to="{ name: 'Create user' }">
+          <router-link :to="{ name: 'Create user' }" v-if="$can('users.create')">
             <CButton color="success" class="float-end text-white">
-              <ion-icon name="person-add"></ion-icon>&nbsp;Create User
+              <ion-icon name="person-add-outline"></ion-icon>&nbsp;Create User
             </CButton>
           </router-link>
         </CCardHeader>
@@ -92,6 +92,7 @@
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View Details"
                     @click="viewDetails(user.id)"
+                    v-if="$can('users.view')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -100,6 +101,7 @@
                       name: 'Edit user',
                       params: { id: this.$encrypt(user.id) },
                     }"
+                    v-if="$can('users.edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
@@ -113,6 +115,7 @@
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteUser(user.id)"
                     title="Delete"
+                    v-if="$can('users.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>

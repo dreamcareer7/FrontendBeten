@@ -8,7 +8,7 @@
               <strong>Groups</strong>&nbsp;
               <ion-icon name="people-outline"></ion-icon>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" v-if="$can('groups.create')">
               <router-link :to="{ name: 'Create Group' }">
                 <CButton color="primary" class="float-end">
                   Create Group

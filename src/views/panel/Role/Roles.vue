@@ -7,7 +7,7 @@
             <div class="col-md-8 col-sm-4">
               <h3 class="mt-1">Clients</h3>
             </div>
-            <div class="col-md-4 col-sm-8" v-if="$can('clients.create')">
+            <div class="col-md-4 col-sm-8">
               <router-link :to="{ name: 'Create client' }">
                 <CButton color="success" class="float-end text-white">
                   <ion-icon name="person-add-outline"></ion-icon>&nbsp;
@@ -224,22 +224,16 @@
 </template>
 
 <script>
-import countries from '@/store/countries'
-
 export default {
-  name: 'Clients',
+  name: 'Roles',
   data: () => ({
-    countries: [],
-    clients: {},
+    roles: [],
     search: {
       gender: '',
       country: '',
     },
-    selected_user: null,
     loading: false,
     pagination: [],
-    client: {},
-    visibleLiveDemo: false,
   }),
   methods: {
     getClients: async function () {

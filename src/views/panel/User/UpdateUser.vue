@@ -152,7 +152,7 @@ export default {
   },
   mounted: async function () {
     await this.$axios
-      .get(`/users/edit/${this.$decrypt(this.$route.params.id)}`)
+      .get(`/users/${this.$decrypt(this.$route.params.id)}/edit`)
       .then((response) => {
         this.user = response.data.user
         this.user.id = Number(this.$decrypt(this.$route.params.id))

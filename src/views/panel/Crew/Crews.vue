@@ -4,10 +4,10 @@
       <CCard class="mb-4">
         <CCardHeader>
           <CRow>
-            <CCol :md="8" :sm="4">
-              <h3 class="mt-1">Crew members</h3>
-            </CCol>
-            <CCol :md="4" :sm="8">
+            <div class="col-md-10">
+              <strong>Crew members</strong>
+            </div>
+            <CCol :md="4" :sm="8" v-if="$can('crews.create')">
               <router-link :to="{ name: 'Create crew' }">
                 <CButton color="success" class="float-end text-white">
                   <ion-icon name="create-outline"></ion-icon>&nbsp;
@@ -59,6 +59,7 @@
               />
             </CCol>
           </CRow>
+          <hr>
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
               <div class="spinner-border text-success" role="status"></div>
@@ -100,6 +101,7 @@
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View details"
                     @click="viewDetails(crew.id)"
+                    v-if="$can('crews.view')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -108,6 +110,7 @@
                       name: 'Update crew',
                       params: { id: this.$encrypt(crew.id) },
                     }"
+                    v-if="$can('crews.edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
@@ -121,6 +124,7 @@
                     class="btn btn-sm btn-danger text-white m-1"
                     @click.stop="deleteCrew(crew.id)"
                     title="Delete"
+                    v-if="$can('crews.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>

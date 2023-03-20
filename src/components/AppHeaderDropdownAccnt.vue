@@ -5,7 +5,7 @@
     </CDropdownToggle>
     <CDropdownMenu class="pt-0">
       <CDropdownHeader component="h6" class="bg-light fw-semibold py-2">
-        Account
+        {{ name }}
       </CDropdownHeader>
       <CDropdownItem>
         <CIcon icon="cil-bell" /> Updates
@@ -27,8 +27,8 @@
         Settings
       </CDropdownHeader>
       <CDropdownItem> <CIcon icon="cil-user" /> Profile </CDropdownItem>
-      <router-link to="/settings">
-      <CDropdownItem> <CIcon icon="cil-settings" /> Settings </CDropdownItem>
+      <router-link to="/settings" v-if="$can('settings')">
+        <CDropdownItem><CIcon icon="cil-settings"/> Settings </CDropdownItem>
       </router-link>
       <CDropdownItem>
         <CIcon icon="cil-dollar" /> Payments
@@ -59,6 +59,11 @@ export default {
       itemsCount: 42,
     }
   },
+  computed: {
+    name() {
+      return JSON.parse(localStorage.getItem('user')).email
+    },
+  },
   methods: {
     logout() {
       localStorage.removeItem('auth_token')
@@ -69,3 +74,12 @@ export default {
   },
 }
 </script>
+
+<style>
+a {
+  text-decoration: none;
+}
+.dropdown-item {
+  cursor: pointer;
+}
+</style>

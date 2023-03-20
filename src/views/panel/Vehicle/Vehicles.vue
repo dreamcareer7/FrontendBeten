@@ -7,7 +7,7 @@
             <div class="col-md-10">
               <strong>Vehicles</strong>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" v-if="$can('vehicles.create')">
               <router-link :to="{ name: 'Create vehicle' }">
                 <CButton color="success" class="float-end text-white">
                   <ion-icon name="add-circle-outline"></ion-icon>&nbsp; Create
@@ -64,7 +64,13 @@
                 <CTableHeaderCell scope="col">Manufacturer</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Year</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Badge</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell
+                  scope="col"
+                  style="width: 20%"
+                  :aria-colspan="2"
+                >
+                  Actions
+                </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -79,14 +85,16 @@
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View details"
                     @click="viewDetails(vehicle.id)"
+                    v-if="$can('vehicles.view')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <router-link
                     :to="{
-                      name: 'update_vehicle',
+                      name: 'Update Vehicle',
                       params: { id: this.$encrypt(vehicle.id) },
                     }"
+                    v-if="$can('vehicles.edit')"
                   >
                     <CButton class="btn btn-sm btn-warning text-white m-1"
                       ><ion-icon name="create-outline"></ion-icon
@@ -95,6 +103,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteVehicle(vehicle.id)"
+                    v-if="$can('vehicles.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
@@ -165,8 +174,16 @@
           <CTableDataCell>{{ vehicle.updated_at }}</CTableDataCell>
         </CTableRow>
       </CTable>
-      <Contractable v-if="vehicle.is_contractable" type="vehicle" :id="vehicle.id" />
-      <Documentable v-if="vehicle.is_documentable" type="vehicle" :id="vehicle.id" />
+      <Contractable
+        v-if="vehicle.is_contractable"
+        type="vehicle"
+        :id="vehicle.id"
+      />
+      <Documentable
+        v-if="vehicle.is_documentable"
+        type="vehicle"
+        :id="vehicle.id"
+      />
     </CModalBody>
     <CModalFooter>
       <CButton color="secondary" @click="is_vehicle_modal_visible = false">
@@ -232,7 +249,7 @@ export default {
             .then(() => this.getVehicles())
           swal('Vehicle has been deleted!', {
             icon: 'success',
-            timer: 3000
+            timer: 3000,
           })
         }
       })

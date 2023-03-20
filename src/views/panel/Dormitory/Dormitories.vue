@@ -8,7 +8,7 @@
               <strong>Dormitories</strong>
             </div>
             <div class="col-md-2">
-              <router-link :to="{ name: 'Create Dormitory' }">
+              <router-link :to="{ name: 'Create Dormitory' }" v-if="$can('dormitories.create')">
                 <CButton color="success" class="float-end text-white">
                   <ion-icon name="bed-outline"></ion-icon>&nbsp; Create
                   Dormitory

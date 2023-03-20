@@ -7,7 +7,7 @@
             <div class="col-md-10">
               <strong>Types</strong>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" v-if="$can('types.create')">
               <router-link to="/meals/types/create">
                 <CButton color="primary" class="float-end">
                   Create Type

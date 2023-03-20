@@ -7,7 +7,7 @@
             <div class="col-md-10">
               <strong>Service Commits</strong>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" v-if="$can('commits.create')">
               <router-link to="/services/commits/create">
                 <CButton color="primary" class="float-end">
                   Create Commit
