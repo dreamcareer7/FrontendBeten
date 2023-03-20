@@ -152,7 +152,7 @@ export default {
     },
   },
   async mounted() {
-    await this.$axios.get('/crews/list').then((response) => {
+    await this.$axios.get('/hospitalities/create').then((response) => {
       if (response.data.length === 0) {
         this.disabled = true // Disable the entire form
       }
