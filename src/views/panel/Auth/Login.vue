@@ -78,9 +78,7 @@ export default {
           localStorage.setItem('auth_token', response.data.token)
           localStorage.setItem('user', JSON.stringify(response.data.user))
           localStorage.setItem('permissions', JSON.stringify(response.data.permissions))
-          setTimeout(() => {
-            this.$router.push({ name: 'Dashboard' })
-          }, 500);
+          window.location.href = '/dashboard'
         })
         .catch(
           (error) =>
