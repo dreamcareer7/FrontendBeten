@@ -3,19 +3,19 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <CRow>
-            <div class="col-md-10">
-              <strong>Crew members</strong>
+          <div class="row">
+            <div class="col-md-8 col-sm-4">
+              <h3 class="mt-1">Crew members</h3>
             </div>
-            <CCol :md="4" :sm="8" v-if="$can('crews.create')">
+            <div class="col-md-4 col-sm-8" v-if="$can('crews.create')">
               <router-link :to="{ name: 'Create crew' }">
                 <CButton color="success" class="float-end text-white">
-                  <ion-icon name="create-outline"></ion-icon>&nbsp;
+                  <ion-icon name="person-add-outline"></ion-icon>&nbsp;
                   <span>Create Crew</span>
                 </CButton>
               </router-link>
-            </CCol>
-          </CRow>
+            </div>
+          </div>
         </CCardHeader>
         <CCardBody>
           <CRow>
@@ -59,7 +59,7 @@
               />
             </CCol>
           </CRow>
-          <hr>
+          <hr />
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
               <div class="spinner-border text-success" role="status"></div>
@@ -220,7 +220,7 @@ export default {
       fullname: '',
       country: '',
       phone: '',
-      id_number: ''
+      id_number: '',
     },
     selected_user: null,
     loading: false,
