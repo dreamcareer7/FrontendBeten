@@ -71,6 +71,7 @@
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View Details"
                     @click="fetchGroupInfo(group.id)"
+                    v-if="$can('groups.view')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -79,6 +80,7 @@
                       name: 'Update Group',
                       params: { id: this.$encrypt(group.id) },
                     }"
+                    v-if="$can('groups.edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
@@ -91,6 +93,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white"
                     @click="deleteGroup(group.id)"
+                    v-if="$can('groups.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>

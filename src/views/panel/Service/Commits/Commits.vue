@@ -41,6 +41,7 @@
                         name: 'Service Commit details',
                         params: { id: this.$encrypt(commit.id) },
                       }"
+                      v-if="$can('commits.view')"
                     >
                       <button
                         class="btn btn-sm btn-info text-white mx-1"
@@ -54,6 +55,7 @@
                       name: 'Update Service Commit',
                       params: { id: this.$encrypt(commit.id) },
                     }"
+                    v-if="$can('commits.edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white mx-1"
@@ -66,6 +68,7 @@
                     class="btn btn-sm btn-danger text-white"
                     @click="deleteCommit(commit.id)"
                     title="Delete"
+                    v-if="$can('commits.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>

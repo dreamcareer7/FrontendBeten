@@ -106,6 +106,7 @@
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View details"
                     @click="viewDetails(client.id)"
+                    v-if="$can('clients.view')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -114,6 +115,7 @@
                       name: 'Update Client',
                       params: { id: this.$encrypt(client.id) },
                     }"
+                    v-if="$can('clients.edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
@@ -126,6 +128,7 @@
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteClient(client.id, client.fullname)"
                     title="Delete"
+                    v-if="$can('clients.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>

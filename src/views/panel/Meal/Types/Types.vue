@@ -38,6 +38,7 @@
                   <button
                     class="btn btn-sm btn-info text-white"
                     @click.stop="fetchMealTypeInfo(meal_type.id)"
+                    v-if="$can('types.view')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -46,6 +47,7 @@
                       name: 'Edit Meal Type',
                       params: { id: this.$encrypt(meal_type.id) },
                     }"
+                    v-if="$can('types.edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
@@ -59,6 +61,7 @@
                     class="btn btn-sm btn-danger text-white"
                     @click.stop="deleteMealType(meal_type.id)"
                     title="Delete"
+                    v-if="$can('types.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>

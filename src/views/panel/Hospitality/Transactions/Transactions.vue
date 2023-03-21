@@ -33,37 +33,34 @@
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
-                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-<button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white">Update</button>
-                    <button class="btn btn-sm btn-danger text-white">Delete</button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white" title="View Details"><ion-icon name="eye-outline"></ion-icon></button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white" title="Edit"><ion-icon name="create-outline"></ion-icon></button>
+                    <button class="btn btn-sm btn-danger text-white" title="Delete"><ion-icon name="trash-bin-outline"></ion-icon></button>
                   </CTableDataCell>
                 </CTableRow>
                 <CTableRow>
-                  <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                  <CTableHeaderCell scope="row">2</CTableHeaderCell>
                   <CTableDataCell>Mark</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
-                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-<button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white">Update</button>
-                    <button class="btn btn-sm btn-danger text-white">Delete</button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white" title="View Details"><ion-icon name="eye-outline"></ion-icon></button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white" title="Edit"><ion-icon name="create-outline"></ion-icon></button>
+                    <button class="btn btn-sm btn-danger text-white" title="Delete"><ion-icon name="trash-bin-outline"></ion-icon></button>
                   </CTableDataCell>
                 </CTableRow>
                 <CTableRow>
-                  <CTableHeaderCell scope="row">1</CTableHeaderCell>
+                  <CTableHeaderCell scope="row">3</CTableHeaderCell>
                   <CTableDataCell>Mark</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>Otto</CTableDataCell>
-                  <CTableDataCell>Otto</CTableDataCell>
                   <CTableDataCell>
-                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white">View</button>
-<button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white">Update</button>
-                    <button class="btn btn-sm btn-danger text-white">Delete</button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-info text-white" title="View Details"><ion-icon name="eye-outline"></ion-icon></button>
+                    <button style="margin-right: 1em;" class="btn btn-sm btn-warning text-white" title="Edit"><ion-icon name="create-outline"></ion-icon></button>
+                    <button class="btn btn-sm btn-danger text-white" title="Delete"><ion-icon name="trash-bin-outline"></ion-icon></button>
                   </CTableDataCell>
                 </CTableRow>
               </CTableBody>

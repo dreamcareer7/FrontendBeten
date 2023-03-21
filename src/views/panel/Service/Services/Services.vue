@@ -33,6 +33,7 @@
                   <button
                     class="btn btn-sm btn-info text-white"
                     @click.stop="fetchServiceInfo(service.id)"
+                    v-if="$can('services.view')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -41,6 +42,7 @@
                       name: 'Update service',
                       params: { id: this.$encrypt(service.id) },
                     }"
+                    v-if="$can('services.edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
@@ -54,6 +56,7 @@
                     class="btn btn-sm btn-danger text-white"
                     @click.stop="deleteService(service.id)"
                     title="Delete"
+                    v-if="$can('services.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
