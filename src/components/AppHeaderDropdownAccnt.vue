@@ -5,7 +5,7 @@
     </CDropdownToggle>
     <CDropdownMenu class="pt-0">
       <CDropdownHeader component="h6" class="bg-light fw-semibold py-2">
-        {{ name }}
+        Account
       </CDropdownHeader>
       <CDropdownItem>
         <CIcon icon="cil-bell" /> Updates
@@ -58,11 +58,6 @@ export default {
       avatar: avatar,
       itemsCount: 42,
     }
-  },
-  computed: {
-    name() {
-      return JSON.parse(localStorage.getItem('user')).email
-    },
   },
   methods: {
     logout() {

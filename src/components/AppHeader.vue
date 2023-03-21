@@ -6,6 +6,21 @@
       </CHeaderToggler>
       <CHeaderNav>
         <CNavItem>
+          <CDropdown variant="nav-item" class="pt-2">
+            <CDropdownToggle placement="bottom-end" class="py-0" :caret="false">
+              <CIcon class="mx-2" icon="cifAe" size="lg" />
+            </CDropdownToggle>
+            <CDropdownMenu class="pt-0">
+              <CDropdownItem @click="changeLocale('ar')">
+                <CIcon class="mx-2" icon="cifAe" size="lg" /> العربية
+              </CDropdownItem>
+              <CDropdownItem @click="changeLocale('en')">
+                <CIcon class="mx-2" icon="cifGb" size="lg" /> English
+              </CDropdownItem>
+            </CDropdownMenu>
+          </CDropdown>
+        </CNavItem>
+        <CNavItem>
           <CNavLink href="#">
             <CIcon class="mx-2" icon="cil-bell" size="lg" />
           </CNavLink>
@@ -40,5 +55,10 @@ export default {
     AppBreadcrumb,
     AppHeaderDropdownAccnt,
   },
+  methods: {
+    changeLocale(locale) {
+      this.$i18n.locale = locale
+    }
+  }
 }
 </script>

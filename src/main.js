@@ -1,23 +1,25 @@
+import Vidle from 'v-idle-3'
 import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
+
 import CoreuiVue from '@coreui/vue'
 import CIcon from '@coreui/icons-vue'
+import * as icons from '@coreui/icons';
 
 import App from './App.vue'
 import router from './router'
 import store from './store'
+
+// Plugins
 import axiosInstance from './plugins/axios'
 import swalInstance from './plugins/swal'
 import { encrypt, decrypt } from '@/plugins/crypto'
 import can from '@/plugins/gate'
 
-import { iconsSet as icons } from '@/assets/icons'
 import DocsExample from '@/components/DocsExample'
 import Contractable from '@/components/Contractable'
 import Documentable from '@/components/Documentable'
 import Concurrable from '@/components/Concurrable'
-
-import Vidle from 'v-idle-3'
 
 const app = createApp(App)
 
