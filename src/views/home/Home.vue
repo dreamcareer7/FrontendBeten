@@ -1,6 +1,8 @@
 <template>
   <div class="text-center mt-5">
-    <a @click="this.$router.push({name:'Login'});" class="btn btn-primary">Members</a>
+    <button @click="this.$router.push({name:'Login'});" class="btn btn-primary">
+      {{ $t('Members') }}
+    </button>
   </div>
 </template>
 

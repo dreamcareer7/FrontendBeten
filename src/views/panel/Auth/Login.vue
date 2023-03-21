@@ -7,15 +7,15 @@
             <CCard class="p-4">
               <CCardBody>
                 <CForm>
-                  <h1 class="text-center">Login</h1>
+                  <h1 class="text-center">{{ $t('Login') }}</h1>
                   <p class="text-medium-emphasis text-center">
-                    Sign In to your account
+                    {{ $t('SignIn') }}
                   </p>
                   <CInputGroup class="mb-3">
                     <CInputGroupText>@</CInputGroupText>
                     <CFormInput
                       type="email"
-                      placeholder="Email"
+                      :placeholder="$t('Email')"
                       v-model="form.email"
                       autocomplete="email"
                     />
@@ -27,7 +27,7 @@
                     <CFormInput
                       type="password"
                       v-model="form.password"
-                      placeholder="Password"
+                      :placeholder="$t('Password')"
                       autocomplete="current-password"
                       @keyup.enter="login"
                     />
@@ -38,7 +38,7 @@
                   <CRow>
                     <CCol :xs="8">
                       <CButton @click="login" color="primary" class="px-4">
-                        Login
+                        {{ $t('Login') }}
                       </CButton>
                     </CCol>
                     <CCol :xs="4" class="text-right">
@@ -48,7 +48,7 @@
                         }"
                       >
                         <CButton color="link" class="px-0">
-                          Forgot password?
+                          {{ $t('ForgotPassword') }}
                         </CButton>
                       </router-link>
                     </CCol>

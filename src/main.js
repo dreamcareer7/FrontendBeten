@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createI18n } from 'vue-i18n'
 import CoreuiVue from '@coreui/vue'
 import CIcon from '@coreui/icons-vue'
 
@@ -20,10 +21,21 @@ import Vidle from 'v-idle-3'
 
 const app = createApp(App)
 
+import messages from './locales/messages'
+
+const i18n = createI18n({
+  locale: 'ar',
+  fallbackLocale: 'en', // set fallback locale
+  messages, // set locale messages
+  missingWarn: false,
+  silentFallbackWarn: true
+})
+
 app.use(store)
 app.use(router)
 app.use(CoreuiVue)
 app.use(Vidle)
+app.use(i18n)
 
 app.provide('icons', icons)
 
