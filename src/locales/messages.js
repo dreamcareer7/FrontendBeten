@@ -22,6 +22,7 @@ const messages = {
     Phone: 'Phone',
     Male: 'Male',
     Female: 'Female',
+    DateOfBirth: 'Date Of Birth',
     CreateClient: 'Create Client',
     UpdateClient: 'Update Client',
     IsHandicap: 'Is Handicap?',

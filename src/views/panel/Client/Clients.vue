@@ -173,21 +173,21 @@
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>Full Name:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('FullName') }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.fullname }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>Gender:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Gender') }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.gender }}</CTableDataCell>
-              <CTableHeaderCell>Country:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Country') }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.country_id }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>Phone:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Phone') }}:</CTableHeaderCell>
               <CTableDataCell>
                 {{ client.phone }}
               </CTableDataCell>
-              <CTableHeaderCell>Is Handicap:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('IsHandicap') }}:</CTableHeaderCell>
               <CTableDataCell>
                 <CBadge
                   :color="client.is_handicap ? 'success' : 'warning'"
@@ -198,13 +198,13 @@
               </CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>ID No:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('IdNumber') }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.id_number }}</CTableDataCell>
-              <CTableHeaderCell>ID Type</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('IdType') }}</CTableHeaderCell>
               <CTableDataCell>{{ client.id_type }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>Date Of Birth:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('DateOfBirth') }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.dob }}</CTableDataCell>
             </CTableRow>
 
