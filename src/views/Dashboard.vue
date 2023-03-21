@@ -53,7 +53,7 @@
           <CCardBody class="clients_chart_bg">
             <CRow>
               <CCol :sm="5">
-                <h4 id="traffic" class="card-title mb-0">Clients</h4>
+                <h4 id="traffic" class="card-title mb-0">{{ $t('Clients') }}</h4>
                 <div class="small text-medium-emphasis">January 2021</div>
               </CCol>
               <CCol :sm="7" class="d-none d-md-block">
