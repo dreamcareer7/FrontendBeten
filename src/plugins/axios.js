@@ -31,6 +31,18 @@ axiosInstance.interceptors.request.use(
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
   (response) => {
+    switch (response.status) {
+      case 201: // Created
+        swal({
+          title: response.data.message,
+          icon: 'success',
+          timer: 3000 // 3 seconds
+        })
+        break;
+    
+      default:
+        break;
+    }
     /*
      * Any status code that lies within the range of 2xx causes this function
      * to trigger
