@@ -1,6 +1,6 @@
 <template>
   <div class="card border-warning mb-4">
-    <div class="card-header">Update crew</div>
+    <div class="card-header">{{ $t('UpdateCrew') }}</div>
     <form @submit.prevent="update">
       <div class="card-body">
         <div class="form-floating mb-3">
@@ -10,7 +10,7 @@
               <option :value="user.id">{{ user.name }}</option>
             </template>
           </select>
-          <label for="user">User</label>
+          <label for="user">{{ $t('User') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -23,7 +23,7 @@
             required
             autofocus
           />
-          <label for="fullname">Fullname *</label>
+          <label for="fullname">{{ $t('FullName') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -36,7 +36,7 @@
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <label for="gender">Gender *</label>
+          <label for="gender">{{ $t('Gender') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -50,7 +50,7 @@
               <option :value="profession.id">{{ profession.title }}</option>
             </template>
           </select>
-          <label for="profession">Profession</label>
+          <label for="profession">{{ $t('Profession') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -65,7 +65,7 @@
               <option :value="country.id">{{ country.title }}</option>
             </template>
           </select>
-          <label for="country">Country *</label>
+          <label for="country">{{ $t('Country') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -76,7 +76,7 @@
             id="phone"
             required
           />
-          <label for="phone">Phone Number *</label>
+          <label for="phone">{{ $t('Phone') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -87,7 +87,7 @@
             id="id_type"
             required
           />
-          <label for="id_type">ID Type *</label>
+          <label for="id_type">{{ $t('IdType') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -98,7 +98,7 @@
             id="id_name"
             required
           />
-          <label for="id_name">ID name *</label>
+          <label for="id_name">{{ $t('IdName') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -109,7 +109,7 @@
             id="id_number"
             required
           />
-          <label for="is_number">ID Number *</label>
+          <label for="is_number">{{ $t('IdNumber') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -120,7 +120,7 @@
             id="dob"
             required
           />
-          <label for="dob">Date of birth *</label>
+          <label for="dob">{{ $t('DateOfBirth') }} *</label>
         </div>
 
         <div class="form-switch">
@@ -132,7 +132,7 @@
             required
           />
           <label class="form-check-label" for="is_active">
-            &nbsp;is active?
+            &nbsp;{{ $t('IsActive') }}?
           </label>
         </div>
 
@@ -146,15 +146,15 @@
       </div>
 
       <div class="card-footer text-end">
-        <span class="float-start">* Required fields</span>
+        <span class="float-start">* {{ $t('RequiredFields') }}</span>
         <button
           class="btn btn-warning text-white"
           @click.prevent="$router.go(-1)"
         >
-          Go Back</button
+          {{ $t('GoBack') }}</button
         >&nbsp;
         <button type="submit" class="btn text-white btn-warning">
-          <ion-icon name="save-outline"></ion-icon>&nbsp;Save
+          <ion-icon name="save-outline"></ion-icon>&nbsp;{{ $t('Save') }}
         </button>
       </div>
     </form>

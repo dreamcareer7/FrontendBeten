@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">Create crew</div>
+    <div class="card-header">{{ $t('CreateCrew') }}</div>
     <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
@@ -10,7 +10,7 @@
               <option :value="user.id">{{ user.name }}</option>
             </template>
           </select>
-          <label for="user">User</label>
+          <label for="user">{{ $t('User') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -23,7 +23,7 @@
             autofocus
             required
           />
-          <label for="fullname">Fullname *</label>
+          <label for="fullname">{{ $t('FullName') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -36,7 +36,7 @@
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <label for="gender">Gender *</label>
+          <label for="gender">{{ $t('Gender') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -53,7 +53,7 @@
               <option :value="profession.id">{{ profession.title }}</option>
             </template>
           </select>
-          <label for="profession">Profession</label>
+          <label for="profession">{{ $t('Profession') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -68,7 +68,7 @@
               <option :value="country.id">{{ country.title }}</option>
             </template>
           </select>
-          <label for="country">Country *</label>
+          <label for="country">{{ $t('Country') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -79,7 +79,7 @@
             id="phone"
             required
           />
-          <label for="phone">Phone number *</label>
+          <label for="phone">{{ $t('Phone') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -90,7 +90,7 @@
             id="id_type"
             required
           />
-          <label for="id_type">ID type *</label>
+          <label for="id_type">{{ $t('IdType') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -101,7 +101,7 @@
             id="id_name"
             required
           />
-          <label for="id_name">ID name *</label>
+          <label for="id_name">{{ $t('IdName') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -112,7 +112,7 @@
             id="id_number"
             required
           />
-          <label for="id_number">ID number</label>
+          <label for="id_number">{{ $t('IdNumber') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -123,7 +123,7 @@
             id="dob"
             required
           />
-          <label for="dob">Date of birth *</label>
+          <label for="dob">{{ $t('DateOfBirth') }} *</label>
         </div>
 
         <div class="form-switch">
@@ -135,7 +135,7 @@
             required
           />
           <label class="form-check-label" for="is_active">
-            &nbsp;is active?
+            &nbsp;{{ $t('IsActive') }}?
           </label>
         </div>
 
@@ -150,7 +150,7 @@
 
       <div class="card-footer text-end">
         <button class="btn text-white btn-success" type="submit">
-          <ion-icon name="person-add-outline"></ion-icon>&nbsp;Create
+          <ion-icon name="person-add-outline"></ion-icon>&nbsp;{{ $t('Create') }}
         </button>
       </div>
     </form>

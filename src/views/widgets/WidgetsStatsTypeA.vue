@@ -8,7 +8,7 @@
             (-12.4% <CIcon icon="cil-arrow-bottom" />)
           </span>
         </template>
-        <template #title>Users</template>
+        <template #title>{{ $t('Users') }}</template>
         <template #action>
           <CDropdown placement="bottom-end">
             <CDropdownToggle
@@ -103,7 +103,7 @@
             (40.9% <CIcon icon="cil-arrow-top" />)
           </span>
         </template>
-        <template #title>Crew</template>
+        <template #title>{{ $t('Crew') }}</template>
         <template #action>
           <CDropdown placement="bottom-end">
             <CDropdownToggle
@@ -197,7 +197,7 @@
             (84.7% <CIcon icon="cil-arrow-top" />)
           </span>
         </template>
-        <template #title>Services</template>
+        <template #title>{{ $t('Services') }}</template>
         <template #action>
           <CDropdown placement="bottom-end">
             <CDropdownToggle
@@ -278,7 +278,7 @@
             (-23.6% <CIcon icon="cil-arrow-bottom" />)
           </span>
         </template>
-        <template #title>Phases</template>
+        <template #title>{{ $t('Phases') }}</template>
         <template #action>
           <CDropdown placement="bottom-end">
             <CDropdownToggle

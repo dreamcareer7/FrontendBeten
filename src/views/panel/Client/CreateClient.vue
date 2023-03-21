@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">Create client</div>
+    <div class="card-header">{{ $t('CreateClient') }}</div>
     <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
@@ -13,7 +13,7 @@
             required
             autofocus
           />
-          <label for="fullname">Full Name</label>
+          <label for="fullname">{{ $t('FullName') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -27,7 +27,7 @@
               {{ country.title }}
             </option>
           </select>
-          <label for="country">Country</label>
+          <label for="country">{{ $t('Country') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -38,7 +38,7 @@
             v-model="client.id_type"
             required
           />
-          <label for="id_type">ID Type</label>
+          <label for="id_type">{{ $t('IdType') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -48,7 +48,7 @@
             id="id_number"
             v-model="client.id_number"
           />
-          <label for="id_number">ID Number</label>
+          <label for="id_number">{{ $t('IdNumber') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -58,7 +58,7 @@
             id="id_name"
             v-model="client.id_name"
           />
-          <label for="id_name">ID Name</label>
+          <label for="id_name">{{ $t('IdName') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -66,7 +66,7 @@
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <label for="gender">Gender</label>
+          <label for="gender">{{ $t('Gender') }}</label>
         </div>
 
         <div class="form-switch">
@@ -77,7 +77,7 @@
             v-model="client.is_handicap"
           />
           <label class="form-check-label" for="is_handicap">
-            &nbsp;is Handicap?
+            &nbsp;{{ $t('IsHandicap') }}
           </label>
         </div>
 
@@ -92,7 +92,7 @@
 
       <div class="card-footer text-end">
         <button class="btn text-white btn-success" type="submit">
-          <ion-icon name="person-add-outline"></ion-icon>&nbsp;Create
+          <ion-icon name="person-add-outline"></ion-icon>&nbsp;{{ $t('Create') }}
         </button>
       </div>
     </form>
