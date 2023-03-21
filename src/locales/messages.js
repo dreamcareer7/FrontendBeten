@@ -27,9 +27,14 @@ const messages = {
     IsHandicap: 'Is Handicap?',
   },
   ar: {
-    Members: 'الأعضاء',
-    Login: 'Login',
-    Clients: 'عملاء',
+    Members: 'الاعضاء',
+    Login: 'تسجيل دخول',
+    SignIn: 'تسجيل دخول',
+    Email: 'البريد الالكتروني',
+    Password: 'كلمة المرور',
+    ForgotPassword: 'هل نسيت كلمة المرور؟',
+    UserManagement: 'ادارة المستخدمين',
+    Clients: 'الحجاج',
   },
 }
 
