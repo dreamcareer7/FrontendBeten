@@ -65,6 +65,7 @@
                       name: 'Phase details',
                       params: { id: this.$encrypt(phase.id) },
                     }"
+                    v-if="$can('phases.view')"
                   >
                     <button
                       class="btn btn-sm btn-info text-white mx-1"
@@ -78,6 +79,7 @@
                       name: 'Update Phase',
                       params: { id: this.$encrypt(phase.id) },
                     }"
+                    v-if="$can('phases.edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
@@ -90,6 +92,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white"
                     @click="deletePhase(phase.id)"
+                    v-if="$can('phases.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>

@@ -94,6 +94,7 @@
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View details"
                     @click="viewDetails(dormitory.id)"
+                    v-if="$can('dormitories.view')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -102,6 +103,7 @@
                       name: 'Update Dormitory',
                       params: { id: this.$encrypt(dormitory.id) },
                     }"
+                    v-if="$can('dormitories.edit')"
                   >
                     <CButton class="btn btn-sm btn-warning text-white m-1">
                       <ion-icon name="create-outline"></ion-icon>
@@ -110,6 +112,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteDormitory(dormitory.id)"
+                    v-if="$can('dormitories.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>

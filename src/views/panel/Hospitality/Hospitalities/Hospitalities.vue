@@ -55,6 +55,7 @@
                     class="btn btn-sm btn-info text-white mx-1"
                     title="View Details"
                     @click="fetchHospitalityInfo(hospitality.id)"
+                    v-if="$can('hospitalities.view')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -63,6 +64,7 @@
                       name: 'Update Hospitality',
                       params: { id: this.$encrypt(hospitality.id) },
                     }"
+                    v-if="$can('hospitalities.edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
@@ -76,6 +78,7 @@
                     class="btn btn-sm btn-danger text-white"
                     @click="deleteHospitality(hospitality.id)"
                     title="Delete"
+                    v-if="$can('hospitalities.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
