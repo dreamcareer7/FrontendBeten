@@ -104,7 +104,7 @@
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
-                    title="View details"
+                    :title="$t('ViewDetails')"
                     @click="viewDetails(client.id)"
                     v-if="$can('clients.view')"
                   >
@@ -119,7 +119,7 @@
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
-                      title="Edit"
+                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
@@ -127,7 +127,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteClient(client.id, client.fullname)"
-                    title="Delete"
+                    :title="$t('Delete')"
                     v-if="$can('clients.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>

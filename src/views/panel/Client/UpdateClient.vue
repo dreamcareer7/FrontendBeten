@@ -110,9 +110,9 @@
           class="btn btn-warning text-white"
           @click.prevent="$router.go(-1)"
         >
-          Go Back</button
+          {{ $t('GoBack') }}</button
         >&nbsp;
-        <button type="submit" class="btn text-white btn-warning">Save</button>
+        <button type="submit" class="btn text-white btn-warning">{{ $t('Save') }}</button>
       </div>
     </form>
   </div>
