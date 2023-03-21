@@ -105,7 +105,7 @@ export default [
     name: 'Dormitories',
     to: '/dormitories',
     icon: 'cil-door',
-    visible: can('vehicles.index'),
+    visible: can('dormitories.index'),
   },
   {
     component: 'CNavGroup',
