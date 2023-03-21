@@ -8,12 +8,29 @@ const messages = {
     ForgotPassword: 'Forgot password?',
     UserManagement: 'User Management',
     Clients: 'Clients',
+    Users: 'Users',
+    Crew: 'Crew',
+    Services: 'Services',
+    Phases: 'Phases',
+    FullName: 'Full Name',
+    Country: 'Country',
+    IdType: 'ID Type',
+    IdNumber: 'ID #',
+    IdName: 'ID Name',
+    Gender: 'Gender',
+    Actions: 'Actions',
+    Phone: 'Phone',
+    Male: 'Male',
+    Female: 'Female',
+    CreateClient: 'Create Client',
+    UpdateClient: 'Update Client',
+    IsHandicap: 'Is Handicap?',
   },
   ar: {
     Members: 'الأعضاء',
     Login: 'Login',
-    Clients: 'عملاء'
-  }
+    Clients: 'عملاء',
+  },
 }
 
 export default messages

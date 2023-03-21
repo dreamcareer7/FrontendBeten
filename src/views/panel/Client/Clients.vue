@@ -25,7 +25,7 @@
                 type="text"
                 class="form-control mb-3"
                 v-model="search.fullname"
-                placeholder="Full Name"
+                :placeholder="$t('FullName')"
                 @change="getClients"
               />
             </CCol>
@@ -47,9 +47,9 @@
                 v-model="search.gender"
                 @change="getClients"
               >
-                <option value="" selected disabled>Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="" selected disabled>{{ $t('Gender') }}</option>
+                <option value="Male">{{ $t('Male') }}</option>
+                <option value="Female">{{ $t('Female') }}</option>
               </select>
             </CCol>
             <CCol :md="2">
@@ -57,7 +57,7 @@
                 type="number"
                 class="form-control mb-3"
                 v-model="search.phone"
-                placeholder="Phone"
+                :placeholder="$t('Phone')"
                 @change="getClients"
               />
             </CCol>
@@ -66,7 +66,7 @@
                 type="number"
                 class="form-control mb-3"
                 v-model="search.id_number"
-                placeholder="ID Number"
+                :placeholder="$t('IdNumber')"
                 @change="getClients"
               />
             </CCol>
@@ -84,13 +84,13 @@
           <CTable v-if="!loading" responsive>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Full Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Country</CTableHeaderCell>
-                <CTableHeaderCell scope="col">ID Type</CTableHeaderCell>
-                <CTableHeaderCell scope="col">ID #</CTableHeaderCell>
-                <CTableHeaderCell scope="col">ID Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Gender</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('FullName') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Country') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('IdType') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('IdNumber') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('IdName') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Gender') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
