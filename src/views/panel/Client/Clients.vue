@@ -5,13 +5,13 @@
         <CCardHeader>
           <div class="row">
             <div class="col-md-8 col-sm-4">
-              <h3 class="mt-1">Clients</h3>
+              <h3 class="mt-1">{{ $t('Clients') }}</h3>
             </div>
             <div class="col-md-4 col-sm-8" v-if="$can('clients.create')">
               <router-link :to="{ name: 'Create client' }">
                 <CButton color="success" class="float-end text-white">
                   <ion-icon name="person-add-outline"></ion-icon>&nbsp;
-                  <span>Create Client</span>
+                  <span>{{ $t('Create client') }}</span>
                 </CButton>
               </router-link>
             </div>
@@ -35,7 +35,7 @@
                 v-model="search.country"
                 @change="getClients"
               >
-                <option value="" selected>Any Country</option>
+                <option value="" selected>{{ $t('Any Country') }}</option>
                 <template v-for="country in countries" :key="country.code">
                   <option :value="country.id">{{ country.title }}</option>
                 </template>

@@ -3,13 +3,14 @@
     <CCol>
       <CCard>
         <CCardHeader>
-          <CCardTitle>Users</CCardTitle>
+          <CCardTitle>{{ $t('Users') }}</CCardTitle>
           <router-link
             :to="{ name: 'Create user' }"
             v-if="$can('users.create')"
           >
             <CButton color="success" class="float-end text-white">
-              <ion-icon name="person-add-outline"></ion-icon>&nbsp;Create User
+              <ion-icon name="person-add-outline"></ion-icon>&nbsp;
+              {{ $t('Create User') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -21,7 +22,7 @@
                 type="text"
                 class="form-control mb-3"
                 v-model="search.name"
-                placeholder="Name..."
+                :placeholder="$t('Name...')"
                 @keyup="filter(search.name)"
                 autofocus
               />
@@ -31,7 +32,7 @@
                 type="text"
                 class="form-control mb-3"
                 v-model="search.email"
-                placeholder="Email..."
+                :placeholder="$t('Email...')"
                 @keyup="filter(search.email)"
               />
             </CCol>
@@ -40,7 +41,7 @@
                 type="text"
                 class="form-control mb-3"
                 v-model="search.contact"
-                placeholder="Contact..."
+                :placeholder="$t('Contact...')"
                 @keyup="filter(search.contact)"
               />
             </CCol>
@@ -52,7 +53,7 @@
               <div class="spinner-border text-success" role="status"></div>
             </CCol>
             <CCol :md="12" class="text-center">
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">{{ $t('Loading...') }}</span>
             </CCol>
           </CRow>
           <!-- No results -->
@@ -70,11 +71,11 @@
           >
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">E-mail</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Active</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Contact</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Name') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Email') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Active') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Contact') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>

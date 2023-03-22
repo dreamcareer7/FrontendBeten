@@ -6,7 +6,7 @@
       :href="item.active ? '' : item.path"
       :active="item.active"
     >
-      {{ item.name }}
+      {{ $t(item.name) }}
     </CBreadcrumbItem>
   </CBreadcrumb>
 </template>

@@ -3,13 +3,14 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <CCardTitle>Service commits</CCardTitle>
+          <CCardTitle>{{ $t('Service Commits') }}</CCardTitle>
           <router-link
             :to="{ name: 'Create commit' }"
             v-if="$can('commits.create')"
           >
             <CButton color="success" class="float-end text-white">
-              <ion-icon name="create-outline"></ion-icon>&nbsp;Create commit
+              <ion-icon name="create-outline"></ion-icon>&nbsp;
+              {{ $t('Create commit') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -17,14 +18,14 @@
           <CTable>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Service</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Badge</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Schedule At</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Started</CTableHeaderCell>
-                <CTableHeaderCell scope="col">From</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Supervisor</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Phase</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Service') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Badge') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Schedule At') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Started') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('From') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Supervisor') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Phase') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>

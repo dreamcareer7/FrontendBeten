@@ -3,13 +3,14 @@
     <CCol>
       <CCard>
         <CCardHeader>
-          <CCardTitle>Services</CCardTitle>
+          <CCardTitle>{{ $t('Services') }}</CCardTitle>
           <router-link
             :to="{ name: 'Create service' }"
             v-if="$can('services.create')"
           >
             <CButton color="success" class="float-end text-white">
-              <ion-icon name="create-outline"></ion-icon>&nbsp;Create Service
+              <ion-icon name="create-outline"></ion-icon>&nbsp;
+              {{ $t('Create Service') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -17,12 +18,12 @@
           <CTable hover responsive>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">City</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Before Date</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Exact Date</CTableHeaderCell>
-                <CTableHeaderCell scope="col">After Date</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Title') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('City') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Before Date') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Exact Date') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('After Date') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>

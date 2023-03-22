@@ -56,7 +56,7 @@
                 <h4 id="traffic" class="card-title mb-0">
                   {{ $t('Clients') }}
                 </h4>
-                <div class="small text-medium-emphasis">January 2021</div>
+                <div class="small text-medium-emphasis">{{ $t('January') }} 2021</div>
               </CCol>
               <CCol :sm="7" class="d-none d-md-block">
                 <CButton color="primary" class="float-end">
@@ -67,11 +67,11 @@
                   role="group"
                   aria-label="Basic outlined example"
                 >
-                  <CButton color="secondary" variant="outline">Day</CButton>
+                  <CButton color="secondary" variant="outline">{{ $t('Day') }}</CButton>
                   <CButton color="secondary" variant="outline" active
-                    >Month</CButton
+                    >{{ $t('Month') }}</CButton
                   >
-                  <CButton color="secondary" variant="outline">Year</CButton>
+                  <CButton color="secondary" variant="outline">{{ $t('Year') }}</CButton>
                 </CButtonGroup>
               </CCol>
             </CRow>

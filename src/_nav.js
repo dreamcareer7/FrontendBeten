@@ -75,7 +75,7 @@ export default [
     items: [
       {
         component: 'CNavItem',
-        name: i18n.global.t('All Meals'),
+        name: i18n.global.t('All meals'),
         to: '/meals',
         visible: can('meals.index'),
       },

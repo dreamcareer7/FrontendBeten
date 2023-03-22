@@ -4,7 +4,7 @@
       <div>
         Copyright
         <span class="ms-1"
-          >{{ new Date().getFullYear() }} All rights reserved.</span
+          >{{ new Date().getFullYear() }} {{ $t('All rights reserved.') }}</span
         >
       </div>
     </div>
