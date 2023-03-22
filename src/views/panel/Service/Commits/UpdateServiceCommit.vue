@@ -188,8 +188,8 @@ export default {
       .get('service/list')
       .then((response) => (this.services = response.data))
     this.$axios
-      .get('users/list_supervisors')
-      .then((response) => (this.users = response.data))
+      .get('users')
+      .then((response) => (this.users = response.data.data))
     this.$axios
       .get(`/service_commits/${this.$decrypt(this.$route.params.id)}`)
       .then((response) => {

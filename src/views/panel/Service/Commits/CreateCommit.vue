@@ -82,7 +82,7 @@
       </CRow>
 
       <div class="card-footer text-end">
-        <button type="submit" class="btn text-white btn-success">
+        <button type="submit" class="btn text-white btn-success" :disabled="disabled">
           <ion-icon name="create"></ion-icon>&nbsp;
           <span>Create</span>
         </button>
@@ -102,6 +102,11 @@ export default {
     users: [],
     commit: {},
   }),
+  computed: {
+    disabled() {
+      return this.users.length === 0
+    }
+  },
   methods: {
     async create() {
       // Send the service commit object to the API for creation
