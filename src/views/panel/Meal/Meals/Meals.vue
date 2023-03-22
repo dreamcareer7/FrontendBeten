@@ -3,13 +3,14 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <CCardTitle>Meals</CCardTitle>
+          <CCardTitle>{{ $t('Meals') }}</CCardTitle>
           <router-link
             :to="{ name: 'Create meal' }"
             v-if="$can('meals.create')"
           >
             <CButton color="success" class="float-end text-white">
-              <ion-icon name="fast-food-outline"></ion-icon>&nbsp; Create meal
+              <ion-icon name="fast-food-outline"></ion-icon>&nbsp;
+              {{ $t('Create meal') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -17,12 +18,12 @@
           <CTable>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Meal Type</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Quantity</CTableHeaderCell>
-                <CTableHeaderCell scope="col">To Model Type</CTableHeaderCell>
-                <CTableHeaderCell scope="col">To Model ID</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Sent At</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Meal Type') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Quantity') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('To Model Type') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('To Model ID') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Sent At') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>

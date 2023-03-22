@@ -132,7 +132,7 @@ const routes = [
       // Meals Menu
       {
         path: '/meals',
-        name: 'All Meals',
+        name: 'All meals',
         component: () => import('@/views/panel/Meal/Meals/Meals'),
       },
       {

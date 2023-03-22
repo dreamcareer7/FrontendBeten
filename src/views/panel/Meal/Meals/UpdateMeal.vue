@@ -123,7 +123,7 @@ export default {
           this.$axios
             .patch(`/meals/${this.meal.id}`, this.meal)
             .then(() => {
-              this.$router.push({ name: 'All Meals' })
+              this.$router.push({ name: 'All meals' })
               swal('Updated successfully!', {
                 icon: 'success',
                 timer: 3000,

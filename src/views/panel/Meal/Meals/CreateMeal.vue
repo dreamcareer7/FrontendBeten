@@ -98,7 +98,7 @@ export default {
       this.meal.sent_at = this.meal.sent_at.replace('T', ' ')
       await this.$axios
         .post('/meals', this.meal)
-        .then(() => this.$router.push({ name: 'All Meals' }))
+        .then(() => this.$router.push({ name: 'All meals' }))
         .catch((error) => {
           if (error.response) {
             this.error_message = error.response.data.message

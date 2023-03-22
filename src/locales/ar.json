@@ -78,5 +78,14 @@
     "Started": "بدأت بتاريخ",
     "From": "من",
     "Supervisor": "المسؤول",
-    "Phase": "المرحله"
+    "Phase": "المرحله",
+    "Required": "المطلوب",
+    "Create phase": "انشاء مرحله",
+    "Search title": "بحث عن العنوان",
+    "Create meal": "انشاء وجبه",
+    "Meal Type": "نوع الوجبه",
+    "Quantity": "الكميه",
+    "To Model Type": "ينتمى إلى نموذج",
+    "To Model ID": "ينتمي إلى هوية النموذج",
+    "Sent At": "ارسلت في"
 }

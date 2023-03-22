@@ -3,14 +3,14 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <CCardTitle>Phases</CCardTitle>
+          <CCardTitle>{{ $t('Phases') }}</CCardTitle>
           <router-link
             :to="{ name: 'Create phase' }"
             v-if="$can('phases.create')"
           >
             <CButton color="success" class="float-end text-white">
               <ion-icon name="play-skip-forward-outline"></ion-icon>&nbsp;
-              Create phase
+              {{ $t('Create phase') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -21,7 +21,7 @@
                 type="text"
                 class="form-control"
                 v-model="search.title"
-                placeholder="Search title"
+                :placeholder="$t('Search title')"
                 @keyup="filter(search.title)"
               />
             </CCol>
@@ -43,9 +43,9 @@
           <CTable v-if="!loading && phases.length > 0">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Required</CTableHeaderCell>
-                <CTableHeaderCell scope="col"> Actions </CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Title') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Required') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
