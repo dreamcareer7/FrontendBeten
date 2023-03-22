@@ -36,12 +36,12 @@ axiosInstance.interceptors.response.use(
         swal({
           title: response.data.message,
           icon: 'success',
-          timer: 3000 // 3 seconds
+          timer: 3000, // 3 seconds
         })
-        break;
-    
+        break
+
       default:
-        break;
+        break
     }
     /*
      * Any status code that lies within the range of 2xx causes this function

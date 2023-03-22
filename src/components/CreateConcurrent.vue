@@ -291,16 +291,13 @@ export default {
       }
     },
     validateTimeWindow: async function (event) {
-      if (
-        event.target.valueAsNumber < 10 ||
-        event.target.valueAsNumber > 60
-      ) {
+      if (event.target.valueAsNumber < 10 || event.target.valueAsNumber > 60) {
         event.target.focus()
         event.target.classList.add('shake')
         event.target.style.border = 'red solid 3px'
         setTimeout(() => {
           event.target.classList.remove('shake')
-        }, 1000);
+        }, 1000)
       }
     },
     addRow: async function () {
@@ -312,14 +309,14 @@ export default {
       this.concurrent.extra.splice(index, 1)
     },
     submit: async function () {
-      await this.$axios.post(
-        `concurrents/${this.type}/${this.id}`, this.concurrent
-      ).then((response) => {
-        // TODO: reset form, emit event to add to the new concurrent to the list
-        // of parent component
-        this.concurrent = {extra: [{}]}
-      })
-    }
+      await this.$axios
+        .post(`concurrents/${this.type}/${this.id}`, this.concurrent)
+        .then((response) => {
+          // TODO: reset form, emit event to add to the new concurrent to the list
+          // of parent component
+          this.concurrent = { extra: [{}] }
+        })
+    },
   },
   mounted: async function () {
     this.concurrent.model_type = this.type

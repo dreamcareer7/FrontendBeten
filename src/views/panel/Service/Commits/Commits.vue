@@ -4,7 +4,10 @@
       <CCard class="mb-4">
         <CCardHeader>
           <CCardTitle>Service commits</CCardTitle>
-          <router-link :to="{ name: 'Create commit' }" v-if="$can('commits.create')">
+          <router-link
+            :to="{ name: 'Create commit' }"
+            v-if="$can('commits.create')"
+          >
             <CButton color="success" class="float-end text-white">
               <ion-icon name="create-outline"></ion-icon>&nbsp;Create commit
             </CButton>
@@ -31,25 +34,23 @@
                 <CTableDataCell>{{ commit.schedule_at }}</CTableDataCell>
                 <CTableDataCell>{{ commit.started_at }}</CTableDataCell>
                 <CTableDataCell>{{ commit.from_location }}</CTableDataCell>
-                <CTableDataCell>{{
-                  commit.supervisor.name
-                }}</CTableDataCell>
+                <CTableDataCell>{{ commit.supervisor.name }}</CTableDataCell>
                 <CTableDataCell>{{ commit.phase?.title }}</CTableDataCell>
                 <CTableDataCell>
-                <router-link
-                      :to="{
-                        name: 'Service Commit details',
-                        params: { id: this.$encrypt(commit.id) },
-                      }"
-                      v-if="$can('commits.view')"
+                  <router-link
+                    :to="{
+                      name: 'Service Commit details',
+                      params: { id: this.$encrypt(commit.id) },
+                    }"
+                    v-if="$can('commits.view')"
+                  >
+                    <button
+                      class="btn btn-sm btn-info text-white mx-1"
+                      title="View"
                     >
-                      <button
-                        class="btn btn-sm btn-info text-white mx-1"
-                        title="View"
-                      >
-                        <ion-icon name="eye-outline"></ion-icon>
-                      </button>
-                    </router-link>
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </button>
+                  </router-link>
                   <router-link
                     :to="{
                       name: 'Update Service Commit',
@@ -81,19 +82,23 @@
     </CCol>
   </CRow>
   <CRow>
-        <CCol :md="12" class="text-center">
-          <nav aria-label="Service commits navigation">
-            <ul class="pagination">
-              <template v-for="page in pagination" :key="page">
-                <li class="page-item" :class="{ active: page.active }">
-                  <a @click.prevent="gotoPage(page.url)" class="page-link" :class="{ disabled: !page.url }"
-                    v-html="page.label"></a>
-                </li>
-              </template>
-            </ul>
-          </nav>
-        </CCol>
-      </CRow>
+    <CCol :md="12" class="text-center">
+      <nav aria-label="Service commits navigation">
+        <ul class="pagination">
+          <template v-for="page in pagination" :key="page">
+            <li class="page-item" :class="{ active: page.active }">
+              <a
+                @click.prevent="gotoPage(page.url)"
+                class="page-link"
+                :class="{ disabled: !page.url }"
+                v-html="page.label"
+              ></a>
+            </li>
+          </template>
+        </ul>
+      </nav>
+    </CCol>
+  </CRow>
 </template>
 
 <script>
@@ -102,16 +107,13 @@ export default {
   data: () => ({
     commits: [],
     pagination: [],
-
   }),
   methods: {
     gotoPage: async function (url) {
-      await this.$axios
-        .get(url)
-        .then((response) => {
-          this.commits = response.data.data
-          this.pagination = response.data.links
-        })
+      await this.$axios.get(url).then((response) => {
+        this.commits = response.data.data
+        this.pagination = response.data.links
+      })
     },
     async deleteCommit(id) {
       await swal({
@@ -147,8 +149,7 @@ export default {
       .then((response) => {
         this.commits = response.data.data
         this.pagination = response.data.links
-      }
-        )
+      })
       .catch((error) => {
         swal({
           title: error.response.statusText,

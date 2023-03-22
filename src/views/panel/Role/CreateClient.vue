@@ -17,7 +17,12 @@
         </div>
 
         <div class="form-floating mb-3">
-          <select id="country" class="form-control" v-model="client.country_id" required>
+          <select
+            id="country"
+            class="form-control"
+            v-model="client.country_id"
+            required
+          >
             <option>Choose Country</option>
             <option
               v-for="country in countries"

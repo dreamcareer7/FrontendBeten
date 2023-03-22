@@ -22,12 +22,7 @@
               <span class="sr-only">Loading...</span>
             </CCol>
           </CRow>
-          <CTable
-            v-if="!loading"
-            responsive
-            hover
-            align="middle"
-          >
+          <CTable v-if="!loading" responsive hover align="middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">Title</CTableHeaderCell>

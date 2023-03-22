@@ -1,4 +1,4 @@
-import axiosInstance from "@/plugins/axios"
+import axiosInstance from '@/plugins/axios'
 
 export default {
   namespaced: true,

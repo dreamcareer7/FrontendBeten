@@ -53,7 +53,9 @@
           <CCardBody class="clients_chart_bg">
             <CRow>
               <CCol :sm="5">
-                <h4 id="traffic" class="card-title mb-0">{{ $t('Clients') }}</h4>
+                <h4 id="traffic" class="card-title mb-0">
+                  {{ $t('Clients') }}
+                </h4>
                 <div class="small text-medium-emphasis">January 2021</div>
               </CCol>
               <CCol :sm="7" class="d-none d-md-block">
@@ -281,7 +283,6 @@ import avatar5 from '@/assets/images/user.jpeg'
 import avatar6 from '@/assets/images/user.jpeg'
 import MainChartExample from './charts/MainChartExample'
 import WidgetsStatsA from './widgets/WidgetsStatsTypeA.vue'
-// import WidgetsStatsD from './widgets/WidgetsStatsTypeD.vue'
 import * as Charts from './charts/index'
 
 export default {
@@ -292,7 +293,7 @@ export default {
     WidgetsStatsA,
   },
   data: () => ({
-    commits: []
+    commits: [],
   }),
   setup() {
     const progressGroupExample1 = [
@@ -418,8 +419,9 @@ export default {
     }
   },
   async mounted() {
-    this.$axios.get('/my_service_commits')
-      .then((response) => this.commits = response.data)
+    this.$axios
+      .get('/my_service_commits')
+      .then((response) => (this.commits = response.data))
     await this.$axios.get('/countries')
   },
 }

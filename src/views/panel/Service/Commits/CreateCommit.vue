@@ -82,10 +82,7 @@
       </CRow>
 
       <div class="card-footer text-end">
-        <button
-          type="submit"
-          class="btn text-white btn-success"
-        >
+        <button type="submit" class="btn text-white btn-success">
           <ion-icon name="create"></ion-icon>&nbsp;
           <span>Create</span>
         </button>

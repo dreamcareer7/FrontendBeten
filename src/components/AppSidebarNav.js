@@ -94,7 +94,7 @@ const AppSidebarNav = defineComponent({
                     active: props.isActive,
                     href: props.href,
                     onClick: (e) => {
-                      e.preventDefault();
+                      e.preventDefault()
                       props.navigate()
                     },
                   },
@@ -136,11 +136,15 @@ const AppSidebarNav = defineComponent({
         CSidebarNav,
         {},
         {
-          default: () => nav.map((item) => {
-            if (JSON.parse(localStorage.getItem('user')).is_admin || item.visible) {
-              return renderItem(item)
-            }
-          }),
+          default: () =>
+            nav.map((item) => {
+              if (
+                JSON.parse(localStorage.getItem('user')).is_admin ||
+                item.visible
+              ) {
+                return renderItem(item)
+              }
+            }),
         },
       )
   },

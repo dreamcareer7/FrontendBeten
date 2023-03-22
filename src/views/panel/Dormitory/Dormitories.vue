@@ -155,8 +155,7 @@
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
-        <CTableRow>
-        </CTableRow>
+        <CTableRow> </CTableRow>
         <CTableRow>
           <CTableDataCell>Title</CTableDataCell>
           <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
@@ -281,16 +280,14 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios
-            .delete(`/dormitories/${id}`)
-            .then(
-              () =>
-                // TODO: remove item from the existing array
-                // instead of reassigning
-                (this.dormitories = this.dormitories.filter(
-                  (dormitory) => dormitory.id !== id,
-                )),
-            )
+          this.$axios.delete(`/dormitories/${id}`).then(
+            () =>
+              // TODO: remove item from the existing array
+              // instead of reassigning
+              (this.dormitories = this.dormitories.filter(
+                (dormitory) => dormitory.id !== id,
+              )),
+          )
           swal('Dormitory has been deleted!', {
             icon: 'success',
             timer: 3000,

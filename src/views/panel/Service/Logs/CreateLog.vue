@@ -11,28 +11,30 @@
             @change="getIds"
             required
           >
-            <option v-for="(model, key) in model_types" :value="key">{{ model }}</option>
+            <option v-for="(model, key) in model_types" :value="key">
+              {{ model }}
+            </option>
           </select>
           <label for="model_type">Model Type</label>
         </div>
 
         <div class="form-floating mb-3">
-           <select
+          <select
             id="model_id"
             class="form-control"
             v-model="log.model_id"
             required
           >
-            <option v-for="model in model_ids" :value="model.id">{{ model.id }}</option>
+            <option v-for="model in model_ids" :value="model.id">
+              {{ model.id }}
+            </option>
           </select>
 
-          <label for="model_id">
-            Model ID
-          </label>
+          <label for="model_id"> Model ID </label>
         </div>
 
         <div class="form-floating mb-3">
-          <input class="form-control" type="text" v-model="log.role">
+          <input class="form-control" type="text" v-model="log.role" />
           <label for="role">Role</label>
           <div class="invalid-feedback"></div>
         </div>
@@ -54,7 +56,7 @@ export default {
     return {
       log: {},
       model_types: [],
-      model_ids: []
+      model_ids: [],
     }
   },
   methods: {
@@ -66,13 +68,15 @@ export default {
       })
     },
     getIds() {
-      this.$axios.get('/ids_by_type/' + this.log.model_type)
-        .then((response) => this.model_ids = response.data)
-    }
+      this.$axios
+        .get('/ids_by_type/' + this.log.model_type)
+        .then((response) => (this.model_ids = response.data))
+    },
   },
   mounted() {
-    this.$axios.get('/model_types')
-        .then((response) => this.model_types = response.data)
-  }
+    this.$axios
+      .get('/model_types')
+      .then((response) => (this.model_types = response.data))
+  },
 }
 </script>

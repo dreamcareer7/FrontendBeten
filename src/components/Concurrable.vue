@@ -28,7 +28,11 @@
                     @click="view(concurrent.id)"
                     title="View details"
                   >
-                    <ion-icon :name="`eye-${extra_shown[concurrent.id] ? 'off-' : ''}outline`"></ion-icon>
+                    <ion-icon
+                      :name="`eye-${
+                        extra_shown[concurrent.id] ? 'off-' : ''
+                      }outline`"
+                    ></ion-icon>
                   </button>
                 </CTableDataCell>
                 <CTableDataCell>
@@ -73,7 +77,7 @@
     </CButton>
     <Transition name="fade">
       <!-- Pass the type & id props, needed for posting the model_type and model_id -->
-      <CreateConcurrent v-if="form_shown" :type="type" :id="id"/>
+      <CreateConcurrent v-if="form_shown" :type="type" :id="id" />
     </Transition>
   </CCol>
 </template>
@@ -86,7 +90,7 @@ export default {
   name: 'Concurrable',
   components: {
     CreateConcurrent,
-    ConcurrentExtra
+    ConcurrentExtra,
   },
   props: ['type', 'id'],
   data: () => ({

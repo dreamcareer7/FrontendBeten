@@ -84,13 +84,27 @@
           <CTable v-if="!loading" responsive>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">{{ $t('FullName') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Country') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('IdType') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('IdNumber') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('IdName') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Gender') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('FullName')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('Country')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('IdType')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('IdNumber')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('IdName')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('Gender')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('Actions')
+                }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>

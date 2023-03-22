@@ -147,7 +147,7 @@ export default {
         // Add the removed service back to the available services
         const title = this.service_titles[service_id]
         // TODO: should be put back at the same index where it was
-        this.available_services.unshift({id: service_id, title: title})
+        this.available_services.unshift({ id: service_id, title: title })
       }
     },
     async create() {

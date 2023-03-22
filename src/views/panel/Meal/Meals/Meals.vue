@@ -9,8 +9,7 @@
             v-if="$can('meals.create')"
           >
             <CButton color="success" class="float-end text-white">
-              <ion-icon name="fast-food-outline"></ion-icon>&nbsp;
-              Create meal
+              <ion-icon name="fast-food-outline"></ion-icon>&nbsp; Create meal
             </CButton>
           </router-link>
         </CCardHeader>

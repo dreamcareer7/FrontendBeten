@@ -150,7 +150,9 @@
 
       <div class="card-footer text-end">
         <button class="btn text-white btn-success" type="submit">
-          <ion-icon name="person-add-outline"></ion-icon>&nbsp;{{ $t('Create') }}
+          <ion-icon name="person-add-outline"></ion-icon>&nbsp;{{
+            $t('Create')
+          }}
         </button>
       </div>
     </form>

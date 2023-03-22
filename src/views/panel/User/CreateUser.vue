@@ -89,9 +89,7 @@
                   id="is_active"
                   v-model="user.is_active"
                 />
-                <label class="form-check-label" for="is_active">
-                  Active
-                </label>
+                <label class="form-check-label" for="is_active"> Active </label>
               </div>
             </div>
           </div>
@@ -139,7 +137,7 @@ export default {
     crew_members: [],
   }),
   methods: {
-    create: async function() {
+    create: async function () {
       await this.$axios
         .post('/users', this.user)
         .then(() => this.$router.push({ name: 'Users' }))

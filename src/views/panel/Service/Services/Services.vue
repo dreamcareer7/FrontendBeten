@@ -4,7 +4,10 @@
       <CCard>
         <CCardHeader>
           <CCardTitle>Services</CCardTitle>
-          <router-link :to="{ name: 'Create service' }" v-if="$can('services.create')">
+          <router-link
+            :to="{ name: 'Create service' }"
+            v-if="$can('services.create')"
+          >
             <CButton color="success" class="float-end text-white">
               <ion-icon name="create-outline"></ion-icon>&nbsp;Create Service
             </CButton>

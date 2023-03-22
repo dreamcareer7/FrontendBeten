@@ -112,7 +112,9 @@
         >
           {{ $t('GoBack') }}</button
         >&nbsp;
-        <button type="submit" class="btn text-white btn-warning">{{ $t('Save') }}</button>
+        <button type="submit" class="btn text-white btn-warning">
+          {{ $t('Save') }}
+        </button>
       </div>
     </form>
   </div>

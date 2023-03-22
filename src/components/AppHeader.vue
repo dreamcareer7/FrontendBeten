@@ -58,13 +58,13 @@ export default {
   computed: {
     flag() {
       return this.$i18n.locale == 'ar' ? 'cifAe' : 'cifGb'
-    }
+    },
   },
   methods: {
     changeLocale(locale) {
       this.$i18n.locale = locale
-      document.dir = (locale === 'ar') ? 'rtl' : 'ltr' 
-    }
-  }
+      document.dir = locale === 'ar' ? 'rtl' : 'ltr'
+    },
+  },
 }
 </script>

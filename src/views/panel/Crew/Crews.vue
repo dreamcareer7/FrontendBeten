@@ -71,15 +71,27 @@
           <CTable v-if="!loading" responsive hover>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">{{ $t('FullName') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Country') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Phone') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('IdType') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('IdNumber') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Active') }}</CTableHeaderCell>
-                <CTableHeaderCell style="width: 10%" :aria-colspan="2"
-                  >{{ $t('Actions') }}</CTableHeaderCell
-                >
+                <CTableHeaderCell scope="col">{{
+                  $t('FullName')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('Country')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('Phone')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('IdType')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('IdNumber')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t('Active')
+                }}</CTableHeaderCell>
+                <CTableHeaderCell style="width: 10%" :aria-colspan="2">{{
+                  $t('Actions')
+                }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>

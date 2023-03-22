@@ -66,11 +66,9 @@ export default {
     },
   },
   mounted: async function () {
-    await this.$axios
-      .get(`/settings`)
-      .then((response) => {
-        this.settings = response.data
-      })
+    await this.$axios.get(`/settings`).then((response) => {
+      this.settings = response.data
+    })
   },
 }
 </script>

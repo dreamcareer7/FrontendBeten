@@ -80,9 +80,7 @@
       </div>
       <div class="card-footer text-end">
         <span class="float-start">* Required fields</span>
-        <button type="submit" class="btn btn-success text-white">
-          Create
-        </button>
+        <button type="submit" class="btn btn-success text-white">Create</button>
       </div>
     </form>
   </div>
@@ -113,7 +111,7 @@ export default {
     },
   },
   mounted() {
-    this.$axios.get('/cities').then((response) => this.cities = response.data)
-  }
+    this.$axios.get('/cities').then((response) => (this.cities = response.data))
+  },
 }
 </script>

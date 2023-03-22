@@ -1,5 +1,5 @@
 <template>
-  <CChartDoughnut :data="defaultData" :height="30"/>
+  <CChartDoughnut :data="defaultData" :height="30" />
 </template>
 
 <script>

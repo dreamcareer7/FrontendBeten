@@ -28,7 +28,7 @@
       </CDropdownHeader>
       <CDropdownItem> <CIcon icon="cil-user" /> Profile </CDropdownItem>
       <router-link to="/settings" v-if="$can('settings')">
-        <CDropdownItem><CIcon icon="cil-settings"/> Settings </CDropdownItem>
+        <CDropdownItem><CIcon icon="cil-settings" /> Settings </CDropdownItem>
       </router-link>
       <CDropdownItem>
         <CIcon icon="cil-dollar" /> Payments

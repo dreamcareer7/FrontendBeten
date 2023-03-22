@@ -6,5 +6,5 @@ async function fetchCountries() {
 }
 
 export default {
-  fetchCountries
+  fetchCountries,
 }

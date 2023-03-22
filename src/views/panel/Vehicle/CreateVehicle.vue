@@ -1,44 +1,83 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">
-      Create Vehicle
-    </div>
+    <div class="card-header">Create Vehicle</div>
 
     <div id="ialert" class="" role="alert"></div>
     <form method="post">
       <div class="card-body">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="model" name="model" placeholder="Model..." required autofocus
-            autocomplete="off" v-model="vehicle.model" />
+          <input
+            type="text"
+            class="form-control"
+            id="model"
+            name="model"
+            placeholder="Model..."
+            required
+            autofocus
+            autocomplete="off"
+            v-model="vehicle.model"
+          />
 
           <label for="model">Model</label>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" v-model="vehicle.manufacturer" class="form-control" id="manufactory" name="manufactory"
-            placeholder="Manufactory..." required autocomplete="off" />
+          <input
+            type="text"
+            v-model="vehicle.manufacturer"
+            class="form-control"
+            id="manufactory"
+            name="manufactory"
+            placeholder="Manufactory..."
+            required
+            autocomplete="off"
+          />
           <label for="manufactory">Manufactory</label>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" v-model="vehicle.year" id="year" name="year"
-            placeholder="Manufactory..." required autocomplete="off" />
+          <input
+            type="text"
+            class="form-control"
+            v-model="vehicle.year"
+            id="year"
+            name="year"
+            placeholder="Manufactory..."
+            required
+            autocomplete="off"
+          />
           <label for="year">Year</label>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="registration" name="registration" placeholder="Registration..."
-            required autocomplete="off" v-model="vehicle.registration" />
+          <input
+            type="text"
+            class="form-control"
+            id="registration"
+            name="registration"
+            placeholder="Registration..."
+            required
+            autocomplete="off"
+            v-model="vehicle.registration"
+          />
           <label for="registration">Registration</label>
           <div class="invalid-feedback"></div>
         </div>
 
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="badge" v-model="vehicle.badge" name="badge" placeholder="Badge..."
-            required autocomplete="off" />
+          <input
+            type="text"
+            class="form-control"
+            id="badge"
+            v-model="vehicle.badge"
+            name="badge"
+            placeholder="Badge..."
+            required
+            autocomplete="off"
+          />
           <label for="badge">Badge</label>
           <div class="invalid-feedback"></div>
         </div>
@@ -72,8 +111,7 @@ export default {
       user_id: null,
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     addVehicle: async function () {
       await this.$axios
@@ -82,8 +120,7 @@ export default {
           this.message = response.data.message
           if (response.data.success) {
             this.$router.push({ name: 'vehicles' })
-          }
-          else {
+          } else {
             this.success = false
           }
         })
@@ -94,7 +131,6 @@ export default {
             this.message = error.message
           }
           this.success = false
-
         })
     },
   },

@@ -4,7 +4,7 @@ import { createI18n } from 'vue-i18n'
 
 import CoreuiVue from '@coreui/vue'
 import CIcon from '@coreui/icons-vue'
-import * as icons from '@coreui/icons';
+import * as icons from '@coreui/icons'
 
 import App from './App.vue'
 import router from './router'
@@ -16,7 +16,6 @@ import swalInstance from './plugins/swal'
 import { encrypt, decrypt } from '@/plugins/crypto'
 import can from '@/plugins/gate'
 
-import DocsExample from '@/components/DocsExample'
 import Contractable from '@/components/Contractable'
 import Documentable from '@/components/Documentable'
 import Concurrable from '@/components/Concurrable'
@@ -30,7 +29,7 @@ const i18n = createI18n({
   fallbackLocale: 'en', // set fallback locale
   messages, // set locale messages
   missingWarn: false,
-  silentFallbackWarn: true
+  silentFallbackWarn: true,
 })
 
 app.use(store)
@@ -42,7 +41,6 @@ app.use(i18n)
 app.provide('icons', icons)
 
 app.component('CIcon', CIcon)
-app.component('DocsExample', DocsExample)
 app.component('Contractable', Contractable)
 app.component('Documentable', Documentable)
 app.component('Concurrable', Concurrable)

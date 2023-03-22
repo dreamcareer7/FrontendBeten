@@ -17,7 +17,12 @@
         </div>
 
         <div class="form-floating mb-3">
-          <select id="country" class="form-control" v-model="client.country_id" required>
+          <select
+            id="country"
+            class="form-control"
+            v-model="client.country_id"
+            required
+          >
             <option>Choose Country</option>
             <option
               v-for="country in countries"
@@ -92,7 +97,9 @@
 
       <div class="card-footer text-end">
         <button class="btn text-white btn-success" type="submit">
-          <ion-icon name="person-add-outline"></ion-icon>&nbsp;{{ $t('Create') }}
+          <ion-icon name="person-add-outline"></ion-icon>&nbsp;{{
+            $t('Create')
+          }}
         </button>
       </div>
     </form>

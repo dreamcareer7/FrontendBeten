@@ -111,9 +111,12 @@
       </CRow>
 
       <div class="card-footer text-end">
-      <button class="btn btn-warning text-white" @click.prevent="$router.go(-1)">
-        Go Back
-      </button>&nbsp;
+        <button
+          class="btn btn-warning text-white"
+          @click.prevent="$router.go(-1)"
+        >
+          Go Back</button
+        >&nbsp;
         <button @click.prevent="update" class="btn btn-success ajax text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"

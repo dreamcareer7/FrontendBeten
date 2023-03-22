@@ -4,7 +4,10 @@
       <CCard>
         <CCardHeader>
           <CCardTitle>Users</CCardTitle>
-          <router-link :to="{ name: 'Create user' }" v-if="$can('users.create')">
+          <router-link
+            :to="{ name: 'Create user' }"
+            v-if="$can('users.create')"
+          >
             <CButton color="success" class="float-end text-white">
               <ion-icon name="person-add-outline"></ion-icon>&nbsp;Create User
             </CButton>

@@ -156,9 +156,7 @@ export default {
       })
     },
     getContracts() {
-      this.$axios
-      .get(`/contracts/${this.type}/${this.id}`)
-      .then((response) => {
+      this.$axios.get(`/contracts/${this.type}/${this.id}`).then((response) => {
         this.contracts = response.data
         // Iterate through the contracts, push an object, key is contract id
         // value would be hardcoded false
@@ -167,7 +165,7 @@ export default {
           this.contract_documents_shown[contract.id] = false
         })
       })
-    }
+    },
   },
   async mounted() {
     this.getContracts()

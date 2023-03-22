@@ -11,7 +11,7 @@ export default [
   {
     component: 'CNavTitle',
     name: 'User Management',
-    visible: can('users.browse')
+    visible: can('users.browse'),
   },
   {
     component: 'CNavItem',
