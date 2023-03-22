@@ -50,6 +50,5 @@ app.config.globalProperties.$axios = axiosInstance
 app.config.globalProperties.$encrypt = encrypt
 app.config.globalProperties.$decrypt = decrypt
 app.config.globalProperties.$can = can
-app.config.globalProperties.api_url = process.env.VUE_APP_BASE_API_URL
 
 app.mount('#app')
