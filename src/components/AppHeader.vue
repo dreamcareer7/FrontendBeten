@@ -8,12 +8,12 @@
         <CNavItem>
           <CDropdown variant="nav-item" class="pt-2">
             <CDropdownToggle placement="bottom-end" class="py-0" :caret="false">
-              <CIcon class="mx-2" v-if="$i18n.locale == 'ar'" icon="cifAe" size="lg" />
+              <CIcon class="mx-2" v-if="$i18n.locale == 'ar'" icon="cifSa" size="lg" />
               <CIcon class="mx-2" v-if="$i18n.locale == 'en'" icon="cifGb" size="lg" />
             </CDropdownToggle>
             <CDropdownMenu class="pt-0">
               <CDropdownItem @click="changeLocale('ar')">
-                <CIcon class="mx-2" icon="cifAe" size="lg" /> العربية
+                <CIcon class="mx-2" icon="cifSa" size="lg" /> العربية
               </CDropdownItem>
               <CDropdownItem @click="changeLocale('en')">
                 <CIcon class="mx-2" icon="cifGb" size="lg" /> English
