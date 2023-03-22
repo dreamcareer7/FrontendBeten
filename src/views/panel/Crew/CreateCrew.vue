@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">{{ $t('CreateCrew') }}</div>
+    <div class="card-header">{{ $t('Create crew') }}</div>
     <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
@@ -23,7 +23,7 @@
             autofocus
             required
           />
-          <label for="fullname">{{ $t('FullName') }} *</label>
+          <label for="fullname">{{ $t('Fullname') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -90,7 +90,7 @@
             id="id_type"
             required
           />
-          <label for="id_type">{{ $t('IdType') }} *</label>
+          <label for="id_type">{{ $t('ID type') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -101,7 +101,7 @@
             id="id_name"
             required
           />
-          <label for="id_name">{{ $t('IdName') }} *</label>
+          <label for="id_name">{{ $t('ID name') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -112,7 +112,7 @@
             id="id_number"
             required
           />
-          <label for="id_number">{{ $t('IdNumber') }}</label>
+          <label for="id_number">{{ $t('ID number') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -123,7 +123,7 @@
             id="dob"
             required
           />
-          <label for="dob">{{ $t('DateOfBirth') }} *</label>
+          <label for="dob">{{ $t('Date of birth') }} *</label>
         </div>
 
         <div class="form-switch">
@@ -135,7 +135,7 @@
             required
           />
           <label class="form-check-label" for="is_active">
-            &nbsp;{{ $t('IsActive') }}?
+            &nbsp;{{ $t('is active') }}?
           </label>
         </div>
 
@@ -161,7 +161,7 @@
 
 <script>
 export default {
-  name: 'CreateCrew',
+  name: 'Create crew',
   data: () => ({
     error_message: '',
     crew: {

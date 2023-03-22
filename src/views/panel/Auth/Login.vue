@@ -9,7 +9,7 @@
                 <CForm>
                   <h1 class="text-center">{{ $t('Login') }}</h1>
                   <p class="text-medium-emphasis text-center">
-                    {{ $t('SignIn') }}
+                    {{ $t('Sign in to your account') }}
                   </p>
                   <CInputGroup class="mb-3">
                     <CInputGroupText>@</CInputGroupText>
@@ -48,7 +48,7 @@
                         }"
                       >
                         <CButton color="link" class="px-0">
-                          {{ $t('ForgotPassword') }}
+                          {{ $t('Forgot password?') }}
                         </CButton>
                       </router-link>
                     </CCol>

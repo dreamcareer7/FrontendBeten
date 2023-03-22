@@ -5,13 +5,13 @@
         <CCardHeader>
           <div class="row">
             <div class="col-md-8 col-sm-4">
-              <h3 class="mt-1">{{ $t('CrewMembers') }}</h3>
+              <h3 class="mt-1">{{ $t('Crew members') }}</h3>
             </div>
             <div class="col-md-4 col-sm-8" v-if="$can('crews.create')">
               <router-link :to="{ name: 'Create crew' }">
                 <CButton color="success" class="float-end text-white">
                   <ion-icon name="person-add-outline"></ion-icon>&nbsp;
-                  <span>{{ $t('CreateCrew') }}</span>
+                  <span>{{ $t('Create crew') }}</span>
                 </CButton>
               </router-link>
             </div>
@@ -24,7 +24,7 @@
                 type="text"
                 class="form-control mb-3"
                 v-model="search.fullname"
-                :placeholder="$t('FullName')"
+                :placeholder="$t('Fullname')"
                 @keyup="filter(search.fullname)"
               />
             </CCol>
@@ -54,7 +54,7 @@
                 type="text"
                 class="form-control mb-3"
                 v-model="search.id_number"
-                :placeholder="$t('IdNumber')"
+                :placeholder="$t('ID number')"
                 @keyup="filter(search.id_number)"
               />
             </CCol>
@@ -72,7 +72,7 @@
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">{{
-                  $t('FullName')
+                  $t('Fullname')
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
                   $t('Country')
@@ -81,10 +81,10 @@
                   $t('Phone')
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('IdType')
+                  $t('ID type')
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('IdNumber')
+                  $t('ID number')
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
                   $t('Active')
@@ -111,7 +111,7 @@
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
-                    :title="$t('ViewDetails')"
+                    :title="$t('View details')"
                     @click="viewDetails(crew.id)"
                     v-if="$can('crews.view')"
                   >
@@ -179,7 +179,7 @@
     <CModalBody>
       <CTable class="table table-responsive">
         <CTableRow class="mt-3">
-          <CTableHeaderCell>{{ $t('FullName') }}:</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t('Fullname') }}:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.fullname }}</CTableDataCell>
         </CTableRow>
 
@@ -200,7 +200,7 @@
         </CTableRow>
 
         <CTableRow class="mt-3">
-          <CTableHeaderCell>{{ $t('IdType') }}:</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t('ID type') }}:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.id_type }}</CTableDataCell>
           <CTableHeaderCell>{{ $t('Active') }}:</CTableHeaderCell>
           <CTableDataCell>
@@ -223,7 +223,7 @@ import { debounce } from '@/utils/helper'
 import countries from '@/store/countries'
 
 export default {
-  name: 'CrewMembers',
+  name: 'Crew members',
   data: () => ({
     debounceFn: null,
     countries: [],

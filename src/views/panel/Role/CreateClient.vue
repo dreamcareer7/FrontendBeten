@@ -107,7 +107,7 @@
 import countries from '@/store/countries'
 
 export default {
-  name: 'CreateClient',
+  name: 'Create client',
   data: () => ({
     error_message: '',
     client: {

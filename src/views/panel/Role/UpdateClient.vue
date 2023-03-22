@@ -121,7 +121,7 @@
 import countries from '@/store/countries'
 
 export default {
-  name: 'UpdateClient',
+  name: 'Update client',
   data: () => ({
     error_message: '',
     client: {},

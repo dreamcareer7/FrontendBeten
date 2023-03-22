@@ -1,6 +1,6 @@
 <template>
   <div class="card border-warning mb-4">
-    <div class="card-header">{{ $t('UpdateCrew') }}</div>
+    <div class="card-header">{{ $t('Update crew') }}</div>
     <form @submit.prevent="update">
       <div class="card-body">
         <div class="form-floating mb-3">
@@ -23,7 +23,7 @@
             required
             autofocus
           />
-          <label for="fullname">{{ $t('FullName') }} *</label>
+          <label for="fullname">{{ $t('Fullname') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -87,7 +87,7 @@
             id="id_type"
             required
           />
-          <label for="id_type">{{ $t('IdType') }} *</label>
+          <label for="id_type">{{ $t('ID type') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -98,7 +98,7 @@
             id="id_name"
             required
           />
-          <label for="id_name">{{ $t('IdName') }} *</label>
+          <label for="id_name">{{ $t('ID name') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -109,7 +109,7 @@
             id="id_number"
             required
           />
-          <label for="is_number">{{ $t('IdNumber') }} *</label>
+          <label for="is_number">{{ $t('ID number') }} *</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -120,7 +120,7 @@
             id="dob"
             required
           />
-          <label for="dob">{{ $t('DateOfBirth') }} *</label>
+          <label for="dob">{{ $t('Date of birth') }} *</label>
         </div>
 
         <div class="form-switch">
@@ -132,7 +132,7 @@
             required
           />
           <label class="form-check-label" for="is_active">
-            &nbsp;{{ $t('IsActive') }}?
+            &nbsp;{{ $t('is active') }}?
           </label>
         </div>
 
@@ -146,12 +146,12 @@
       </div>
 
       <div class="card-footer text-end">
-        <span class="float-start">* {{ $t('RequiredFields') }}</span>
+        <span class="float-start">* {{ $t('Required fields') }}</span>
         <button
           class="btn btn-warning text-white"
           @click.prevent="$router.go(-1)"
         >
-          {{ $t('GoBack') }}</button
+          {{ $t('Go back') }}</button
         >&nbsp;
         <button type="submit" class="btn text-white btn-warning">
           <ion-icon name="save-outline"></ion-icon>&nbsp;{{ $t('Save') }}
@@ -163,7 +163,7 @@
 
 <script>
 export default {
-  name: 'UpdateCrew',
+  name: 'Update crew',
   data: () => ({
     error_message: '',
     crew: {},

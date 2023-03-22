@@ -44,12 +44,12 @@ const routes = [
       {
         path: '/clients/create',
         name: 'Create client',
-        component: () => import('@/views/panel/Client/CreateClient'),
+        component: () => import('@/views/panel/Client/Create client'),
       },
       {
         path: '/clients/edit/:id',
         name: 'Update Client',
-        component: () => import('@/views/panel/Client/UpdateClient'),
+        component: () => import('@/views/panel/Client/Update client'),
       },
       {
         path: '/crews',
@@ -59,12 +59,12 @@ const routes = [
       {
         path: '/crews/create',
         name: 'Create crew',
-        component: () => import('@/views/panel/Crew/CreateCrew'),
+        component: () => import('@/views/panel/Crew/Create crew'),
       },
       {
         path: '/crews/edit/:id',
         name: 'Update crew',
-        component: () => import('@/views/panel/Crew/UpdateCrew'),
+        component: () => import('@/views/panel/Crew/Update crew'),
       },
       // Services menu
       {

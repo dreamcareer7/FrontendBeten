@@ -25,7 +25,7 @@
                 type="text"
                 class="form-control mb-3"
                 v-model="search.fullname"
-                :placeholder="$t('FullName')"
+                :placeholder="$t('Fullname')"
                 @change="getClients"
               />
             </CCol>
@@ -66,7 +66,7 @@
                 type="number"
                 class="form-control mb-3"
                 v-model="search.id_number"
-                :placeholder="$t('IdNumber')"
+                :placeholder="$t('ID number')"
                 @change="getClients"
               />
             </CCol>
@@ -85,19 +85,19 @@
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">{{
-                  $t('FullName')
+                  $t('Fullname')
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
                   $t('Country')
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('IdType')
+                  $t('ID type')
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('IdNumber')
+                  $t('ID number')
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('IdName')
+                  $t('ID name')
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
                   $t('Gender')
@@ -118,7 +118,7 @@
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
-                    :title="$t('ViewDetails')"
+                    :title="$t('View details')"
                     @click="viewDetails(client.id)"
                     v-if="$can('clients.view')"
                   >
@@ -187,7 +187,7 @@
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>{{ $t('FullName') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Fullname') }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.fullname }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
@@ -201,7 +201,7 @@
               <CTableDataCell>
                 {{ client.phone }}
               </CTableDataCell>
-              <CTableHeaderCell>{{ $t('IsHandicap') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('is handicap') }}:</CTableHeaderCell>
               <CTableDataCell>
                 <CBadge
                   :color="client.is_handicap ? 'success' : 'warning'"
@@ -212,13 +212,13 @@
               </CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>{{ $t('IdNumber') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('ID number') }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.id_number }}</CTableDataCell>
-              <CTableHeaderCell>{{ $t('IdType') }}</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('ID type') }}</CTableHeaderCell>
               <CTableDataCell>{{ client.id_type }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>{{ $t('DateOfBirth') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Date of birth') }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.dob }}</CTableDataCell>
             </CTableRow>
 
