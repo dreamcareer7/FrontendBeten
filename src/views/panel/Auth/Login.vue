@@ -18,6 +18,7 @@
                       :placeholder="$t('Email')"
                       v-model="form.email"
                       autocomplete="email"
+                      style="direction: inherit;"
                     />
                   </CInputGroup>
                   <CInputGroup class="mb-4">
