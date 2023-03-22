@@ -12,7 +12,6 @@ import store from './store'
 
 // Plugins
 import axiosInstance from './plugins/axios'
-import swalInstance from './plugins/swal'
 import { encrypt, decrypt } from '@/plugins/crypto'
 import can from '@/plugins/gate'
 
@@ -47,7 +46,6 @@ app.component('Concurrable', Concurrable)
 
 app.config.compilerOptions.isCustomElement = (tag) => tag.includes('ion-icon')
 
-app.config.globalProperties.$swal = swalInstance
 app.config.globalProperties.$axios = axiosInstance
 app.config.globalProperties.$encrypt = encrypt
 app.config.globalProperties.$decrypt = decrypt
