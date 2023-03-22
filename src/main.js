@@ -1,6 +1,7 @@
 import Vidle from 'v-idle-3'
 import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
+import swal from 'sweetalert'
 
 import CoreuiVue from '@coreui/vue'
 import CIcon from '@coreui/icons-vue'
@@ -60,5 +61,6 @@ app.config.globalProperties.$axios = axiosInstance
 app.config.globalProperties.$encrypt = encrypt
 app.config.globalProperties.$decrypt = decrypt
 app.config.globalProperties.$can = can
+app.config.globalProperties.swal = swal
 
 app.mount('#app')
