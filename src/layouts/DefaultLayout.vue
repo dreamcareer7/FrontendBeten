@@ -35,7 +35,7 @@ export default {
           localStorage.removeItem('auth')
           localStorage.removeItem('auth_token')
           swal({
-            title: 'You have been logout due to inactivity.',
+            title: this.$i18n.t('idle'),
             icon: 'warning',
           })
           this.$router.push({ name: 'Login' })

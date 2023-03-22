@@ -40,6 +40,7 @@ const messages = {
     Edit: 'Edit',
     Delete: 'Delete',
     ViewDetails: 'View Details',
+    idle: 'You have been logged out due to inactivity.'
   },
   ar: {
     Members: 'الاعضاء',
@@ -82,6 +83,7 @@ const messages = {
     Edit: 'تعديل',
     Delete: 'حذف',
     ViewDetails: 'التفاصيل',
+    idle: 'لقد تم تسجيل الخروج بسبب عدم النشاط'
   },
 }
 
