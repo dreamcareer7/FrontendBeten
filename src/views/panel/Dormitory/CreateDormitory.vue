@@ -25,7 +25,7 @@
             autocomplete="off"
             required
           />
-          <label for="phones">Phones</label>
+          <label for="phones">Phone</label>
         </div>
 
         <div class="form-floating mb-3">

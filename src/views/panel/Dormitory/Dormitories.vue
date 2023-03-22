@@ -3,13 +3,14 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <CCardTitle>Dormitories</CCardTitle>
+          <CCardTitle>{{ $t('Dormitories') }}</CCardTitle>
           <router-link
             :to="{ name: 'Create dormitory' }"
             v-if="$can('dormitories.create')"
           >
             <CButton color="success" class="float-end text-white">
-              <ion-icon name="bed-outline"></ion-icon>&nbsp;Create dormitory
+              <ion-icon name="bed-outline"></ion-icon>&nbsp;
+              {{ $t('Create dormitory') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -21,7 +22,7 @@
                 type="text"
                 class="form-control"
                 v-model="search.title"
-                placeholder="Title..."
+                :placeholder="$t('Title')"
                 @keyup="filter(search.title)"
               />
             </CCol>
@@ -30,7 +31,7 @@
                 type="text"
                 class="form-control"
                 v-model="search.phones"
-                placeholder="Phones..."
+                :placeholder="$t('Phone')"
                 @keyup="filter(search.phones)"
               />
             </CCol>
@@ -39,7 +40,7 @@
                 type="text"
                 class="form-control"
                 v-model="search.city"
-                placeholder="City..."
+                :placeholder="$t('City')"
                 @keyup="filter(search.city)"
               />
             </CCol>
@@ -67,12 +68,12 @@
           <CTable v-if="!loading && dormitories.length > 0">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Phones</CTableHeaderCell>
-                <CTableHeaderCell scope="col">City</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Location</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Active</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Title') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Phone') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('City') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Location') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Active') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -161,7 +162,7 @@
           <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Phones</CTableDataCell>
+          <CTableDataCell>Phone</CTableDataCell>
           <CTableDataCell>
             {{ dormitory.phones }}
           </CTableDataCell>

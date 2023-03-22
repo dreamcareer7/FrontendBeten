@@ -18,7 +18,7 @@
     "ID name": "الاسم بالهوية",
     "Gender": "الجنس",
     "Actions": "الاجراءآت",
-    "Phone": "الهاتف",
+    "Phone": "رقم الجوال",
     "Male": "ذكر",
     "Female": "انثى",
     "Active": "نشط",
@@ -87,5 +87,7 @@
     "Quantity": "الكميه",
     "To Model Type": "ينتمى إلى نموذج",
     "To Model ID": "ينتمي إلى هوية النموذج",
-    "Sent At": "ارسلت في"
+    "Sent At": "ارسلت في",
+    "Location": "العنوان",
+    "Create dormitory": "انشاء المسكن"
 }
