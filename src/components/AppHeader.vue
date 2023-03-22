@@ -8,7 +8,8 @@
         <CNavItem>
           <CDropdown variant="nav-item" class="pt-2">
             <CDropdownToggle placement="bottom-end" class="py-0" :caret="false">
-              <CIcon class="mx-2" :icon="flag" size="lg" />
+              <CIcon class="mx-2" v-if="$i18n.locale == 'ar'" icon="cifAe" size="lg" />
+              <CIcon class="mx-2" v-if="$i18n.locale == 'en'" icon="cifGb" size="lg" />
             </CDropdownToggle>
             <CDropdownMenu class="pt-0">
               <CDropdownItem @click="changeLocale('ar')">
@@ -55,15 +56,14 @@ export default {
     AppBreadcrumb,
     AppHeaderDropdownAccnt,
   },
-  computed: {
-    flag() {
-      return this.$i18n.locale == 'ar' ? 'cifAe' : 'cifGb'
-    },
-  },
   methods: {
     changeLocale(locale) {
+      localStorage.setItem('locale', locale)
       this.$i18n.locale = locale
-      document.dir = locale === 'ar' ? 'rtl' : 'ltr'
+      let dir = locale === 'ar' ? 'rtl' : 'ltr'
+      localStorage.setItem('dir', dir)
+      document.dir = dir
+      document.title = this.$i18n.t('Murafiq')
     },
   },
 }

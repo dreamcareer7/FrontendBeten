@@ -23,13 +23,23 @@ const app = createApp(App)
 
 import messages from './locales/messages'
 
+if (!localStorage.getItem('dir')) {
+  localStorage.setItem('dir', 'rtl')
+}
+if (!localStorage.getItem('locale')) {
+  localStorage.setItem('locale', 'ar')
+}
+
 const i18n = createI18n({
-  locale: 'ar',
+  locale: localStorage.getItem('locale'),
   fallbackLocale: 'en', // set fallback locale
   messages, // set locale messages
   missingWarn: false,
   silentFallbackWarn: true,
 })
+
+document.title = i18n.global.t('Murafiq')
+document.dir = localStorage.getItem('dir')
 
 app.use(store)
 app.use(router)
