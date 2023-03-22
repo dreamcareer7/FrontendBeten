@@ -41,5 +41,15 @@
     "View details": "التفاصيل",
     "You have been logged out due to inactivity.": "لقد تم تسجيل الخروج بسبب عدم النشا",
     "Murafiq": "مرافق",
-    "Dashboard": "لوحة القيادة"
+    "Dashboard": "لوحة القيادة",
+    "Others": "آخرون",
+    "Dormitories": "المساكن",
+    "Service Commits": "تلتزم الخدمة",
+    "Meals": "وجبات",
+    "All meals": "جميع الوجبات",
+    "Types": "أنواع",
+    "Groups": "مجموعات",
+    "Vehicles": "مركبات",
+    "Hospitalities": "الاعاشة",
+    "Transactions": "المعاملات"
 }
