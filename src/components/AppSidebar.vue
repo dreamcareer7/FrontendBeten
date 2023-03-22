@@ -6,7 +6,7 @@
   >
     <CSidebarBrand>
       <router-link to="/">{{
-        sidebarUnfoldable ? 'M' : 'Murafiq'
+        sidebarUnfoldable ? 'M' : $i18n.t('Murafiq')
       }}</router-link>
     </CSidebarBrand>
     <AppSidebarNav />
@@ -19,7 +19,6 @@
 
 <script>
 import store from '../store'
-import { computed } from 'vue'
 import { AppSidebarNav } from './AppSidebarNav'
 
 export default {
@@ -27,11 +26,9 @@ export default {
   components: {
     AppSidebarNav,
   },
-  setup() {
-    return {
-      sidebarUnfoldable: computed(() => store.state.sidebarUnfoldable),
-      sidebarVisible: computed(() => store.state.sidebarVisible),
-    }
+  computed: {
+    sidebarUnfoldable: () => store.state.sidebarUnfoldable,
+    sidebarVisible: () => store.state.sidebarVisible
   },
 }
 </script>
