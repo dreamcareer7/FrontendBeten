@@ -20,6 +20,12 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
     }
+
+    let locale = localStorage.getItem('locale')
+
+    if (locale) {
+      config.headers['X-Locale'] = locale
+    }
     return config
   },
   (error) => {
