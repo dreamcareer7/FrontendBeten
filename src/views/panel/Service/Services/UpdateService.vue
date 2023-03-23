@@ -49,7 +49,7 @@
             v-model="service.exact_date"
             label="Exact date..."
           />
-          <label for="phone">Exact Date</label>
+          <label for="phone">Exact date</label>
         </div>
         <div class="form-floating mb-3">
           <input

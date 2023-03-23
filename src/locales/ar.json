@@ -71,9 +71,9 @@
     "Create Service": "انشئ خدمه",
     "Title": "العنوان",
     "City": "المكان",
-    "Before Date": "التاريخ المسبق",
-    "Exact Date": "التاريخ المحدد",
-    "After Date": "التاريخ التالي",
+    "Before date": "التاريخ المسبق",
+    "Exact date": "التاريخ المحدد",
+    "After date": "التاريخ التالي",
     "Badge": "الشاره",
     "Schedule At": "تاريخ الجدوله",
     "Started": "بدأت بتاريخ",
@@ -402,5 +402,6 @@
     "supervisor": "مشرف",
     "user": "مستخدم",
     "The user has been deleted!": "تم حذف المستخدم!",
-    "Users navigation": "تنقل المستخدمين"
+    "Users navigation": "تنقل المستخدمين",
+    "Choose city": "إختر مدينة"
 }

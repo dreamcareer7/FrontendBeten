@@ -1,7 +1,7 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">Create Service</div>
-    <form @submit.prevent="createService">
+    <div class="card-header">{{ $t('Create Service') }}</div>
+    <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
           <input
@@ -9,27 +9,26 @@
             class="form-control"
             id="title"
             v-model="service.title"
-            placeholder="Title..."
             required
             autofocus
             autocomplete="off"
           />
-          <label for="title">Title *</label>
+          <label for="title">{{ $t('Title') }} *</label>
         </div>
         <div class="form-floating mb-3">
           <select
             class="form-select"
             id="city"
-            aria-label="Choose city"
+            :aria-label="$t('Choose city')"
             v-model="service.city_id"
             required
           >
-            <option>Choose city</option>
+            <option>{{ $t('Choose city') }}</option>
             <option v-for="city in cities" :value="city.id" :key="city.id">
               {{ city.title }}
             </option>
           </select>
-          <label for="city">City *</label>
+          <label for="city">{{ $t('City') }} *</label>
         </div>
         <div class="form-floating mb-3">
           <input
@@ -37,11 +36,8 @@
             class="form-control"
             id="before_date"
             v-model="service.before_date"
-            name="before_date"
-            placeholder="Before date..."
           />
-          <label for="phone">Before date</label>
-          <div class="invalid-feedback"></div>
+          <label for="before_date">{{ $t('Before date') }}</label>
         </div>
         <div class="form-floating mb-3">
           <input
@@ -49,11 +45,8 @@
             class="form-control"
             id="exact_date"
             v-model="service.exact_date"
-            name="exact_date"
-            placeholder="Exact date..."
           />
-          <label for="phone">Exact Date</label>
-          <div class="invalid-feedback"></div>
+          <label for="exact_date">{{ $t('Exact date') }}</label>
         </div>
         <div class="form-floating mb-3">
           <input
@@ -61,26 +54,20 @@
             class="form-control"
             id="after_date"
             v-model="service.after_date"
-            name="after_date"
-            placeholder="After date..."
           />
-          <label for="phone">After date</label>
-          <div class="invalid-feedback"></div>
+          <label for="after_date">{{ $t('After date') }}</label>
         </div>
-        <CRow>
+        <CRow v-if="error_message">
           <CCol :md="12">
-            <div v-show="message && !success" class="error_style">
-              {{ message }}
-            </div>
-            <div v-show="message && success" class="alert alert-success">
-              {{ message }}
+            <div class="error_style">
+              {{ error_message }}
             </div>
           </CCol>
         </CRow>
       </div>
       <div class="card-footer text-end">
-        <span class="float-start">* Required fields</span>
-        <button type="submit" class="btn btn-success text-white">Create</button>
+        <span class="float-start">* {{ $t('Required fields') }}</span>
+        <button type="submit" class="btn btn-success text-white">{{ $t('Create') }}</button>
       </div>
     </form>
   </div>
@@ -90,23 +77,21 @@
 export default {
   name: 'CreateService',
   data: () => ({
-    message: '',
-    success: false,
+    error_message: '',
     service: {},
     cities: [],
   }),
   methods: {
-    createService: async function () {
+    create: async function () {
       await this.$axios
         .post('/services', this.service)
         .then(() => this.$router.push({ name: 'Services' }))
         .catch((error) => {
           if (error.response) {
-            this.message = error.response.data.message
+            this.error_message = error.response.data.message
           } else {
-            this.message = error.message
+            this.error_message = error.message
           }
-          this.success = false
         })
     },
   },

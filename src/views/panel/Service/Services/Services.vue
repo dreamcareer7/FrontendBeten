@@ -20,9 +20,9 @@
               <CTableRow>
                 <CTableHeaderCell scope="col">{{ $t('Title') }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{ $t('City') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Before Date') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Exact Date') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('After Date') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Before date') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Exact date') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('After date') }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -119,13 +119,13 @@
             <CTableRow>
               <CTableHeaderCell>Title</CTableHeaderCell>
               <CTableDataCell>{{ service.title }}</CTableDataCell>
-              <CTableHeaderCell>After Date:</CTableHeaderCell>
+              <CTableHeaderCell>After date:</CTableHeaderCell>
               <CTableDataCell>{{ service.after_date }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>Before Date:</CTableHeaderCell>
+              <CTableHeaderCell>Before date:</CTableHeaderCell>
               <CTableDataCell>{{ service.before_date }}</CTableDataCell>
-              <CTableHeaderCell>Exact Date:</CTableHeaderCell>
+              <CTableHeaderCell>Exact date:</CTableHeaderCell>
               <CTableDataCell>{{ service.exact_date }}</CTableDataCell>
             </CTableRow>
           </CTable>
