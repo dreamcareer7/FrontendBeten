@@ -111,3 +111,9 @@ $enable-rtl: true;
 .card-title {
   display: inline;
 }
+ *[dir=rtl] .form-floating > label {
+   right: 0;
+   font-size: 12px;
+   margin-top: -8px;
+   transform: none !important;
+ }

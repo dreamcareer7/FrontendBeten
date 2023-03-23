@@ -35,21 +35,19 @@
                 <CTableDataCell>Otto</CTableDataCell>
                 <CTableDataCell>
                   <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-info text-white"
+                    class="btn btn-sm btn-info text-white mx-1"
                     :title="$t('View details')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-warning text-white"
+                    class="btn btn-sm btn-warning text-white mx-1"
                     :title="$t('Edit')"
                   >
                     <ion-icon name="create-outline"></ion-icon>
                   </button>
                   <button
-                    class="btn btn-sm btn-danger text-white"
+                    class="btn btn-sm btn-danger text-white mx-1"
                     :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
@@ -64,21 +62,19 @@
                 <CTableDataCell>Otto</CTableDataCell>
                 <CTableDataCell>
                   <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-info text-white"
+                    class="btn btn-sm btn-info text-white mx-1"
                     :title="$t('View details')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-warning text-white"
+                    class="btn btn-sm btn-warning text-white mx-1"
                     :title="$t('Edit')"
                   >
                     <ion-icon name="create-outline"></ion-icon>
                   </button>
                   <button
-                    class="btn btn-sm btn-danger text-white"
+                    class="btn btn-sm btn-danger text-white mx-1"
                     :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
@@ -93,21 +89,19 @@
                 <CTableDataCell>Otto</CTableDataCell>
                 <CTableDataCell>
                   <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-info text-white"
+                    class="btn btn-sm btn-info text-white mx-1"
                     :title="$t('View details')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <button
-                    style="margin-right: 1em"
-                    class="btn btn-sm btn-warning text-white"
+                    class="btn btn-sm btn-warning text-white mx-1"
                     :title="$t('Edit')"
                   >
                     <ion-icon name="create-outline"></ion-icon>
                   </button>
                   <button
-                    class="btn btn-sm btn-danger text-white"
+                    class="btn btn-sm btn-danger text-white mx-1"
                     :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
