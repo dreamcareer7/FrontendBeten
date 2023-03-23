@@ -144,7 +144,7 @@
     </CCol>
   </CRow>
   <CModal
-    size="lg"
+    size="md"
     :visible="is_dormitory_modal_shown"
     @close="is_dormitory_modal_shown = false"
     class="modal-popup-detail"

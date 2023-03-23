@@ -106,7 +106,7 @@
   </CRow>
 
   <CModal
-    size="lg"
+    size="md"
     :visible="is_hospitality_modal_visible"
     @close="is_hospitality_modal_visible = false"
     class="modal-popup-detail"

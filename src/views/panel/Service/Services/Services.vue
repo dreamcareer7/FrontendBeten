@@ -96,7 +96,7 @@
   </CRow>
 
   <CModal
-    size="lg"
+    size="md"
     :visible="showServiceDetailModal"
     @close="showServiceDetailModal = false"
     class="modal-popup-detail"

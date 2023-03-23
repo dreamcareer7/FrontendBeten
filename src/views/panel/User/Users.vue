@@ -151,7 +151,7 @@
   </CRow>
 
   <CModal
-    size="lg"
+    size="md"
     :visible="is_user_modal_visible"
     @close="is_user_modal_visible = false"
     class="modal-popup-detail"

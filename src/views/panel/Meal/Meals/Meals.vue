@@ -75,7 +75,7 @@
   </CRow>
 
   <CModal
-    size="lg"
+    size="md"
     :visible="is_meal_modal_visible"
     @close="is_meal_modal_visible = false"
     class="modal-popup-detail"
