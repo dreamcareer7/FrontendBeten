@@ -138,7 +138,7 @@ export default {
               this.message = response.data.message
               if (response.data.success) {
                 this.$router.push({ name: 'Vehicles' })
-                swal('Updated successfully!', {
+                swal(this.$i18n.t('Updated successfully!'), {
                   icon: 'success',
                   timer: 3000,
                 })

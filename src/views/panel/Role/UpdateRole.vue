@@ -1,7 +1,7 @@
 <template>
   <div class="card border-warning mb-4">
-    <div class="card-header">Update client</div>
-    <form @submit.prevent="updateClient">
+    <div class="card-header">Update role</div>
+    <form @submit.prevent="updaterole">
       <div class="card-body">
         <div class="form-floating mb-3">
           <input
@@ -9,7 +9,7 @@
             id="fullname"
             type="text"
             autocomplete="off"
-            v-model="client.fullname"
+            v-model="role.fullname"
             required
             autofocus
           />
@@ -20,7 +20,7 @@
           <select
             class="form-control"
             id="country_id"
-            v-model="client.country_id"
+            v-model="role.country_id"
             required
           >
             <option>Choose Country</option>
@@ -40,7 +40,7 @@
             class="form-control"
             id="id_type"
             type="text"
-            v-model="client.id_type"
+            v-model="role.id_type"
             required
           />
           <label for="id_type">ID Type</label>
@@ -51,7 +51,7 @@
             class="form-control"
             id="id_number"
             type="text"
-            v-model="client.id_number"
+            v-model="role.id_number"
             required
           />
           <label for="id_number">ID Number</label>
@@ -62,7 +62,7 @@
             type="text"
             class="form-control"
             id="id_name"
-            v-model="client.id_name"
+            v-model="role.id_name"
             required
           />
           <label for="id_name">ID Name</label>
@@ -72,7 +72,7 @@
           <select
             id="gender"
             class="form-control"
-            v-model="client.gender"
+            v-model="role.gender"
             required
           >
             <option value="Male">{{ $t('Male') }}</option>
@@ -87,8 +87,8 @@
               class="form-check-input"
               id="is_handicap"
               type="checkbox"
-              :checked="client.is_handicap"
-              v-model="client.is_handicap"
+              :checked="role.is_handicap"
+              v-model="role.is_handicap"
             />
             <label class="form-check-label" for="is_handicap">
               &nbsp;is handicapped?
@@ -121,14 +121,14 @@
 import countries from '@/store/countries'
 
 export default {
-  name: 'Update client',
+  name: 'Update role',
   data: () => ({
     error_message: '',
-    client: {},
+    role: {},
     countries: [],
   }),
   methods: {
-    updateClient: async function () {
+    updaterole: async function () {
       await swal({
         title: this.$i18n.t('Are you sure?'),
         text: this.$i18n.t('Click confirm to update, this action is irreversible'),
@@ -137,10 +137,10 @@ export default {
       }).then((willUpdate) => {
         if (willUpdate) {
           this.$axios
-            .patch(`/clients/${this.client.id}`, this.client)
+            .patch(`/roles/${this.role.id}`, this.role)
             .then(() => {
-              this.$router.push({ name: 'Clients' })
-              swal('Updated successfully!', {
+              this.$router.push({ name: 'roles' })
+              swal(this.$i18n.t('Updated successfully!'), {
                 icon: 'success',
                 timer: 3000,
               })
@@ -157,8 +157,8 @@ export default {
   async mounted() {
     countries.fetchCountries().then((countries) => (this.countries = countries))
     await this.$axios
-      .get(`/clients/${this.$decrypt(this.$route.params.id)}`)
-      .then((response) => (this.client = response.data))
+      .get(`/roles/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => (this.role = response.data))
   },
 }
 </script>

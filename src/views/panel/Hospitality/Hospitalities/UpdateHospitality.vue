@@ -150,7 +150,7 @@ export default {
             .then((response) => {
               if (response.status === 204) {
                 this.$router.push({ name: 'Hospitalities' })
-                swal('Updated successfully!', {
+                swal(this.$i18n.t('Updated successfully!'), {
                   icon: 'success',
                   timer: 3000,
                 })

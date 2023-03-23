@@ -163,7 +163,7 @@ export default {
               if (response.status == 204) {
                 // If updated
                 this.$router.push({ name: 'Service Commits' })
-                swal('Updated successfully!', {
+                swal(this.$i18n.t('Updated successfully!'), {
                   icon: 'success',
                   timer: 3000,
                 })

@@ -130,10 +130,10 @@
                       params: { id: this.$encrypt(client.id) },
                     }"
                     v-if="$can('clients.edit')"
+                    :title="$t('Edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
-                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
@@ -207,7 +207,7 @@
                   :color="client.is_handicap ? 'success' : 'warning'"
                   shape="rounded-pill"
                 >
-                  {{ client.is_handicap ? 'Yes' : 'No' }}
+                  {{ client.is_handicap ? $t('Yes') : $t('No') }}
                 </CBadge>
               </CTableDataCell>
             </CTableRow>
@@ -221,19 +221,10 @@
               <CTableHeaderCell>{{ $t('Date of birth') }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.dob }}</CTableDataCell>
             </CTableRow>
-
-            <CTableRow class="mt-3" v-if="client.is_contractable ?? false">
-              <CTableDataCell colspan="4">
-                <Contractable type="client" :id="client.id" />
-              </CTableDataCell>
-            </CTableRow>
-
-            <CTableRow class="mt-0" v-if="client.is_documentable ?? false">
-              <CTableDataCell colspan="4">
-                <Documentable type="client" :id="client.id" />
-              </CTableDataCell>
-            </CTableRow>
           </CTable>
+          <Documentable v-if="client.is_documentable" type="client" :id="client.id" />
+          <Contractable v-if="client.is_contractable" type="client" :id="client.id" />
+          <Concurrable v-if="client.is_concurrable" type="client" :id="client.id" />
         </CCol>
       </CRow>
     </CModalBody>

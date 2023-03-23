@@ -184,7 +184,7 @@ export default {
             .patch(`/crews/${this.crew.id}`, this.crew)
             .then(() => {
               this.$router.push({ name: 'Crews' })
-              swal('Updated successfully!', {
+              swal(this.$i18n.t('Updated successfully!'), {
                 icon: 'success',
                 timer: 3000,
               })

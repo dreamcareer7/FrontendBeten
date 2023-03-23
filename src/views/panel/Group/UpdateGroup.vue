@@ -167,7 +167,7 @@ export default {
             .patch(`/groups/${this.group.id}`, this.group)
             .then(() => {
               this.$router.push({ name: 'Groups' })
-              swal('Updated successfully!', {
+              swal(this.$i18n.t('Updated successfully!'), {
                 icon: 'success',
                 timer: 3000,
               })

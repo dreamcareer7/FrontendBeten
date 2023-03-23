@@ -124,7 +124,7 @@ export default {
             .patch(`/meals/${this.meal.id}`, this.meal)
             .then(() => {
               this.$router.push({ name: 'All meals' })
-              swal('Updated successfully!', {
+              swal(this.$i18n.t('Updated successfully!'), {
                 icon: 'success',
                 timer: 3000,
               })

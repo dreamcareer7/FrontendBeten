@@ -160,7 +160,7 @@ export default {
             // Redirect back to the list of phases after creation
             .then(() => {
               this.$router.push({ name: 'Phases' })
-              swal('Updated successfully!', {
+              swal(this.$i18n.t('Updated successfully!'), {
                 icon: 'success',
                 timer: 3000,
               })
