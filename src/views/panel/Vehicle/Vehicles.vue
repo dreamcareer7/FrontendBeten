@@ -231,7 +231,7 @@ export default {
         title: this.$i18n.t('Are you sure?'),
         text: this.$i18n.t('Once deleted, you will not be able to recover!'),
         icon: 'warning',
-        buttons: true,
+        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
