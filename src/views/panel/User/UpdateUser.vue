@@ -139,14 +139,11 @@ export default {
                 timer: 3000,
               });
             })
-            .catch((error) => {
-              if (error.response) {
-                this.message = error.response.data.message;
-              } else {
-                this.message = error.message;
-              }
-              this.success = false;
-            });
+            .catch(
+              (error) =>
+                (this.error_message =
+                  error.response?.data.message || error.message),
+            )
         }
       });
     },
