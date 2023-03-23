@@ -1,25 +1,25 @@
 <template>
   <div class="card border-info mb-4">
-    <div class="card-header">Phase Information</div>
+    <div class="card-header">{{ $t("Phase Information") }}</div>
     <div class="row mt-3">
       <div class="col-12 text-center">
         <h5>{{ phase.title }}</h5>
       </div>
     </div>
-    <CRow style="margin-left: 4px">
+    <CRow class="m-3">
       <CCol :md="12">
-        <h3>Assigned services</h3>
+        <h3>{{ $t("Assigned services") }}</h3>
         <CTable class="table table-responsive">
           <CTableHead>
             <CTableRow>
-              <CTableHeaderCell scope="col">title</CTableHeaderCell>
+              <CTableHeaderCell scope="col">{{ $t("Title") }}</CTableHeaderCell>
             </CTableRow>
           </CTableHead>
           <CTableRow v-for="client in phase.services" :key="client.id">
             <CTableDataCell>{{ client.title }}</CTableDataCell>
             <CTableDataCell>
               <CButton color="info" @click="createCommit(client.id)">
-                Commit Service
+                {{ $t("Commit Service") }}
               </CButton>
             </CTableDataCell>
           </CTableRow>
@@ -35,7 +35,7 @@
       data-keyboard="false"
     >
       <CModalHeader>
-        <CModalTitle>Create commit</CModalTitle>
+        <CModalTitle>{{ $t('Create commit') }}</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CreateCommit :service="service" />
@@ -46,7 +46,7 @@
           class="text-white"
           @click="is_phase_modal_visible = false"
         >
-          Close
+          {{ $t('Close') }}
         </CButton>
       </CModalFooter>
     </CModal>
@@ -54,36 +54,26 @@
 </template>
 
 <script>
-import CreateCommit from '../Commits/CreateCommit.vue'
+import CreateCommit from "../Commits/CreateCommit.vue";
 
 export default {
-  name: 'PhaseDetails',
-  data() {
-    return {
-      message: '',
-      success: false,
-      phase: {},
-      phase_services: {},
-      phase_id: null,
-      is_phase_modal_visible: false,
-      service: null,
-    }
-  },
-  mounted() {
-    this.phase_id = this.$decrypt(this.$route.params.id)
-    this.fetchInfo(this.phase_id)
-  },
-  methods: {
-    fetchInfo: async function (id) {
-      await this.$axios.get(`/phases/` + id).then((response) => {
-        this.phase = response.data
-      })
-    },
-    createCommit(id) {
-      this.service = id
-      this.is_phase_modal_visible = true
-    },
-  },
+  name: "PhaseDetails",
   components: { CreateCommit },
-}
+  data: () => ({
+    phase: {},
+    is_phase_modal_visible: false,
+    service: null,
+  }),
+  methods: {
+    createCommit(id) {
+      this.service = id;
+      this.is_phase_modal_visible = true;
+    },
+  },
+  mounted: async function () {
+    await this.$axios
+      .get(`/phases/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => (this.phase = response.data));
+  },
+};
 </script>

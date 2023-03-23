@@ -125,7 +125,7 @@ const routes = [
       },
       {
         path: '/phases/update/:id',
-        name: 'Update Phase',
+        name: 'Update phase',
         component: () => import('@/views/panel/Phase/UpdatePhase'),
       },
       // Phases Menu ends here

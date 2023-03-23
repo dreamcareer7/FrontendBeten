@@ -56,7 +56,7 @@
                     :color="phase.is_required ? 'success' : 'warning'"
                     shape="rounded-pill"
                   >
-                    {{ phase.is_required ? 'Yes' : 'No' }}
+                    {{ phase.is_required ? $t('Yes') : $t('No') }}
                   </CBadge>
                 </CTableDataCell>
                 <CTableDataCell>
@@ -66,25 +66,25 @@
                       params: { id: this.$encrypt(phase.id) },
                     }"
                     v-if="$can('phases.view')"
+                    :title="$t('View details')"
                   >
                     <button
                       class="btn btn-sm btn-info text-white mx-1"
-                      :title="$t('View details')"
                     >
                       <ion-icon name="eye-outline"></ion-icon>
                     </button>
                   </router-link>
                   <router-link
                     :to="{
-                      name: 'Update Phase',
+                      name: 'Update phase',
                       params: { id: this.$encrypt(phase.id) },
                     }"
                     v-if="$can('phases.edit')"
+                    :title="$t('Edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
                       :xl="0"
-                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
@@ -93,6 +93,7 @@
                     class="btn btn-sm btn-danger text-white"
                     @click="deletePhase(phase.id)"
                     v-if="$can('phases.delete')"
+                    :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
@@ -102,7 +103,7 @@
           </CTable>
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Users navigation">
+              <nav aria-label="Phases navigation">
                 <ul class="pagination">
                   <template v-for="page in pagination" :key="page">
                     <li class="page-item" :class="{ active: page.active }">
@@ -122,66 +123,6 @@
       </CCard>
     </CCol>
   </CRow>
-  <CModal
-    size="lg"
-    :visible="is_phase_modal_visible"
-    @close="is_phase_modal_visible = false"
-    class="modal-popup-detail"
-    data-backdrop="static"
-    data-keyboard="false"
-  >
-    <CModalHeader>
-      <CModalTitle>Phase Information</CModalTitle>
-    </CModalHeader>
-    <CModalBody>
-      <CTable class="table table-responsive">
-        <CTableRow>
-          <CTableHeaderCell>Title</CTableHeaderCell>
-          <CTableDataCell>{{ phase.title }}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableHeaderCell>Required</CTableHeaderCell>
-          <CTableDataCell>
-            <CBadge
-              :color="phase.is_required ? 'success' : 'warning'"
-              shape="rounded-pill"
-            >
-              {{ phase.is_required ? 'Yes' : 'No' }}
-            </CBadge>
-          </CTableDataCell>
-        </CTableRow>
-      </CTable>
-      <CRow>
-        <CCol :md="12">
-          <h3>Assigned services</h3>
-          <CTable class="table table-responsive">
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col">title</CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableRow v-for="client in phase.services" :key="client.id">
-              <CTableDataCell>{{ client.title }}</CTableDataCell>
-              <CTableDataCell>
-                <CButton color="info"> Commit Service </CButton>
-              </CTableDataCell>
-            </CTableRow>
-          </CTable>
-        </CCol>
-      </CRow>
-      <Contractable v-if="phase.is_contractable" type="phase" :id="phase.id" />
-      <Documentable v-if="phase.is_documentable" type="phase" :id="phase.id" />
-    </CModalBody>
-    <CModalFooter>
-      <CButton
-        color="secondary"
-        class="text-white"
-        @click="is_phase_modal_visible = false"
-      >
-        Close
-      </CButton>
-    </CModalFooter>
-  </CModal>
 </template>
 
 <script>
@@ -197,8 +138,6 @@ export default {
     },
     loading: false,
     pagination: [],
-    is_phase_modal_visible: false,
-    phase: {},
   }),
   methods: {
     getPhases: async function () {

@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">Create phase</div>
+    <div class="card-header">{{ $t('Create phase') }}</div>
     <div class="row mt-4">
       <div class="col-12">
         <form @submit.prevent="create">
@@ -15,7 +15,7 @@
                 required
                 autofocus
               />
-              <label for="title">Title</label>
+              <label for="title">{{ $t('Title') }}</label>
             </div>
             <div class="border rounded px-1">
               <div class="form-check form-switch">
@@ -26,7 +26,7 @@
                   v-model="phase.is_required"
                 />
                 <label class="form-check-label" for="is_required">
-                  is required?
+                  {{ $t('is required?') }}
                 </label>
               </div>
             </div>
@@ -34,11 +34,11 @@
         </form>
       </div>
       <div class="col-12 text-center">
-        <h6>Move services from left side to right side to assign</h6>
+        <h6>{{ $t('Move services from left side to right side to assign') }}</h6>
         <div class="row ms-0 p-4" v-if="available_services.length !== 0">
           <!-- Left side -->
           <div class="col-6 p-3">
-            <h6>{{ available_services.length }} Available services</h6>
+            <h6>{{ available_services.length }} {{ $t('Available services') }}</h6>
             <div
               class="row mt-3 no-bars ms-0 border-dark"
               style="height: 300px; overflow: scroll"
@@ -67,7 +67,7 @@
             class="col-6 p-3 no-bars"
             style="height: 300px; overflow: scroll"
           >
-            <h6>{{ phase.services.length }} Assigned services</h6>
+            <h6>{{ phase.services.length }} {{ $t('Assigned services') }}</h6>
             <div
               class="row mt-3 border p-2 mb-2"
               v-for="service_id in phase.services"
@@ -102,7 +102,7 @@
         :disabled="phase.services.length === 0 || phase.title === ''"
         class="btn btn-success text-white"
       >
-        Create phase
+        {{ $t('Create phase') }}
       </button>
     </div>
   </div>

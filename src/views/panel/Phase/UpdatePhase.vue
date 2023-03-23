@@ -1,6 +1,6 @@
 <template>
   <form class="card border-warning mb-4" @submit.prevent="update">
-    <div class="card-header">Update Phase</div>
+    <div class="card-header">{{ $t('Update phase') }}</div>
     <div class="row mt-4">
       <div class="col-12">
         <div class="card-body">
@@ -14,7 +14,7 @@
               required
               autofocus
             />
-            <label for="title">Title</label>
+            <label for="title">{{ $t('Title') }}</label>
           </div>
           <div class="border rounded px-1">
             <div class="form-check form-switch">
@@ -26,18 +26,18 @@
                 :checked="phase.is_required"
               />
               <label class="form-check-label" for="is_required">
-                is required?
+                {{ $t('is required?') }}
               </label>
             </div>
           </div>
         </div>
       </div>
       <div class="col-12 text-center">
-        <h6>Move services from left side to right side to assign</h6>
+        <h6>{{ $t('Move services from left side to right side to assign') }}</h6>
         <div class="row ms-0 p-4" v-if="available_services.length !== 0">
           <!-- Left side -->
           <div class="col-6 p-3">
-            <h6>Available services</h6>
+            <h6>{{ $t('Available services') }}</h6>
             <div
               class="row mt-3 no-bars ms-0 border-dark"
               style="height: 300px; overflow: scroll"
@@ -66,7 +66,7 @@
             class="col-6 p-3 no-bars"
             style="height: 300px; overflow: scroll"
           >
-            <h6>Assigned services</h6>
+            <h6>{{ $t('Assigned services') }}</h6>
             <div
               class="row mt-3 border p-2 mb-2"
               v-for="service_id in phase.services"
@@ -100,10 +100,10 @@
         class="btn btn-warning text-white"
         @click.prevent="$router.go(-1)"
       >
-        Go back</button
+        {{ $t('Go back') }}</button
       >&nbsp;
       <button type="submit" class="btn btn-warning text-white">
-        Save
+        {{ $t('Save') }}
       </button>
     </div>
   </form>

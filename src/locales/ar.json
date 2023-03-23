@@ -406,5 +406,12 @@
     "Choose city": "إختر مدينة",
     "Update service": "تحديث الخدمة",
     "Choose a supervisor": "اختر مشرفًا",
-    "Update Service Commit": "تحديث إلتزام الخدمة"
+    "Update Service Commit": "تحديث إلتزام الخدمة",
+    "is required?": "مطلوب؟",
+    "Move services from left side to right side to assign": "نقل الخدمات من الجانب الأيسر إلى الجانب الأيمن للتعيين",
+    "Available services": "الخدمات المتاحة",
+    "Assigned services": "الخدمات المخصصة",
+    "Phase Information": "معلومات المرحلة",
+    "Update phase": "تحديث المرحلة",
+    "Commit Service": "إلتزام الخدمة"
 }
