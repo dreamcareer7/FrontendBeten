@@ -156,7 +156,7 @@ export default {
         this.roles_select_options = response.data.roles.map((role) => {
           return {
             value: role,
-            label: role,
+            label: this.$i18n.t(role),
           }
         })
         // Populate the crew member select element options

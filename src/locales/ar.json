@@ -395,5 +395,10 @@
     "Received by": "استلمت من قبل",
     "Create transaction": "إنشاء معاملة",
     "Extra": "إضافي",
-    "Hospitality": "ضيافة"
+    "Hospitality": "ضيافة",
+    "admin": "مدير",
+    "groups-admin": "مدير المجموعة",
+    "member": "عضو",
+    "supervisor": "مشرف",
+    "user": "مستخدم"
 }
