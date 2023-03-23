@@ -126,16 +126,16 @@ export default {
       await swal({
         title: this.$i18n.t('Are you sure?'),
         text: this.$i18n.t('Click confirm to update, this action is irreversible'),
-        icon: "warning",
+        icon: 'warning',
         buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
       }).then((willUpdate) => {
         if (willUpdate) {
           this.$axios
             .patch(`/users/${this.user.id}`, this.user)
             .then(() => {
-              this.$router.push({ name: "Users" });
+              this.$router.push({ name: 'Users' });
               swal(this.$i18n.t('Updated successfully!'), {
-                icon: "success",
+                icon: 'success',
                 timer: 3000,
               });
             })

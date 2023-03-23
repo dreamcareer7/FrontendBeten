@@ -59,7 +59,7 @@
           <!-- No results -->
           <CRow v-if="users.length === 0 && !loading" class="mt-4">
             <CCol :md="12" class="text-center">
-              <span class="sr-only">No results</span>
+              <span class="sr-only">{{ $t('No results') }}</span>
             </CCol>
           </CRow>
           <!-- End no results -->
@@ -119,7 +119,7 @@
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteUser(user.id)"
                     :title="$t('Delete')"
-                    v-if="$can('users.delete')"
+                    v-if="$can('users.delete') && user.id != auth_user.id"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
@@ -193,6 +193,7 @@
       </CTable>
       <Documentable v-if="user.is_documentable" type="user" :id="user.id" />
       <Contractable v-if="user.is_contractable" type="user" :id="user.id" />
+      <Concurrable v-if="user.is_concurrable" type="user" :id="user.id" />
     </CModalBody>
   </CModal>
 </template>
@@ -207,9 +208,10 @@ export default {
     users: [],
     search: {},
     user: {},
-    pagination: {},
+    pagination: [],
     loading: false,
     is_user_modal_visible: false,
+    auth_user: {},
   }),
   methods: {
     getUsers: async function () {
@@ -243,8 +245,6 @@ export default {
         })
         .then((response) => {
           this.users = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
           this.pagination = response.data.links
         })
       this.loading = false
@@ -276,6 +276,7 @@ export default {
   mounted: async function () {
     this.getUsers()
     this.debounceFn = debounce(() => this.getUsers(), 500)
+    this.auth_user = JSON.parse(localStorage.getItem('user'))
   },
 }
 </script>
