@@ -3,13 +3,14 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <CCardTitle>Groups</CCardTitle>
+          <CCardTitle>{{ $t('Groups') }}</CCardTitle>
           <router-link
             :to="{ name: 'Create group' }"
             v-if="$can('groups.create')"
           >
             <CButton color="success" class="float-end text-white">
-              <ion-icon name="people-outline"></ion-icon>&nbsp;Create group
+              <ion-icon name="people-outline"></ion-icon>&nbsp;
+              {{ $t('Create group') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -20,7 +21,7 @@
                 type="text"
                 class="form-control"
                 v-model="search.title"
-                placeholder="Search title"
+                :placeholder="$t('Search title')"
                 @keyup="filter(search.title)"
               />
             </CCol>
@@ -29,7 +30,7 @@
                 type="text"
                 class="form-control"
                 v-model="search.crew_member"
-                placeholder="Search crew member"
+                :placeholder="$t('Search crew member')"
                 @keyup="filter(search.crew_member)"
               />
             </CCol>
@@ -40,25 +41,25 @@
               <div class="spinner-border text-success" role="status"></div>
             </CCol>
             <CCol :md="12" class="text-center">
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">{{ $t('Loading...') }}</span>
             </CCol>
           </CRow>
           <CRow v-if="groups.length === 0 && !loading" class="mt-4">
             <CCol :md="12" class="text-center">
-              <span class="sr-only">No results</span>
+              <span class="sr-only">{{ $t('No results') }}</span>
             </CCol>
           </CRow>
           <CTable v-if="!loading && groups.length > 0">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Crew member</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Title') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Crew member') }}</CTableHeaderCell>
                 <CTableHeaderCell
                   style="width: 20%"
                   scope="col"
                   :aria-colspan="2"
                 >
-                  Actions
+                  {{ $t('Actions') }}
                 </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -93,6 +94,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white"
                     @click="deleteGroup(group.id)"
+                    :title="$t('Delete')"
                     v-if="$can('groups.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
@@ -103,7 +105,7 @@
           </CTable>
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Groups navigation">
+              <nav :aria-label="$t('Groups navigation')">
                 <ul class="pagination">
                   <template v-for="page in pagination" :key="page">
                     <li class="page-item" :class="{ active: page.active }">
@@ -126,7 +128,7 @@
 
   <!-- Small modal size unless documents or contracts -->
   <CModal
-    :size="!group.is_documentable && !group.is_contractable ? 'sm' : 'lg'"
+    :size="modalSize"
     :visible="is_group_modal_visible"
     @close="is_group_modal_visible = false"
     class="modal-popup-detail"
@@ -134,18 +136,18 @@
     data-keyboard="false"
   >
     <CModalHeader>
-      <CModalTitle>Group Information</CModalTitle>
+      <CModalTitle>{{ $t('Group Information') }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CRow>
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableDataCell>Title: {{ group.title }}</CTableDataCell>
+              <CTableDataCell>{{ $t('Title') }}: {{ group.title }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell>
-                Crew member: {{ group.crew?.fullname }}
+                {{ $t('Crew member') }}: {{ group.crew?.fullname }}
               </CTableDataCell>
             </CTableRow>
           </CTable>
@@ -153,11 +155,11 @@
       </CRow>
       <CRow>
         <CCol :md="12">
-          <h3>Clients</h3>
+          <h3>{{ $t('Clients') }}</h3>
           <CTable class="table table-responsive">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Fullname</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Fullname') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableRow v-for="client in group.clients" :key="client.id">
@@ -168,6 +170,7 @@
       </CRow>
       <Documentable v-if="group.is_documentable" type="group" :id="group.id" />
       <Contractable v-if="group.is_contractable" type="group" :id="group.id" />
+      <Concurrable v-if="group.is_concurrable" type="group" :id="group.id" />
     </CModalBody>
   </CModal>
 </template>
@@ -189,6 +192,14 @@ export default {
     pagination: [],
     is_group_modal_visible: false,
   }),
+  computed: {
+    modalSize() {
+      if (this.group.is_contractable || this.group.is_documentable || this.group.is_concurrable) {
+        return 'lg'
+      }
+      return 'sm'
+    }
+  },
   methods: {
     async getGroups() {
       this.loading = true
@@ -240,7 +251,7 @@ export default {
               1,
             ),
           )
-          swal('Group has been deleted!', {
+          swal(this.$i18n.t('Group has been deleted!'), {
             icon: 'success',
             timer: 3000,
           })

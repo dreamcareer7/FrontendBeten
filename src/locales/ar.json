@@ -378,5 +378,10 @@
     "Meal Type Information": "معلومات عن نوع الوجبه",
     "Meal Type has been deleted!": "تم حذف نوع الوجبة",
     "Create type": "انشئ النوع",
-    "Meal types navigation": "توجيه انواع الوجبه"
+    "Meal types navigation": "توجيه انواع الوجبه",
+    "Search crew member": "بحث عن عامل",
+    "No results": "لم يتم العثور على نتائج",
+    "Create group": "إنشاء مجموعة",
+    "Group Information": "معلومات المجموعة",
+    "Group has been deleted!": "تم حذف المجموعة!"
 }
