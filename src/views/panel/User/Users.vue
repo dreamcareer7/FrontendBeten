@@ -106,11 +106,11 @@
                       params: { id: this.$encrypt(user.id) },
                     }"
                     v-if="$can('users.edit')"
+                    :title="$t('Edit')"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
                       :xl="0"
-                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
