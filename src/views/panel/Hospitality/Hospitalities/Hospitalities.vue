@@ -48,7 +48,7 @@
                 <CTableDataCell :aria-colspan="2">
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
-                    title="View Details"
+                    :title="$t('View details')"
                     @click="fetchHospitalityInfo(hospitality.id)"
                     v-if="$can('hospitalities.view')"
                   >
@@ -64,7 +64,7 @@
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
                       :xl="0"
-                      title="Edit"
+                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
@@ -72,7 +72,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white"
                     @click="deleteHospitality(hospitality.id)"
-                    title="Delete"
+                    :title="$t('Delete')"
                     v-if="$can('hospitalities.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>

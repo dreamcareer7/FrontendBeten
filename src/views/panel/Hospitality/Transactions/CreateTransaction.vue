@@ -62,7 +62,7 @@
       </div>
 
       <div class="card-footer text-end">
-        <a class="btn btn-outline-success ajax">Save</a>
+        <a class="btn btn-outline-success ajax">{{ $t('Save') }}</a>
       </div>
     </form>
   </div>

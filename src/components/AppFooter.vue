@@ -2,7 +2,7 @@
   <CFooter>
     <div class="ms-auto">
       <div>
-        Copyright
+        {{ $t('Copyright') }}
         <span class="ms-1"
           >{{ new Date().getFullYear() }} {{ $t('All rights reserved.') }}</span
         >

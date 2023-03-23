@@ -75,8 +75,8 @@
             v-model="client.gender"
             required
           >
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <option value="Male">{{ $t('Male') }}</option>
+            <option value="Female">{{ $t('Female') }}</option>
           </select>
           <label for="gender">{{ $t('Gender') }}</label>
         </div>
@@ -132,10 +132,10 @@ export default {
   methods: {
     updateClient: async function () {
       await swal({
-        title: 'Are you sure?',
-        text: 'Click confirm to update, this action is irreversible',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Click confirm to update, this action is irreversible'),
         icon: 'warning',
-        buttons: ['Cancel', 'Confirm'],
+        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
       }).then((willUpdate) => {
         if (willUpdate) {
           this.$axios

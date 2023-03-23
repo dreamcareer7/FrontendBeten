@@ -47,7 +47,7 @@
                   >
                     <button
                       class="btn btn-sm btn-info text-white mx-1"
-                      title="View"
+                      :title="$t('View details')"
                     >
                       <ion-icon name="eye-outline"></ion-icon>
                     </button>
@@ -61,7 +61,7 @@
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white mx-1"
-                      title="Edit"
+                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
@@ -69,7 +69,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white"
                     @click="deleteCommit(commit.id)"
-                    title="Delete"
+                    :title="$t('Delete')"
                     v-if="$can('commits.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
@@ -118,8 +118,8 @@ export default {
     },
     async deleteCommit(id) {
       await swal({
-        title: 'Are you sure?',
-        text: 'Once deleted, you will not be able to recover this service commit!',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
         icon: 'warning',
         buttons: true,
         dangerMode: true,

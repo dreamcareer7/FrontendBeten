@@ -37,20 +37,20 @@
                   <button
                     style="margin-right: 1em"
                     class="btn btn-sm btn-info text-white"
-                    title="View Details"
+                    :title="$t('View details')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <button
                     style="margin-right: 1em"
                     class="btn btn-sm btn-warning text-white"
-                    title="Edit"
+                    :title="$t('Edit')"
                   >
                     <ion-icon name="create-outline"></ion-icon>
                   </button>
                   <button
                     class="btn btn-sm btn-danger text-white"
-                    title="Delete"
+                    :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
@@ -66,20 +66,20 @@
                   <button
                     style="margin-right: 1em"
                     class="btn btn-sm btn-info text-white"
-                    title="View Details"
+                    :title="$t('View details')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <button
                     style="margin-right: 1em"
                     class="btn btn-sm btn-warning text-white"
-                    title="Edit"
+                    :title="$t('Edit')"
                   >
                     <ion-icon name="create-outline"></ion-icon>
                   </button>
                   <button
                     class="btn btn-sm btn-danger text-white"
-                    title="Delete"
+                    :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
@@ -95,20 +95,20 @@
                   <button
                     style="margin-right: 1em"
                     class="btn btn-sm btn-info text-white"
-                    title="View Details"
+                    :title="$t('View details')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <button
                     style="margin-right: 1em"
                     class="btn btn-sm btn-warning text-white"
-                    title="Edit"
+                    :title="$t('Edit')"
                   >
                     <ion-icon name="create-outline"></ion-icon>
                   </button>
                   <button
                     class="btn btn-sm btn-danger text-white"
-                    title="Delete"
+                    :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>

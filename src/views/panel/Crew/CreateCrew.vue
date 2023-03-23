@@ -33,8 +33,8 @@
             v-model="crew.gender"
             required
           >
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <option value="Male">{{ $t('Male') }}</option>
+            <option value="Female">{{ $t('Female') }}</option>
           </select>
           <label for="gender">{{ $t('Gender') }} *</label>
         </div>

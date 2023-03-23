@@ -32,17 +32,18 @@ export default {
       this.$axios
         .post('token-logout')
         .then(() => {
-          localStorage.removeItem('auth')
           localStorage.removeItem('auth_token')
           swal({
             title: this.$i18n.t('You have been logged out due to inactivity.'),
             icon: 'warning',
+            button: this.$i18n.t('Ok'),
           })
           this.$router.push({ name: 'Login' })
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error.response);
           swal({
-            title: 'Error occured. Please try to login again',
+            title: this.$i18n.t('Error occurred. Please try to login again'),
             icon: 'error',
           })
         })

@@ -48,8 +48,8 @@
                 @change="getClients"
               >
                 <option value="" selected disabled>Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="Male">{{ $t('Male') }}</option>
+                <option value="Female">{{ $t('Female') }}</option>
               </select>
             </CCol>
             <CCol :md="2">
@@ -96,7 +96,7 @@
             <CTableBody>
               <CTableRow v-for="client in clients" :key="client.id">
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
-                <CTableDataCell>{{ client.country?.title }}</CTableDataCell>
+                <CTableDataCell>{{ $t(client.country?.title) }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_number }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_name }}</CTableDataCell>
@@ -104,20 +104,20 @@
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
-                    title="View details"
+                    :title="$t('View details')"
                     @click="viewDetails(client.id)"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <router-link
                     :to="{
-                      name: 'Update Client',
+                      name: 'Update client',
                       params: { id: this.$encrypt(client.id) },
                     }"
                   >
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
-                      title="Edit"
+                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
@@ -125,7 +125,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteClient(client.id, client.fullname)"
-                    title="Delete"
+                    :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
@@ -263,7 +263,7 @@ export default {
     deleteClient: async function (id, name) {
       await swal({
         title: `Are you sure?`,
-        text: `Once deleted, you will not be able to recover the client ${name}!`,
+        text: `Once deleted, you will not be able to recover!`,
         icon: 'warning',
         buttons: true,
         dangerMode: true,

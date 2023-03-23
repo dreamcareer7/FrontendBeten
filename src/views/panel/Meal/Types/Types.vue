@@ -52,7 +52,7 @@
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
                       :xl="0"
-                      title="Edit"
+                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
@@ -60,7 +60,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white"
                     @click.stop="deleteMealType(meal_type.id)"
-                    title="Delete"
+                    :title="$t('Delete')"
                     v-if="$can('types.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
@@ -162,8 +162,8 @@ export default {
     },
     deleteMealType: async function (id) {
       await swal({
-        title: 'Are you sure?',
-        text: 'Once deleted, you will not be able to recover this meal type!',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
         icon: 'warning',
         buttons: true,
         dangerMode: true,

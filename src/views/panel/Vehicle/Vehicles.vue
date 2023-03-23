@@ -79,7 +79,7 @@
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
-                    title="View details"
+                    :title="$t('View details')"
                     @click="viewDetails(vehicle.id)"
                     v-if="$can('vehicles.view')"
                   >
@@ -233,8 +233,8 @@ export default {
     },
     deleteVehicle: async function (id) {
       await swal({
-        title: 'Are you sure?',
-        text: 'Once deleted, you will not be able to recover this vehicle!',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
         icon: 'warning',
         buttons: true,
         dangerMode: true,

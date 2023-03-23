@@ -2,6 +2,7 @@ import { h, resolveComponent } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
+import i18n from '@/plugins/i18n'
 
 const routes = [
   {
@@ -29,7 +30,7 @@ const routes = [
       },
       {
         path: '/users/edit/:id',
-        name: 'Edit user',
+        name: 'Update user',
         component: () => import('@/views/panel/User/UpdateUser'),
       },
       {
@@ -48,7 +49,7 @@ const routes = [
       },
       {
         path: '/clients/edit/:id',
-        name: 'Update Client',
+        name: 'Update client',
         component: () => import('@/views/panel/Client/UpdateClient'),
       },
       {

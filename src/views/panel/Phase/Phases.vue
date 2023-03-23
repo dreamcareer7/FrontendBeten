@@ -69,7 +69,7 @@
                   >
                     <button
                       class="btn btn-sm btn-info text-white mx-1"
-                      title="View Details"
+                      :title="$t('View details')"
                     >
                       <ion-icon name="eye-outline"></ion-icon>
                     </button>
@@ -84,7 +84,7 @@
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
                       :xl="0"
-                      title="Edit"
+                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
@@ -232,8 +232,8 @@ export default {
     },
     deletePhase: async function (id) {
       await swal({
-        title: 'Are you sure?',
-        text: 'Once deleted, you will not be able to recover this phase!',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
         icon: 'warning',
         buttons: true,
         dangerMode: true,

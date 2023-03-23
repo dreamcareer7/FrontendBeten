@@ -110,11 +110,11 @@
             <CTableBody>
               <CTableRow v-for="client in clients" :key="client.id">
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
-                <CTableDataCell>{{ client.country?.title }}</CTableDataCell>
+                <CTableDataCell>{{ $t(client.country?.title) }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_number }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_name }}</CTableDataCell>
-                <CTableDataCell>{{ client.gender }}</CTableDataCell>
+                <CTableDataCell>{{ $t(client.gender) }}</CTableDataCell>
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
@@ -126,7 +126,7 @@
                   </button>
                   <router-link
                     :to="{
-                      name: 'Update Client',
+                      name: 'Update client',
                       params: { id: this.$encrypt(client.id) },
                     }"
                     v-if="$can('clients.edit')"
@@ -180,7 +180,7 @@
     class="modal-popup-detail"
   >
     <CModalHeader>
-      <CModalTitle>Client Information</CModalTitle>
+      <CModalTitle>{{ $t('Client Information') }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CRow>
@@ -192,7 +192,7 @@
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell>{{ $t('Gender') }}:</CTableHeaderCell>
-              <CTableDataCell>{{ client.gender }}</CTableDataCell>
+              <CTableDataCell>{{ $t(client.gender) }}</CTableDataCell>
               <CTableHeaderCell>{{ $t('Country') }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.country_id }}</CTableDataCell>
             </CTableRow>
@@ -285,8 +285,8 @@ export default {
     },
     deleteClient: async function (id, name) {
       await swal({
-        title: `Are you sure?`,
-        text: `Once deleted, you will not be able to recover the client ${name}!`,
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
         icon: 'warning',
         buttons: true,
         dangerMode: true,

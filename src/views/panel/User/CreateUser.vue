@@ -1,9 +1,9 @@
 <template>
   <div class="card border-success">
-    <div class="card-header">Create user</div>
+    <div class="card-header">{{ $t('Create user') }}</div>
     <form @submit.prevent="create">
       <div class="card-body">
-        <div class="form-floating mb-2">
+        <div class="form-floating mb-2" style="direction: inherit;">
           <select
             class="form-control"
             id="crew_member"
@@ -17,7 +17,7 @@
               {{ crew_member.fullname }}
             </option>
           </select>
-          <label for="crew_member">Crew member</label>
+          <label for="crew_member">{{ $t('Crew member') }}</label>
         </div>
         <div class="form-floating mb-2">
           <input
@@ -29,7 +29,7 @@
             autofocus
             required
           />
-          <label for="name">Name</label>
+          <label for="name">{{ $t('Name') }}</label>
         </div>
 
         <div class="form-floating mb-2">
@@ -41,7 +41,7 @@
             v-model="user.email"
             required
           />
-          <label for="email">Email Address</label>
+          <label for="email">{{ $t('Email') }}</label>
         </div>
         <div class="form-floating mb-2">
           <input
@@ -52,7 +52,7 @@
             v-model="user.contact"
             required
           />
-          <label for="contact">Contact</label>
+          <label for="contact">{{ $t('Contact') }}</label>
         </div>
 
         <div class="row g-1 mb-2">
@@ -67,7 +67,7 @@
                 v-model="user.password"
                 required
               />
-              <label for="password">Password</label>
+              <label for="password">{{ $t('Password') }}</label>
             </div>
 
             <div class="form-floating mb-2">
@@ -78,7 +78,7 @@
                 v-model="user.password_confirmation"
                 required
               />
-              <label for="password_confirmation">Confirm Password</label>
+              <label for="password_confirmation">{{ $t('Confirm Password') }}</label>
             </div>
 
             <div class="border rounded px-1">
@@ -89,13 +89,13 @@
                   id="is_active"
                   v-model="user.is_active"
                 />
-                <label class="form-check-label" for="is_active"> Active </label>
+                <label class="form-check-label" for="is_active"> {{ $t('Active') }} </label>
               </div>
             </div>
           </div>
 
           <div class="col">
-            <label class="form-label roles-select-label">User Roles</label>
+            <label class="form-label roles-select-label">{{ $t('User Roles') }}</label>
             <CFormSelect
               :html-size="6"
               aria-label="Roles"
@@ -117,7 +117,7 @@
 
       <div class="card-footer text-end">
         <button class="btn btn-success text-white" type="submit">
-          <ion-icon name="create-outline"></ion-icon>&nbsp;Create
+          <ion-icon name="create-outline"></ion-icon>&nbsp;{{ $t('Create') }}
         </button>
       </div>
     </form>

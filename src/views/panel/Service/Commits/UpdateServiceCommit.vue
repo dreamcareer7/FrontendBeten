@@ -115,7 +115,7 @@
           class="btn btn-warning text-white"
           @click.prevent="$router.go(-1)"
         >
-          Go Back</button
+          Go back</button
         >&nbsp;
         <button @click.prevent="update" class="btn btn-success ajax text-white">
           <svg
@@ -147,10 +147,10 @@ export default {
   methods: {
     async update() {
       await swal({
-        title: 'Are you sure?',
-        text: 'Click confirm to update, this action is irreversible',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Click confirm to update, this action is irreversible'),
         icon: 'warning',
-        buttons: ['Cancel', 'Confirm'],
+        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
       }).then((willUpdate) => {
         if (willUpdate) {
           this.$axios

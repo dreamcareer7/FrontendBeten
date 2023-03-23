@@ -10,7 +10,7 @@
           >
             <CButton color="success" class="float-end text-white">
               <ion-icon name="person-add-outline"></ion-icon>&nbsp;
-              {{ $t('Create User') }}
+              {{ $t('Create user') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -94,7 +94,7 @@
                 <CTableDataCell :aria-colspan="2">
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
-                    title="View Details"
+                    :title="$t('View details')"
                     @click="viewDetails(user.id)"
                     v-if="$can('users.view')"
                   >
@@ -102,7 +102,7 @@
                   </button>
                   <router-link
                     :to="{
-                      name: 'Edit user',
+                      name: 'Update user',
                       params: { id: this.$encrypt(user.id) },
                     }"
                     v-if="$can('users.edit')"
@@ -110,7 +110,7 @@
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
                       :xl="0"
-                      title="Edit"
+                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
@@ -118,7 +118,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteUser(user.id)"
-                    title="Delete"
+                    :title="$t('Delete')"
                     v-if="$can('users.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
@@ -159,35 +159,35 @@
     data-keyboard="false"
   >
     <CModalHeader>
-      <CModalTitle>User Information</CModalTitle>
+      <CModalTitle>{{ $t('User Information') }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
         <CTableRow>
-          <CTableHeaderCell>Name</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t('Name') }}</CTableHeaderCell>
           <CTableDataCell>{{ user.name }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableHeaderCell>Email</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t('Email') }}</CTableHeaderCell>
           <CTableDataCell>{{ user.email }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableHeaderCell>Active</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t('Active') }}</CTableHeaderCell>
           <CTableDataCell>
             <CBadge
               :color="user.is_active ? 'success' : 'warning'"
               shape="rounded-pill"
             >
-              {{ user.is_active ? 'Yes' : 'No' }}
+              {{ user.is_active ? $t('Yes') : $t('No') }}
             </CBadge>
           </CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableHeaderCell>Contact</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t('Contact') }}</CTableHeaderCell>
           <CTableDataCell>{{ user.contact }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableHeaderCell>Roles</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t('Roles') }}</CTableHeaderCell>
           <CTableDataCell>{{ user.roles }}</CTableDataCell>
         </CTableRow>
       </CTable>
@@ -251,8 +251,8 @@ export default {
     },
     deleteUser: async function (id) {
       await swal({
-        title: 'Are you sure?',
-        text: 'Once deleted, you will not be able to recover!',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
         icon: 'warning',
         buttons: true,
         dangerMode: true,

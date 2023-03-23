@@ -93,7 +93,7 @@
         </CCol>
       </CRow>
       <div class="card-footer text-end">
-        <a class="btn btn-outline-success ajax" @click="addVehicle">Save</a>
+        <a class="btn btn-outline-success ajax" @click="addVehicle">{{ $t('Save') }}</a>
       </div>
     </form>
   </div>

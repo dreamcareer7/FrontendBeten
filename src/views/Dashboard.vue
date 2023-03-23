@@ -34,7 +34,7 @@
                     >
                       <button
                         class="btn btn-sm btn-info text-white mx-1"
-                        title="View"
+                        :title="$t('View details')"
                       >
                         <ion-icon name="eye-outline"></ion-icon>
                       </button>

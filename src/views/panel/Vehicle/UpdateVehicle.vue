@@ -97,10 +97,10 @@
           class="btn btn-warning text-white"
           @click.prevent="$router.go(-1)"
         >
-          Go Back</button
+          Go back</button
         >&nbsp;
         <a class="btn btn-warning ajax text-white" @click="updateVehicle"
-          >Save Changes</a
+          >{{ $t('Save') }}</a
         >
       </div>
     </form>
@@ -126,10 +126,10 @@ export default {
   methods: {
     updateVehicle: async function () {
       await swal({
-        title: 'Are you sure?',
-        text: 'Click confirm to update, this action is irreversible',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Click confirm to update, this action is irreversible'),
         icon: 'warning',
-        buttons: ['Cancel', 'Confirm'],
+        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
       }).then((willUpdate) => {
         if (willUpdate) {
           this.$axios

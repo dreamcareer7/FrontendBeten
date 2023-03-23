@@ -1,6 +1,6 @@
 <template>
   <div class="card border-warning mb-4">
-    <div class="card-header">Update Client</div>
+    <div class="card-header">Update client</div>
     <form @submit.prevent="updateClient">
       <div class="card-body">
         <div class="form-floating mb-3">
@@ -75,8 +75,8 @@
             v-model="client.gender"
             required
           >
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <option value="Male">{{ $t('Male') }}</option>
+            <option value="Female">{{ $t('Female') }}</option>
           </select>
           <label for="gender">Gender</label>
         </div>
@@ -110,9 +110,9 @@
           class="btn btn-warning text-white"
           @click.prevent="$router.go(-1)"
         >
-          Go Back</button
+          Go back</button
         >&nbsp;
-        <button type="submit" class="btn text-white btn-warning">Save</button>
+        <button type="submit" class="btn text-white btn-warning">{{ $t('Save') }}</button>
       </div>
     </form>
   </div>
@@ -130,10 +130,10 @@ export default {
   methods: {
     updateClient: async function () {
       await swal({
-        title: 'Are you sure?',
-        text: 'Click confirm to update, this action is irreversible',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Click confirm to update, this action is irreversible'),
         icon: 'warning',
-        buttons: ['Cancel', 'Confirm'],
+        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
       }).then((willUpdate) => {
         if (willUpdate) {
           this.$axios

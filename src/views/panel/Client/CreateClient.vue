@@ -68,8 +68,8 @@
 
         <div class="form-floating mb-3">
           <select id="gender" class="form-control" v-model="client.gender">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <option value="Male">{{ $t('Male') }}</option>
+            <option value="Female">{{ $t('Female') }}</option>
           </select>
           <label for="gender">{{ $t('Gender') }}</label>
         </div>

@@ -3,7 +3,7 @@ import router from '@/router'
 
 const axiosInstance = axios.create({
   baseURL: process.env.VUE_APP_BASE_API_URL,
-  timeout: 60000,
+  timeout: 10000,
 })
 
 // Add a request interceptor

@@ -1,14 +1,16 @@
 <template>
   <CCol class="card bg-light border-top-3 border-secondary p-0 mt-3">
-    <CCardHeader class="font-weight-bold">Contracts</CCardHeader>
+    <CCardHeader class="font-weight-bold">{{ $t("Contracts") }}</CCardHeader>
     <CCard class="mt-1">
       <CAlert color="success" class="m-2" v-show="message">
         {{ message }}
-        <span class="pull-right cursor-pointer" @click="message = ''"> X </span>
+        <span class="cursor-pointer" :class="dir" @click="message = ''">
+          X
+        </span>
       </CAlert>
       <CAlert color="danger" class="m-2" v-show="error_message">
         {{ error_message }}
-        <span class="pull-right cursor-pointer" @click="error_message = ''">
+        <span class="cursor-pointer" :class="dir" @click="error_message = ''">
           X
         </span>
       </CAlert>
@@ -19,7 +21,7 @@
               v-if="contracts.length === 0"
               class="text-center d-block pt-3 pb-1"
             >
-              No contracts
+              {{ $t("No contracts") }}
             </CTableRow>
             <template v-for="contract in contracts" :key="contract.id">
               <CTableRow>
@@ -28,7 +30,7 @@
                 </CTableHeaderCell>
                 <CTableDataCell>
                   <CButton
-                    title="View Documents"
+                    :title="$t('View Documents')"
                     class="btn btn-sm btn-info text-white mx-1"
                     @click="toggleDocumentsOfContract(contract.id)"
                   >
@@ -43,7 +45,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteContract(contract.id)"
-                    title="Delete Contract"
+                    :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
@@ -63,33 +65,35 @@
     </CCard>
     <CForm class="p-2" @submit.prevent="upload" ref="uploadForm">
       <CRow class="mt-1">
-        <CCol xs="5" sm="5">
+        <CInputGroup class="mb-3">
           <input
             type="text"
             class="form-control sm"
-            placeholder="Reference"
+            :placeholder="$t('Reference')"
             v-model="reference"
             required
           />
-        </CCol>
-        <CCol xs="5" sm="5">
+          <CInputGroupText id="basic-addon1">
+            <label for="docsel" class="btn btn-primary btn-sm">
+              {{ $t("Add contract") }}
+            </label>
+          </CInputGroupText>
           <input
             type="file"
             accept="image/*,.pdf"
-            class="form-control sm"
+            class="d-none"
             ref="docs"
+            id="docsel"
             multiple
           />
-        </CCol>
-        <CCol xs="2" sm="2">
           <CButton
             type="submit"
             color="info"
             class="mt-1 text-white btn-sm"
             shape="rounded-pill"
-            >Upload</CButton
+            >{{ $t("Upload") }}</CButton
           >
-        </CCol>
+        </CInputGroup>
       </CRow>
     </CForm>
   </CCol>
@@ -97,22 +101,27 @@
 
 <script>
 export default {
-  name: 'Contractable',
-  props: ['type', 'id'],
+  name: "Contractable",
+  props: ["type", "id"],
   data: () => ({
     contracts: [],
-    error_message: '',
-    message: '',
+    error_message: "",
+    message: "",
     contract_documents_shown: [],
-    reference: '',
+    reference: "",
   }),
+  computed: {
+    dir() {
+      return document.dir === "rtl" ? "float-end" : "pull-right";
+    },
+  },
   methods: {
     async upload() {
       /*
         Initialize the form data
       */
-      let form_data = new FormData()
-      form_data.append('reference', this.reference)
+      let form_data = new FormData();
+      form_data.append("reference", this.reference);
       /*
         Iteate over any file sent over appending the files
         to the form data.
@@ -124,8 +133,8 @@ export default {
       ) {
         form_data.append(
           `contracts[${file_index}]`,
-          this.$refs.docs.files[file_index],
-        )
+          this.$refs.docs.files[file_index]
+        );
       }
       /*
         Make the request to the POST /select-files URL
@@ -133,42 +142,42 @@ export default {
       await this.$axios
         .post(`/contracts/${this.type}/${this.id}`, form_data)
         .then(() => {
-          this.message = 'Contract uploaded successfully.'
-          this.reference = ''
-          this.$refs.uploadForm.$el.reset()
-          this.getContracts()
+          this.message = this.$i18n.t("Contract uploaded successfully.");
+          this.reference = "";
+          this.$refs.uploadForm.$el.reset();
+          this.getContracts();
         })
         .catch((error) => {
-          this.error_message = error.response.data.message
-        })
+          this.error_message = error.response.data.message;
+        });
     },
     toggleDocumentsOfContract(contract_id) {
       this.contract_documents_shown[contract_id] =
-        !this.contract_documents_shown[contract_id]
+        !this.contract_documents_shown[contract_id];
     },
     async deleteContract(contract_id) {
       await this.$axios.delete(`/contracts/${contract_id}`).then(() => {
         this.contracts = this.contracts.filter(
-          (contract) => contract.id !== contract_id,
-        )
-        this.message = 'Contract deleted successfully.'
-        this.showMessage = true
-      })
+          (contract) => contract.id !== contract_id
+        );
+        this.message = this.$i18n.t("Contract deleted successfully.");
+        this.showMessage = true;
+      });
     },
     getContracts() {
       this.$axios.get(`/contracts/${this.type}/${this.id}`).then((response) => {
-        this.contracts = response.data
+        this.contracts = response.data;
         // Iterate through the contracts, push an object, key is contract id
         // value would be hardcoded false
         // This array will be used to toggle the documents for each contract
         response.data.forEach((contract) => {
-          this.contract_documents_shown[contract.id] = false
-        })
-      })
+          this.contract_documents_shown[contract.id] = false;
+        });
+      });
     },
   },
   async mounted() {
-    this.getContracts()
+    this.getContracts();
   },
-}
+};
 </script>

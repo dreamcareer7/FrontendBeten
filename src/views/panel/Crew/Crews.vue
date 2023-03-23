@@ -36,7 +36,7 @@
               >
                 <option value="" selected>{{ $t('Country') }}</option>
                 <template v-for="country in countries" :key="country.code">
-                  <option :value="country.id">{{ country.title }}</option>
+                  <option :value="country.id">{{ $t(country.title) }}</option>
                 </template>
               </select>
             </CCol>
@@ -97,7 +97,7 @@
             <CTableBody>
               <CTableRow v-for="crew in crews" :key="crew.id">
                 <CTableDataCell>{{ crew.fullname }}</CTableDataCell>
-                <CTableDataCell>{{ crew.country?.title }}</CTableDataCell>
+                <CTableDataCell>{{ $t(crew.country?.title) }}</CTableDataCell>
                 <CTableDataCell>{{ crew.phone }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ crew.id_number }}</CTableDataCell>
@@ -105,7 +105,7 @@
                   <CBadge
                     :color="crew.is_active ? 'success' : 'warning'"
                     shape="rounded-pill"
-                    >{{ crew.is_active ? 'Yes' : 'No' }}</CBadge
+                    >{{ crew.is_active ? $t('Yes') : $t('No') }}</CBadge
                   >
                 </CTableDataCell>
                 <CTableDataCell>
@@ -174,7 +174,7 @@
     class="modal-popup-detail"
   >
     <CModalHeader>
-      <CModalTitle>Crew Member Details</CModalTitle>
+      <CModalTitle>{{ $t('Crew Member Details') }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
@@ -186,7 +186,7 @@
         <CTableRow class="mt-3">
           <CTableHeaderCell>{{ $t('Gender') }}:</CTableHeaderCell>
           <CTableDataCell>
-            {{ crew_member.gender === 1 ? 'Male' : 'Female' }}
+            {{ crew_member.gender === 1 ? $t('Male') : $t('Female') }}
           </CTableDataCell>
           <CTableHeaderCell>{{ $t('Profession') }}:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.profession_id }}</CTableDataCell>
@@ -194,7 +194,7 @@
 
         <CTableRow class="mt-3">
           <CTableHeaderCell>{{ $t('Country') }}:</CTableHeaderCell>
-          <CTableDataCell>{{ crew_member.country_id }}</CTableDataCell>
+          <CTableDataCell>{{ $t(countries[crew_member.country_id].title) }}</CTableDataCell>
           <CTableHeaderCell>{{ $t('Phone') }}:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.phone }}</CTableDataCell>
         </CTableRow>
@@ -276,8 +276,8 @@ export default {
     },
     deleteCrew: async function (id) {
       await swal({
-        title: 'Are you sure?',
-        text: 'Once deleted, you will not be able to recover this crew member!',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
         icon: 'warning',
         buttons: true,
         dangerMode: true,

@@ -22,7 +22,7 @@
     </CRow>
     <div class="card-footer text-end">
       <button type="submit" class="btn btn-warning text-white">
-        <ion-icon name="save-outline"></ion-icon>&nbsp;Save
+        <ion-icon name="save-outline"></ion-icon>&nbsp;{{ $t('Save') }}
       </button>
     </div>
   </form>
@@ -38,10 +38,10 @@ export default {
   methods: {
     update: async function () {
       await swal({
-        title: 'Are you sure?',
+        title: this.$i18n.t('Are you sure?'),
         text: 'Click confirm to save, this action is irreversible',
         icon: 'warning',
-        buttons: ['Cancel', 'Confirm'],
+        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
       }).then((willUpdate) => {
         if (willUpdate) {
           this.$axios

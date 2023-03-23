@@ -36,7 +36,7 @@
                 <CTableDataCell :aria-colspan="2">
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
-                    title="View Details"
+                    :title="$t('View details')"
                     @click="viewDetails(meal.id)"
                     v-if="$can('meals.view')"
                   >
@@ -52,7 +52,7 @@
                     <CButton
                       class="btn btn-sm btn-warning text-white m-1"
                       :xl="0"
-                      title="Edit"
+                      :title="$t('Edit')"
                     >
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
@@ -60,7 +60,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteMeal(meal.id)"
-                    title="Delete"
+                    :title="$t('Delete')"
                     v-if="$can('meals.delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
@@ -144,8 +144,8 @@ export default {
     },
     deleteMeal: async function (id) {
       await swal({
-        title: 'Are you sure?',
-        text: 'Once deleted, you will not be able to recover this meal!',
+        title: this.$i18n.t('Are you sure?'),
+        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
         icon: 'warning',
         buttons: true,
         dangerMode: true,

@@ -1,14 +1,14 @@
 <template>
   <CCol class="card bg-light border-top-3 p-0 mt-3">
-    <CCardHeader class="font-weight-bold">Documents</CCardHeader>
+    <CCardHeader class="font-weight-bold">{{ $t('Documents') }}</CCardHeader>
     <CCard class="mt-1">
       <CAlert color="success" class="m-2" v-show="message">
         {{ message }}
-        <span class="pull-right cursor-pointer" @click="message = ''"> X </span>
+        <span class="cursor-pointer" :class="dir" @click="message = ''"> X </span>
       </CAlert>
       <CAlert color="danger" class="m-2" v-show="error_message">
         {{ error_message }}
-        <span class="pull-right cursor-pointer" @click="error_message = ''">
+        <span class="cursor-pointer" :class="dir" @click="error_message = ''">
           X
         </span>
       </CAlert>
@@ -19,7 +19,7 @@
               v-if="documents.length === 0"
               class="text-center d-block p-3"
             >
-              No documents
+              {{ $t('No documents') }}
             </CTableRow>
             <CTableRow v-for="document in documents" :key="document.id">
               <CTableDataCell scope="row">
@@ -32,7 +32,7 @@
                 <a
                   class="btn btn-sm btn-info text-white m-1"
                   :href="document.path"
-                  title="Download document"
+                  :title="$t('Download document')"
                   :download="document.title"
                   target="_blank"
                 >
@@ -43,7 +43,7 @@
                 <a
                   class="btn btn-sm btn-info text-white m-1"
                   :href="document.path"
-                  title="View document"
+                  :title="$t('View details')"
                   target="_blank"
                 >
                   <ion-icon name="eye-outline"></ion-icon>
@@ -53,7 +53,7 @@
                 <button
                   class="btn btn-sm btn-danger text-white m-1"
                   @click="deleteDocument(document.id)"
-                  title="Delete Document"
+                  :title="$t('Delete')"
                 >
                   <ion-icon name="trash-bin-outline"></ion-icon>
                 </button>
@@ -65,23 +65,25 @@
     </CCard>
     <CForm class="p-2" @submit.prevent="upload" ref="uploadForm">
       <CRow class="mt-1">
-        <CCol xs="5" sm="5">
+        <CCol xs="8" sm="8">
           <input
             type="text"
             class="form-control sm"
-            placeholder="Title"
+            :placeholder="$t('Title')"
             v-model="title"
             required
           />
         </CCol>
-        <CCol xs="5" sm="5">
+        <CCol xs="2" sm="2">
           <input
             type="file"
             accept="image/*,.pdf"
-            class="form-control sm"
+            class="d-none"
             ref="docs"
+            id="docsel"
             multiple
           />
+          <label for="docsel" class="btn btn-primary btn-sm">{{ $t('Add document') }}</label>
         </CCol>
         <CCol xs="2" sm="2">
           <CButton
@@ -90,7 +92,7 @@
             class="mt-1 text-white btn-sm"
             shape="rounded-pill"
           >
-            Upload
+            {{ $t('Upload') }}
           </CButton>
         </CCol>
       </CRow>
@@ -109,6 +111,11 @@ export default {
     files: [],
     title: '',
   }),
+  computed: {
+    dir() {
+      return document.dir === 'rtl' ? 'float-end' : 'pull-right'
+    }
+  },
   methods: {
     async upload() {
       /*
@@ -133,7 +140,7 @@ export default {
         .then(() => {
           this.error_message = '' // Hide previous error message if any
           this.getDocuments()
-          this.message = 'Document uploaded successfully.'
+          this.message = this.$i18n.t('Document uploaded successfully.')
           this.$refs.uploadForm.$el.reset()
         })
         .catch((error) => {
@@ -143,7 +150,7 @@ export default {
     async deleteDocument(doc_id) {
       await this.$axios.delete(`/documents/${doc_id}`).then(() => {
         this.documents = this.documents.filter((doc) => doc.id !== doc_id)
-        this.message = 'Document deleted successfully.'
+        this.message = this.$i18n.t('Document deleted successfully.')
         setTimeout(() => {
           this.message = ''
         }, 3000)

@@ -26,7 +26,7 @@
                   <button
                     class="btn btn-sm btn-info text-white"
                     @click="view(concurrent.id)"
-                    title="View details"
+                    :title="$t('View details')"
                   >
                     <ion-icon
                       :name="`eye-${
@@ -39,7 +39,7 @@
                   <button
                     class="btn btn-sm btn-warning text-white"
                     @click="deleteConcurrent(concurrent.id)"
-                    title="Edit"
+                    :title="$t('Edit')"
                   >
                     <ion-icon name="create-outline"></ion-icon>
                   </button>
@@ -48,7 +48,7 @@
                   <button
                     class="btn btn-sm btn-danger text-white"
                     @click="deleteConcurrent(concurrent.id)"
-                    title="Delete"
+                    :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
