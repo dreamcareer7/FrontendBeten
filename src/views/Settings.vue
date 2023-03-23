@@ -1,6 +1,6 @@
 <template>
   <form class="card border-warning" @submit.prevent="update">
-    <div class="card-header">Settings</div>
+    <div class="card-header">{{ $t('Settings') }}</div>
     <div class="card-body">
       <div class="form-floating mb-2" v-for="setting in settings">
         <input
@@ -10,7 +10,7 @@
           autocomplete="off"
           v-model="setting.value"
         />
-        <label :for="setting.key">{{ setting.key }}</label>
+        <label :for="setting.key">{{ $t(setting.key) }}</label>
       </div>
     </div>
     <CRow v-if="error_message">
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: 'UpdateUser',
+  name: 'Settings',
   data: () => ({
     error_message: '',
     settings: [],
@@ -39,7 +39,7 @@ export default {
     update: async function () {
       await swal({
         title: this.$i18n.t('Are you sure?'),
-        text: 'Click confirm to save, this action is irreversible',
+        text: this.$i18n.t('Click confirm to update, this action is irreversible'),
         icon: 'warning',
         buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
       }).then((willUpdate) => {
@@ -48,7 +48,7 @@ export default {
             .patch(`/settings`, this.settings)
             .then(() => {
               this.$router.push({ name: 'Dashboard' })
-              swal('Updated successfully!', {
+              swal(this.$i18n.t('Updated successfully!'), {
                 icon: 'success',
                 timer: 3000,
               })
