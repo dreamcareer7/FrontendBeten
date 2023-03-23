@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">Create commit</div>
+    <div class="card-header">{{ $t('Create commit') }}</div>
     <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
@@ -11,12 +11,12 @@
             autofocus
             required
           >
-            <option>Choose Service</option>
+            <option>{{ $t('Choose Service') }}</option>
             <option v-for="service in services" :value="service.id">
               {{ service.title }}
             </option>
           </select>
-          <label for="service_id">Service</label>
+          <label for="service_id">{{ $t('Service') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -28,7 +28,7 @@
             v-model="commit.badge"
             required
           />
-          <label for="badge">Badge</label>
+          <label for="badge">{{ $t('Badge') }}</label>
         </div>
 
         <div class="row g-1 mb-1">
@@ -41,7 +41,7 @@
                 id="scheduled_at"
                 v-model="commit.schedule_at"
               />
-              <label for="scheduled_at">Scheduled At</label>
+              <label for="scheduled_at">{{ $t('Schedule At') }}</label>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
             v-model="commit.from_location"
             required
           />
-          <label for="from_location">From Location</label>
+          <label for="from_location">{{ $t('From') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -69,7 +69,7 @@
               {{ user.name }}
             </option>
           </select>
-          <label for="supervisor_id">Supervisor</label>
+          <label for="supervisor_id">{{ $t('Supervisor') }}</label>
         </div>
       </div>
 
@@ -84,7 +84,7 @@
       <div class="card-footer text-end">
         <button type="submit" class="btn text-white btn-success" :disabled="disabled">
           <ion-icon name="create"></ion-icon>&nbsp;
-          <span>Create</span>
+          <span>{{ $t('Create') }}</span>
         </button>
       </div>
     </form>

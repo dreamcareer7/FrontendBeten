@@ -404,5 +404,7 @@
     "The user has been deleted!": "تم حذف المستخدم!",
     "Users navigation": "تنقل المستخدمين",
     "Choose city": "إختر مدينة",
-    "Update service": "تحديث الخدمة"
+    "Update service": "تحديث الخدمة",
+    "Choose a supervisor": "اختر مشرفًا",
+    "Update Service Commit": "تحديث إلتزام الخدمة"
 }
