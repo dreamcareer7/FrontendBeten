@@ -163,7 +163,7 @@ export default {
           this.roles = response.data.roles.map((role) => {
             return {
               value: role.name,
-              label: role.name,
+              label: this.$i18n.t(role.name),
               selected: this.user.roles.some(
                 (user_role) => user_role.name === role.name
               ),
