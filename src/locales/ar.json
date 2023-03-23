@@ -400,5 +400,7 @@
     "groups-admin": "مدير المجموعة",
     "member": "عضو",
     "supervisor": "مشرف",
-    "user": "مستخدم"
+    "user": "مستخدم",
+    "The user has been deleted!": "تم حذف المستخدم!",
+    "Users navigation": "تنقل المستخدمين"
 }

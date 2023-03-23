@@ -134,7 +134,7 @@ export default {
             .patch(`/users/${this.user.id}`, this.user)
             .then(() => {
               this.$router.push({ name: "Users" });
-              swal("Updated successfully!", {
+              swal(this.$i18n.t('Updated successfully!'), {
                 icon: "success",
                 timer: 3000,
               });

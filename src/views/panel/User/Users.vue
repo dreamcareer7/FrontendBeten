@@ -129,7 +129,7 @@
           </CTable>
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Users navigation">
+              <nav :aria-label="$t('Users navigation')">
                 <ul class="pagination">
                   <template v-for="page in pagination" :key="page">
                     <li class="page-item" :class="{ active: page.active }">
@@ -188,7 +188,7 @@
         </CTableRow>
         <CTableRow>
           <CTableHeaderCell>{{ $t('Roles') }}</CTableHeaderCell>
-          <CTableDataCell>{{ user.roles }}</CTableDataCell>
+          <CTableDataCell>{{ $t(user.roles) }}</CTableDataCell>
         </CTableRow>
       </CTable>
       <Documentable v-if="user.is_documentable" type="user" :id="user.id" />
@@ -264,7 +264,7 @@ export default {
               this.users.findIndex((user) => user.id === id),
               1,
             )
-            swal('The user has been deleted!', {
+            swal(this.$i18n.t('The user has been deleted!'), {
               icon: 'success',
               timer: 3000,
             })
