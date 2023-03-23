@@ -68,7 +68,7 @@
     "Contact": "التواصل",
     "All rights reserved.": "كل الحقوق محفوظة.",
     "Any Country": "اختر دوله",
-    "Create Service": "انشئ خدمه",
+    "Create service": "انشئ خدمه",
     "Title": "العنوان",
     "City": "المكان",
     "Before date": "التاريخ المسبق",
@@ -403,5 +403,6 @@
     "user": "مستخدم",
     "The user has been deleted!": "تم حذف المستخدم!",
     "Users navigation": "تنقل المستخدمين",
-    "Choose city": "إختر مدينة"
+    "Choose city": "إختر مدينة",
+    "Update service": "تحديث الخدمة"
 }

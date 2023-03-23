@@ -10,7 +10,7 @@
           >
             <CButton color="success" class="float-end text-white">
               <ion-icon name="create-outline"></ion-icon>&nbsp;
-              {{ $t('Create Service') }}
+              {{ $t('Create service') }}
             </CButton>
           </router-link>
         </CCardHeader>

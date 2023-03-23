@@ -1,7 +1,7 @@
 <template>
-  <div class="card border-success mb-4">
-    <div class="card-header">Update Service</div>
-    <form @submit.prevent="updateService">
+  <div class="card border-warning mb-4">
+    <div class="card-header">{{ $t('Update service') }}</div>
+    <form @submit.prevent="update">
       <div class="card-body">
         <div class="form-floating mb-3">
           <input
@@ -9,12 +9,11 @@
             class="form-control"
             id="title"
             v-model="service.title"
-            label="Title..."
             required
             autofocus
             autocomplete="off"
           />
-          <label for="title">Title *</label>
+          <label for="title">{{ $t('Title') }} *</label>
         </div>
         <div class="form-floating mb-3">
           <select
@@ -24,42 +23,39 @@
             v-model="service.city_id"
             required
           >
-            <option>Choose city</option>
+            <option>{{ $t('Choose city') }}</option>
             <option v-for="city in cities" :value="city.id" :key="city.id">
               {{ city.title }}
             </option>
           </select>
-          <label for="city">City *</label>
+          <label for="city">{{ $t('City') }} *</label>
         </div>
         <div class="form-floating mb-3">
           <input
             type="date"
             class="form-control"
-            for="before_date"
+            id="before_date"
             v-model="service.before_date"
-            label="Before date..."
           />
-          <label for="phone">Before date</label>
+          <label for="before_date">{{ $t('Before date') }}</label>
         </div>
         <div class="form-floating mb-3">
           <input
             type="date"
             class="form-control"
-            for="exact_date"
+            id="exact_date"
             v-model="service.exact_date"
-            label="Exact date..."
           />
-          <label for="phone">Exact date</label>
+          <label for="exact_date">{{ $t('Exact date') }}</label>
         </div>
         <div class="form-floating mb-3">
           <input
             type="date"
             class="form-control"
-            for="after_date"
+            id="after_date"
             v-model="service.after_date"
-            label="After date..."
           />
-          <label for="phone">After date</label>
+          <label for="after_date">{{ $t('After date') }}</label>
         </div>
         <CRow v-if="error_message">
           <CCol :md="12">
@@ -70,14 +66,17 @@
         </CRow>
       </div>
       <div class="card-footer text-end">
-        <span class="float-start">* Required fields</span>
+        <span class="float-start">* {{ $t('Required fields') }}</span>
         <button
           class="btn btn-warning text-white"
           @click.prevent="$router.go(-1)"
         >
-          Go back</button
-        >&nbsp;
-        <button class="btn btn-success text-white" type="submit">{{ $t('Save') }}</button>
+          {{ $t('Go back') }}
+        </button>&nbsp;
+        <button class="btn btn-warning text-white" type="submit">
+          <ion-icon name="save-outline"></ion-icon>&nbsp;
+          {{ $t('Save') }}
+        </button>
       </div>
     </form>
   </div>
@@ -94,7 +93,7 @@ export default {
     cities: [],
   }),
   methods: {
-    updateService: async function () {
+    update: async function () {
       await swal({
         title: this.$i18n.t('Are you sure?'),
         text: this.$i18n.t('Click confirm to update, this action is irreversible'),
