@@ -3,13 +3,13 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <CCardTitle>Types</CCardTitle>
+          <CCardTitle>{{ $t('Types') }}</CCardTitle>
           <router-link
             :to="{ name: 'Create type' }"
             v-if="$can('types.create')"
           >
             <CButton color="success" class="float-end text-white">
-              &nbsp;Create type
+              &nbsp;{{ $t('Create type') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -17,10 +17,10 @@
           <CTable hover responsive>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Description</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Has Documents</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Title') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Description') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Has documents') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -31,7 +31,7 @@
                   <CBadge
                     :color="meal_type.has_documents ? 'success' : 'warning'"
                     shape="rounded-pill"
-                    >{{ meal_type.has_documents ? 'Yes' : 'No' }}</CBadge
+                    >{{ meal_type.has_documents ? $t('Yes') : $t('No') }}</CBadge
                   >
                 </CTableDataCell>
                 <CTableDataCell>
@@ -72,7 +72,7 @@
 
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Meal types navigation">
+              <nav :aria-label="$t('Meal types navigation')">
                 <ul class="pagination">
                   <li
                     class="page-item"
@@ -105,25 +105,25 @@
     data-keyboard="false"
   >
     <CModalHeader>
-      <CModalTitle>Meal Type Information</CModalTitle>
+      <CModalTitle>{{ $t('Meal Type Information') }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CRow>
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>Title</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Title') }}</CTableHeaderCell>
               <CTableDataCell>{{ meal_type.title }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>Description</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Description') }}</CTableHeaderCell>
               <CTableDataCell>{{ meal_type.description }}</CTableDataCell>
-              <CTableHeaderCell>Has Documents:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Has documents') }}</CTableHeaderCell>
               <CTableDataCell>
                 <CBadge
                   :color="meal_type.has_documents ? 'success' : 'warning'"
                   shape="rounded-pill"
-                  >{{ meal_type.has_documents ? 'Yes' : 'No' }}</CBadge
+                  >{{ meal_type.has_documents ? $t('Yes') : $t('No') }}</CBadge
                 >
               </CTableDataCell>
             </CTableRow>
@@ -139,9 +139,7 @@ export default {
   name: 'Types',
   data: () => ({
     meal_types: [],
-    current_page: 1,
-    pagination: {},
-    last_page: 99,
+    pagination: [],
     showMealTypeDetailModal: false,
     meal_type: {},
   }),
@@ -149,8 +147,6 @@ export default {
     gotoPage: async function (url) {
       await this.$axios.get(url).then((response) => {
         this.meal_types = response.data.data
-        this.current_page = response.data.current_page
-        this.last_page = response.data.last_page
         this.pagination = response.data.links
       })
     },
@@ -174,7 +170,7 @@ export default {
               (meal_type) => meal_type.id !== id,
             )
           })
-          swal('Meal Type has been deleted!', {
+          swal(this.$i18n.t('Meal Type has been deleted!'), {
             icon: 'success',
           })
         }
@@ -184,8 +180,6 @@ export default {
   async mounted() {
     await this.$axios.get('/meal_types').then((response) => {
       this.meal_types = response.data.data
-      this.current_page = response.data.current_page
-      this.last_page = response.data.last_page
       this.pagination = response.data.links
     })
   },

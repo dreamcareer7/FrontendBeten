@@ -371,5 +371,12 @@
     "Document deleted successfully.": "تم حذف الوثيقة بنجاح",
     "Contract deleted successfully.": "تم حذف العقد بنجاح",
     "Add contract": "اضافة عقد",
-    "Add document": "اضافة وثيقة"
+    "Add document": "اضافة وثيقة",
+    "Service": "الخدمة",
+    "Description": "وصف",
+    "Has documents": "وثائق؟",
+    "Meal Type Information": "معلومات عن نوع الوجبه",
+    "Meal Type has been deleted!": "تم حذف نوع الوجبة",
+    "Create type": "انشئ النوع",
+    "Meal types navigation": "توجيه انواع الوجبه"
 }
