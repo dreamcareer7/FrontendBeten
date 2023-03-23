@@ -3,13 +3,14 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <CCardTitle>Vehicle</CCardTitle>
+          <CCardTitle>{{ $t('Vehicles') }}</CCardTitle>
           <router-link
             :to="{ name: 'Create vehicle' }"
             v-if="$can('vehicles.create')"
           >
             <CButton color="success" class="float-end text-white">
-              <ion-icon name="car-sport-outline"></ion-icon>&nbsp;Create vehicle
+              <ion-icon name="car-sport-outline"></ion-icon>&nbsp;
+              {{ $t('Create vehicle') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -20,7 +21,7 @@
                 type="text"
                 class="form-control"
                 v-model="search.model"
-                placeholder="model"
+                :placeholder="$t('Model')"
                 @change="getVehicles"
               />
             </CCol>
@@ -29,7 +30,7 @@
                 type="text"
                 class="form-control"
                 v-model="search.manufacturer"
-                placeholder="Manufacturer"
+                :placeholder="$t('Manufacturer')"
                 @change="getVehicles"
               />
             </CCol>
@@ -38,7 +39,7 @@
                 type="text"
                 class="form-control"
                 v-model="search.registration"
-                placeholder="Registration"
+                :placeholder="$t('Registration')"
                 @change="getVehicles"
               />
             </CCol>
@@ -49,23 +50,23 @@
               <div class="spinner-border text-success" role="status"></div>
             </CCol>
             <CCol :md="12" class="text-center">
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">{{ $t('Loading...') }}</span>
             </CCol>
           </CRow>
           <CTable v-if="!loading">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Model</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Registration</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Manufacturer</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Year</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Badge</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Model') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Registration') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Manufacturer') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Year') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Badge') }}</CTableHeaderCell>
                 <CTableHeaderCell
                   scope="col"
                   style="width: 20%"
                   :aria-colspan="2"
                 >
-                  Actions
+                  {{ $t('Actions') }}
                 </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -91,15 +92,17 @@
                       params: { id: this.$encrypt(vehicle.id) },
                     }"
                     v-if="$can('vehicles.edit')"
+                    :title="$t('Edit')"
                   >
-                    <CButton class="btn btn-sm btn-warning text-white m-1"
-                      ><ion-icon name="create-outline"></ion-icon
-                    ></CButton>
+                    <CButton class="btn btn-sm btn-warning text-white m-1">
+                      <ion-icon name="create-outline"></ion-icon>
+                    </CButton>
                   </router-link>
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="deleteVehicle(vehicle.id)"
                     v-if="$can('vehicles.delete')"
+                    :title="$t('Delete')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
@@ -135,39 +138,31 @@
     size="lg"
   >
     <CModalHeader>
-      <CModalTitle>Vehicle details</CModalTitle>
+      <CModalTitle>{{ $t('Vehicle details') }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
         <CTableRow>
-          <CTableDataCell>Model</CTableDataCell>
+          <CTableDataCell>{{ $t('Model') }}</CTableDataCell>
           <CTableDataCell>{{ vehicle.model }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Manufacturer</CTableDataCell>
+          <CTableDataCell>{{ $t('Manufacturer') }}</CTableDataCell>
           <CTableDataCell>
             {{ vehicle.manufacturer }}
           </CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Year</CTableDataCell>
+          <CTableDataCell>{{ $t('Year') }}</CTableDataCell>
           <CTableDataCell>{{ vehicle.year }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Registration</CTableDataCell>
+          <CTableDataCell>{{ $t('Registration') }}</CTableDataCell>
           <CTableDataCell>{{ vehicle.registration }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Badge</CTableDataCell>
+          <CTableDataCell>{{ $t('Badge') }}</CTableDataCell>
           <CTableDataCell>{{ vehicle.badge }}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Date created</CTableDataCell>
-          <CTableDataCell>{{ vehicle.created_at }}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Date updated</CTableDataCell>
-          <CTableDataCell>{{ vehicle.updated_at }}</CTableDataCell>
         </CTableRow>
       </CTable>
       <Contractable
@@ -183,7 +178,7 @@
     </CModalBody>
     <CModalFooter>
       <CButton color="secondary" @click="is_vehicle_modal_visible = false">
-        Close
+        {{ $t('Close') }}
       </CButton>
     </CModalFooter>
   </CModal>
@@ -243,7 +238,7 @@ export default {
           this.$axios
             .post(`/vehicles/delete/${id}`)
             .then(() => this.getVehicles())
-          swal('Vehicle has been deleted!', {
+          swal(this.$i18n.t('Vehicle has been deleted!'), {
             icon: 'success',
             timer: 3000,
           })

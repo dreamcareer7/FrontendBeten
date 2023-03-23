@@ -87,7 +87,7 @@
                     :color="user.is_active ? 'success' : 'warning'"
                     shape="rounded-pill"
                   >
-                    {{ user.is_active ? 'Yes' : 'No' }}
+                    {{ user.is_active ? $t('Yes') : $t('No') }}
                   </CBadge>
                 </CTableDataCell>
                 <CTableDataCell>{{ user.contact }}</CTableDataCell>

@@ -117,7 +117,7 @@ export default [
     items: [
       {
         component: 'CNavItem',
-        name: i18n.global.t('All Hospitalities'),
+        name: i18n.global.t('Hospitalities'),
         to: '/hospitalities',
         visible: can('hospitalities.index'),
       },

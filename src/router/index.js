@@ -236,7 +236,7 @@ const routes = [
       },
       {
         path: '/hospitalities/transactions/create',
-        name: 'Create Transaction',
+        name: 'Create transaction',
         component: () =>
           import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
       },

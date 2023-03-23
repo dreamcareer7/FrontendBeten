@@ -383,5 +383,17 @@
     "No results": "لم يتم العثور على نتائج",
     "Create group": "إنشاء مجموعة",
     "Group Information": "معلومات المجموعة",
-    "Group has been deleted!": "تم حذف المجموعة!"
+    "Group has been deleted!": "تم حذف المجموعة!",
+    "Create vehicle": "إنشاء مركبة",
+    "Model": "نموذج",
+    "Manufacturer": "الصانع",
+    "Registration": "تسجيل",
+    "Vehicle details": "تفاصيل السيارة",
+    "Close": "يغلق",
+    "Vehicle has been deleted!": "تم حذف السيارة!",
+    "Create hospitality": "خلق كرم الضيافة",
+    "Received by": "استلمت من قبل",
+    "Create transaction": "إنشاء معاملة",
+    "Extra": "إضافي",
+    "Hospitality": "ضيافة"
 }

@@ -3,13 +3,14 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <CCardTitle>Hospitalities</CCardTitle>
+          <CCardTitle>{{ $t('Hospitalities') }}</CCardTitle>
           <router-link
             :to="{ name: 'Create hospitality' }"
             v-if="$can('hospitalities.create')"
           >
             <CButton color="success" class="float-end text-white">
-              <ion-icon name="happy-outline"></ion-icon>&nbsp;Create hospitality
+              <ion-icon name="happy-outline"></ion-icon>&nbsp;
+              {{ $t('Create hospitality') }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -19,18 +20,18 @@
               <div class="spinner-border text-success" role="status"></div>
             </CCol>
             <CCol :md="12" class="text-center">
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">{{ $t('Loading...') }}</span>
             </CCol>
           </CRow>
           <CTable v-if="!loading" responsive hover align="middle">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Description</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Required</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Quantity</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Received by</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Title') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Description') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Required') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Quantity') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Received by') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
