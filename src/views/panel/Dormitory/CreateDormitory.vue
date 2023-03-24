@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">Create Dormitory</div>
+    <div class="card-header">{{ $t('Create dormitory') }}</div>
     <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
@@ -13,7 +13,7 @@
             autofocus
             required
           />
-          <label for="title">Title</label>
+          <label for="title">{{ $t('Title') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -25,7 +25,7 @@
             autocomplete="off"
             required
           />
-          <label for="phones">Phone</label>
+          <label for="phones">{{ $t('Phone') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -34,7 +34,7 @@
               {{ city.title }}
             </option>
           </select>
-          <label for="city">City</label>
+          <label for="city">{{ $t('City') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -46,7 +46,7 @@
             autocomplete="off"
             required
           />
-          <label for="location">Location</label>
+          <label for="location">{{ $t('Location') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -57,7 +57,7 @@
             v-model="dormitory.coordinate"
             autocomplete="off"
           />
-          <label for="coordinate">Coordinate</label>
+          <label for="coordinate">{{ $t('Coordinate') }}</label>
         </div>
 
         <div class="row g-1 mb-1">
@@ -72,7 +72,7 @@
                   v-model="dormitory.is_active"
                 />
                 <label class="form-check-label" for="is_active"
-                  >&nbsp; Active
+                  >&nbsp; {{ $t('Active') }}
                 </label>
               </div>
             </div>
@@ -89,7 +89,7 @@
       <div class="card-footer text-end">
         <!-- TODO: vee-validate & disable -->
         <button class="btn btn-success text-white" type="submit">
-          <ion-icon name="create-outline"></ion-icon>&nbsp; Create
+          <ion-icon name="create-outline"></ion-icon>&nbsp; {{ $t('Create') }}
         </button>
       </div>
     </form>

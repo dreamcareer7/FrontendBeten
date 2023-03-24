@@ -87,7 +87,7 @@
                     :color="dormitory.is_active ? 'success' : 'warning'"
                     shape="rounded-pill"
                   >
-                    {{ dormitory.is_active ? 'Yes' : 'No' }}
+                    {{ dormitory.is_active ? $t('Yes') : $t('No') }}
                   </CBadge>
                 </CTableDataCell>
                 <CTableDataCell>
