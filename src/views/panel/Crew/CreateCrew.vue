@@ -77,7 +77,6 @@
             type="text"
             class="form-control"
             id="phone"
-            required
           />
           <label for="phone">{{ $t('Phone') }} *</label>
         </div>
@@ -121,7 +120,6 @@
             type="date"
             class="form-control"
             id="dob"
-            required
           />
           <label for="dob">{{ $t('Date of birth') }} *</label>
         </div>
