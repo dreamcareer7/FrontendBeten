@@ -27,9 +27,9 @@
             <option
               :value="country.id"
               v-for="country in countries"
-              :key="country.code"
+              :key="country.id"
             >
-              {{ country.name }}
+              {{ $t(country.title) }}
             </option>
           </select>
           <label for="country_id">{{ $t('Country') }}</label>
@@ -120,10 +120,8 @@
   </div>
 </template>
 <script>
-import countries from '@/store/countries'
-
 export default {
-  name: 'Update client',
+  name: 'UpdateClient',
   data: () => ({
     error_message: '',
     client: {},
@@ -156,11 +154,13 @@ export default {
       })
     },
   },
-  async mounted() {
-    countries.fetchCountries().then((countries) => (this.countries = countries))
+  mounted: async function () {
     await this.$axios
-      .get(`/clients/${this.$decrypt(this.$route.params.id)}`)
-      .then((response) => (this.client = response.data))
+      .get(`/clients/${this.$decrypt(this.$route.params.id)}/edit`)
+      .then((response) => {
+        this.client = response.data.client
+        this.countries = response.data.countries
+      })
   },
 }
 </script>
