@@ -229,6 +229,8 @@ export default {
     filter: async function (value) {
       if (value.length > 2) {
         await this.debounceFn()
+      } else {
+        await this.getUsers()
       }
     },
     viewDetails: async function (id) {
