@@ -61,6 +61,7 @@
                 <CTableHeaderCell scope="col">{{ $t('Manufacturer') }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{ $t('Year') }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{ $t('Badge') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Passengers') }}</CTableHeaderCell>
                 <CTableHeaderCell
                   scope="col"
                   style="width: 20%"
@@ -77,6 +78,7 @@
                 <CTableDataCell>{{ vehicle.manufacturer }}</CTableDataCell>
                 <CTableDataCell>{{ vehicle.year }}</CTableDataCell>
                 <CTableDataCell>{{ vehicle.badge }}</CTableDataCell>
+                <CTableDataCell>{{ vehicle.passengers }}</CTableDataCell>
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
@@ -163,6 +165,10 @@
         <CTableRow>
           <CTableDataCell>{{ $t('Badge') }}</CTableDataCell>
           <CTableDataCell>{{ vehicle.badge }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('Passengers') }}</CTableDataCell>
+          <CTableDataCell>{{ vehicle.passengers }}</CTableDataCell>
         </CTableRow>
       </CTable>
       <Contractable

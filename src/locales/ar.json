@@ -415,5 +415,8 @@
     "Update phase": "تحديث المرحلة",
     "Commit Service": "إلتزام الخدمة",
     "Coordinate": "إحداثيات",
-    "Update Dormitory": "تحديث المسكن"
+    "Update Dormitory": "تحديث المسكن",
+    "Passengers": "الركاب",
+    "Update Vehicle": "تحديث المركبة",
+    "Updated successfully!": "تم التحديث بنجاح!"
 }

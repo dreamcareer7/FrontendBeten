@@ -147,3 +147,8 @@ $enable-rtl: true;
   text-align: right;
   direction: rtl;
 }
+
+*[dir=rtl] input[type="number"] {
+  text-align: right;
+  direction: rtl;
+}

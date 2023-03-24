@@ -1,138 +1,116 @@
 <template>
-  <div class="card border-success mb-4">
-    <div class="card-header">Create Vehicle</div>
+  <form class="card border-success mb-4" @submit.prevent="create">
+    <div class="card-header">{{ $t("Create vehicle") }}</div>
+    <div class="card-body">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="model"
+          required
+          autofocus
+          autocomplete="off"
+          v-model="vehicle.model"
+        />
 
-    <div id="ialert" class="" role="alert"></div>
-    <form method="post">
-      <div class="card-body">
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            id="model"
-            name="model"
-            placeholder="Model..."
-            required
-            autofocus
-            autocomplete="off"
-            v-model="vehicle.model"
-          />
-
-          <label for="model">Model</label>
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            v-model="vehicle.manufacturer"
-            class="form-control"
-            id="manufactory"
-            name="manufactory"
-            placeholder="Manufactory..."
-            required
-            autocomplete="off"
-          />
-          <label for="manufactory">Manufactory</label>
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            v-model="vehicle.year"
-            id="year"
-            name="year"
-            placeholder="Manufactory..."
-            required
-            autocomplete="off"
-          />
-          <label for="year">Year</label>
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            id="registration"
-            name="registration"
-            placeholder="Registration..."
-            required
-            autocomplete="off"
-            v-model="vehicle.registration"
-          />
-          <label for="registration">Registration</label>
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            class="form-control"
-            id="badge"
-            v-model="vehicle.badge"
-            name="badge"
-            placeholder="Badge..."
-            required
-            autocomplete="off"
-          />
-          <label for="badge">Badge</label>
-          <div class="invalid-feedback"></div>
-        </div>
+        <label for="model">{{ $t('Model') }}</label>
       </div>
-      <CRow>
-        <CCol :md="12">
-          <div v-show="message && !success" class="error_style">
-            {{ message }}
-          </div>
-          <div v-show="message && success" class="alert alert-success">
-            {{ message }}
-          </div>
-        </CCol>
-      </CRow>
-      <div class="card-footer text-end">
-        <a class="btn btn-outline-success ajax" @click="addVehicle">{{ $t('Save') }}</a>
+
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          v-model="vehicle.manufacturer"
+          class="form-control"
+          id="manufactory"
+          required
+          autocomplete="off"
+        />
+        <label for="manufactory">{{ $t('Manufacturer') }}</label>
       </div>
-    </form>
-  </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          v-model="vehicle.year"
+          id="year"
+          required
+          autocomplete="off"
+        />
+        <label for="year">{{ $t('Year') }}</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="registration"
+          required
+          autocomplete="off"
+          v-model="vehicle.registration"
+        />
+        <label for="registration">{{ $t('Registration') }}</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="badge"
+          v-model="vehicle.badge"
+          required
+          autocomplete="off"
+        />
+        <label for="badge">{{ $t('Badge') }}</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="number"
+          min="1"
+          max="2147483647"
+          step="1"
+          class="form-control"
+          id="passengers"
+          v-model="vehicle.passengers"
+          autocomplete="off"
+        />
+        <label for="passengers">{{ $t('Passengers') }}</label>
+      </div>
+    </div>
+    <CRow v-if="error_message">
+      <CCol :md="12">
+        <div class="error_style">
+          {{ error_message }}
+        </div>
+      </CCol>
+    </CRow>
+    <div class="card-footer text-end">
+      <button class="btn btn-success text-white" type="submit">
+        {{ $t("Save") }}
+      </button>
+    </div>
+  </form>
 </template>
 
 <script>
 export default {
-  name: 'create_vehicle',
-  data() {
-    return {
-      message: '',
-      success: false,
-      vehicle: {},
-      form: {},
-      user_id: null,
-    }
-  },
-  mounted() {},
+  name: "CreateVehicle",
+  data: () => ({
+    error_message: "",
+    vehicle: {},
+  }),
   methods: {
-    addVehicle: async function () {
+    create: async function () {
       await this.$axios
         .post(`/vehicles/add`, this.vehicle)
-        .then((response) => {
-          this.message = response.data.message
-          if (response.data.success) {
-            this.$router.push({ name: 'vehicles' })
-          } else {
-            this.success = false
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            this.message = error.response.data.message
-          } else {
-            this.message = error.message
-          }
-          this.success = false
-        })
+        .then(() => this.$router.push({ name: "vehicles" }))
+        .catch(
+          (error) =>
+            (this.error_message =
+              error.response?.data.message || error.message),
+        )
     },
   },
-}
+};
 </script>
