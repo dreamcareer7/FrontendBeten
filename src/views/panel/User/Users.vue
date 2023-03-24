@@ -3,14 +3,14 @@
     <CCol>
       <CCard>
         <CCardHeader>
-          <CCardTitle>{{ $t('Users') }}</CCardTitle>
+          <CCardTitle>{{ $t("Users") }}</CCardTitle>
           <router-link
             :to="{ name: 'Create user' }"
             v-if="$can('users.create')"
           >
             <CButton color="success" class="float-end text-white">
               <ion-icon name="person-add-outline"></ion-icon>&nbsp;
-              {{ $t('Create user') }}
+              {{ $t("Create user") }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -23,7 +23,7 @@
                 class="form-control mb-3"
                 v-model="search.name"
                 :placeholder="$t('Name...')"
-                @keyup="filter(search.name)"
+                @keyup="filter(search.name, $event)"
                 autofocus
               />
             </CCol>
@@ -33,7 +33,7 @@
                 class="form-control mb-3"
                 v-model="search.email"
                 :placeholder="$t('Email...')"
-                @keyup="filter(search.email)"
+                @keyup="filter(search.email, $event)"
               />
             </CCol>
             <CCol md="4" sm="4" lg="3">
@@ -42,7 +42,7 @@
                 class="form-control mb-3"
                 v-model="search.contact"
                 :placeholder="$t('Contact...')"
-                @keyup="filter(search.contact)"
+                @keyup="filter(search.contact, $event)"
               />
             </CCol>
           </CRow>
@@ -53,13 +53,13 @@
               <div class="spinner-border text-success" role="status"></div>
             </CCol>
             <CCol :md="12" class="text-center">
-              <span class="sr-only">{{ $t('Loading...') }}</span>
+              <span class="sr-only">{{ $t("Loading...") }}</span>
             </CCol>
           </CRow>
           <!-- No results -->
           <CRow v-if="users.length === 0 && !loading" class="mt-4">
             <CCol :md="12" class="text-center">
-              <span class="sr-only">{{ $t('No results') }}</span>
+              <span class="sr-only">{{ $t("No results") }}</span>
             </CCol>
           </CRow>
           <!-- End no results -->
@@ -71,11 +71,21 @@
           >
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">{{ $t('Name') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Email') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Active') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Contact') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Name")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Email")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Active")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Contact")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Actions")
+                }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -87,7 +97,7 @@
                     :color="user.is_active ? 'success' : 'warning'"
                     shape="rounded-pill"
                   >
-                    {{ user.is_active ? $t('Yes') : $t('No') }}
+                    {{ user.is_active ? $t("Yes") : $t("No") }}
                   </CBadge>
                 </CTableDataCell>
                 <CTableDataCell>{{ user.contact }}</CTableDataCell>
@@ -159,35 +169,35 @@
     data-keyboard="false"
   >
     <CModalHeader>
-      <CModalTitle>{{ $t('User Information') }}</CModalTitle>
+      <CModalTitle>{{ $t("User Information") }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
         <CTableRow>
-          <CTableHeaderCell>{{ $t('Name') }}</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("Name") }}</CTableHeaderCell>
           <CTableDataCell>{{ user.name }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableHeaderCell>{{ $t('Email') }}</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("Email") }}</CTableHeaderCell>
           <CTableDataCell>{{ user.email }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableHeaderCell>{{ $t('Active') }}</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("Active") }}</CTableHeaderCell>
           <CTableDataCell>
             <CBadge
               :color="user.is_active ? 'success' : 'warning'"
               shape="rounded-pill"
             >
-              {{ user.is_active ? $t('Yes') : $t('No') }}
+              {{ user.is_active ? $t("Yes") : $t("No") }}
             </CBadge>
           </CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableHeaderCell>{{ $t('Contact') }}</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("Contact") }}</CTableHeaderCell>
           <CTableDataCell>{{ user.contact }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableHeaderCell>{{ $t('Roles') }}</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("Roles") }}</CTableHeaderCell>
           <CTableDataCell>{{ $t(user.roles) }}</CTableDataCell>
         </CTableRow>
       </CTable>
@@ -199,10 +209,10 @@
 </template>
 
 <script>
-import { debounce } from '@/utils/helper'
+import { debounce } from "@/utils/helper";
 
 export default {
-  name: 'Users',
+  name: "Users",
   data: () => ({
     debounceFn: null,
     users: [],
@@ -214,49 +224,52 @@ export default {
     auth_user: {},
   }),
   methods: {
-    getUsers: async function () {
-      this.loading = true
+    getUsers: async function (reset = false) {
+      this.loading = true;
       await this.$axios
-        .get('/users', {
-          params: this.search,
+        .get("/users", {
+          params: reset ? {} : this.search,
         })
         .then((response) => {
-          this.users = response.data.data
-          this.pagination = response.data.links
-          this.loading = false
-        })
+          this.users = response.data.data;
+          this.pagination = response.data.links;
+          this.loading = false;
+        });
     },
-    filter: async function (value) {
-      if (value.length > 2) {
-        await this.debounceFn()
-      } else {
-        await this.getUsers()
+    filter: async function (value, event) {
+      if (
+        (event.key == "Backspace" || event.key == "Delete") &&
+        value.length === 2
+      ) {
+        await this.getUsers(true);
+      } else if (value.length > 2) {
+        await this.debounceFn();
       }
     },
     viewDetails: async function (id) {
       await this.$axios.get(`/users/${id}`).then((response) => {
-        this.user = response.data
-        this.is_user_modal_visible = true
-      })
+        this.user = response.data;
+        this.is_user_modal_visible = true;
+      });
     },
     gotoPage: async function (url) {
-      this.loading = true
+      this.loading = true;
       await this.$axios
         .get(url, {
           params: this.search,
         })
         .then((response) => {
-          this.users = response.data.data
-          this.pagination = response.data.links
-        })
-      this.loading = false
+          this.users = response.data.data;
+          this.pagination = response.data.links;
+        });
+      this.loading = false;
     },
     deleteUser: async function (id) {
       await swal({
-        title: this.$i18n.t('Are you sure?'),
-        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
-        icon: 'warning',
-        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
+        title: this.$i18n.t("Are you sure?"),
+        text: this.$i18n.t("Once deleted, you will not be able to recover!"),
+        icon: "warning",
+        buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
@@ -264,23 +277,23 @@ export default {
             // Remove the user from the list
             this.users.splice(
               this.users.findIndex((user) => user.id === id),
-              1,
-            )
-            swal(this.$i18n.t('The user has been deleted!'), {
-              icon: 'success',
+              1
+            );
+            swal(this.$i18n.t("The user has been deleted!"), {
+              icon: "success",
               timer: 3000,
-            })
-          })
+            });
+          });
         }
-      })
+      });
     },
   },
   mounted: async function () {
-    this.getUsers()
-    this.debounceFn = debounce(() => this.getUsers(), 500)
-    this.auth_user = JSON.parse(localStorage.getItem('user'))
+    this.getUsers();
+    this.debounceFn = debounce(() => this.getUsers(), 500);
+    this.auth_user = JSON.parse(localStorage.getItem("user"));
   },
-}
+};
 </script>
 
 <style scoped>
