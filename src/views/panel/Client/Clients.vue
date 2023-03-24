@@ -5,13 +5,13 @@
         <CCardHeader>
           <div class="row">
             <div class="col-md-8 col-sm-4">
-              <h3 class="mt-1">{{ $t('Clients') }}</h3>
+              <h3 class="mt-1">{{ $t("Clients") }}</h3>
             </div>
             <div class="col-md-4 col-sm-8" v-if="$can('clients.create')">
               <router-link :to="{ name: 'Create client' }">
                 <CButton color="success" class="float-end text-white">
                   <ion-icon name="person-add-outline"></ion-icon>&nbsp;
-                  <span>{{ $t('Create client') }}</span>
+                  <span>{{ $t("Create client") }}</span>
                 </CButton>
               </router-link>
             </div>
@@ -26,18 +26,18 @@
                 class="form-control mb-3"
                 v-model="search.fullname"
                 :placeholder="$t('Fullname')"
-                @change="getClients"
+                @keyup="filter(search.fullname, $event)"
               />
             </CCol>
             <CCol :md="2">
               <select
                 class="form-control mb-3"
                 v-model="search.country"
-                @change="getClients"
+                @change="getClients()"
               >
-                <option value="" selected>{{ $t('Any Country') }}</option>
+                <option value="" selected>{{ $t("Any country") }}</option>
                 <template v-for="country in countries" :key="country.code">
-                  <option :value="country.id">{{ country.title }}</option>
+                  <option :value="country.id">{{ $t(country.title) }}</option>
                 </template>
               </select>
             </CCol>
@@ -45,11 +45,11 @@
               <select
                 class="form-control mb-3"
                 v-model="search.gender"
-                @change="getClients"
+                @change="getClients()"
               >
-                <option value="" selected disabled>{{ $t('Gender') }}</option>
-                <option value="Male">{{ $t('Male') }}</option>
-                <option value="Female">{{ $t('Female') }}</option>
+                <option value="" selected>{{ $t("Any gender") }}</option>
+                <option value="Male">{{ $t("Male") }}</option>
+                <option value="Female">{{ $t("Female") }}</option>
               </select>
             </CCol>
             <CCol :md="2">
@@ -58,7 +58,7 @@
                 class="form-control mb-3"
                 v-model="search.phone"
                 :placeholder="$t('Phone')"
-                @change="getClients"
+                @keyup="filter(search.phone, $event)"
               />
             </CCol>
             <CCol :md="2">
@@ -67,7 +67,7 @@
                 class="form-control mb-3"
                 v-model="search.id_number"
                 :placeholder="$t('ID number')"
-                @change="getClients"
+                @keyup="filter(search.id_number, $event)"
               />
             </CCol>
           </CRow>
@@ -84,26 +84,26 @@
           <CTable v-if="!loading" responsive>
             <CTableHead>
               <CTableRow>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Fullname") }}
+                </CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('Fullname')
+                  $t("Country")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('Country')
+                  $t("ID type")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('ID type')
+                  $t("ID number")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('ID number')
+                  $t("ID name")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('ID name')
+                  $t("Gender")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('Gender')
-                }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{
-                  $t('Actions')
+                  $t("Actions")
                 }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -132,9 +132,7 @@
                     v-if="$can('clients.edit')"
                     :title="$t('Edit')"
                   >
-                    <CButton
-                      class="btn btn-sm btn-warning text-white m-1"
-                    >
+                    <CButton class="btn btn-sm btn-warning text-white m-1">
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
@@ -174,57 +172,68 @@
   </CRow>
 
   <CModal
-    size="md"
-    :visible="visibleLiveDemo"
-    @close="visibleLiveDemo = false"
+    :visible="is_client_modal_visible"
+    @close="is_client_modal_visible = false"
     class="modal-popup-detail"
   >
     <CModalHeader>
-      <CModalTitle>{{ $t('Client Information') }}</CModalTitle>
+      <CModalTitle>{{ $t("Client Information") }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CRow>
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>{{ $t('Fullname') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t("Fullname") }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.fullname }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>{{ $t('Gender') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t("Gender") }}:</CTableHeaderCell>
               <CTableDataCell>{{ $t(client.gender) }}</CTableDataCell>
-              <CTableHeaderCell>{{ $t('Country') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t("Country") }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.country_id }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>{{ $t('Phone') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t("Phone") }}:</CTableHeaderCell>
               <CTableDataCell>
                 {{ client.phone }}
               </CTableDataCell>
-              <CTableHeaderCell>{{ $t('is handicap') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t("is handicap") }}:</CTableHeaderCell>
               <CTableDataCell>
                 <CBadge
                   :color="client.is_handicap ? 'success' : 'warning'"
                   shape="rounded-pill"
                 >
-                  {{ client.is_handicap ? $t('Yes') : $t('No') }}
+                  {{ client.is_handicap ? $t("Yes") : $t("No") }}
                 </CBadge>
               </CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>{{ $t('ID number') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t("ID number") }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.id_number }}</CTableDataCell>
-              <CTableHeaderCell>{{ $t('ID type') }}</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t("ID type") }}</CTableHeaderCell>
               <CTableDataCell>{{ client.id_type }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>{{ $t('Date of birth') }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t("Date of birth") }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.dob }}</CTableDataCell>
             </CTableRow>
           </CTable>
-          <Documentable v-if="client.is_documentable" type="client" :id="client.id" />
-          <Contractable v-if="client.is_contractable" type="client" :id="client.id" />
-          <Concurrable v-if="client.is_concurrable" type="client" :id="client.id" />
+          <Documentable
+            v-if="client.is_documentable"
+            type="client"
+            :id="client.id"
+          />
+          <Contractable
+            v-if="client.is_contractable"
+            type="client"
+            :id="client.id"
+          />
+          <Concurrable
+            v-if="client.is_concurrable"
+            type="client"
+            :id="client.id"
+          />
         </CCol>
       </CRow>
     </CModalBody>
@@ -232,76 +241,88 @@
 </template>
 
 <script>
-import countries from '@/store/countries'
+import countries from "@/store/countries";
+import { debounce } from "@/utils/helper";
 
 export default {
-  name: 'Clients',
+  name: "Clients",
   data: () => ({
+    debounceFn: null,
     countries: [],
-    clients: {},
+    clients: [],
     search: {
-      gender: '',
-      country: '',
+      country: "",
+      gender: "",
     },
-    selected_user: null,
     loading: false,
     pagination: [],
     client: {},
-    visibleLiveDemo: false,
+    is_client_modal_visible: false,
   }),
   methods: {
-    getClients: async function () {
-      this.loading = true
+    getClients: async function (reset = false) {
+      this.loading = true;
       await this.$axios
-        .get(`/clients`, {
-          params: this.search,
+        .get("/clients", {
+          params: reset ? {} : this.search,
         })
         .then((response) => {
-          this.clients = response.data.data
-          this.pagination = response.data.links
-          this.loading = false
-        })
+          this.clients = response.data.data;
+          this.pagination = response.data.links;
+          this.loading = false;
+        });
+    },
+    filter: async function (value, event) {
+      if (
+        (event.key == "Backspace" || event.key == "Delete") &&
+        value.length === 2
+      ) {
+        await this.getClients(true);
+      } else if (value.length > 2) {
+        await this.debounceFn();
+      }
     },
     gotoPage: async function (url) {
-      this.loading = true
+      this.loading = true;
       await this.$axios
         .get(url, {
           params: this.search,
         })
         .then((response) => {
-          this.clients = response.data.data
-          this.pagination = response.data.links
-          this.loading = false
-        })
+          this.clients = response.data.data;
+          this.pagination = response.data.links;
+          this.loading = false;
+        });
     },
     deleteClient: async function (id, name) {
       await swal({
-        title: this.$i18n.t('Are you sure?'),
-        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
-        icon: 'warning',
-        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
+        title: this.$i18n.t("Are you sure?"),
+        text: this.$i18n.t("Once deleted, you will not be able to recover!"),
+        icon: "warning",
+        buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.delete(`/clients/${id}`).then(() => this.getClients())
+          this.$axios.delete(`/clients/${id}`).then(() => this.getClients());
           swal(`The client ${name} has been deleted!`, {
-            icon: 'success',
-          })
+            icon: "success",
+          });
         }
-      })
+      });
     },
     viewDetails: async function (id) {
       await this.$axios.get(`/clients/${id}`).then((response) => {
-        this.client = response.data
-        this.visibleLiveDemo = true
-      })
+        this.client = response.data;
+        this.is_client_modal_visible = true;
+      });
     },
   },
-  mounted() {
-    this.getClients()
+  mounted: async function () {
+    this.debounceFn = debounce(() => this.getClients(), 500);
     countries.fetchCountries().then((countries) => {
-      this.countries = countries
-    })
+      this.countries = countries;
+    });
+    await this.getClients();
   },
-}
+};
 </script>

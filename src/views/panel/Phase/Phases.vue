@@ -22,7 +22,7 @@
                 class="form-control"
                 v-model="search.title"
                 :placeholder="$t('Search title')"
-                @keyup="filter(search.title)"
+                @keyup="filter(search.title, $event)"
               />
             </CCol>
           </CRow>
@@ -133,18 +133,16 @@ export default {
   data: () => ({
     debounceFn: null,
     phases: [],
-    search: {
-      title: '',
-    },
+    search: {},
     loading: false,
     pagination: [],
   }),
   methods: {
-    getPhases: async function () {
+    getPhases: async function (reset = false) {
       this.loading = true
       await this.$axios
         .get('/phases', {
-          params: this.search,
+          params: reset ? {} : this.search,
         })
         .then((response) => {
           this.phases = response.data.data
@@ -152,9 +150,14 @@ export default {
           this.loading = false
         })
     },
-    filter: async function (value) {
-      if (value.length > 2) {
-        await this.debounceFn()
+    filter: async function (value, event) {
+      if (
+        (event.key == "Backspace" || event.key == "Delete") &&
+        value.length === 2
+      ) {
+        await this.getPhases(true);
+      } else if (value.length > 2) {
+        await this.debounceFn();
       }
     },
     gotoPage: async function (url) {

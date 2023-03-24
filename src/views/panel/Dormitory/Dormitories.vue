@@ -23,7 +23,7 @@
                 class="form-control"
                 v-model="search.title"
                 :placeholder="$t('Title')"
-                @keyup="filter(search.title)"
+                @keyup="filter(search.title, $event)"
               />
             </CCol>
             <CCol :md="2">
@@ -32,7 +32,7 @@
                 class="form-control"
                 v-model="search.phones"
                 :placeholder="$t('Phone')"
-                @keyup="filter(search.phones)"
+                @keyup="filter(search.phones, $event)"
               />
             </CCol>
             <CCol :md="2">
@@ -41,7 +41,7 @@
                 class="form-control"
                 v-model="search.city"
                 :placeholder="$t('City')"
-                @keyup="filter(search.city)"
+                @keyup="filter(search.city, $event)"
               />
             </CCol>
           </CRow>
@@ -237,11 +237,11 @@ export default {
     dormitory: {},
   }),
   methods: {
-    getDormitories: async function () {
+    getDormitories: async function (reset = false) {
       this.loading = true
       await this.$axios
         .get('/dormitories', {
-          params: this.search,
+          params: reset ? {} : this.search,
         })
         .then((response) => {
           this.dormitories = response.data.data
@@ -249,9 +249,14 @@ export default {
           this.loading = false
         })
     },
-    filter: async function (value) {
-      if (value.length > 2) {
-        await this.debounceFn()
+    filter: async function (value, event) {
+      if (
+        (event.key == "Backspace" || event.key == "Delete") &&
+        value.length === 2
+      ) {
+        await this.getDormitories(true);
+      } else if (value.length > 2) {
+        await this.debounceFn();
       }
     },
     viewDetails: async function (id) {

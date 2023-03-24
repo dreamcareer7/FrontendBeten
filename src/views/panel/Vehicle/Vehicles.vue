@@ -22,7 +22,7 @@
                 class="form-control"
                 v-model="search.model"
                 :placeholder="$t('Model')"
-                @change="getVehicles"
+                @keyup="filter(search.model, $event)"
               />
             </CCol>
             <CCol :md="2">
@@ -31,7 +31,7 @@
                 class="form-control"
                 v-model="search.manufacturer"
                 :placeholder="$t('Manufacturer')"
-                @change="getVehicles"
+                @keyup="filter(search.manufacturer, $event)"
               />
             </CCol>
             <CCol :md="2">
@@ -40,7 +40,7 @@
                 class="form-control"
                 v-model="search.registration"
                 :placeholder="$t('Registration')"
-                @change="getVehicles"
+                @keyup="filter(search.registration, $event)"
               />
             </CCol>
           </CRow>
@@ -191,9 +191,12 @@
 </template>
 
 <script>
+import { debounce } from '@/utils/helper'
+
 export default {
   name: 'Vehicles',
   data: () => ({
+    debounceFn: null,
     vehicles: {},
     search: {},
     loading: false,
@@ -202,17 +205,27 @@ export default {
     is_vehicle_modal_visible: false,
   }),
   methods: {
-    getVehicles: async function () {
+    getVehicles: async function (reset = false) {
       this.loading = true
       await this.$axios
-        .get(`/vehicles/paginate`, {
-          params: this.search,
+        .get('/vehicles/paginate', {
+          params: reset ? {} : this.search,
         })
         .then((response) => {
           this.vehicles = response.data.data
           this.pagination = response.data.links
+          this.loading = false
         })
-      this.loading = false
+    },
+    filter: async function (value, event) {
+      if (
+        (event.key == "Backspace" || event.key == "Delete") &&
+        value.length === 2
+      ) {
+        await this.getVehicles(true);
+      } else if (value.length > 2) {
+        await this.debounceFn();
+      }
     },
     gotoPage: async function (url) {
       this.loading = true
@@ -252,8 +265,9 @@ export default {
       })
     },
   },
-  mounted() {
-    this.getVehicles()
+  mounted: async function () {
+    this.debounceFn = debounce(() => this.getVehicles(), 500)
+    await this.getVehicles()
   },
 }
 </script>

@@ -5,13 +5,13 @@
         <CCardHeader>
           <div class="row">
             <div class="col-md-8 col-sm-4">
-              <h3 class="mt-1">{{ $t('Crew members') }}</h3>
+              <h3 class="mt-1">{{ $t("Crew members") }}</h3>
             </div>
             <div class="col-md-4 col-sm-8" v-if="$can('crews.create')">
               <router-link :to="{ name: 'Create crew' }">
                 <CButton color="success" class="float-end text-white">
                   <ion-icon name="person-add-outline"></ion-icon>&nbsp;
-                  <span>{{ $t('Create crew') }}</span>
+                  <span>{{ $t("Create crew") }}</span>
                 </CButton>
               </router-link>
             </div>
@@ -25,16 +25,16 @@
                 class="form-control mb-3"
                 v-model="search.fullname"
                 :placeholder="$t('Fullname')"
-                @keyup="filter(search.fullname)"
+                @keyup="filter(search.fullname, $event)"
               />
             </CCol>
             <CCol :md="2">
               <select
                 class="form-control mb-3"
                 v-model="search.country"
-                @change="filter('¯\_(ツ)_/¯')"
+                @change="getCrews()"
               >
-                <option value="" selected>{{ $t('Country') }}</option>
+                <option selected value="">{{ $t('Choose country') }}</option>
                 <template v-for="country in countries" :key="country.code">
                   <option :value="country.id">{{ $t(country.title) }}</option>
                 </template>
@@ -46,7 +46,7 @@
                 class="form-control mb-3"
                 v-model="search.phone"
                 :placeholder="$t('Phone')"
-                @keyup="filter(search.phone)"
+                @keyup="filter(search.phone, $event)"
               />
             </CCol>
             <CCol :md="2" :sm="6">
@@ -55,7 +55,7 @@
                 class="form-control mb-3"
                 v-model="search.id_number"
                 :placeholder="$t('ID number')"
-                @keyup="filter(search.id_number)"
+                @keyup="filter(search.id_number, $event)"
               />
             </CCol>
           </CRow>
@@ -72,25 +72,25 @@
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">{{
-                  $t('Fullname')
+                  $t("Fullname")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('Country')
+                  $t("Country")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('Phone')
+                  $t("Phone")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('ID type')
+                  $t("ID type")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('ID number')
+                  $t("ID number")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  $t('Active')
+                  $t("Active")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell style="width: 10%" :aria-colspan="2">{{
-                  $t('Actions')
+                  $t("Actions")
                 }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
@@ -105,7 +105,7 @@
                   <CBadge
                     :color="crew.is_active ? 'success' : 'warning'"
                     shape="rounded-pill"
-                    >{{ crew.is_active ? $t('Yes') : $t('No') }}</CBadge
+                    >{{ crew.is_active ? $t("Yes") : $t("No") }}</CBadge
                   >
                 </CTableDataCell>
                 <CTableDataCell>
@@ -168,46 +168,47 @@
   </CRow>
 
   <CModal
-    size="md"
-    :visible="visibleLiveDemo"
-    @close="visibleLiveDemo = false"
+    :visible="is_crew_member_modal_visible"
+    @close="is_crew_member_modal_visible = false"
     class="modal-popup-detail"
   >
     <CModalHeader>
-      <CModalTitle>{{ $t('Crew Member Details') }}</CModalTitle>
+      <CModalTitle>{{ $t("Crew Member Details") }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
         <CTableRow class="mt-3" colspan>
-          <CTableHeaderCell>{{ $t('Fullname') }}:</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("Fullname") }}:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.fullname }}</CTableDataCell>
         </CTableRow>
 
         <CTableRow class="mt-3">
-          <CTableHeaderCell>{{ $t('Gender') }}:</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("Gender") }}:</CTableHeaderCell>
           <CTableDataCell>
-            {{ crew_member.gender === 1 ? $t('Male') : $t('Female') }}
+            {{ crew_member.gender === 1 ? $t("Male") : $t("Female") }}
           </CTableDataCell>
-          <CTableHeaderCell>{{ $t('Profession') }}:</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("Profession") }}:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.profession_id }}</CTableDataCell>
         </CTableRow>
 
         <CTableRow class="mt-3">
-          <CTableHeaderCell>{{ $t('Country') }}:</CTableHeaderCell>
-          <CTableDataCell>{{ $t(countries[crew_member.country_id].title) }}</CTableDataCell>
-          <CTableHeaderCell>{{ $t('Phone') }}:</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("Country") }}:</CTableHeaderCell>
+          <CTableDataCell>{{
+            $t(countries[crew_member.country_id].title)
+          }}</CTableDataCell>
+          <CTableHeaderCell>{{ $t("Phone") }}:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.phone }}</CTableDataCell>
         </CTableRow>
 
         <CTableRow class="mt-3">
-          <CTableHeaderCell>{{ $t('ID type') }}:</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("ID type") }}:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.id_type }}</CTableDataCell>
-          <CTableHeaderCell>{{ $t('Active') }}:</CTableHeaderCell>
+          <CTableHeaderCell>{{ $t("Active") }}:</CTableHeaderCell>
           <CTableDataCell>
             <CBadge
               :color="crew_member.is_active ? 'success' : 'warning'"
               shape="rounded-pill"
-              >{{ crew_member.is_active ? 'Yes' : 'No' }}</CBadge
+              >{{ crew_member.is_active ? "Yes" : "No" }}</CBadge
             >
           </CTableDataCell>
         </CTableRow>
@@ -219,90 +220,87 @@
 </template>
 
 <script>
-import { debounce } from '@/utils/helper'
-import countries from '@/store/countries'
+import { debounce } from "@/utils/helper";
+import countries from "@/store/countries";
 
 export default {
-  name: 'Crew members',
+  name: "CrewMembers",
   data: () => ({
     debounceFn: null,
     countries: [],
-    crews: {},
+    crews: [],
     search: {
-      fullname: '',
       country: '',
-      phone: '',
-      id_number: '',
     },
-    selected_user: null,
     loading: false,
     pagination: [],
     crew_member: {},
-    visibleLiveDemo: false,
+    is_crew_member_modal_visible: false,
   }),
   methods: {
-    getCrews: async function () {
-      this.loading = true
+    getCrews: async function (reset = false) {
+      this.loading = true;
       await this.$axios
-        .get(`/crews`, {
-          params: this.search,
+        .get("/crews", {
+          params: reset ? {} : this.search,
         })
         .then((response) => {
-          this.crews = response.data.data
-          this.current_page = response.data.current_page
-          this.last_page = response.data.last_page
-          let total_pages = response.data.total / response.data.per_page
-          this.total_pages = total_pages
-          this.pagination = response.data.links ? response.data.links : {}
-        })
-      this.loading = false
+          this.crews = response.data.data;
+          this.pagination = response.data.links;
+          this.loading = false;
+        });
     },
-    filter: async function (value) {
-      if (value.length > 2) {
-        await this.debounceFn()
+    filter: async function (value, event) {
+      if (
+        (event.key == "Backspace" || event.key == "Delete") &&
+        value.length === 2
+      ) {
+        await this.getCrews(true);
+      } else if (value.length > 2) {
+        await this.debounceFn();
       }
     },
     gotoPage: async function (url) {
-      this.loading = true
+      this.loading = true;
       await this.$axios
         .get(url, {
           params: this.search,
         })
         .then((response) => {
-          this.crews = response.data.data
-          this.pagination = response.data.links
-          this.loading = false
-        })
+          this.crews = response.data.data;
+          this.pagination = response.data.links;
+          this.loading = false;
+        });
     },
     deleteCrew: async function (id) {
       await swal({
-        title: this.$i18n.t('Are you sure?'),
-        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
-        icon: 'warning',
-        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
+        title: this.$i18n.t("Are you sure?"),
+        text: this.$i18n.t("Once deleted, you will not be able to recover!"),
+        icon: "warning",
+        buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.delete(`/crews/${id}`).then(() => this.getCrews())
-          swal('Crew member has been deleted!', {
-            icon: 'success',
-          })
+          this.$axios.delete(`/crews/${id}`).then(() => this.getCrews());
+          swal("Crew member has been deleted!", {
+            icon: "success",
+          });
         }
-      })
+      });
     },
     viewDetails: async function (id) {
       await this.$axios.get(`/crews/${id}`).then((response) => {
-        this.crew_member = response.data
-        this.visibleLiveDemo = true
-      })
+        this.crew_member = response.data;
+        this.is_crew_member_modal_visible = true;
+      });
     },
   },
   mounted: async function () {
-    await this.getCrews()
-    this.debounceFn = debounce(() => this.getCrews(), 500)
+    this.debounceFn = debounce(() => this.getCrews(), 500);
     countries.fetchCountries().then((countries) => {
-      this.countries = countries
-    })
+      this.countries = countries;
+    });
+    await this.getCrews();
   },
-}
+};
 </script>

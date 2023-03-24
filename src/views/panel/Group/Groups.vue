@@ -22,7 +22,7 @@
                 class="form-control"
                 v-model="search.title"
                 :placeholder="$t('Search title')"
-                @keyup="filter(search.title)"
+                @keyup="filter(search.title, $event)"
               />
             </CCol>
             <CCol :md="4">
@@ -31,7 +31,7 @@
                 class="form-control"
                 v-model="search.crew_member"
                 :placeholder="$t('Search crew member')"
-                @keyup="filter(search.crew_member)"
+                @keyup="filter(search.crew_member, $event)"
               />
             </CCol>
           </CRow>
@@ -184,10 +184,7 @@ export default {
     debounceFn: null,
     group: {},
     groups: [],
-    search: {
-      title: '',
-      crew_member: '',
-    },
+    search: {},
     loading: false,
     pagination: [],
     is_group_modal_visible: false,
@@ -201,11 +198,11 @@ export default {
     }
   },
   methods: {
-    async getGroups() {
+    async getGroups(reset = false) {
       this.loading = true
       await this.$axios
         .get(`/groups`, {
-          params: this.search,
+          params: reset ? {} : this.search,
         })
         .then((response) => {
           this.groups = response.data.data
@@ -213,9 +210,14 @@ export default {
           this.loading = false
         })
     },
-    filter: async function (value) {
-      if (value.length > 2) {
-        await this.debounceFn()
+    filter: async function (value, event) {
+      if (
+        (event.key == "Backspace" || event.key == "Delete") &&
+        value.length === 2
+      ) {
+        await this.getGroups(true);
+      } else if (value.length > 2) {
+        await this.debounceFn();
       }
     },
     fetchGroupInfo: async function (id) {
