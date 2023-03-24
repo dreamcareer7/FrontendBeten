@@ -97,7 +97,7 @@
   </CRow>
 
   <CModal
-    size="lg"
+    size="md"
     :visible="showMealTypeDetailModal"
     @close="showMealTypeDetailModal = false"
     class="modal-popup-detail"

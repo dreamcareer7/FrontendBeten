@@ -157,7 +157,7 @@
   </CRow>
 
   <CModal
-    size="lg"
+    size="md"
     :visible="visibleLiveDemo"
     @close="visibleLiveDemo = false"
     class="modal-popup-detail"

@@ -168,7 +168,7 @@
   </CRow>
 
   <CModal
-    size="lg"
+    size="md"
     :visible="visibleLiveDemo"
     @close="visibleLiveDemo = false"
     class="modal-popup-detail"
@@ -178,7 +178,7 @@
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
-        <CTableRow class="mt-3">
+        <CTableRow class="mt-3" colspan>
           <CTableHeaderCell>{{ $t('Fullname') }}:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.fullname }}</CTableDataCell>
         </CTableRow>

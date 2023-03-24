@@ -135,7 +135,7 @@
   <CModal
     :visible="is_vehicle_modal_visible"
     @close="is_vehicle_modal_visible = false"
-    size="lg"
+    size="md"
   >
     <CModalHeader>
       <CModalTitle>{{ $t('Vehicle details') }}</CModalTitle>

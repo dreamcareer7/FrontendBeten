@@ -19,7 +19,7 @@
           <CTableBody>
             <CTableRow
               v-if="contracts.length === 0"
-              class="text-center d-block pt-3 pb-1"
+              class="text-center d-block pt-1 pb-1"
             >
               {{ $t("No contracts") }}
             </CTableRow>
@@ -65,7 +65,7 @@
     </CCard>
     <CForm class="p-2" @submit.prevent="upload" ref="uploadForm">
       <CRow class="mt-1">
-        <CInputGroup class="mb-3">
+        <CInputGroup class="mb-0">
           <input
             type="text"
             class="form-control sm"
@@ -73,8 +73,8 @@
             v-model="reference"
             required
           />
-          <CInputGroupText id="basic-addon1">
-            <label for="docsel" class="btn btn-primary btn-sm">
+          <CInputGroupText id="basic-addon1" class="p-0" >
+            <label for="docsel" class="btn btn-info btn-sm">
               {{ $t("Add contract") }}
             </label>
           </CInputGroupText>
@@ -88,9 +88,9 @@
           />
           <CButton
             type="submit"
-            color="info"
-            class="mt-1 text-white btn-sm"
-            shape="rounded-pill"
+            color="success"
+            class="mt-0 text-white btn-sm"
+            shape="square-pill"
             >{{ $t("Upload") }}</CButton
           >
         </CInputGroup>

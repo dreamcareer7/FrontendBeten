@@ -17,7 +17,7 @@
           <CTableBody>
             <CTableRow
               v-if="documents.length === 0"
-              class="text-center d-block p-3"
+              class="text-center d-block p-1"
             >
               {{ $t('No documents') }}
             </CTableRow>
@@ -65,7 +65,7 @@
     </CCard>
     <CForm class="p-2" @submit.prevent="upload" ref="uploadForm">
       <CRow class="mt-1">
-        <CCol xs="8" sm="8">
+       <CInputGroup class="mb-0">
           <input
             type="text"
             class="form-control sm"
@@ -73,28 +73,29 @@
             v-model="title"
             required
           />
-        </CCol>
-        <CCol xs="2" sm="2">
+           <CInputGroupText id="basic-addon2" class="p-0" >
+              <label for="docsel1" class="btn btn-info btn-sm">
+                {{ $t('Add document') }}
+              </label>
+            </CInputGroupText>
           <input
             type="file"
             accept="image/*,.pdf"
             class="d-none"
             ref="docs"
-            id="docsel"
+            id="docsel1"
             multiple
           />
-          <label for="docsel" class="btn btn-primary btn-sm">{{ $t('Add document') }}</label>
-        </CCol>
-        <CCol xs="2" sm="2">
+
           <CButton
             type="submit"
-            color="info"
-            class="mt-1 text-white btn-sm"
-            shape="rounded-pill"
+            color="success"
+            class="mt-0 text-white btn-sm"
+            shape="square-pill"
           >
             {{ $t('Upload') }}
           </CButton>
-        </CCol>
+        </CInputGroup>
       </CRow>
     </CForm>
   </CCol>
