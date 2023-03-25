@@ -190,7 +190,7 @@
               <CTableHeaderCell>{{ $t("Gender") }}:</CTableHeaderCell>
               <CTableDataCell>{{ $t(client.gender) }}</CTableDataCell>
               <CTableHeaderCell>{{ $t("Country") }}:</CTableHeaderCell>
-              <CTableDataCell>{{ client.country_id }}</CTableDataCell>
+              <CTableDataCell>{{ $t(client.country) }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell>{{ $t("ID number") }}:</CTableHeaderCell>
@@ -317,6 +317,10 @@ export default {
     viewDetails: async function (id) {
       await this.$axios.get(`/clients/${id}`).then((response) => {
         this.client = response.data;
+        let country_index = this.countries.findIndex(
+          (country) => country.id === this.client.country_id
+        );
+        this.client.country = this.countries[country_index].title
         this.is_client_modal_visible = true;
       });
     },
