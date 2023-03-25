@@ -1,52 +1,52 @@
 <template>
   <div class="card border-info mb-4">
-    <div class="card-header">Service Commit Information</div>
+    <div class="card-header">{{ $t('Service Commit Information') }}</div>
     <CRow class="mt-3 ms-3">
       <CCol :md="6">
         <CTable class="table table-responsive">
           <CTableRow>
-            <CTableDataCell>Service title</CTableDataCell>
+            <CTableDataCell>{{ $t('Title') }}</CTableDataCell>
             <CTableDataCell>{{ service_commit.service?.title }}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Service city ID</CTableDataCell>
+            <CTableDataCell>{{ $t('City') }}</CTableDataCell>
             <CTableDataCell>{{
               service_commit.service?.city_id
             }}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Service before date</CTableDataCell>
+            <CTableDataCell>{{ $t('Before date') }}</CTableDataCell>
             <CTableDataCell>{{
               service_commit.service?.before_date
             }}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Service exact date</CTableDataCell>
+            <CTableDataCell>{{ $t('Exact date') }}</CTableDataCell>
             <CTableDataCell>{{
               service_commit.service?.exact_date
             }}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Service after date</CTableDataCell>
+            <CTableDataCell>{{ $t('After date') }}</CTableDataCell>
             <CTableDataCell>{{
               service_commit.service?.after_date
             }}</CTableDataCell>
           </CTableRow>
           <hr />
           <CTableRow>
-            <CTableDataCell>Badge</CTableDataCell>
+            <CTableDataCell>{{ $t('Badge') }}</CTableDataCell>
             <CTableDataCell>{{ service_commit.badge }}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Scheduled at</CTableDataCell>
+            <CTableDataCell>{{ $t('Schedule At') }}</CTableDataCell>
             <CTableDataCell>{{ service_commit.schedule_at }}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Started at</CTableDataCell>
+            <CTableDataCell>{{ $t('Started') }}</CTableDataCell>
             <CTableDataCell>{{ service_commit.started_at }}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>From location</CTableDataCell>
+            <CTableDataCell>{{ $t('From') }}</CTableDataCell>
             <CTableDataCell>{{ service_commit.from_location }}</CTableDataCell>
           </CTableRow>
         </CTable>
@@ -55,23 +55,23 @@
             <CTable>
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell scope="col">Model type</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Model id</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Role</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">{{ $t('Model type') }}</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">{{ $t('Model id') }}</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">{{ $t('Role') }}</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
                 <CTableRow v-for="log in service_commit_logs">
-                  <CTableDataCell>{{ log.model_type }}</CTableDataCell>
-                  <CTableDataCell>{{ log.model_type }}</CTableDataCell>
-                  <CTableDataCell>{{ log.role }}</CTableDataCell>
+                  <CTableDataCell>{{ $t(log.model_type) }}</CTableDataCell>
+                  <CTableDataCell>{{ $t(log.model_type) }}</CTableDataCell>
+                  <CTableDataCell>{{ $t(log.role) }}</CTableDataCell>
                 </CTableRow>
               </CTableBody>
             </CTable>
           </CRow>
           <CRow>
             <CCol :md="12" class="text-center">
-              <nav aria-label="Service commits navigation">
+              <nav :aria-label="$t('Service commits navigation')">
                 <ul class="pagination">
                   <template v-for="page in pagination" :key="page">
                     <li class="page-item" :class="{ active: page.active }">
@@ -90,14 +90,14 @@
         </div>
 
         <button class="btn btn-primary" @click="show_add_log_form = true">
-          Add logs
+          {{ $t('Add logs') }}
         </button>
         <button
           class="btn btn-primary"
           v-if="service_commit.service_commit_log?.length"
           @click="initialize"
         >
-          Initialize
+          {{ $t('Initialize') }}
         </button>
         <CModal
           size="sm"
@@ -108,7 +108,7 @@
           data-keyboard="false"
         >
           <CModalHeader>
-            <CModalTitle>Add log</CModalTitle>
+            <CModalTitle>{{ $t('Add log') }}</CModalTitle>
           </CModalHeader>
           <CModalBody>
             <CreateLog

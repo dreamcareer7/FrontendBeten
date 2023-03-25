@@ -419,5 +419,18 @@
     "Update Dormitory": "تحديث المسكن",
     "Passengers": "الركاب",
     "Update Vehicle": "تحديث المركبة",
-    "Updated successfully!": "تم التحديث بنجاح!"
+    "Updated successfully!": "تم التحديث بنجاح!",
+    "Service Commit Information": "معلومات الالتزام بالخدمة",
+    "Service Commit details": "تفاصيل الالتزام بالخدمة",
+    "Add logs": "أضف السجلات",
+    "Initialize": "التهيئة",
+    "Concurrents": "توافقات",
+    "daily": "يوميًا",
+    "Add": "أضف",
+    "Input text": "أدخل نصآ",
+    "Add log": "أضف السجل",
+    "Create Log": "إنشاء سجل",
+    "Model Type": "نوع النموذج",
+    "Model name": "اسم النموذج",
+    "Choose country": "اختر الدولة"
 }

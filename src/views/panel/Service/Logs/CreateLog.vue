@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4 mt-4">
-    <div class="card-header">Create Log</div>
+    <div class="card-header">{{ $t('Create Log') }}</div>
     <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
@@ -12,10 +12,10 @@
             required
           >
             <option v-for="(model, key) in model_types" :value="key">
-              {{ model }}
+              {{ model.key }}
             </option>
           </select>
-          <label for="model_type">Model Type</label>
+          <label for="model_type">{{ $t('Model Type') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -26,16 +26,16 @@
             required
           >
             <option v-for="model in model_ids" :value="model.id">
-              {{ model.id }}
+              {{ model.label }}
             </option>
           </select>
 
-          <label for="model_id"> Model ID </label>
+          <label for="model_id"> {{ $t('Model name') }} </label>
         </div>
 
         <div class="form-floating mb-3">
           <input class="form-control" type="text" v-model="log.role" />
-          <label for="role">Role</label>
+          <label for="role">{{ $t('Input text') }}</label>
           <div class="invalid-feedback"></div>
         </div>
       </div>

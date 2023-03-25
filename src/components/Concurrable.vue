@@ -1,6 +1,6 @@
 <template>
   <CCol class="card bg-light border-top-3 border-secondary p-0 mt-3">
-    <CCardHeader class="font-weight-bold">Concurrents</CCardHeader>
+    <CCardHeader class="font-weight-bold">{{ $t('Concurrents') }}</CCardHeader>
     <CCard class="mt-1">
       <CAlert color="success" class="m-2" v-show="show_message">
         {{ message }}
@@ -20,7 +20,7 @@
                   {{ concurrent.ending_at }}
                 </CTableHeaderCell>
                 <CTableHeaderCell scope="row">
-                  {{ concurrent.extra.frequency }}
+                  {{ $t(concurrent.extra.frequency) }}
                 </CTableHeaderCell>
                 <CTableDataCell>
                   <button
@@ -71,7 +71,7 @@
       class="text-white"
       @click="form_shown = !form_shown"
     >
-      {{ form_shown ? 'Close' : 'Add' }}&nbsp;
+      {{ form_shown ? $t('Close') : $t('Add') }}&nbsp;
       <ion-icon :name="`${form_shown ? 'close' : 'add'}-circle-outline`">
       </ion-icon>
     </CButton>
