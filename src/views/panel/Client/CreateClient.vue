@@ -74,6 +74,26 @@
           <label for="gender">{{ $t('Gender') }}</label>
         </div>
 
+        <div class="form-floating mb-3">
+          <input
+            type="date"
+            class="form-control"
+            id="dob"
+            v-model="client.dob"
+          />
+          <label for="dob">{{ $t('Date of birth') }}</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="phone"
+            v-model="client.phone"
+          />
+          <label for="phone">{{ $t('Phone') }}</label>
+        </div>
+
         <div class="form-switch">
           <input
             class="form-check-input"

@@ -78,24 +78,30 @@
                 <CTableHeaderCell scope="col">
                   {{ $t("Fullname") }}
                 </CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{
-                  $t("Country")
-                }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{
-                  $t("ID type")
-                }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{
-                  $t("ID number")
-                }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{
-                  $t("ID name")
-                }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{
-                  $t("Gender")
-                }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{
-                  $t("Actions")
-                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Country") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("ID type") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("ID number") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("ID name") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Gender") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Date of birth") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Phone") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Actions") }}
+                </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -106,6 +112,8 @@
                 <CTableDataCell>{{ client.id_number }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_name }}</CTableDataCell>
                 <CTableDataCell>{{ $t(client.gender) }}</CTableDataCell>
+                <CTableDataCell>{{ client.dob }}</CTableDataCell>
+                <CTableDataCell>{{ client.phone }}</CTableDataCell>
                 <CTableDataCell>
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
@@ -208,6 +216,10 @@
             <CTableRow>
               <CTableHeaderCell>{{ $t("Date of birth") }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.dob }}</CTableDataCell>
+            </CTableRow>
+            <CTableRow>
+              <CTableHeaderCell>{{ $t("Phone") }}:</CTableHeaderCell>
+              <CTableDataCell>{{ client.phone }}</CTableDataCell>
             </CTableRow>
           </CTable>
           <Documentable
