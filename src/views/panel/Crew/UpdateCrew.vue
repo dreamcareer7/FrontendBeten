@@ -128,8 +128,8 @@
             class="form-check-input"
             type="checkbox"
             id="is_active"
+            :checked="crew.is_active"
             v-model="crew.is_active"
-            required
           />
           <label class="form-check-label" for="is_active">
             &nbsp;{{ $t('is active') }}?
