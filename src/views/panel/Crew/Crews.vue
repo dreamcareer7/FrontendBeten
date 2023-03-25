@@ -185,7 +185,7 @@
         <CTableRow class="mt-3">
           <CTableHeaderCell>{{ $t("Gender") }}:</CTableHeaderCell>
           <CTableDataCell>
-            {{ crew_member.gender === 1 ? $t("Male") : $t("Female") }}
+            {{ $t(crew_member.gender) }}
           </CTableDataCell>
           <CTableHeaderCell>{{ $t("Profession") }}:</CTableHeaderCell>
           <CTableDataCell>{{ crew_member.profession_id }}</CTableDataCell>
