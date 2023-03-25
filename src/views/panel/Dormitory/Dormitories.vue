@@ -152,35 +152,35 @@
     data-keyboard="false"
   >
     <CModalHeader>
-      <CModalTitle>Dormitory details</CModalTitle>
+      <CModalTitle>{{ $t('Dormitory details') }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CTable class="table table-responsive">
         <CTableRow> </CTableRow>
         <CTableRow>
-          <CTableDataCell>Title</CTableDataCell>
+          <CTableDataCell>{{ $t('Title') }}</CTableDataCell>
           <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Phone</CTableDataCell>
+          <CTableDataCell>{{ $t('Phone') }}</CTableDataCell>
           <CTableDataCell>
             {{ dormitory.phones }}
           </CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>City</CTableDataCell>
+          <CTableDataCell>{{ $t('City') }}</CTableDataCell>
           <CTableDataCell>{{ dormitory.city?.title }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Location</CTableDataCell>
+          <CTableDataCell>{{ $t('Location') }}</CTableDataCell>
           <CTableDataCell>{{ dormitory.location }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Coordinates</CTableDataCell>
+          <CTableDataCell>{{ $t('Coordinate') }}</CTableDataCell>
           <CTableDataCell>{{ dormitory.coordinate }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
-          <CTableDataCell>Active</CTableDataCell>
+          <CTableDataCell>{{ $t('Active') }}</CTableDataCell>
           <CTableDataCell>
             <CBadge
               :color="dormitory.is_active ? 'success' : 'warning'"
@@ -189,14 +189,6 @@
               {{ dormitory.is_active ? 'Yes' : 'No' }}
             </CBadge>
           </CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Date created</CTableDataCell>
-          <CTableDataCell>{{ dormitory.created_at }}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Date updated</CTableDataCell>
-          <CTableDataCell>{{ dormitory.updated_at }}</CTableDataCell>
         </CTableRow>
       </CTable>
       <Contractable
@@ -216,7 +208,7 @@
         class="text-white"
         @click="is_dormitory_modal_shown = false"
       >
-        Close
+        {{ $t('Close') }}
       </CButton>
     </CModalFooter>
   </CModal>
@@ -294,7 +286,7 @@ export default {
                 (dormitory) => dormitory.id !== id,
               )),
           )
-          swal('Dormitory has been deleted!', {
+          swal(this.$i18n.t('Dormitory has been deleted!'), {
             icon: 'success',
             timer: 3000,
           })

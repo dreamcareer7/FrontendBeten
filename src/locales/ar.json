@@ -432,5 +432,14 @@
     "Create Log": "إنشاء سجل",
     "Model Type": "نوع النموذج",
     "Model name": "اسم النموذج",
-    "Choose country": "اختر الدولة"
+    "Choose country": "اختر الدولة",
+    "Phase details": "تفاصيل المرحلة",
+    "Update Group": "تحديث المجموعة",
+    "Search Client": "عميل البحث",
+    "Assigned Members to this Group": "الأعضاء المعينون لهذه المجموعة",
+    "Dormitory details": "تفاصيل السكن",
+    "Dormitory has been deleted!'": "تم حذف المسكن!",
+    "Create Meal": "اصنع وجبة",
+    "Meal Information": "معلومات الوجبه",
+    "Meal Type ID": "هوية نوع الوجبه"
 }

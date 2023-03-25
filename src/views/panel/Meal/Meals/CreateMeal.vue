@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">Create Meal</div>
+    <div class="card-header">{{ $t('Create Meal') }}</div>
     <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
@@ -11,12 +11,12 @@
             v-model="meal.meal_type_id"
             autofocus
           >
-            <option>Choose Meal Type</option>
+            <option>{{ $t('Choose Meal Type') }}</option>
             <template v-for="meal_type in meal_types" :key="meal_type.id">
               <option :value="meal_type.id">{{ meal_type.title }}</option>
             </template>
           </select>
-          <label for="meal_type_id">Meal Type</label>
+          <label for="meal_type_id">{{ $t('Meal Type') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -29,7 +29,7 @@
             autocomplete="off"
             v-model="meal.quantity"
           />
-          <label for="quantity">Quantity</label>
+          <label for="quantity">{{ $t('Quantity') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -41,7 +41,7 @@
             autocomplete="off"
             v-model="meal.to_model_type"
           />
-          <label for="to_model_type">To Model Type</label>
+          <label for="to_model_type">{{ $t('To Model Type') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -54,7 +54,7 @@
             autocomplete="off"
             v-model="meal.to_model_id"
           />
-          <label for="to_model_id">To Model ID</label>
+          <label for="to_model_id">{{ $t('To Model ID') }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -63,11 +63,11 @@
             step="1"
             class="form-control"
             id="sent_at"
-            placeholder="Sent At..."
+            :placeholder="$t('Sent At...')"
             required
             v-model="meal.sent_at"
           />
-          <label for="sent_at">Sent At</label>
+          <label for="sent_at">{{ $t('Sent At') }}</label>
         </div>
         <CRow v-if="error_message">
           <CCol :md="12">

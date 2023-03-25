@@ -83,26 +83,26 @@
     data-keyboard="false"
   >
     <CModalHeader>
-      <CModalTitle>Meal Information</CModalTitle>
+      <CModalTitle>{{ $t('Meal Information') }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CRow>
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>Meal Type ID</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Meal Type ID') }}</CTableHeaderCell>
               <CTableDataCell>{{ meal.meal_type_id }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>Quantity</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Quantity') }}</CTableHeaderCell>
               <CTableDataCell>{{ meal.quantity }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>To Model Type</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('To Model Type') }}</CTableHeaderCell>
               <CTableDataCell>{{ meal.to_model_type }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>Sent at</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t('Sent At') }}</CTableHeaderCell>
               <CTableDataCell>{{ meal.sent_at }}</CTableDataCell>
             </CTableRow>
           </CTable>

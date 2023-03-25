@@ -1,6 +1,6 @@
 <template>
   <form class="card border-warning mb-4" @submit.prevent="update">
-    <div class="card-header">Update Group</div>
+    <div class="card-header">{{ $t('Update Group') }}</div>
     <div class="row mt-4">
       <div class="col-4">
         <div class="card-body">
@@ -14,25 +14,25 @@
               required
               autofocus
             />
-            <label for="title">Title</label>
+            <label for="title">{{ $t('Title') }}</label>
           </div>
 
           <div class="form-floating mb-3">
             <select v-model="group.crew_id" id="crew_id" class="form-control">
-              <option>Choose Crew</option>
+              <option>{{ $t('Choose Crew') }}</option>
               <template v-for="crew in crews" :key="crew.id">
                 <option :value="crew.id">{{ crew.fullname }}</option>
               </template>
             </select>
-            <label for="crew_id">Crew</label>
+            <label for="crew_id">{{ $t('Crew') }}</label>
           </div>
         </div>
       </div>
       <div class="col-8 text-center">
-        <h6>Assigned Members to this Group</h6>
+        <h6>{{ $t('Assigned Members to this Group') }}</h6>
         <div class="row">
           <div class="col-4">
-            <h6>Search Client</h6>
+            <h6>{{ $t('Search Client') }}</h6>
             <input
               type="text"
               v-model="client_query"
@@ -88,7 +88,7 @@
         class="btn btn-warning text-white"
         @click.prevent="$router.go(-1)"
       >
-        Go back</button
+        {{ $t('Go back') }}</button
       >&nbsp;
       <button type="submit" class="btn btn-warning text-white">
         <ion-icon name="save-outline"></ion-icon>&nbsp;{{ $t('Save') }}

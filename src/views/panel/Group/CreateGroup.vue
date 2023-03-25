@@ -1,6 +1,6 @@
 <template>
   <form class="card border-success mb-4" @submit.prevent="create">
-    <div class="card-header">Create group</div>
+    <div class="card-header">{{ $t('Create group') }}</div>
     <div class="card-body">
       <div class="form-floating mb-3">
         <input
@@ -12,7 +12,7 @@
           required
           autofocus
         />
-        <label for="title">Title</label>
+        <label for="title">{{ $t('Title') }}</label>
       </div>
 
       <div class="form-floating mb-3">
@@ -26,7 +26,7 @@
             <option :value="crew.id">{{ crew.fullname }}</option>
           </template>
         </select>
-        <label class="form-label" for="crew_member">Crew member</label>
+        <label class="form-label" for="crew_member">{{ $t('Crew member') }}</label>
       </div>
     </div>
     <CRow v-if="error_message">
@@ -42,7 +42,7 @@
         type="submit"
         :disabled="create_button_disabled"
       >
-        <ion-icon name="create-outline"></ion-icon>&nbsp;Create
+        <ion-icon name="create-outline"></ion-icon>&nbsp;{{ $t('Create') }}
       </button>
     </div>
   </form>
