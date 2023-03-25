@@ -134,7 +134,7 @@ export default {
       this.$axios
         .post('/hospitalities', this.hospitality)
         .then((response) => {
-          if (response.status === 201) {
+          if (response.status < 201) {
             this.$router.push({ name: 'Hospitalities' })
           } else {
             this.message = response.data.message

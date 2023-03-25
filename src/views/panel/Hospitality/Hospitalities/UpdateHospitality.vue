@@ -148,7 +148,7 @@ export default {
           this.$axios
             .patch(`/hospitalities/${this.hospitality.id}`, this.hospitality)
             .then((response) => {
-              if (response.status === 204) {
+              if (response.status < 204) {
                 this.$router.push({ name: 'Hospitalities' })
                 swal(this.$i18n.t('Updated successfully!'), {
                   icon: 'success',

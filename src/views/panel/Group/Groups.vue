@@ -213,7 +213,7 @@ export default {
     filter: async function (value, event) {
       if (
         (event.key == "Backspace" || event.key == "Delete") &&
-        value.length === 2
+        value.length <= 2
       ) {
         await this.getGroups(true);
       } else if (value.length > 2) {

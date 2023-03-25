@@ -56,18 +56,9 @@
               <input
                 type="number"
                 class="form-control mb-3"
-                v-model="search.phone"
-                :placeholder="$t('Phone')"
-                @keyup="filter(search.phone, $event)"
-              />
-            </CCol>
-            <CCol :md="2">
-              <input
-                type="number"
-                class="form-control mb-3"
                 v-model="search.id_number"
                 :placeholder="$t('ID number')"
-                @keyup="filter(search.id_number, $event)"
+                @keyup="filter(String(search.id_number), $event)"
               />
             </CCol>
           </CRow>
@@ -194,9 +185,9 @@
               <CTableDataCell>{{ client.country_id }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
-              <CTableHeaderCell>{{ $t("Phone") }}:</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t("ID number") }}:</CTableHeaderCell>
               <CTableDataCell>
-                {{ client.phone }}
+                {{ client.id_number }}
               </CTableDataCell>
               <CTableHeaderCell>{{ $t("is handicap") }}:</CTableHeaderCell>
               <CTableDataCell>
@@ -253,6 +244,7 @@ export default {
     search: {
       country: "",
       gender: "",
+      id_number: "",
     },
     loading: false,
     pagination: [],
@@ -275,7 +267,7 @@ export default {
     filter: async function (value, event) {
       if (
         (event.key == "Backspace" || event.key == "Delete") &&
-        value.length === 2
+        value.length <= 2
       ) {
         await this.getClients(true);
       } else if (value.length > 2) {

@@ -79,7 +79,7 @@ export default {
       return await this.$axios
         .post(`${process.env.VUE_APP_BASE_API_URL}/password/reset`, this.form)
         .then((response) => {
-          if (response.status === 200) {
+          if (response.status < 200) {
             this.$router.push('login')
           }
           this.message = response.data.message
