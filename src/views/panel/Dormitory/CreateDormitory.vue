@@ -13,7 +13,7 @@
             autofocus
             required
           />
-          <label for="title">{{ $t('Title') }}</label>
+          <label for="title">{{ $t('Place name') }}</label>
         </div>
 
         <div class="form-floating mb-3">

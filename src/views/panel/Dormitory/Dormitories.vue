@@ -68,7 +68,7 @@
           <CTable v-if="!loading && dormitories.length > 0">
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">{{ $t('Title') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{ $t('Place name') }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{ $t('Phone') }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{ $t('City') }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{ $t('Location') }}</CTableHeaderCell>
@@ -158,7 +158,7 @@
       <CTable class="table table-responsive">
         <CTableRow> </CTableRow>
         <CTableRow>
-          <CTableDataCell>{{ $t('Title') }}</CTableDataCell>
+          <CTableDataCell>{{ $t('Place name') }}</CTableDataCell>
           <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
         </CTableRow>
         <CTableRow>
