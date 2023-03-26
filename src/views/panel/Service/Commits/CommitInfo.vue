@@ -63,7 +63,7 @@
               <CTableBody>
                 <CTableRow v-for="log in service_commit_logs">
                   <CTableDataCell>{{ $t(log.model_type) }}</CTableDataCell>
-                  <CTableDataCell>{{ $t(log.model_type) }}</CTableDataCell>
+                  <CTableDataCell>{{ log.model_id }}</CTableDataCell>
                   <CTableDataCell>{{ $t(log.role) }}</CTableDataCell>
                 </CTableRow>
               </CTableBody>

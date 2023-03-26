@@ -442,5 +442,12 @@
     "Create Meal": "اصنع وجبة",
     "Meal Information": "معلومات الوجبه",
     "Meal Type ID": "هوية نوع الوجبه",
-    "Place name": "اسم المكان"
+    "Place name": "اسم المكان",
+    "App\\Models\\Crew": "الطاقم",
+    "App\\Models\\Hospitality": "الاعاشة",
+    "App\\Models\\Client": "الحجاج",
+    "App\\Models\\Dormitory": "المساكن",
+    "App\\Models\\Group": "المجموعات",
+    "App\\Models\\MealType": "نوع الوجبة",
+    "App\\Models\\Vehicle": "المركبات"
 }
