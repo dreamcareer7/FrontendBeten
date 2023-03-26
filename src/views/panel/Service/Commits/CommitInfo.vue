@@ -55,8 +55,8 @@
             <CTable>
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell scope="col">{{ $t('Model type') }}</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">{{ $t('Model id') }}</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">{{ $t('Model Type') }}</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">{{ $t('Model name') }}</CTableHeaderCell>
                   <CTableHeaderCell scope="col">{{ $t('Role') }}</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>

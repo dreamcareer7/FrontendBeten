@@ -449,5 +449,6 @@
     "App\\Models\\Dormitory": "المساكن",
     "App\\Models\\Group": "المجموعات",
     "App\\Models\\MealType": "نوع الوجبة",
-    "App\\Models\\Vehicle": "المركبات"
+    "App\\Models\\Vehicle": "المركبات",
+    "Role": "الدور"
 }

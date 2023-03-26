@@ -15,9 +15,9 @@
             <CTable>
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell scope="col">Service</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Badge</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Schedule At</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">{{ $t('Service') }}</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">{{ $t('Badge') }}</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">{{ $t('Schedule At') }}</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
