@@ -107,7 +107,7 @@
             <CTableBody>
               <CTableRow v-for="client in clients" :key="client.id">
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
-                <CTableDataCell>{{ $t(client.country?.title) }}</CTableDataCell>
+                <CTableDataCell>{{ client.country }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_number }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_name }}</CTableDataCell>
@@ -271,7 +271,21 @@ export default {
           params: reset ? {} : this.search,
         })
         .then((response) => {
-          this.clients = response.data.data;
+          this.clients = response.data.data.map((client) => {
+            if (client.country_id) {
+              let country_index = this.countries.findIndex(
+                (country) => country.id === client.country_id
+              );
+              if (country_index >= 0) {
+                client.country = this.$i18n.t(this.countries[country_index].title);
+              } else {
+                client.country = ''
+              }
+            } else {
+              client.country = ''
+            }
+            return client
+          });
           this.pagination = response.data.links;
           this.loading = false;
         });
@@ -293,7 +307,21 @@ export default {
           params: this.search,
         })
         .then((response) => {
-          this.clients = response.data.data;
+          this.clients = response.data.data.map((client) => {
+            if (client.country_id) {
+              let country_index = this.countries.findIndex(
+                (country) => country.id === client.country_id
+              );
+              if (country_index >= 0) {
+                client.country = this.$i18n.t(this.countries[country_index].title);
+              } else {
+                client.country = ''
+              }
+            } else {
+              client.country = ''
+            }
+            return client
+          });
           this.pagination = response.data.links;
           this.loading = false;
         });
