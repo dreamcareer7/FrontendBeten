@@ -278,12 +278,10 @@ export default {
               );
               if (country_index >= 0) {
                 client.country = this.$i18n.t(this.countries[country_index].title);
-              } else {
-                client.country = ''
+                return client
               }
-            } else {
-              client.country = ''
             }
+            client.country = ''
             return client
           });
           this.pagination = response.data.links;
@@ -314,12 +312,10 @@ export default {
               );
               if (country_index >= 0) {
                 client.country = this.$i18n.t(this.countries[country_index].title);
-              } else {
-                client.country = ''
+                return client
               }
-            } else {
-              client.country = ''
             }
+            client.country = ''
             return client
           });
           this.pagination = response.data.links;
