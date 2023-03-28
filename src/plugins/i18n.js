@@ -7,6 +7,8 @@ const i18n = createI18n({
   messages, // set locale messages
   missingWarn: false,
   silentFallbackWarn: true,
+  silentTranslationWarn: true,
+  formatFallbackMessages: true,
 })
 
 export default i18n
