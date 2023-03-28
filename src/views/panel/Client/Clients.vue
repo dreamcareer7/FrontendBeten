@@ -36,7 +36,7 @@
                 @change="getClients()"
               >
                 <option value="" selected>{{ $t("Any country") }}</option>
-                <template v-for="country in countries" :key="country.code">
+                <template v-for="country in countries" :key="country.id">
                   <option :value="country.id">{{ $t(country.title) }}</option>
                 </template>
               </select>

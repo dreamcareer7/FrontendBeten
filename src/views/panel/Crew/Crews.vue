@@ -35,7 +35,7 @@
                 @change="getCrews()"
               >
                 <option selected value="">{{ $t('Choose country') }}</option>
-                <template v-for="country in countries" :key="country.code">
+                <template v-for="country in countries" :key="country.id">
                   <option :value="country.id">{{ $t(country.title) }}</option>
                 </template>
               </select>

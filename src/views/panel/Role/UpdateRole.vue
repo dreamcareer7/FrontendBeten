@@ -27,7 +27,7 @@
             <option
               :value="country.id"
               v-for="country in countries"
-              :key="country.code"
+              :key="country.id"
             >
               {{ country.name }}
             </option>
