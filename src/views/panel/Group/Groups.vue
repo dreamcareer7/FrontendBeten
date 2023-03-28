@@ -72,14 +72,21 @@
                 <CTableDataCell>{{ group.title }}</CTableDataCell>
                 <CTableDataCell>{{ group.crew.fullname }}</CTableDataCell>
                 <CTableDataCell>
-                  <button
-                    class="btn btn-sm btn-info text-white mx-1"
-                    :title="$t('View details')"
-                    @click="fetchGroupInfo(group.id)"
+                   <router-link
+                    :to="{
+                      name: 'Group Detail',
+                      params: { id: this.$encrypt(group.id) },
+                    }"
                     v-if="$can('groups.view')"
                   >
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </button>
+                    <CButton
+                      class="btn btn-sm btn-info text-white m-1"
+                      :xl="0"
+                      :title="$t('Detail')"
+                    >
+                       <ion-icon name="eye-outline"></ion-icon>
+                    </CButton>
+                  </router-link>
                   <router-link
                     :to="{
                       name: 'Update Group',

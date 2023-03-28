@@ -180,6 +180,11 @@ const routes = [
         component: () => import('@/views/panel/Group/UpdateGroup'),
       },
       {
+        path: '/groups/:id',
+        name: 'Group Detail',
+        component: () => import('@/views/panel/Group/DetailGroup'),
+      },
+      {
         path: '/vehicles',
         name: 'Vehicles',
         component: () => import('@/views/panel/Vehicle/Vehicles'),
