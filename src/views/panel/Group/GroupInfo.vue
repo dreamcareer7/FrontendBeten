@@ -5,17 +5,28 @@
         <CCardHeader>
           <div class="row">
             <div class="col-md-12 col-sm-12">
-              <h3 class="mt-1">{{ group.title }}
-                <CButton @click="is_client_add_modal_visible = true; clientList = [], selectedClients = []" color="success" class="float-end text-white">
+              <h3 class="mt-1">
+                {{ group.title }}
+                <CButton
+                  @click="
+                    is_client_add_modal_visible = true;
+                    (clientList = []), (selectedClients = []);
+                  "
+                  color="success"
+                  class="float-end text-white"
+                >
                   <ion-icon name="people-outline"></ion-icon>&nbsp;
-                   {{ $t("Add clients to group") }}
+                  {{ $t("Add clients to group") }}
                 </CButton>
               </h3>
             </div>
           </div>
         </CCardHeader>
-         <CCardBody>
-           <span class="fs-5"><stong>{{ $t("Crew member") }}:</stong>  {{ group.crew?.fullname }}</span>
+        <CCardBody>
+          <span class="fs-5"
+            ><stong>{{ $t("Crew member") }}:</stong>
+            {{ group.crew?.fullname }}</span
+          >
           <!-- Start search filters -->
           <CRow class="mt-3">
             <CCol :md="2">
@@ -210,7 +221,7 @@
     </CModalBody>
   </CModal>
 
-   <CModal
+  <CModal
     :visible="is_client_add_modal_visible"
     @close="is_client_add_modal_visible = false"
     class="modal-popup-detail"
@@ -222,34 +233,43 @@
     <CModalBody>
       <CRow>
         <CCol :sm="12" class="mb-3">
-               <input
-                type="text"
-                class="form-control mb-3"
-                v-model="queryClient"
-                :placeholder="$t('Fullname')"
-                @keyup="searchClients(queryClient, $event)"
-              />
-              
-              <CCol :md="12" v-if="clientListLoading" class="text-center">
-                <div class="spinner-border text-success" role="status"></div>
-              </CCol>
-              <CCol :md="12" v-if="clientListLoading" class="text-center">
-                <span class="sr-only">Loading...</span>
-              </CCol>
-             <CListGroup v-if="!clientListLoading">
-              <CListGroupItem v-for="client in clientList" :key="client.id">
-                <label class="form-check">
-                  <input class="form-check-input me-2" v-model="selectedClients" :value="client" type="checkbox" value="1">{{ client.fullname }}
-                  </label>
-              </CListGroupItem>
-            </CListGroup>
+          <input
+            type="text"
+            class="form-control mb-3"
+            v-model="queryClient"
+            :placeholder="$t('Fullname')"
+            @keyup="searchClients(queryClient, $event)"
+          />
 
+          <CCol :md="12" v-if="clientListLoading" class="text-center">
+            <div class="spinner-border text-success" role="status"></div>
+          </CCol>
+          <CCol :md="12" v-if="clientListLoading" class="text-center">
+            <span class="sr-only">Loading...</span>
+          </CCol>
+          <CListGroup v-if="!clientListLoading">
+            <CListGroupItem v-for="client in clientList" :key="client.id">
+              <label class="form-check">
+                <input
+                  class="form-check-input me-2"
+                  v-model="selectedClients"
+                  :value="client"
+                  type="checkbox"
+                  value="1"
+                />{{ client.fullname }}
+              </label>
+            </CListGroupItem>
+          </CListGroup>
         </CCol>
         <CCol :sm="12" class="center">
-          <CButton @click="addClientsToGroup()" color="info" class="float-end text-white">
-              <ion-icon name="people-outline"></ion-icon>&nbsp;
-                {{ $t("Save") }}
-            </CButton>
+          <CButton
+            @click="addClientsToGroup()"
+            color="info"
+            class="float-end text-white"
+          >
+            <ion-icon name="people-outline"></ion-icon>&nbsp;
+            {{ $t("Save") }}
+          </CButton>
         </CCol>
       </CRow>
     </CModalBody>
@@ -262,7 +282,7 @@ import { debounce } from "@/utils/helper";
 
 export default {
   name: "GroupInfo",
-  components: {multiselect: window.VueBootstrapMultiselect},
+  components: { multiselect: window.VueBootstrapMultiselect },
   data: () => ({
     debounceFn: null,
     countries: [],
@@ -280,15 +300,15 @@ export default {
     is_client_add_modal_visible: false,
     clientList: [],
     clientListLoading: false,
-    queryClient: '',
-    selectedClients : [],
+    queryClient: "",
+    selectedClients: [],
   }),
   methods: {
     async addClientsToGroup() {
       this.selectedClients.map((client) => {
         this.group.clients.push(client);
         this.clients.push(client);
-      })
+      });
       this.is_client_add_modal_visible = false;
     },
     removeClientFromGroup(index) {
@@ -301,9 +321,9 @@ export default {
       ) {
         this.clientList = [];
         this.clientListLoading = false;
-      } else{
+      } else {
         this.clientListLoading = true;
-          await this.$axios
+        await this.$axios
           .get("/clients", {
             params: { fullname: query, per_page: 10 },
           })
@@ -313,7 +333,7 @@ export default {
                 .map((client) => client.id)
                 .includes(client.id);
             });
-            this.clientListLoading = false
+            this.clientListLoading = false;
           });
       }
     },
@@ -325,11 +345,11 @@ export default {
         })
         .then((response) => {
           this.clients = response.data.data.filter((client) => {
-              return this.group.clients
-                .map((client) => client.id)
-                .includes(client.id);
-            });
-            this.loading = false;
+            return this.group.clients
+              .map((client) => client.id)
+              .includes(client.id);
+          });
+          this.loading = false;
         });
     },
     filter: async function (value, event) {
@@ -355,10 +375,12 @@ export default {
         });
     },
     fetchGroupInfo: async function () {
-      await this.$axios.get(`/groups/${this.$decrypt(this.$route.params.id)}`).then((response) => {
-        this.group = response.data;
-        this.is_group_modal_visible = true;
-      });
+      await this.$axios
+        .get(`/groups/${this.$decrypt(this.$route.params.id)}`)
+        .then((response) => {
+          this.group = response.data;
+          this.is_group_modal_visible = true;
+        });
     },
     deleteClient: async function (id, name) {
       await swal({
@@ -382,7 +404,7 @@ export default {
         let country_index = this.countries.findIndex(
           (country) => country.id === this.client.country_id
         );
-        this.client.country = this.countries[country_index].title
+        this.client.country = this.countries[country_index].title;
         this.is_client_modal_visible = true;
       });
     },
@@ -396,8 +418,6 @@ export default {
     this.fetchGroupInfo();
 
     await this.getClients();
-
-  
   },
 };
 </script>
