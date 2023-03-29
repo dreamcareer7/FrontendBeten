@@ -133,10 +133,6 @@ export default {
                   (commit) => commit.id !== id,
                 )),
             )
-            .catch((error) => {
-              // TODO: swal the error message
-              console.log(error)
-            })
           swal('Service commit has been deleted!', {
             icon: 'success',
           })

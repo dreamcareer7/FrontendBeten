@@ -357,7 +357,6 @@ export default {
     fetchGroupInfo: async function () {
       await this.$axios.get(`/groups/${this.$decrypt(this.$route.params.id)}`).then((response) => {
         this.group = response.data;
-        console.log(this.group);
         this.is_group_modal_visible = true;
       });
     },

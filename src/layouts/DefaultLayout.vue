@@ -40,8 +40,7 @@ export default {
           })
           this.$router.push({ name: 'Login' })
         })
-        .catch((error) => {
-          console.log(error.response);
+        .catch(() => {
           swal({
             title: this.$i18n.t('Error occurred. Please try to login again'),
             icon: 'error',
