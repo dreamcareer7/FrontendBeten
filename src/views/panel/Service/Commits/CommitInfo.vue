@@ -1,7 +1,7 @@
 <template>
   <div class="card border-info mb-4">
     <div class="card-header">{{ $t('Service Commit Information') }}</div>
-    <CRow class="mt-3 ms-3">
+    <CRow class="mt-3 ms-3 pb-3">
       <CCol :md="6">
         <CTable class="table table-responsive">
           <CTableRow>
@@ -50,6 +50,22 @@
             <CTableDataCell>{{ service_commit.from_location }}</CTableDataCell>
           </CTableRow>
         </CTable>
+      
+
+        <button class="btn btn-success text-white" @click="show_add_log_form = true">
+          {{ $t('Add logs') }}
+        </button>
+        <button
+          class="btn btn-info text-white mx-2"
+          v-if="service_commit_logs?.length"
+          @click="initialize"
+        >
+          {{ $t('Initialize') }}
+        </button>
+
+        <br>
+      </CCol>
+      <CCol :sm="6">
         <div v-if="service_commit_logs?.length">
           <CRow>
             <CTable>
@@ -88,35 +104,6 @@
             </CCol>
           </CRow>
         </div>
-
-        <button class="btn btn-primary" @click="show_add_log_form = true">
-          {{ $t('Add logs') }}
-        </button>
-        <button
-          class="btn btn-primary"
-          v-if="service_commit.service_commit_log?.length"
-          @click="initialize"
-        >
-          {{ $t('Initialize') }}
-        </button>
-        <CModal
-          size="sm"
-          :visible="show_add_log_form"
-          @close="show_add_log_form = false"
-          class="modal-popup-detail"
-          data-backdrop="static"
-          data-keyboard="false"
-        >
-          <CModalHeader>
-            <CModalTitle>{{ $t('Add log') }}</CModalTitle>
-          </CModalHeader>
-          <CModalBody>
-            <CreateLog
-              :service_commit_id="service_commit.id"
-              @created="getCommit"
-            />
-          </CModalBody>
-        </CModal>
       </CCol>
     </CRow>
   </div>
@@ -125,6 +112,25 @@
     type="ServiceCommit"
     :id="service_commit.id"
   />
+
+  <CModal
+        size="sm"
+        :visible="show_add_log_form"
+        @close="show_add_log_form = false"
+        class="modal-popup-detail"
+        data-backdrop="static"
+        data-keyboard="false"
+      >
+        <CModalHeader>
+          <CModalTitle>{{ $t('Add log') }}</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CreateLog
+            :service_commit_id="service_commit.id"
+            @created="getCommit"
+          />
+        </CModalBody>
+      </CModal>
 </template>
 
 <script>

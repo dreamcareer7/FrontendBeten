@@ -135,11 +135,11 @@
                   </button>
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
-                    @click="removeClientFromGroup(index)"
+                    @click="removeClientFromGroup(client,index)"
                     :title="$t('Remove')"
                     v-if="$can('groups.clients.remove')"
                   >
-                    <ion-icon name="trash-bin-outline"></ion-icon>
+                    X
                   </button>
                 </CTableDataCell>
               </CTableRow>
@@ -304,14 +304,49 @@ export default {
   }),
   methods: {
     async addClientsToGroup() {
+      let newClients = [];
       this.selectedClients.map((client) => {
         this.group.clients.push(client);
         this.clients.push(client);
+        newClients.push(client.id)
       });
-      this.is_client_add_modal_visible = false;
+
+      await this.$axios
+        .post('/groups/clients', {
+            "group_id": this.group.id,
+            "clients": newClients
+          })
+        .then(() => {
+          this.is_client_add_modal_visible = false;
+          this.selectedClients = [];
+        })
+        .catch(
+          (error) =>
+            (console.log(error)),
+        )
+      
     },
-    removeClientFromGroup(index) {
-      this.clients.splice(this.clients.indexOf(index), 1);
+    async removeClientFromGroup(client, index) {
+       await swal({
+        title: this.$i18n.t("Are you sure?"),
+        icon: "warning",
+        buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          this.$axios.delete('/groups/clients', {
+            "group_id": this.group.id,
+            "clients": [client.id]
+          }).then(
+            this.clients.splice(this.clients.indexOf(index), 1)
+            swal(this.$i18n.t("Client has been removed from this group!"), {
+              icon: "success",
+              timer: 3000,
+            })
+          );
+        }
+      });
+      
     },
     searchClients: async function (query, event) {
       if (
