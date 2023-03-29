@@ -10,7 +10,7 @@
                 <CButton
                   @click="
                     is_client_add_modal_visible = true;
-                    (clientList = []), (selectedClients = []);
+                    (clientList = []), (selectedClients = []); queryClient = '';
                   "
                   color="success"
                   class="float-end text-white"
@@ -74,6 +74,10 @@
           </CRow>
           <hr />
           <!-- End filter -->
+            <CAlert color="success" class="m-2" v-show="message">
+              {{ message }}
+              <span class="cursor-pointer float-end test-danger" @click="message = ''"> X </span>
+            </CAlert>
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
               <div class="spinner-border text-success" role="status"></div>
@@ -115,7 +119,7 @@
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="client in group.clients" :key="client.id">
+              <CTableRow v-for="(client, index) in group.clients" :key="client.id">
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
                 <CTableDataCell>{{ client.country }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
@@ -134,8 +138,8 @@
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
                   <button
-                    class="btn btn-sm btn-danger text-white m-1"
-                    @click="removeClientFromGroup(client,index)"
+                    class="btn btn-sm btn-danger text-white m-1 removeX"
+                    @click="removeClientFromGroup(client, index)"
                     :title="$t('Remove')"
                     v-if="$can('groups.clients.remove')"
                   >
@@ -261,14 +265,13 @@
             </CListGroupItem>
           </CListGroup>
         </CCol>
-        <CCol :sm="12" class="center">
+        <CCol :sm="12" class="d-grid gap-2 col-6 mx-auto">
           <CButton
             @click="addClientsToGroup()"
-            color="info"
-            class="float-end text-white"
+            color="success"
+            class="text-white"
           >
-            <ion-icon name="people-outline"></ion-icon>&nbsp;
-            {{ $t("Save") }}
+            {{ $t("Add to group") }}
           </CButton>
         </CCol>
       </CRow>
@@ -301,6 +304,7 @@ export default {
     clientListLoading: false,
     queryClient: "",
     selectedClients: [],
+    message: '',
   }),
   methods: {
     async addClientsToGroup() {
@@ -319,6 +323,10 @@ export default {
         .then(() => {
           this.is_client_add_modal_visible = false;
           this.selectedClients = [];
+          this.message = this.$i18n.t('Clients has been added to group!')
+            setTimeout(() => {
+              this.message = ''
+            }, 3000);
         })
         .catch(
           (error) =>
@@ -327,6 +335,7 @@ export default {
       
     },
     async removeClientFromGroup(client, index) {
+                
        await swal({
         title: this.$i18n.t("Are you sure?"),
         icon: "warning",
@@ -334,16 +343,16 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.delete('/groups/clients', {
+          this.$axios.delete('/groups/clients',{ data: {
             "group_id": this.group.id,
             "clients": [client.id]
-          }).then(
-            this.clients.splice(this.clients.indexOf(index), 1)
-            swal(this.$i18n.t("Client has been removed from this group!"), {
-              icon: "success",
-              timer: 3000,
-            })
-          );
+          }}).then(() => {
+            this.group.clients.splice(this.group.clients.indexOf(index), 1);
+            this.message = this.$i18n.t('Client has been removed from group!')
+            setTimeout(() => {
+              this.message = ''
+            }, 3000);
+          });
         }
       });
       
@@ -351,11 +360,11 @@ export default {
     searchClients: async function (query, event) {
       if (
         (event.key == "Backspace" || event.key == "Delete") &&
-        query.length <= 0
+        query.length <= 2
       ) {
         this.clientList = [];
         this.clientListLoading = false;
-      } else {
+      } else if(query.length > 2){
         this.clientListLoading = true;
         await this.$axios
           .get("/clients", {
