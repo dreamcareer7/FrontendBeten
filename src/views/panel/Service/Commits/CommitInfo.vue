@@ -45,6 +45,10 @@
             <CTableDataCell>{{ $t('Started') }}</CTableDataCell>
             <CTableDataCell>{{ service_commit.started_at }}</CTableDataCell>
           </CTableRow>
+            <CTableRow>
+            <CTableDataCell>{{ $t('Ended') }}</CTableDataCell>
+            <CTableDataCell>{{ service_commit.ended_at }}</CTableDataCell>
+          </CTableRow>
           <CTableRow>
             <CTableDataCell>{{ $t('From') }}</CTableDataCell>
             <CTableDataCell>{{ service_commit.from_location }}</CTableDataCell>
@@ -57,10 +61,17 @@
         </button>
         <button
           class="btn btn-info text-white mx-2"
-          v-if="service_commit_logs?.length"
+          v-if="service_commit_logs?.length && service_commit.started_at == null"
           @click="initialize"
         >
           {{ $t('Initialize') }}
+        </button>
+        <button
+          class="btn btn-warning text-white mx-2"
+          v-if="service_commit_logs?.length && service_commit.started_at != null && service_commit.ended_at == null"
+          @click="release"
+        >
+          {{ $t('Finished') }}
         </button>
 
         <br>
@@ -165,6 +176,13 @@ export default {
     initialize() {
       this.$axios
         .get(`/service_commits/initialize/${this.service_commit.id}`)
+        .then(() => this.getCommit())
+    },
+    release() {
+      this.$axios
+        .post('/service_commits/release', {
+          id: this.service_commit.id
+        })
         .then(() => this.getCommit())
     },
   },
