@@ -14,6 +14,7 @@
                   "
                   color="success"
                   class="float-end text-white"
+                  v-if="$can('groups.clients.add')"
                 >
                   <ion-icon name="people-outline"></ion-icon>&nbsp;
                   {{ $t("Add clients to group") }}
@@ -24,7 +25,7 @@
         </CCardHeader>
         <CCardBody>
           <span class="fs-5"
-            ><stong>{{ $t("Crew member") }}:</stong>
+            ><strong>{{ $t("Crew member") }}:</strong>
             {{ group.crew?.fullname }}</span
           >
           <!-- Start search filters -->
@@ -78,7 +79,7 @@
               <div class="spinner-border text-success" role="status"></div>
             </CCol>
             <CCol :md="12" class="text-center">
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">{{ $t('Loading...') }}</span>
             </CCol>
           </CRow>
           <CTable v-if="!loading" responsive>
@@ -114,9 +115,9 @@
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="(client, index) in clients" :key="client.id">
+              <CTableRow v-for="client in group.clients" :key="client.id">
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
-                <CTableDataCell>{{ $t(client.country?.title) }}</CTableDataCell>
+                <CTableDataCell>{{ client.country }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_number }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_name }}</CTableDataCell>
@@ -135,8 +136,8 @@
                   <button
                     class="btn btn-sm btn-danger text-white m-1"
                     @click="removeClientFromGroup(index)"
-                    :title="$t('Delete')"
-                    v-if="$can('clients.delete')"
+                    :title="$t('Remove')"
+                    v-if="$can('groups.clients.remove')"
                   >
                     <ion-icon name="trash-bin-outline"></ion-icon>
                   </button>
@@ -169,7 +170,7 @@
               <CTableHeaderCell>{{ $t("Gender") }}:</CTableHeaderCell>
               <CTableDataCell>{{ $t(client.gender) }}</CTableDataCell>
               <CTableHeaderCell>{{ $t("Country") }}:</CTableHeaderCell>
-              <CTableDataCell>{{ $t(client.country) }}</CTableDataCell>
+              <CTableDataCell>{{ client.country }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell>{{ $t("ID number") }}:</CTableHeaderCell>
@@ -225,7 +226,6 @@
     :visible="is_client_add_modal_visible"
     @close="is_client_add_modal_visible = false"
     class="modal-popup-detail"
-    size="md"
   >
     <CModalHeader>
       <CModalTitle>{{ $t("Add clients to group") }}</CModalTitle>
@@ -293,7 +293,6 @@ export default {
       id_number: "",
     },
     loading: false,
-    pagination: [],
     group: {},
     client: {},
     is_client_modal_visible: false,
@@ -341,14 +340,10 @@ export default {
       this.loading = true;
       await this.$axios
         .get("/clients", {
-          params: reset ? {} : this.search,
+          params: reset ? {group: this.group.id} : this.search,
         })
         .then((response) => {
-          this.clients = response.data.data.filter((client) => {
-            return this.group.clients
-              .map((client) => client.id)
-              .includes(client.id);
-          });
+          this.clients = response.data.data
           this.loading = false;
         });
     },
@@ -361,42 +356,6 @@ export default {
       } else if (value.length > 2) {
         await this.debounceFn();
       }
-    },
-    gotoPage: async function (url) {
-      this.loading = true;
-      await this.$axios
-        .get(url, {
-          params: this.search,
-        })
-        .then((response) => {
-          this.clients = response.data.data;
-          this.pagination = response.data.links;
-          this.loading = false;
-        });
-    },
-    fetchGroupInfo: async function () {
-      await this.$axios
-        .get(`/groups/${this.$decrypt(this.$route.params.id)}`)
-        .then((response) => {
-          this.group = response.data;
-          this.is_group_modal_visible = true;
-        });
-    },
-    deleteClient: async function (id, name) {
-      await swal({
-        title: this.$i18n.t("Are you sure?"),
-        text: this.$i18n.t("Once deleted, you will not be able to recover!"),
-        icon: "warning",
-        buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
-          this.$axios.delete(`/clients/${id}`).then(() => this.getClients());
-          swal(`The client ${name} has been deleted!`, {
-            icon: "success",
-          });
-        }
-      });
     },
     viewDetails: async function (id) {
       await this.$axios.get(`/clients/${id}`).then((response) => {
@@ -415,9 +374,11 @@ export default {
       this.countries = countries;
     });
 
-    this.fetchGroupInfo();
-
-    await this.getClients();
+    await this.$axios
+      .get(`/groups/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => {
+        this.group = response.data;
+      });
   },
 };
 </script>

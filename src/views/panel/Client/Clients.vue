@@ -44,6 +44,18 @@
             <CCol :md="2">
               <select
                 class="form-control mb-3"
+                v-model="search.group"
+                @change="getClients()"
+              >
+                <option value="" selected>{{ $t("Any group") }}</option>
+                <template v-for="group in groups" :key="group.id">
+                  <option :value="group.id">{{ group.title }}</option>
+                </template>
+              </select>
+            </CCol>
+            <CCol :md="2">
+              <select
+                class="form-control mb-3"
                 v-model="search.gender"
                 @change="getClients()"
               >
@@ -79,6 +91,9 @@
                   {{ $t("Fullname") }}
                 </CTableHeaderCell>
                 <CTableHeaderCell scope="col">
+                  {{ $t("Group") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
                   {{ $t("Country") }}
                 </CTableHeaderCell>
                 <CTableHeaderCell scope="col">
@@ -107,6 +122,7 @@
             <CTableBody>
               <CTableRow v-for="client in clients" :key="client.id">
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
+                <CTableDataCell>{{ client.group }}</CTableDataCell>
                 <CTableDataCell>{{ client.country }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_number }}</CTableDataCell>
@@ -185,12 +201,14 @@
             <CTableRow>
               <CTableHeaderCell>{{ $t("Fullname") }}:</CTableHeaderCell>
               <CTableDataCell>{{ client.fullname }}</CTableDataCell>
+              <CTableHeaderCell>{{ $t("Group") }}:</CTableHeaderCell>
+              <CTableDataCell>{{ $t(client.group) }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell>{{ $t("Gender") }}:</CTableHeaderCell>
               <CTableDataCell>{{ $t(client.gender) }}</CTableDataCell>
               <CTableHeaderCell>{{ $t("Country") }}:</CTableHeaderCell>
-              <CTableDataCell>{{ $t(client.country) }}</CTableDataCell>
+              <CTableDataCell>{{ client.country }}</CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableHeaderCell>{{ $t("ID number") }}:</CTableHeaderCell>
@@ -252,11 +270,13 @@ export default {
   data: () => ({
     debounceFn: null,
     countries: [],
+    groups: [],
     clients: [],
     search: {
       country: "",
       gender: "",
       id_number: "",
+      group: "",
     },
     loading: false,
     pagination: [],
@@ -272,16 +292,22 @@ export default {
         })
         .then((response) => {
           this.clients = response.data.data.map((client) => {
-            if (client.country_id) {
-              let country_index = this.countries.findIndex(
-                (country) => country.id === client.country_id
-              );
-              if (country_index >= 0) {
-                client.country = this.$i18n.t(this.countries[country_index].title);
-                return client
-              }
+            let country_index = this.countries.findIndex(
+              (country) => country.id === client.country_id
+            );
+            if (country_index >= 0) {
+              client.country = this.$i18n.t(this.countries[country_index].title);
+            } else {
+              client.country = ''
             }
-            client.country = ''
+            let group_index = this.groups.findIndex(
+              (group) => group.id === client.group_id
+            );
+            if (group_index >= 0) {
+              client.group = this.$i18n.t(this.groups[group_index].title);
+            } else {
+              client.group = ''
+            }
             return client
           });
           this.pagination = response.data.links;
@@ -306,16 +332,22 @@ export default {
         })
         .then((response) => {
           this.clients = response.data.data.map((client) => {
-            if (client.country_id) {
-              let country_index = this.countries.findIndex(
-                (country) => country.id === client.country_id
-              );
-              if (country_index >= 0) {
-                client.country = this.$i18n.t(this.countries[country_index].title);
-                return client
-              }
+            let country_index = this.countries.findIndex(
+              (country) => country.id === client.country_id
+            );
+            if (country_index >= 0) {
+              client.country = this.$i18n.t(this.countries[country_index].title);
+            } else {
+              client.country = ''
             }
-            client.country = ''
+            let group_index = this.groups.findIndex(
+              (group) => group.id === client.group_id
+            );
+            if (group_index >= 0) {
+              client.group = this.$i18n.t(this.groups[group_index].title);
+            } else {
+              client.group = ''
+            }
             return client
           });
           this.pagination = response.data.links;
@@ -344,7 +376,19 @@ export default {
         let country_index = this.countries.findIndex(
           (country) => country.id === this.client.country_id
         );
-        this.client.country = this.countries[country_index].title
+        if (country_index >= 0) {
+          this.client.country = this.$i18n.t(this.countries[country_index].title)
+        } else {
+          this.client.country = ''
+        }
+        let group_index = this.groups.findIndex(
+          (group) => group.id === this.client.group_id
+        );
+        if (group_index >= 0) {
+          this.client.group = this.$i18n.t(this.groups[group_index].title)
+        } else {
+          this.client.group = ''
+        }
         this.is_client_modal_visible = true;
       });
     },
@@ -354,6 +398,8 @@ export default {
     countries.fetchCountries().then((countries) => {
       this.countries = countries;
     });
+    this.$axios.get('groups/all')
+      .then((response) => this.groups = response.data)
     await this.getClients();
   },
 };
