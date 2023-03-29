@@ -182,7 +182,7 @@ const routes = [
       {
         path: '/groups/:id',
         name: 'Group Detail',
-        component: () => import('@/views/panel/Group/DetailGroup'),
+        component: () => import('@/views/panel/Group/GroupInfo'),
       },
       {
         path: '/vehicles',

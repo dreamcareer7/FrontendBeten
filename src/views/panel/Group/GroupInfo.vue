@@ -261,7 +261,7 @@ import countries from "@/store/countries";
 import { debounce } from "@/utils/helper";
 
 export default {
-  name: "Group Detail",
+  name: "GroupInfo",
   components: {multiselect: window.VueBootstrapMultiselect},
   data: () => ({
     debounceFn: null,
