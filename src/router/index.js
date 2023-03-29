@@ -181,7 +181,7 @@ const routes = [
       },
       {
         path: '/groups/:id',
-        name: 'Group Detail',
+        name: 'Group details',
         component: () => import('@/views/panel/Group/GroupInfo'),
       },
       {

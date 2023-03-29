@@ -74,7 +74,7 @@
                 <CTableDataCell>
                    <router-link
                     :to="{
-                      name: 'Group Detail',
+                      name: 'Group details',
                       params: { id: this.$encrypt(group.id) },
                     }"
                     v-if="$can('groups.view')"
