@@ -240,6 +240,26 @@
               <CTableDataCell>{{ client.phone }}</CTableDataCell>
             </CTableRow>
           </CTable>
+        <div v-if="client.logs?.length">
+          <CRow>
+            <CTable>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">{{ $t('Model Type') }}</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">{{ $t('Model name') }}</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">{{ $t('Role') }}</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                <CTableRow v-for="log in client.logs">
+                  <CTableDataCell>{{ $t(log.title) }}</CTableDataCell>
+                  <CTableDataCell>{{ log.model_id }}</CTableDataCell>
+                  <CTableDataCell>{{ $t(log.role) }}</CTableDataCell>
+                </CTableRow>
+              </CTableBody>
+            </CTable>
+          </CRow>
+        </div>
           <Documentable
             v-if="client.is_documentable"
             type="client"
