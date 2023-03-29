@@ -147,7 +147,7 @@
     data-keyboard="false"
   >
     <CModalHeader>
-      <CModalTitle>{{ $t("Group Information") }}</CModalTitle>
+      <CModalTitle>{{ $t("Group details") }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CRow>
