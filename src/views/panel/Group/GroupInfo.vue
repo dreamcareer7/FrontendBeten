@@ -206,26 +206,24 @@
               <CTableDataCell>{{ client.phone }}</CTableDataCell>
             </CTableRow>
           </CTable>
-          <div v-if="client.logs?.length">
-          <CRow>
-            <CTable>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">{{ $t('Model Type') }}</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">{{ $t('Model name') }}</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">{{ $t('Role') }}</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                <CTableRow v-for="log in client.logs">
-                  <CTableDataCell>{{ $t(log.title) }}</CTableDataCell>
-                  <CTableDataCell>{{ log.model_id }}</CTableDataCell>
-                  <CTableDataCell>{{ $t(log.role) }}</CTableDataCell>
-                </CTableRow>
-              </CTableBody>
-            </CTable>
-          </CRow>
-        </div>
+
+         <CCard v-if="client.logs?.length" class="mt-2">
+            <CCardBody class="p-0">
+              <CTable>
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell scope="col">{{ $t('Logs') }}</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                  <CTableRow v-for="log in client.logs">
+                    <CTableDataCell v-if="log.key === 'assigned_group'">{{$t(`This client has been assigned to group`)}} {{log.value +' '+ $t('on') +' '+ log.created_at}}</CTableDataCell>
+                    <CTableDataCell v-if="log.key === 'retracted_group'">{{$t(`This client has been removed from group`)}} {{log.value +' '+ $t('on') +' '+ log.created_at}}</CTableDataCell>
+                  </CTableRow>
+                </CTableBody>
+              </CTable>
+            </CCardBody>
+          </CCard>
           <Documentable
             v-if="client.is_documentable"
             type="client"
