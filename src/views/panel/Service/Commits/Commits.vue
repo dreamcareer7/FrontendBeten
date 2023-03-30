@@ -126,7 +126,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           this.$axios
-            .delete(`/service/commits/${id}`)
+            .delete(`/service_commits/${id}`)
             .then(
               () =>
                 (this.commits = this.commits.filter(
