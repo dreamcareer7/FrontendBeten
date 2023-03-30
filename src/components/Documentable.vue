@@ -91,7 +91,7 @@
             type="submit"
             color="success"
             class="mt-0 text-white btn-sm"
-            shape="square-pill"
+            shape="rounded-0"
           >
             {{ $t('Upload') }}
           </CButton>
