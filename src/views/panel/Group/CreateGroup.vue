@@ -75,8 +75,8 @@ export default {
   },
   mounted: async function () {
     await this.$axios
-      .get('/crews', { params: { per_page: 20 } })
-      .then((response) => (this.crew_members = response.data.data))
+      .get('/crews/all')
+      .then((response) => (this.crew_members = response.data))
   },
 }
 </script>
