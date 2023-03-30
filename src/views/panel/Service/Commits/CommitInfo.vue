@@ -54,9 +54,9 @@
             <CTableDataCell>{{ service_commit.from_location }}</CTableDataCell>
           </CTableRow>
         </CTable>
-      
 
-        <button class="btn btn-success text-white" @click="show_add_log_form = true">
+
+        <button :class="service_commit_logs?.length && service_commit.ended_at != null ? 'btn btn-light' : 'btn btn-success text-white'" @click="showLogsButtonAction()">
           {{ $t('Add logs') }}
         </button>
         <button
@@ -145,6 +145,7 @@
 </template>
 
 <script>
+import swal from 'sweetalert'
 import CreateLog from '../Logs/CreateLog.vue'
 export default {
   name: 'ServiceCommitInfo',
@@ -184,6 +185,18 @@ export default {
           id: this.service_commit.id
         })
         .then(() => this.getCommit())
+    },
+    showLogsButtonAction() {
+      if(this.service_commit_logs?.length && this.service_commit.ended_at != null){
+        swal({
+          title: this.$t('Information'),
+          text: this.$t('Task finished. Please create a new service commit.'),
+          icon: 'info',
+        })
+        return
+      }else{
+        this.show_add_log_form = true
+      }
     },
   },
   mounted() {

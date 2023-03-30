@@ -209,9 +209,9 @@
 
          <CCard v-if="client.logs?.length" class="mt-2">
             <CCardBody class="p-0">
-              <CTable>
+              <CTable class="table-hover table-striped">
                 <CTableHead>
-                  <CTableRow>
+                  <CTableRow class="table-dark">
                     <CTableHeaderCell scope="col">{{ $t('Logs') }}</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
@@ -350,10 +350,10 @@ export default {
           (error) =>
             (console.log(error)),
         )
-      
+
     },
     async removeClientFromGroup(client, index) {
-                
+
        await swal({
         title: this.$i18n.t("Are you sure?"),
         icon: "warning",
@@ -373,7 +373,7 @@ export default {
           });
         }
       });
-      
+
     },
     searchClients: async function (query, event) {
       if (
