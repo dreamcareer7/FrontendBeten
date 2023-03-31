@@ -64,7 +64,6 @@ export default {
       localStorage.setItem('dir', dir)
       document.dir = dir
       document.title = this.$i18n.t('Murafiq')
-      window.location.reload();
     },
   },
 }

@@ -1,6 +1,5 @@
 import Vidle from 'v-idle-3'
 import { createApp } from 'vue'
-import { createI18n } from 'vue-i18n'
 import swal from 'sweetalert'
 
 import CoreuiVue from '@coreui/vue'
@@ -15,34 +14,13 @@ import store from './store'
 import axiosInstance from './plugins/axios'
 import { encrypt, decrypt } from '@/plugins/crypto'
 import can from '@/plugins/gate'
+import i18n from './plugins/i18n'
 
 import Contractable from '@/components/Contractable'
 import Documentable from '@/components/Documentable'
 import Concurrable from '@/components/Concurrable'
 
 const app = createApp(App)
-
-import messages from './locales/messages'
-
-if (!localStorage.getItem('dir')) {
-  localStorage.setItem('dir', 'rtl')
-}
-if (!localStorage.getItem('locale')) {
-  localStorage.setItem('locale', 'ar')
-}
-
-const i18n = createI18n({
-  locale: localStorage.getItem('locale'),
-  fallbackLocale: 'en', // set fallback locale
-  messages, // set locale messages
-  missingWarn: false,
-  silentFallbackWarn: true,
-  silentTranslationWarn: true,
-  formatFallbackMessages: true,
-})
-
-document.title = i18n.global.t('Murafiq')
-document.dir = localStorage.getItem('dir')
 
 app.use(store)
 app.use(router)

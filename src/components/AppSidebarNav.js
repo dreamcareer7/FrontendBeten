@@ -9,6 +9,7 @@ import {
   CNavTitle,
 } from '@coreui/vue'
 import nav from '@/_nav.js'
+import i18n from '@/plugins/i18n'
 
 const normalizePath = (path) =>
   decodeURI(path)
@@ -72,7 +73,7 @@ const AppSidebarNav = defineComponent({
                 customClassName: 'nav-icon',
                 name: item.icon,
               }),
-              item.name,
+              i18n.global.t(item.name),
             ],
             default: () => item.items.map((child) => renderItem(child)),
           },
@@ -105,7 +106,7 @@ const AppSidebarNav = defineComponent({
                           customClassName: 'nav-icon',
                           name: item.icon,
                         }),
-                      item.name,
+                      i18n.global.t(item.name),
                       item.badge &&
                         h(
                           CBadge,
@@ -126,7 +127,7 @@ const AppSidebarNav = defineComponent({
             resolveComponent(item.component),
             {},
             {
-              default: () => item.name,
+              default: () => i18n.global.t(item.name),
             },
           )
     }
