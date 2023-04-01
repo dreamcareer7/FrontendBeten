@@ -36,7 +36,6 @@ export default {
 
     onMounted(() => {
       breadcrumbs.value = getBreadcrumbs()
-      console.log(breadcrumbs);
     })
 
     return {
