@@ -10,7 +10,8 @@
                 <CButton
                   @click="
                     is_client_add_modal_visible = true;
-                    (clientList = []), (selectedClients = []); queryClient = '';
+                    (clientList = []), (selectedClients = []);
+                    queryClient = '';
                   "
                   color="success"
                   class="float-end text-white"
@@ -74,16 +75,21 @@
           </CRow>
           <hr />
           <!-- End filter -->
-            <CAlert color="success" class="m-2" v-show="message">
-              {{ message }}
-              <span class="cursor-pointer float-end test-danger" @click="message = ''"> X </span>
-            </CAlert>
+          <CAlert color="success" class="m-2" v-show="message">
+            {{ message }}
+            <span
+              class="cursor-pointer float-end test-danger"
+              @click="message = ''"
+            >
+              X
+            </span>
+          </CAlert>
           <CRow v-if="loading" class="mt-4">
             <CCol :md="12" class="text-center">
               <div class="spinner-border text-success" role="status"></div>
             </CCol>
             <CCol :md="12" class="text-center">
-              <span class="sr-only">{{ $t('Loading...') }}</span>
+              <span class="sr-only">{{ $t("Loading...") }}</span>
             </CCol>
           </CRow>
           <CTable v-if="!loading" responsive>
@@ -119,7 +125,10 @@
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="(client, index) in group.clients" :key="client.id">
+              <CTableRow
+                v-for="(client, index) in group.clients"
+                :key="client.id"
+              >
                 <CTableDataCell>{{ client.fullname }}</CTableDataCell>
                 <CTableDataCell>{{ client.country }}</CTableDataCell>
                 <CTableDataCell>{{ client.id_type }}</CTableDataCell>
@@ -207,18 +216,30 @@
             </CTableRow>
           </CTable>
 
-         <CCard v-if="client.logs?.length" class="mt-2">
+          <CCard v-if="client.logs?.length" class="mt-2 logs-card">
             <CCardBody class="p-0">
               <CTable class="table-hover table-striped">
                 <CTableHead>
                   <CTableRow class="table-dark">
-                    <CTableHeaderCell scope="col">{{ $t('Logs') }}</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">{{
+                      $t("Logs")
+                    }}</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
                   <CTableRow v-for="log in client.logs">
-                    <CTableDataCell v-if="log.key === 'assigned_group'">{{$t(`This client has been assigned to group`)}} {{log.value +' '+ $t('on') +' '+ log.created_at}}</CTableDataCell>
-                    <CTableDataCell v-if="log.key === 'retracted_group'">{{$t(`This client has been removed from group`)}} {{log.value +' '+ $t('on') +' '+ log.created_at}}</CTableDataCell>
+                    <CTableDataCell v-if="log.key === 'assigned_group'"
+                      >{{ $t(`This client has been assigned to group`) }}
+                      {{
+                        log.value + " " + $t("on") + " " + log.created_at
+                      }}</CTableDataCell
+                    >
+                    <CTableDataCell v-if="log.key === 'retracted_group'"
+                      >{{ $t(`This client has been removed from group`) }}
+                      {{
+                        log.value + " " + $t("on") + " " + log.created_at
+                      }}</CTableDataCell
+                    >
                   </CTableRow>
                 </CTableBody>
               </CTable>
@@ -322,7 +343,7 @@ export default {
     clientListLoading: false,
     queryClient: "",
     selectedClients: [],
-    message: '',
+    message: "",
   }),
   methods: {
     async addClientsToGroup() {
@@ -330,50 +351,50 @@ export default {
       this.selectedClients.map((client) => {
         this.group.clients.push(client);
         this.clients.push(client);
-        newClients.push(client.id)
+        newClients.push(client.id);
       });
 
       await this.$axios
-        .post('/groups/clients', {
-            "group_id": this.group.id,
-            "clients": newClients
-          })
+        .post("/groups/clients", {
+          group_id: this.group.id,
+          clients: newClients,
+        })
         .then(() => {
           this.is_client_add_modal_visible = false;
           this.selectedClients = [];
-          this.message = this.$i18n.t('Clients has been added to group!')
-            setTimeout(() => {
-              this.message = ''
-            }, 3000);
+          this.message = this.$i18n.t("Clients has been added to group!");
+          setTimeout(() => {
+            this.message = "";
+          }, 3000);
         })
-        .catch(
-          (error) =>
-            (console.log(error)),
-        )
-
+        .catch((error) => console.log(error));
     },
     async removeClientFromGroup(client, index) {
-
-       await swal({
+      await swal({
         title: this.$i18n.t("Are you sure?"),
         icon: "warning",
         buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.delete('/groups/clients',{ data: {
-            "group_id": this.group.id,
-            "clients": [client.id]
-          }}).then(() => {
-            this.group.clients.splice(this.group.clients.indexOf(index), 1);
-            this.message = this.$i18n.t('Client has been removed from group!')
-            setTimeout(() => {
-              this.message = ''
-            }, 3000);
-          });
+          this.$axios
+            .delete("/groups/clients", {
+              data: {
+                group_id: this.group.id,
+                clients: [client.id],
+              },
+            })
+            .then(() => {
+              this.group.clients.splice(this.group.clients.indexOf(index), 1);
+              this.message = this.$i18n.t(
+                "Client has been removed from group!"
+              );
+              setTimeout(() => {
+                this.message = "";
+              }, 3000);
+            });
         }
       });
-
     },
     searchClients: async function (query, event) {
       if (
@@ -382,7 +403,7 @@ export default {
       ) {
         this.clientList = [];
         this.clientListLoading = false;
-      } else if(query.length > 2){
+      } else if (query.length > 2) {
         this.clientListLoading = true;
         await this.$axios
           .get("/clients", {
@@ -402,10 +423,10 @@ export default {
       this.loading = true;
       await this.$axios
         .get("/clients", {
-          params: reset ? {group: this.group.id} : this.search,
+          params: reset ? { group: this.group.id } : this.search,
         })
         .then((response) => {
-          this.clients = response.data.data
+          this.clients = response.data.data;
           this.loading = false;
         });
     },

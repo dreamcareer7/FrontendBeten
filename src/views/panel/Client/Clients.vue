@@ -81,7 +81,7 @@
               <div class="spinner-border text-success" role="status"></div>
             </CCol>
             <CCol :md="12" class="text-center">
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">{{ $t('Loading...') }}</span>
             </CCol>
           </CRow>
           <CTable v-if="!loading" responsive>
@@ -240,18 +240,30 @@
               <CTableDataCell>{{ client.phone }}</CTableDataCell>
             </CTableRow>
           </CTable>
-          <CCard v-if="client.logs?.length" class="mt-2">
+          <CCard v-if="client.logs?.length" class="mt-2 logs-card">
             <CCardBody class="p-0">
               <CTable class="table-hover table-striped">
                 <CTableHead>
                   <CTableRow class="table-dark">
-                    <CTableHeaderCell scope="col">{{ $t('Logs') }}</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">{{
+                      $t("Logs")
+                    }}</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
                   <CTableRow v-for="log in client.logs">
-                    <CTableDataCell v-if="log.key === 'assigned_group'">{{$t(`This client has been assigned to group`)}} {{log.value +' '+ $t('on') +' '+ log.created_at}}</CTableDataCell>
-                    <CTableDataCell v-if="log.key === 'retracted_group'">{{$t(`This client has been removed from group`)}} {{log.value +' '+ $t('on') +' '+ log.created_at}}</CTableDataCell>
+                    <CTableDataCell v-if="log.key === 'assigned_group'"
+                      >{{ $t(`This client has been assigned to group`) }}
+                      {{
+                        log.value + " " + $t("on") + " " + log.created_at
+                      }}</CTableDataCell
+                    >
+                    <CTableDataCell v-if="log.key === 'retracted_group'"
+                      >{{ $t(`This client has been removed from group`) }}
+                      {{
+                        log.value + " " + $t("on") + " " + log.created_at
+                      }}</CTableDataCell
+                    >
                   </CTableRow>
                 </CTableBody>
               </CTable>
@@ -313,9 +325,11 @@ export default {
               (country) => country.id === client.country_id
             );
             if (country_index >= 0) {
-              client.country = this.$i18n.t(this.countries[country_index].title);
+              client.country = this.$i18n.t(
+                this.countries[country_index].title
+              );
             } else {
-              client.country = ''
+              client.country = "";
             }
             let group_index = this.groups.findIndex(
               (group) => group.id === client.group_id
@@ -323,9 +337,9 @@ export default {
             if (group_index >= 0) {
               client.group = this.$i18n.t(this.groups[group_index].title);
             } else {
-              client.group = ''
+              client.group = "";
             }
-            return client
+            return client;
           });
           this.pagination = response.data.links;
           this.loading = false;
@@ -353,9 +367,11 @@ export default {
               (country) => country.id === client.country_id
             );
             if (country_index >= 0) {
-              client.country = this.$i18n.t(this.countries[country_index].title);
+              client.country = this.$i18n.t(
+                this.countries[country_index].title
+              );
             } else {
-              client.country = ''
+              client.country = "";
             }
             let group_index = this.groups.findIndex(
               (group) => group.id === client.group_id
@@ -363,9 +379,9 @@ export default {
             if (group_index >= 0) {
               client.group = this.$i18n.t(this.groups[group_index].title);
             } else {
-              client.group = ''
+              client.group = "";
             }
-            return client
+            return client;
           });
           this.pagination = response.data.links;
           this.loading = false;
@@ -394,17 +410,19 @@ export default {
           (country) => country.id === this.client.country_id
         );
         if (country_index >= 0) {
-          this.client.country = this.$i18n.t(this.countries[country_index].title)
+          this.client.country = this.$i18n.t(
+            this.countries[country_index].title
+          );
         } else {
-          this.client.country = ''
+          this.client.country = "";
         }
         let group_index = this.groups.findIndex(
           (group) => group.id === this.client.group_id
         );
         if (group_index >= 0) {
-          this.client.group = this.$i18n.t(this.groups[group_index].title)
+          this.client.group = this.$i18n.t(this.groups[group_index].title);
         } else {
-          this.client.group = ''
+          this.client.group = "";
         }
         this.is_client_modal_visible = true;
       });
@@ -415,8 +433,9 @@ export default {
     countries.fetchCountries().then((countries) => {
       this.countries = countries;
     });
-    this.$axios.get('groups/all')
-      .then((response) => this.groups = response.data)
+    this.$axios
+      .get("groups/all")
+      .then((response) => (this.groups = response.data));
     await this.getClients();
   },
 };

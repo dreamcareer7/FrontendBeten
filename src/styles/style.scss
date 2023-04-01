@@ -1,20 +1,20 @@
 // If you want to override variables do it here
-@import 'variables';
+@import "variables";
 
 $enable-ltr: true;
 $enable-rtl: true;
 
 // Import styles
-@import '~@coreui/coreui/scss/coreui';
+@import "~@coreui/coreui/scss/coreui";
 
 // Import Chart.js Tooltips
-@import '~@coreui/chartjs/scss/tooltips';
+@import "~@coreui/chartjs/scss/tooltips";
 
-@import 'layout';
-@import 'example';
+@import "layout";
+@import "example";
 
 // If you want to add something do it here
-@import 'custom';
+@import "custom";
 
 .cursor-pointer {
   cursor: pointer;
@@ -104,20 +104,26 @@ $enable-rtl: true;
   animation-iteration-count: 3;
 }
 
-.table td, .table th {
+.table td,
+.table th {
   vertical-align: middle;
 }
 
 .card-title {
   display: inline;
 }
- *[dir=rtl] .form-floating > label {
-   right: 0;
-   font-size: 12px;
-   margin-top: -8px;
-   transform: none !important;
- }
-.modal thead, .modal tbody, .modal tfoot, .modal tr, .modal td, .modal th {
+*[dir="rtl"] .form-floating > label {
+  right: 0;
+  font-size: 12px;
+  margin-top: -8px;
+  transform: none !important;
+}
+.modal thead,
+.modal tbody,
+.modal tfoot,
+.modal tr,
+.modal td,
+.modal th {
   font-size: 15px !important;
 }
 .card-header {
@@ -129,30 +135,37 @@ $enable-rtl: true;
   margin-bottom: 0 !important;
 }
 
-#basic-addon1, #basic-addon2 {
+#basic-addon1,
+#basic-addon2 {
   margin-right: 10px;
 }
-#basic-addon1 label.btn, #basic-addon2 label.btn{
+#basic-addon1 label.btn,
+#basic-addon2 label.btn {
   height: 37px;
   border-radius: 0;
   color: #fff;
   padding-top: 7px;
 }
 
-*[dir=rtl] #basic-addon1, *[dir=rtl] #basic-addon2 {
+*[dir="rtl"] #basic-addon1,
+*[dir="rtl"] #basic-addon2 {
   margin-right: 0;
   margin-left: 10px;
 }
-*[dir=rtl] input[type="datetime-local"] {
+*[dir="rtl"] input[type="datetime-local"] {
   text-align: right;
   direction: rtl;
 }
 
-*[dir=rtl] input[type="number"] {
+*[dir="rtl"] input[type="number"] {
   text-align: right;
   direction: rtl;
 }
-.removeX{
+.removeX {
   height: 35px;
   width: 35px;
+}
+.logs-card {
+  max-height: 240px;
+  overflow-y: auto;
 }
