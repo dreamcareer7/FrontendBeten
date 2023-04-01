@@ -39,7 +39,7 @@
     </div>
     <div class="card-footer text-end">
       <button
-        class="btn btn-warning text-white"
+        class="btn btn-secondary text-white"
         @click.prevent="$router.go(-1)"
       >
         {{ $t("Go back") }}</button

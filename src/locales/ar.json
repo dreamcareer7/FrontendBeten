@@ -453,5 +453,6 @@
     "Role": "الدور",
     "Any group": "إختر مجموعة",
     "Group": "المجموعة",
-    "Add clients to group": "إضافة حجاج إلى المجموعة"
+    "Add clients to group": "إضافة حجاج إلى المجموعة",
+    "Remove client from group": "احذف الحاج من المجموعة"
 }
