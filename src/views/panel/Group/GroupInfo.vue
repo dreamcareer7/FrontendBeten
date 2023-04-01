@@ -25,15 +25,20 @@
           </div>
         </CCardHeader>
         <CCardBody>
-          <span class="fs-5">
-            <strong>{{ $t("Crew member") }}: </strong>{{ group.crew?.fullname }}
-          </span>&nbsp;
-          <span class="fs-5">
-            <strong>{{ $t("Clients virtual count") }}: </strong>{{ group.clients_virtual_count }}
-          </span>&nbsp;
-          <span class="fs-5">
-            <strong>{{ $t("Clients count") }}: </strong>{{ group.clients?.length }}
-          </span>
+          <div class="d-flex justify-content-between">
+            <span class="fs-5">
+              <strong>{{ $t("Crew member") }}: </strong>
+              {{ group.crew?.fullname }}
+            </span>
+            <span class="fs-5">
+              <strong>{{ $t("Clients virtual count") }}: </strong>
+              {{ group.clients_virtual_count }}
+            </span>
+            <span class="fs-5">
+              <strong>{{ $t("Clients count") }}: </strong>
+              {{ group.clients?.length }}
+            </span>
+          </div>
           <!-- Start search filters -->
           <CRow class="mt-3">
             <CCol :md="2">
