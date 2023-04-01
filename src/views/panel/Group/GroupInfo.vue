@@ -91,12 +91,6 @@
               <span class="sr-only">{{ $t("Loading...") }}</span>
             </CCol>
           </CRow>
-          <!-- No results -->
-          <CRow v-if="users.length === 0 && !loading" class="mt-4">
-            <CCol :md="12" class="text-center">
-              <span class="sr-only">{{ $t("No results") }}</span>
-            </CCol>
-          </CRow>
           <!-- End no results -->
           <CTable v-if="!loading && group.clients?.length !== 0" responsive>
             <CTableHead>
@@ -367,9 +361,7 @@ export default {
     async addClientsToGroup() {
       let newClients = [];
       this.selectedClients.map((client) => {
-        this.group.clients.push(client);
-        this.clients.push(client);
-        newClients.push(client.id);
+        newClients.push(client.id)
       });
 
       await this.$axios
@@ -378,6 +370,7 @@ export default {
           clients: newClients,
         })
         .then(() => {
+          this.getGroupInfo();
           this.is_client_add_modal_visible = false;
           this.selectedClients = [];
           this.message = this.$i18n.t("Clients has been added to group!");
@@ -388,29 +381,23 @@ export default {
         .catch((error) => console.log(error));
     },
     async removeClient(client, index) {
-      await swal({
+       await swal({
         title: this.$i18n.t("Are you sure?"),
         icon: "warning",
         buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios
-            .delete("/groups/clients", {
-              data: {
-                group_id: this.group.id,
-                clients: [client.id],
-              },
-            })
-            .then(() => {
-              this.group.clients.splice(this.group.clients.indexOf(index), 1);
-              this.message = this.$i18n.t(
-                "Client has been removed from group!"
-              );
-              setTimeout(() => {
-                this.message = "";
-              }, 3000);
-            });
+          this.$axios.delete('/groups/clients',{ data: {
+            "group_id": this.group.id,
+            "clients": [client.id]
+          }}).then(() => {
+            this.getGroupInfo();
+            this.message = this.$i18n.t('Client has been removed from group!')
+            setTimeout(() => {
+              this.message = ''
+            }, 3000);
+          });
         }
       });
     },
@@ -473,6 +460,14 @@ export default {
         this.is_client_modal_visible = true;
       });
     },
+    getGroupInfo: async function () {
+      await this.$axios
+      .get(`/groups/${this.$decrypt(this.$route.params.id)}`)
+      .then((response) => {
+        this.group = response.data;
+        this.groupClientsClone = response.data.clients;
+      });
+    },
   },
   mounted: async function () {
     this.debounceFn = debounce(() => this.getClients(), 500);
@@ -480,12 +475,8 @@ export default {
       this.countries = countries;
     });
 
-    await this.$axios
-      .get(`/groups/${this.$decrypt(this.$route.params.id)}`)
-      .then((response) => {
-        this.group = response.data;
-        this.groupClientsClone = response.data.clients;
-      });
+    this.getGroupInfo();
+
   },
 };
 </script>

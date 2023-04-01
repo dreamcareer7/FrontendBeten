@@ -104,7 +104,7 @@
                   </router-link>
                   <button
                     class="btn btn-sm btn-danger text-white"
-                    @click="deleteGroup(group.id)"
+                    @click="deleteGroup(group.id, group.clients_count)"
                     :title="$t('Delete')"
                     :disabled="deleteDisabled(group)"
                   >
@@ -158,7 +158,7 @@ export default {
     },
     deleteDisabled(group) {
       if (group.clients_count !== 0) {
-        return true
+        return false
       }
       if (can('groups.delete')) {
         return false
@@ -202,27 +202,35 @@ export default {
           this.loading = false;
         });
     },
-    deleteGroup: async function (id) {
-      await swal({
-        title: this.$i18n.t("Are you sure?"),
-        text: this.$i18n.t("Once deleted, you will not be able to recover!"),
-        icon: "warning",
-        buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
-          this.$axios.delete(`/groups/${id}`).then(
-            this.groups.splice(
-              this.groups.findIndex((group) => group.id === id),
-              1
-            )
-          );
-          swal(this.$i18n.t("Group has been deleted!"), {
-            icon: "success",
-            timer: 3000,
-          });
-        }
-      });
+    deleteGroup: async function (id, clientCount) {
+      if(clientCount > 0) {
+        swal(this.$i18n.t("Group has clients, you should remove all clients to delete the group"), {
+          icon: "info",
+          timer: 6000,
+        });
+      }else{
+        await swal({
+          title: this.$i18n.t("Are you sure?"),
+          text: this.$i18n.t("Once deleted, you will not be able to recover!"),
+          icon: "warning",
+          buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
+          dangerMode: true,
+        }).then((willDelete) => {
+          if (willDelete) {
+            this.$axios.delete(`/groups/${id}`).then(
+              this.groups.splice(
+                this.groups.findIndex((group) => group.id === id),
+                1
+              )
+            );
+            swal(this.$i18n.t("Group has been deleted!"), {
+              icon: "success",
+              timer: 3000,
+            });
+          }
+        });
+      }
+
     },
   },
   async mounted() {
