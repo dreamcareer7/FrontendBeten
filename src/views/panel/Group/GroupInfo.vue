@@ -348,9 +348,9 @@ export default {
   }),
   computed: {
     is_supervisor() {
-      let user = JSON.parse(localStorage.getItem('user'));
-      return user.id === this.group.crew?.user_id
-    }
+      let user = JSON.parse(localStorage.getItem("user"));
+      return user.id === this.group.crew?.user_id;
+    },
   },
   methods: {
     openAddClientsModal: async function () {
@@ -361,7 +361,7 @@ export default {
     async addClientsToGroup() {
       let newClients = [];
       this.selectedClients.map((client) => {
-        newClients.push(client.id)
+        newClients.push(client.id);
       });
 
       await this.$axios
@@ -381,23 +381,29 @@ export default {
         .catch((error) => console.log(error));
     },
     async removeClient(client, index) {
-       await swal({
+      await swal({
         title: this.$i18n.t("Are you sure?"),
         icon: "warning",
         buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.delete('/groups/clients',{ data: {
-            "group_id": this.group.id,
-            "clients": [client.id]
-          }}).then(() => {
-            this.getGroupInfo();
-            this.message = this.$i18n.t('Client has been removed from group!')
-            setTimeout(() => {
-              this.message = ''
-            }, 3000);
-          });
+          this.$axios
+            .delete("/groups/clients", {
+              data: {
+                group_id: this.group.id,
+                clients: [client.id],
+              },
+            })
+            .then(() => {
+              this.getGroupInfo();
+              this.message = this.$i18n.t(
+                "Client has been removed from group!"
+              );
+              setTimeout(() => {
+                this.message = "";
+              }, 3000);
+            });
         }
       });
     },
@@ -462,11 +468,11 @@ export default {
     },
     getGroupInfo: async function () {
       await this.$axios
-      .get(`/groups/${this.$decrypt(this.$route.params.id)}`)
-      .then((response) => {
-        this.group = response.data;
-        this.groupClientsClone = response.data.clients;
-      });
+        .get(`/groups/${this.$decrypt(this.$route.params.id)}`)
+        .then((response) => {
+          this.group = response.data;
+          this.groupClientsClone = response.data.clients;
+        });
     },
   },
   mounted: async function () {
@@ -476,7 +482,6 @@ export default {
     });
 
     this.getGroupInfo();
-
   },
 };
 </script>
