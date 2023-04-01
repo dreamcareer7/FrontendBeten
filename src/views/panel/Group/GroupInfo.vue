@@ -27,6 +27,12 @@
         <CCardBody>
           <span class="fs-5">
             <strong>{{ $t("Crew member") }}: </strong>{{ group.crew?.fullname }}
+          </span>&nbsp;
+          <span class="fs-5">
+            <strong>{{ $t("Clients virtual count") }}: </strong>{{ group.clients_virtual_count }}
+          </span>&nbsp;
+          <span class="fs-5">
+            <strong>{{ $t("Clients count") }}: </strong>{{ group.clients?.length }}
           </span>
           <!-- Start search filters -->
           <CRow class="mt-3">

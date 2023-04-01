@@ -28,6 +28,21 @@
         </select>
         <label class="form-label" for="crew_member">{{ $t('Crew member') }}</label>
       </div>
+
+      <div class="form-floating mb-3">
+        <input
+          id="virtual_count"
+          class="form-control"
+          type="number"
+          min="1"
+          step="1"
+          max="2147483647"
+          v-model="group.clients_virtual_count"
+          autocomplete="off"
+          autofocus
+        />
+        <label for="virtual_count">{{ $t('Clients count') }}</label>
+      </div>
     </div>
     <CRow v-if="error_message">
       <CCol :md="12">

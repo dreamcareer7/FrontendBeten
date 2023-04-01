@@ -58,6 +58,12 @@
                 <CTableHeaderCell scope="col">
                   {{ $t("Crew member") }}
                 </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Clients virtual count") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Clients count") }}
+                </CTableHeaderCell>
                 <CTableHeaderCell
                   style="width: 20%"
                   scope="col"
@@ -71,6 +77,8 @@
               <CTableRow v-for="group in groups" :key="group.id">
                 <CTableDataCell>{{ group.title }}</CTableDataCell>
                 <CTableDataCell>{{ group.crew.fullname }}</CTableDataCell>
+                <CTableDataCell>{{ group.clients_virtual_count }}</CTableDataCell>
+                <CTableDataCell>{{ group.clients_count }}</CTableDataCell>
                 <CTableDataCell>
                   <router-link
                     :to="{
