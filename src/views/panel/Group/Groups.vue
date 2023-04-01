@@ -171,7 +171,7 @@ export default {
     async getGroups(reset = false) {
       this.loading = true;
       await this.$axios
-        .get(`/groups`, {
+        .get('/groups', {
           params: reset ? {} : this.search,
         })
         .then((response) => {
