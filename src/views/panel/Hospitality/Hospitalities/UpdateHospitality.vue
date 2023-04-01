@@ -108,7 +108,7 @@
       <div class="card-footer text-end">
         <span class="float-start">* Required fields</span>
         <button
-          class="btn btn-warning text-white"
+          class="btn btn-secondary text-white"
           @click.prevent="$router.go(-1)"
         >
           Go back</button

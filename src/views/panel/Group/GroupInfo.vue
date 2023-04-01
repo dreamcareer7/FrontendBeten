@@ -15,7 +15,7 @@
                   "
                   color="success"
                   class="float-end text-white"
-                  v-if="$can('groups.clients.add')"
+                  v-if="$can('groups.clients.add') || is_supervisor"
                 >
                   <ion-icon name="people-outline"></ion-icon>&nbsp;
                   {{ $t("Add clients to group") }}
@@ -25,10 +25,9 @@
           </div>
         </CCardHeader>
         <CCardBody>
-          <span class="fs-5"
-            ><strong>{{ $t("Crew member") }}:</strong>
-            {{ group.crew?.fullname }}</span
-          >
+          <span class="fs-5">
+            <strong>{{ $t("Crew member") }}: </strong>{{ group.crew?.fullname }}
+          </span>
           <!-- Start search filters -->
           <CRow class="mt-3">
             <CCol :md="2">
@@ -92,7 +91,14 @@
               <span class="sr-only">{{ $t("Loading...") }}</span>
             </CCol>
           </CRow>
-          <CTable v-if="!loading" responsive>
+          <!-- No results -->
+          <CRow v-if="users.length === 0 && !loading" class="mt-4">
+            <CCol :md="12" class="text-center">
+              <span class="sr-only">{{ $t("No results") }}</span>
+            </CCol>
+          </CRow>
+          <!-- End no results -->
+          <CTable v-if="!loading && group.clients?.length !== 0" responsive>
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">
@@ -148,11 +154,11 @@
                   </button>
                   <button
                     class="btn btn-sm btn-danger text-white m-1 removeX"
-                    @click="removeClientFromGroup(client, index)"
-                    :title="$t('Remove')"
+                    @click="removeClient(client, index)"
+                    :title="$t('Remove client from group')"
                     v-if="$can('groups.clients.remove')"
                   >
-                    X
+                    <ion-icon name="person-remove-outline"></ion-icon>
                   </button>
                 </CTableDataCell>
               </CTableRow>
@@ -329,6 +335,7 @@ export default {
     debounceFn: null,
     countries: [],
     clients: [],
+    groupClientsClone: [],
     search: {
       country: "",
       gender: "",
@@ -345,7 +352,18 @@ export default {
     selectedClients: [],
     message: "",
   }),
+  computed: {
+    is_supervisor() {
+      let user = JSON.parse(localStorage.getItem('user'));
+      return user.id === this.group.crew?.user_id
+    }
+  },
   methods: {
+    openAddClientsModal: async function () {
+      is_client_add_modal_visible = true;
+      (clientList = []), (selectedClients = []);
+      queryClient = "";
+    },
     async addClientsToGroup() {
       let newClients = [];
       this.selectedClients.map((client) => {
@@ -369,7 +387,7 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-    async removeClientFromGroup(client, index) {
+    async removeClient(client, index) {
       await swal({
         title: this.$i18n.t("Are you sure?"),
         icon: "warning",
@@ -411,7 +429,7 @@ export default {
           })
           .then((response) => {
             this.clientList = response.data.data.filter((client) => {
-              return !this.group.clients
+              return !this.groupClientsClone
                 .map((client) => client.id)
                 .includes(client.id);
             });
@@ -426,7 +444,11 @@ export default {
           params: reset ? { group: this.group.id } : this.search,
         })
         .then((response) => {
-          this.clients = response.data.data;
+          this.group.clients = response.data.data.filter((client) => {
+            return this.groupClientsClone
+              .map((client) => client.id)
+              .includes(client.id);
+          });
           this.loading = false;
         });
     },
@@ -437,6 +459,7 @@ export default {
       ) {
         await this.getClients(true);
       } else if (value.length > 2) {
+        this.group.clients = this.groupClientsClone;
         await this.debounceFn();
       }
     },
@@ -461,6 +484,7 @@ export default {
       .get(`/groups/${this.$decrypt(this.$route.params.id)}`)
       .then((response) => {
         this.group = response.data;
+        this.groupClientsClone = response.data.clients;
       });
   },
 };

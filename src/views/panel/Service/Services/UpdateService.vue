@@ -68,7 +68,7 @@
       <div class="card-footer text-end">
         <span class="float-start">* {{ $t('Required fields') }}</span>
         <button
-          class="btn btn-warning text-white"
+          class="btn btn-secondary text-white"
           @click.prevent="$router.go(-1)"
         >
           {{ $t('Go back') }}

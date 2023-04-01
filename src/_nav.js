@@ -1,5 +1,7 @@
 import can from '@/plugins/gate'
 
+const user = JSON.parse(localStorage.getItem('user'))
+
 export default [
   {
     component: 'CNavItem',
@@ -91,7 +93,8 @@ export default [
     name: 'Groups',
     to: '/groups',
     icon: 'cil-wc',
-    visible: can('groups.index'),
+    // if user is a supervisor of some group(s)...
+    visible: can('groups.index') || user.is_supervisor,
   },
   {
     component: 'CNavItem',
