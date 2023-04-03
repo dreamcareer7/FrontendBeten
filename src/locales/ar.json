@@ -456,5 +456,6 @@
     "Add clients to group": "إضافة حجاج إلى المجموعة",
     "Remove client from group": "احذف الحاج من المجموعة",
     "Clients virtual count": "عدد الحجاج الوهمي",
-    "Clients count": "عدد الحجاج"
+    "Clients count": "عدد الحجاج",
+    "Ungrouped": "بدون مجموعة"
 }

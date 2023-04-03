@@ -429,7 +429,7 @@ export default {
         this.clientListLoading = true;
         await this.$axios
           .get("/clients", {
-            params: { fullname: query, per_page: 10, unassigned: true },
+            params: { fullname: query, per_page: 10, group: 'ungrouped' },
           })
           .then((response) => {
             this.clientList = response.data.data.filter((client) => {

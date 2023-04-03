@@ -48,6 +48,7 @@
                 @change="getClients()"
               >
                 <option value="" selected>{{ $t("Any group") }}</option>
+                <option value="ungrouped">{{ $t("Ungrouped") }}</option>
                 <template v-for="group in groups" :key="group.id">
                   <option :value="group.id">{{ group.title }}</option>
                 </template>
