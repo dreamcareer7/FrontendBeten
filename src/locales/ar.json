@@ -456,5 +456,6 @@
     "Remove client from group": "احذف الحاج من المجموعة",
     "Clients virtual count": "عدد الحجاج الوهمي",
     "Clients count": "عدد الحجاج",
-    "Ungrouped": "بدون مجموعة"
+    "Ungrouped": "بدون مجموعة",
+    "Create meal type": "إنشاء نوع وجبة"
 }
