@@ -1,6 +1,6 @@
 <template>
   <div class="card border-success mb-4">
-    <div class="card-header">{{ $t('Create Meal') }}</div>
+    <div class="card-header">{{ $t('Create meal') }}</div>
     <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
