@@ -8,6 +8,7 @@
             class="form-control"
             id="crew_member"
             v-model="user.crew_member_id"
+            @change="populate"
           >
             <option
               v-for="crew_member in crew_members"
@@ -19,7 +20,7 @@
           </select>
           <label for="crew_member">{{ $t('Crew member') }}</label>
         </div>
-        <div class="form-floating mb-2">
+        <div class="form-floating mb-2" v-if="no_crew_picked">
           <input
             id="name"
             type="text"
@@ -135,8 +136,15 @@ export default {
     },
     roles_select_options: [],
     crew_members: [],
+    no_crew_picked: true,
   }),
   methods: {
+    populate: async function () {
+      this.user.name = this.crew_members[this.crew_members.findIndex(
+        (crew) => crew.id === this.user.crew_member_id)
+      ].fullname
+      this.no_crew_picked = false
+    },
     create: async function () {
       await this.$axios
         .post('/users', this.user)
