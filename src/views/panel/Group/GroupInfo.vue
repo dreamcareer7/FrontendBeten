@@ -291,7 +291,7 @@
             type="text"
             class="form-control mb-3"
             v-model="queryClient"
-            :placeholder="$t('Fullname')"
+            :placeholder="$t('Fullname or ID number')"
             @keyup="searchClients(queryClient, $event)"
           />
 
@@ -310,7 +310,9 @@
                   :value="client"
                   type="checkbox"
                   value="1"
-                />{{ client.fullname }}
+                />
+                <span class="pull-right">{{ client.id_number }}</span>
+                <span>{{ client.fullname }}</span>
               </label>
             </CListGroupItem>
           </CListGroup>
@@ -429,7 +431,7 @@ export default {
         this.clientListLoading = true;
         await this.$axios
           .get("/clients", {
-            params: { fullname: query, per_page: 10, group: 'ungrouped' },
+            params: { client_query: query, per_page: 10, group: 'ungrouped' },
           })
           .then((response) => {
             this.clientList = response.data.data.filter((client) => {
