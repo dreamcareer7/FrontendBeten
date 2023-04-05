@@ -153,7 +153,6 @@
                     class="btn btn-sm btn-info text-white mx-1"
                     :title="$t('View details')"
                     @click="viewDetails(client.id)"
-                    v-if="$can('clients.view')"
                   >
                     <ion-icon name="eye-outline"></ion-icon>
                   </button>
@@ -161,7 +160,6 @@
                     class="btn btn-sm btn-danger text-white m-1 removeX"
                     @click="removeClient(client, index)"
                     :title="$t('Remove client from group')"
-                    v-if="$can('groups.clients.remove')"
                   >
                     <ion-icon name="person-remove-outline"></ion-icon>
                   </button>
