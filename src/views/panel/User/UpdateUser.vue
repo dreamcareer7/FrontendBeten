@@ -10,7 +10,7 @@
           autocomplete="off"
           v-model="user.name"
           autofocus
-          required
+          disabled
         />
         <label for="name">{{ $t("Name") }}</label>
       </div>
@@ -21,7 +21,7 @@
           id="email"
           autocomplete="off"
           v-model="user.email"
-          required
+          disabled
         />
         <label for="email">{{ $t("Email") }}</label>
       </div>
