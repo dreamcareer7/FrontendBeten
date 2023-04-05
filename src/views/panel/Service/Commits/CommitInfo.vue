@@ -229,7 +229,11 @@ export default {
       }
     },
     deleteLog(id) {
-      this.$axios.delete(`service_commit_log/${id}`).then(() => this.service_commit_logs.splice(this.service_commit_logs.findIndex((log) => log.id === id), 1))
+      this.$axios.delete(`service_commit_log/${id}`)
+        .then(() => this.service_commit_logs.splice(
+          this.service_commit_logs.findIndex((log) => log.id === id),
+          1
+        ))
     },
   },
   mounted() {
