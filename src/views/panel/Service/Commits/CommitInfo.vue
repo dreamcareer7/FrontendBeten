@@ -90,7 +90,7 @@
               <CTableBody>
                 <CTableRow v-for="log in service_commit_logs">
                   <CTableDataCell>{{ $t(log.title) }}</CTableDataCell>
-                  <CTableDataCell>{{ log.model_id }}</CTableDataCell>
+                  <CTableDataCell>{{ log.name }}</CTableDataCell>
                   <CTableDataCell>{{ $t(log.role) }}</CTableDataCell>
                 </CTableRow>
               </CTableBody>
