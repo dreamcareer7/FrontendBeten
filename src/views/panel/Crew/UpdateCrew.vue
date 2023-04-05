@@ -4,16 +4,6 @@
     <form @submit.prevent="update">
       <div class="card-body">
         <div class="form-floating mb-3">
-          <select v-model="crew.user_id" id="user" class="form-control">
-            <option>Choose user</option>
-            <template v-for="user in users" :key="user.id">
-              <option :value="user.id">{{ user.name }}</option>
-            </template>
-          </select>
-          <label for="user">{{ $t('User') }}</label>
-        </div>
-
-        <div class="form-floating mb-3">
           <input
             v-model="crew.fullname"
             type="text"
@@ -167,7 +157,6 @@ export default {
   data: () => ({
     error_message: '',
     crew: {},
-    users: [],
     professions: [],
     countries: [],
   }),
@@ -203,7 +192,6 @@ export default {
       .get(`crews/${this.$decrypt(this.$route.params.id)}/edit`)
       .then((response) => {
         this.crew = response.data.crew
-        this.users = response.data.users
         this.professions = response.data.professions
         this.countries = response.data.countries
       })

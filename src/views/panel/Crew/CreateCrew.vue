@@ -4,16 +4,6 @@
     <form @submit.prevent="create">
       <div class="card-body">
         <div class="form-floating mb-3">
-          <select v-model="crew.user_id" id="user" class="form-control">
-            <option>Choose user</option>
-            <template v-for="user in data.users" :key="user.id">
-              <option :value="user.id">{{ user.name }}</option>
-            </template>
-          </select>
-          <label for="user">{{ $t('User') }}</label>
-        </div>
-
-        <div class="form-floating mb-3">
           <input
             v-model="crew.fullname"
             type="text"
