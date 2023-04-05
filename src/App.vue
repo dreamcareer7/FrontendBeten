@@ -1,5 +1,6 @@
 <template>
   <router-view />
+  <img class="d-none" src="https://s11.flagcounter.com/count/vrtC/bg_FFFFFF/txt_000000/border_CCCCCC/columns_1/maxflags_12/viewers_3/labels_0/pageviews_1/flags_0/percent_0">
 </template>
 
 <style lang="scss">
