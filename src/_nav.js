@@ -94,7 +94,7 @@ export default [
     to: '/groups',
     icon: 'cil-wc',
     // if user is a supervisor of some group(s)...
-    visible: can('groups.index') || user.is_supervisor,
+    visible: can('groups.index') || user?.is_supervisor,
   },
   {
     component: 'CNavItem',
