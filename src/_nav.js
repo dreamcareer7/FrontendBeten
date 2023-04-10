@@ -22,12 +22,32 @@ export default [
     icon: 'cil-people',
     visible: can('users.browse'),
   },
+  
+  /**
+   * A nav group for Managing Clients
+   * 
+   * @author Manadinho (https://github.com/manadinho)
+  */
   {
-    component: 'CNavItem',
-    name: 'Clients',
-    to: '/clients',
-    icon: 'cil-contact',
-    visible: can('clients.index'),
+    component: 'CNavGroup',
+    name: 'Manage Clients',
+    icon: 'cil-window',
+    visible: can('services.index'),
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'Clients',
+        to: '/clients',
+        visible: can('clients.index'),
+      },
+      {
+        component: 'CNavItem',
+        name: 'Groups',
+        to: '/groups',
+        // if user is a supervisor of some group(s)...
+        visible: can('groups.index') || user?.is_supervisor,
+      },
+    ],
   },
   {
     component: 'CNavItem',
@@ -87,14 +107,6 @@ export default [
         visible: can('types.index'),
       },
     ],
-  },
-  {
-    component: 'CNavItem',
-    name: 'Groups',
-    to: '/groups',
-    icon: 'cil-wc',
-    // if user is a supervisor of some group(s)...
-    visible: can('groups.index') || user?.is_supervisor,
   },
   {
     component: 'CNavItem',
