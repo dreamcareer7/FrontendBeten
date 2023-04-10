@@ -1,4 +1,3 @@
-import Vidle from 'v-idle-3'
 import { createApp } from 'vue'
 import swal from 'sweetalert'
 
@@ -25,7 +24,6 @@ const app = createApp(App)
 app.use(store)
 app.use(router)
 app.use(CoreuiVue)
-app.use(Vidle)
 app.use(i18n)
 
 app.provide('icons', icons)

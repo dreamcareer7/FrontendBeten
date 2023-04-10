@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-idle @idle="onidle" style="display: none" :duration="900" />
     <AppSidebar />
     <div class="wrapper d-flex flex-column min-vh-100 bg-light">
       <AppHeader />
@@ -26,27 +25,6 @@ export default {
     AppHeader,
     AppSidebar,
     CContainer,
-  },
-  methods: {
-    onidle() {
-      this.$axios
-        .post('token-logout')
-        .then(() => {
-          localStorage.removeItem('auth_token')
-          swal({
-            title: this.$i18n.t('You have been logged out due to inactivity.'),
-            icon: 'warning',
-            button: this.$i18n.t('Ok'),
-          })
-          this.$router.push({ name: 'Login' })
-        })
-        .catch(() => {
-          swal({
-            title: this.$i18n.t('Error occurred. Please try to login again'),
-            icon: 'error',
-          })
-        })
-    },
   },
 }
 </script>
