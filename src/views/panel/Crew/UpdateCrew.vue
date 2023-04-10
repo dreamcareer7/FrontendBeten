@@ -52,7 +52,7 @@
           >
             <option>Choose Country</option>
             <template v-for="country in countries" :key="country.id">
-              <option :value="country.id">{{ country.title }}</option>
+              <option :value="country.id">{{ $t(country.title) }}</option>
             </template>
           </select>
           <label for="country">{{ $t('Country') }} *</label>
