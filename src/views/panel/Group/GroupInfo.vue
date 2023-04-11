@@ -386,7 +386,7 @@
     class="modal-popup-detail"
   >
     <CModalHeader>
-      <CModalTitle>{{ $t("Group Docuements") }}</CModalTitle>
+      <CModalTitle>{{ $t("Group Documents") }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CRow>
