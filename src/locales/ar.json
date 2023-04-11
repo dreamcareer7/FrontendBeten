@@ -460,5 +460,8 @@
     "Create meal type": "إنشاء نوع وجبة",
     "Fullname or ID number": "الإسم الكامل أو رقم التعريف",
     "Add to group": "أضف إلى المجموعة",
-    "Manage Clients":"إدارة الحجاج"
+    "Manage Clients":"إدارة الحجاج",
+    "Welcome":"اهلا وسهلا",
+    "User has been created successfully":"تم إنشاء المستخدم بنجاح",
+    "Vehicle has been created successfully":"تم إنشاء المركبه بنجاح"
 }

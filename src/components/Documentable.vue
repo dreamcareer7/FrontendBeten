@@ -12,7 +12,7 @@
           X
         </span>
       </CAlert>
-      <CCardBody class="p-0">
+      <CCardBody class="p-0" v-if="showListing">
         <CTable responsive hover class="mb-0">
           <CTableBody>
             <CTableRow
@@ -104,7 +104,20 @@
 <script>
 export default {
   name: 'Documentable',
-  props: ['type', 'id'],
+  props: {
+    type: {
+      type: String,
+      required: true,
+    },
+    id: {
+      type: Number,
+      required: true,
+    },
+    showListing: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data: () => ({
     documents: [],
     error_message: '',
@@ -143,6 +156,7 @@ export default {
           this.getDocuments()
           this.message = this.$i18n.t('Document uploaded successfully.')
           this.$refs.uploadForm.$el.reset()
+          this.$emit('document_created')
         })
         .catch((error) => {
           this.error_message = error.response.data.message

@@ -8,6 +8,9 @@
         Account
       </CDropdownHeader>
       <CDropdownItem>
+        {{$i18n.t('Welcome')}} {{user.name}}
+      </CDropdownItem>
+      <CDropdownItem>
         <CIcon icon="cil-bell" /> Updates
         <CBadge color="info" class="ms-auto">{{ itemsCount }}</CBadge>
       </CDropdownItem>
@@ -67,6 +70,11 @@ export default {
       })
     },
   },
+  computed:{
+    user(){
+      return JSON.parse(localStorage.getItem('user'))
+    }
+  }
 }
 </script>
 

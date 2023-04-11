@@ -104,7 +104,13 @@ export default {
     create: async function () {
       await this.$axios
         .post(`/vehicles/add`, this.vehicle)
-        .then(() => this.$router.push({ name: "vehicles" }))
+        .then(() => {
+          swal(this.$i18n.t("Vehicle has been created successfully"), {
+            icon: "success",
+            timer: 3000,
+          });
+          this.$router.push({ name: "Vehicles" })
+        })
         .catch(
           (error) =>
             (this.error_message =

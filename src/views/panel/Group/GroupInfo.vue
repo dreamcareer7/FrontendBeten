@@ -171,6 +171,112 @@
       </CCard>
     </CCol>
   </CRow>
+  <CRow>
+    <CCol :xs="12">
+      <CCard class="mb-4">
+        <CCardHeader>
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <h3 class="mt-1">
+                {{ $i18n.t('Documents') }}
+                <CButton
+                  @click="
+                    is_group_document_modal_visible = true;
+                  "
+                  color="success"
+                  class="float-end text-white"
+                  v-if="$can('groups.clients.add') || is_supervisor"
+                >
+                  <ion-icon name="document"></ion-icon>&nbsp;
+                  {{ $t("Add document") }}
+                </CButton>
+              </h3>
+            </div>
+          </div>
+        </CCardHeader>
+        <CCardBody>
+          <CAlert color="success" class="m-2" v-show="message">
+            {{ message }}
+            <span
+              class="cursor-pointer float-end test-danger"
+              @click="message = ''"
+            >
+              X
+            </span>
+          </CAlert>
+          <CRow v-if="loading" class="mt-4">
+            <CCol :md="12" class="text-center">
+              <div class="spinner-border text-success" role="status"></div>
+            </CCol>
+            <CCol :md="12" class="text-center">
+              <span class="sr-only">{{ $t("Loading...") }}</span>
+            </CCol>
+          </CRow>
+          <!-- End no results -->
+          <CTable v-if="!loading && group.clients?.length !== 0" responsive>
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Title") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Created By") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("File") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("View Detail") }}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  {{ $t("Delete") }}
+                </CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              <CTableRow
+                v-for="(group_document, index) in group_documents"
+                :key="group_document.id"
+              >
+                <CTableDataCell>{{ group_document.title }}</CTableDataCell>
+                <CTableDataCell>{{ group_document.created_by }}</CTableDataCell>
+                 <CTableDataCell>
+                  <a
+                    class="btn btn-sm btn-info text-white m-1"
+                    :href="group_document.path"
+                    :title="$t('Download document')"
+                    :download="group_document.title"
+                    target="_blank"
+                  >
+                    <ion-icon name="cloud-download-outline"></ion-icon>
+                  </a>
+                </CTableDataCell>
+                <CTableDataCell>
+                  <a
+                    class="btn btn-sm btn-info text-white m-1"
+                    :href="group_document.path"
+                    :title="$t('View details')"
+                    target="_blank"
+                  >
+                  <ion-icon name="eye-outline"></ion-icon>
+                </a>
+              </CTableDataCell>
+                <CTableDataCell :aria-colspan="2">
+                <button
+                  class="btn btn-sm btn-danger text-white m-1"
+                  @click="deleteGroupDocument(group_document.id)"
+                  :title="$t('Delete')"
+                >
+                  <ion-icon name="trash-bin-outline"></ion-icon>
+                </button>
+              </CTableDataCell>
+              </CTableRow>
+            </CTableBody>
+          </CTable>
+        </CCardBody>
+      </CCard>
+    </CCol>
+  </CRow>
 
   <CModal
     :visible="is_client_modal_visible"
@@ -273,6 +379,28 @@
       </CRow>
     </CModalBody>
   </CModal>
+  
+  <CModal
+    :visible="is_group_document_modal_visible"
+    @close="is_group_document_modal_visible = false"
+    class="modal-popup-detail"
+  >
+    <CModalHeader>
+      <CModalTitle>{{ $t("Group Docuements") }}</CModalTitle>
+    </CModalHeader>
+    <CModalBody>
+      <CRow>
+        <CCol :md="12">
+          <Documentable
+            type="group"
+            :id="group.id"
+            :showListing="false"
+            @document_created="document_created"
+          /> 
+        </CCol>
+      </CRow>
+    </CModalBody>
+  </CModal>
 
   <CModal
     :visible="is_client_add_modal_visible"
@@ -350,6 +478,8 @@ export default {
     group: {},
     client: {},
     is_client_modal_visible: false,
+    is_group_document_modal_visible: false,
+    group_documents:[],
     is_client_add_modal_visible: false,
     clientList: [],
     clientListLoading: false,
@@ -483,8 +613,28 @@ export default {
         .then((response) => {
           this.group = response.data;
           this.groupClientsClone = response.data.clients;
+          this.getGroupDocuments();
         });
     },
+    async deleteGroupDocument(doc_id) {
+      await this.$axios.delete(`/documents/${doc_id}`).then(() => {
+        this.group_documents = this.group_documents.filter((doc) => doc.id !== doc_id)
+        swal(this.$i18n.t("Document deleted successfully."), {
+            icon: "success",
+            timer: 3000,
+          });
+      })
+    },
+    async getGroupDocuments() {
+      await this.$axios
+        .get(`/documents/group/${this.group.id}`)
+        .then((response) => {
+          this.group_documents = response.data
+        })
+    },
+    document_created() {
+      this.getGroupDocuments();
+    }
   },
   mounted: async function () {
     this.debounceFn = debounce(() => this.getClients(), 500);

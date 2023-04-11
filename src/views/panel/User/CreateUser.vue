@@ -148,7 +148,13 @@ export default {
     create: async function () {
       await this.$axios
         .post('/users', this.user)
-        .then(() => this.$router.push({ name: 'Users' }))
+        .then(() => { 
+          swal(this.$i18n.t("User has been created successfully"), {
+            icon: "success",
+            timer: 3000,
+          });
+          this.$router.push({ name: 'Users' })
+        })
         .catch(
           (error) =>
             (this.error_message =
