@@ -29,7 +29,7 @@
               :value="country.id"
               :key="country.id"
             >
-              {{ country.title }}
+              {{ $t(country.title) }}
             </option>
           </select>
           <label for="country">{{ $t('Country') }}</label>
