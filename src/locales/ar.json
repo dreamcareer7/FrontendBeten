@@ -52,7 +52,7 @@
     "Service Commits": "تكليف مهمة",
     "Meals Service": "خدمة التغذية",
     "All meals": "جميع الوجبات",
-    "Types": "أنواع",
+    "Types":  "أنواع الوجبات",
     "Groups": "مجموعات",
     "Vehicles Service": "خدمة النقل",
     "Hospitalities Service": "خدمة الاعاشة",
@@ -475,5 +475,7 @@
     "Meals pagination": "ترقيم صفحات الوجبات",
     "The task added successfully":"تم اضافة المهمه بنجاح",
     "Finished":"إنهاء المهمه",
-    "Ended":"انتهت"
+    "Ended":"انتهت",
+  "Hospitalities":" الاعاشه والضيافه"
+  
 }
