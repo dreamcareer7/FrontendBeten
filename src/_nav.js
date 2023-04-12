@@ -22,33 +22,6 @@ export default [
     icon: 'cil-people',
     visible: can('users.browse'),
   },
-  
-  /**
-   * A nav group for Managing Clients
-   * 
-   * @author Manadinho (https://github.com/manadinho)
-  */
-  {
-    component: 'CNavGroup',
-    name: 'Manage Clients',
-    icon: 'cil-window',
-    visible: can('services.index'),
-    items: [
-      {
-        component: 'CNavItem',
-        name: 'Clients',
-        to: '/clients',
-        visible: can('clients.index'),
-      },
-      {
-        component: 'CNavItem',
-        name: 'Groups',
-        to: '/groups',
-        // if user is a supervisor of some group(s)...
-        visible: can('groups.index') || user?.is_supervisor,
-      },
-    ],
-  },
   {
     component: 'CNavItem',
     name: 'Crew',
@@ -58,27 +31,21 @@ export default [
   },
   {
     component: 'CNavTitle',
-    name: 'Others',
+    name: 'Manage Tasks',
   },
   {
-    component: 'CNavGroup',
+    component: 'CNavItem',
     name: 'Services',
-    icon: 'cil-window',
+    to: '/services',
+    icon: "cil-window",
     visible: can('services.index'),
-    items: [
-      {
-        component: 'CNavItem',
-        name: 'Services',
-        to: '/services',
-        visible: can('services.index'),
-      },
-      {
-        component: 'CNavItem',
-        name: 'Service Commits',
-        to: '/services/commits',
-        visible: can('commits.index'),
-      },
-    ],
+  },
+  {
+    component: 'CNavItem',
+    name: 'Service Commits',
+    to: '/services/commits',
+    icon: "cil-briefcase",
+    visible: can('commits.index'),
   },
   {
     component: 'CNavItem',
@@ -88,8 +55,46 @@ export default [
     visible: can('phases.index'),
   },
   {
+    component: 'CNavTitle',
+    name: 'Manage Clients',
+    visible: can('users.browse'),
+  },
+  {
+    component: 'CNavItem',
+    name: 'Clients',
+    to: '/clients',
+    icon:"cil-user",
+    visible: can('clients.index'),
+  },
+  {
+    component: 'CNavItem',
+    name: 'Groups',
+    to: '/groups',
+    icon: 'cil-object-group',
+    // if user is a supervisor of some group(s)...
+    visible: can('groups.index') || user?.is_supervisor,
+  },
+  {
+    component: 'CNavTitle',
+    name: 'Manage Services',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Vehicles Service',
+    to: '/vehicles',
+    icon: 'cil-car-alt',
+    visible: can('vehicles.index'),
+  },
+  {
+    component: 'CNavItem',
+    name: 'Dormitories Service',
+    to: '/dormitories',
+    icon: 'cil-door',
+    visible: can('dormitories.index'),
+  },
+  {
     component: 'CNavGroup',
-    name: 'Meals',
+    name: 'Meals Service',
     to: '/meals',
     icon: 'cil-fastfood',
     visible: can('meals.index'),
@@ -109,22 +114,8 @@ export default [
     ],
   },
   {
-    component: 'CNavItem',
-    name: 'Vehicles',
-    to: '/vehicles',
-    icon: 'cil-car-alt',
-    visible: can('vehicles.index'),
-  },
-  {
-    component: 'CNavItem',
-    name: 'Dormitories',
-    to: '/dormitories',
-    icon: 'cil-door',
-    visible: can('dormitories.index'),
-  },
-  {
     component: 'CNavGroup',
-    name: 'Hospitalities',
+    name: 'Hospitalities Service',
     to: '/hospitalities',
     icon: 'cil-mood-good',
     visible: can('hospitalities.index'),
