@@ -3,14 +3,14 @@
     <CCol>
       <CCard>
         <CCardHeader>
-          <CCardTitle>{{ $t('Services') }}</CCardTitle>
+          <CCardTitle>{{ $t("Services") }}</CCardTitle>
           <router-link
             :to="{ name: 'Create service' }"
             v-if="$can('services.create')"
           >
             <CButton color="success" class="float-end text-white">
               <ion-icon name="create-outline"></ion-icon>&nbsp;
-              {{ $t('Create service') }}
+              {{ $t("Create service") }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -18,12 +18,24 @@
           <CTable hover responsive>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">{{ $t('Title') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('City') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Before date') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Exact date') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('After date') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Title")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("City")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Before date")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Exact date")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("After date")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Actions")
+                }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -141,10 +153,10 @@
 </template>
 
 <script>
-import cities from '@/store/cities'
+import cities from "@/store/cities";
 
 export default {
-  name: 'Services',
+  name: "Services",
   data: () => ({
     services: [],
     current_page: 1,
@@ -157,49 +169,53 @@ export default {
   methods: {
     deleteService: async function (id) {
       await swal({
-        title: this.$i18n.t('Are you sure?'),
-        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
-        icon: 'warning',
-        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
+        title: this.$i18n.t("Are you sure?"),
+        text: this.$i18n.t("Once deleted, you will not be able to recover!"),
+        icon: "warning",
+        buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
           this.$axios.delete(`/services/${id}`).then(() => {
-            this.services = this.services.filter((service) => service.id !== id)
-          })
-          swal('Service has been deleted!', {
-            icon: 'success',
-          })
+            this.services.splice(
+              this.services.findIndex((service) => service.id === id),
+              1
+            );
+          });
+          swal(this.$i18n.t("Service has been deleted!"), {
+            icon: "success",
+            timer: 3000,
+          });
         }
-      })
+      });
     },
     gotoPage: async function (url) {
       await this.$axios.get(url).then((response) => {
-        this.services = response.data.data
-        this.current_page = response.data.current_page
-        this.last_page = response.data.last_page
-        this.pagination = response.data.links
-      })
+        this.services = response.data.data;
+        this.current_page = response.data.current_page;
+        this.last_page = response.data.last_page;
+        this.pagination = response.data.links;
+      });
     },
     fetchServiceInfo: async function (id) {
       await this.$axios.get(`/services/${id}`).then((response) => {
-        this.service = response.data
-        this.showServiceDetailModal = true
-      })
+        this.service = response.data;
+        this.showServiceDetailModal = true;
+      });
     },
   },
   async mounted() {
-    await this.$axios.get('/services').then((response) => {
-      this.services = response.data.data
-      this.current_page = response.data.current_page
-      this.last_page = response.data.last_page
-      this.pagination = response.data.links
-    })
+    await this.$axios.get("/services").then((response) => {
+      this.services = response.data.data;
+      this.current_page = response.data.current_page;
+      this.last_page = response.data.last_page;
+      this.pagination = response.data.links;
+    });
     cities.fetchCities().then((cities) => {
-      this.cities = cities
-    })
+      this.cities = cities;
+    });
   },
-}
+};
 </script>
 
 <style scoped>

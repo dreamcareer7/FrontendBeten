@@ -182,11 +182,12 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           this.$axios.delete(`/phases/${id}`).then(() => {
-            // TODO: remove item from the existing array
-            // instead of reassigning
-            this.phases = this.phases.filter((phase) => phase.id !== id)
+            this.phases.splice(
+              this.phases.findIndex((phase) => phase.id === id),
+              1
+            );
           })
-          swal('Phase has been deleted!', {
+          swal(this.$i18n.t("Phase has been deleted!"), {
             icon: 'success',
             timer: 3000,
           })

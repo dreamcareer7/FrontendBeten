@@ -34,7 +34,7 @@
                 v-model="search.country"
                 @change="getCrews()"
               >
-                <option selected value="">{{ $t('Choose country') }}</option>
+                <option selected value="">{{ $t("Choose country") }}</option>
                 <template v-for="country in countries" :key="country.id">
                   <option :value="country.id">{{ $t(country.title) }}</option>
                 </template>
@@ -230,7 +230,7 @@ export default {
     countries: [],
     crews: [],
     search: {
-      country: '',
+      country: "",
     },
     loading: false,
     pagination: [],
@@ -281,7 +281,12 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.delete(`/crews/${id}`).then(() => this.getCrews());
+          this.$axios.delete(`/crews/${id}`).then(() => {
+            this.crews.splice(
+              this.crews.findIndex((crew) => crew.id === id),
+              1
+            );
+          });
           swal("Crew member has been deleted!", {
             icon: "success",
           });

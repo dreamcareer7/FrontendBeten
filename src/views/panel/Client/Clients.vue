@@ -82,7 +82,7 @@
               <div class="spinner-border text-success" role="status"></div>
             </CCol>
             <CCol :md="12" class="text-center">
-              <span class="sr-only">{{ $t('Loading...') }}</span>
+              <span class="sr-only">{{ $t("Loading...") }}</span>
             </CCol>
           </CRow>
           <CTable v-if="!loading" responsive>
@@ -397,8 +397,14 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios.delete(`/clients/${id}`).then(() => this.getClients());
-          swal(`The client ${name} has been deleted!`, {
+          this.$axios.delete(`/clients/${id}`).then(() => {
+            // Remove the client from the list
+            this.clients.splice(
+              this.clients.findIndex((client) => client.id === id),
+              1
+            );
+          });
+          swal(this.$i18n.t("The client {name} has been deleted", {name: name}) , {
             icon: "success",
           });
         }

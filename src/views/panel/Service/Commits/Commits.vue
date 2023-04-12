@@ -3,14 +3,14 @@
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader>
-          <CCardTitle>{{ $t('Service Commits') }}</CCardTitle>
+          <CCardTitle>{{ $t("Service Commits") }}</CCardTitle>
           <router-link
             :to="{ name: 'Create commit' }"
             v-if="$can('commits.create')"
           >
             <CButton color="success" class="float-end text-white">
               <ion-icon name="create-outline"></ion-icon>&nbsp;
-              {{ $t('Create commit') }}
+              {{ $t("Create commit") }}
             </CButton>
           </router-link>
         </CCardHeader>
@@ -18,14 +18,30 @@
           <CTable>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell scope="col">{{ $t('Service') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Badge') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Schedule At') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Started') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('From') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Supervisor') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Phase') }}</CTableHeaderCell>
-                <CTableHeaderCell scope="col">{{ $t('Actions') }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Service")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Badge")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Schedule At")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Started")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("From")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Supervisor")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Phase")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
+                  $t("Actions")
+                }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
@@ -78,33 +94,33 @@
               </CTableRow>
             </CTableBody>
           </CTable>
+          <CRow>
+            <CCol :md="12" class="text-center">
+              <nav aria-label="Service commits navigation">
+                <ul class="pagination">
+                  <template v-for="page in pagination" :key="page">
+                    <li class="page-item" :class="{ active: page.active }">
+                      <a
+                        @click.prevent="gotoPage(page.url)"
+                        class="page-link"
+                        :class="{ disabled: !page.url }"
+                        v-html="page.label"
+                      ></a>
+                    </li>
+                  </template>
+                </ul>
+              </nav>
+            </CCol>
+          </CRow>
         </CCardBody>
       </CCard>
-    </CCol>
-  </CRow>
-  <CRow>
-    <CCol :md="12" class="text-center">
-      <nav aria-label="Service commits navigation">
-        <ul class="pagination">
-          <template v-for="page in pagination" :key="page">
-            <li class="page-item" :class="{ active: page.active }">
-              <a
-                @click.prevent="gotoPage(page.url)"
-                class="page-link"
-                :class="{ disabled: !page.url }"
-                v-html="page.label"
-              ></a>
-            </li>
-          </template>
-        </ul>
-      </nav>
     </CCol>
   </CRow>
 </template>
 
 <script>
 export default {
-  name: 'Commits',
+  name: "Commits",
   data: () => ({
     commits: [],
     pagination: [],
@@ -112,48 +128,47 @@ export default {
   methods: {
     gotoPage: async function (url) {
       await this.$axios.get(url).then((response) => {
-        this.commits = response.data.data
-        this.pagination = response.data.links
-      })
+        this.commits = response.data.data;
+        this.pagination = response.data.links;
+      });
     },
     async deleteCommit(id) {
       await swal({
-        title: this.$i18n.t('Are you sure?'),
-        text: this.$i18n.t('Once deleted, you will not be able to recover!'),
-        icon: 'warning',
-        buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
+        title: this.$i18n.t("Are you sure?"),
+        text: this.$i18n.t("Once deleted, you will not be able to recover!"),
+        icon: "warning",
+        buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          this.$axios
-            .delete(`/service_commits/${id}`)
-            .then(
-              () =>
-                (this.commits = this.commits.filter(
-                  (commit) => commit.id !== id,
-                )),
-            )
-          swal('Service commit has been deleted!', {
-            icon: 'success',
-          })
+          this.$axios.delete(`/service_commits/${id}`).then(() => {
+            this.commits.splice(
+              this.commits.findIndex((commit) => commit.id === id),
+              1
+            );
+          });
+          swal(this.$i18n.t("Service commit has been deleted!"), {
+            icon: "success",
+            timer: 3000,
+          });
         }
-      })
+      });
     },
   },
   async mounted() {
     await this.$axios
-      .get('/service_commits')
+      .get("/service_commits")
       .then((response) => {
-        this.commits = response.data.data
-        this.pagination = response.data.links
+        this.commits = response.data.data;
+        this.pagination = response.data.links;
       })
       .catch((error) => {
         swal({
           title: error.response.statusText,
           text: error.response.data.message,
-          icon: 'error',
-        })
-      })
+          icon: "error",
+        });
+      });
   },
-}
+};
 </script>
