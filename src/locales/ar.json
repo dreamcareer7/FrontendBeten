@@ -476,6 +476,9 @@
     "The task added successfully":"تم اضافة المهمه بنجاح",
     "Finished":"إنهاء المهمه",
     "Ended":"انتهت",
-  "Hospitalities":" الاعاشه والضيافه"
+  "Hospitalities":" الاعاشه والضيافه",
+  "Vehicles":"خدمة النقل",
+  "Dormitories":"خدمة الاسكان",
+  "Meal":"الوجبات",
   
 }
