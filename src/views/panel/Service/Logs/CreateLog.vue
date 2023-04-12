@@ -64,6 +64,10 @@ export default {
       this.log.service_commit_id = this.service_commit_id
       this.$axios.post('/service_commit_log', this.log).then(() => {
         this.log = {}
+         swal(this.$i18n.t("The task added successfully"), {
+            icon: "success",
+            timer: 3000,
+          });
         this.$emit('created')
       })
     },

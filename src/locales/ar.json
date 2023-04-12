@@ -472,5 +472,8 @@
     "Service commit has been deleted!": "تم حذف تكليف المهمة!",
     "Phase has been deleted!": "تم حذف المرحلة!",
     "Meal has been deleted!": "تم حذف الوجبة!",
-    "Meals pagination": "ترقيم صفحات الوجبات"
+    "Meals pagination": "ترقيم صفحات الوجبات",
+    "The task added successfully":"تم اضافة المهمه بنجاح",
+    "Finished":"إنهاء المهمه",
+    "Ended":"انتهت"
 }
