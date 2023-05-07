@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import CreateCommit from "../Commits/CreateCommit.vue";
+import CreateCommit from "../Commit/CreateCommit.vue";
 
 export default {
   name: "PhaseDetails",

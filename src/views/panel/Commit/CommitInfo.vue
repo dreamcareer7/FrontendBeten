@@ -173,7 +173,7 @@
 
 <script>
 import swal from "sweetalert";
-import CreateLog from "../Logs/CreateLog.vue";
+import CreateLog from "@/components/CreateLog.vue";
 export default {
   name: "ServiceCommitInfo",
   components: {

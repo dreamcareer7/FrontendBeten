@@ -71,44 +71,44 @@ const routes = [
       {
         path: '/services',
         name: 'Services',
-        component: () => import('@/views/panel/Service/Services/Services'),
+        component: () => import('@/views/panel/Service/Services'),
       },
       {
         path: '/services/create',
         name: 'Create service',
-        component: () => import('@/views/panel/Service/Services/CreateService'),
+        component: () => import('@/views/panel/Service/CreateService'),
       },
       {
         path: '/services/:id',
         name: 'Update service',
-        component: () => import('@/views/panel/Service/Services/UpdateService'),
+        component: () => import('@/views/panel/Service/UpdateService'),
       },
       {
         path: '/services/commits',
         name: 'Service Commits',
-        component: () => import('@/views/panel/Service/Commits/Commits'),
+        component: () => import('@/views/panel/Commit/Commits'),
       },
       // Service Commits
       {
         path: '/services/commits/:id',
         name: 'Service Commit details',
-        component: () => import('@/views/panel/Service/Commits/CommitInfo'),
+        component: () => import('@/views/panel/Commit/CommitInfo'),
       },
       {
         path: '/phases/:id',
         name: 'Phase details',
-        component: () => import('@/views/panel/Service/Phase/PhaseInfo'),
+        component: () => import('@/views/panel/Phase/PhaseInfo'),
       },
       {
         path: '/services/commits/create',
         name: 'Create commit',
-        component: () => import('@/views/panel/Service/Commits/CreateCommit'),
+        component: () => import('@/views/panel/Commit/CreateCommit'),
       },
       {
         path: '/services/commits/edit/:id',
         name: 'Update Service Commit',
         component: () =>
-          import('@/views/panel/Service/Commits/UpdateServiceCommit'),
+          import('@/views/panel/Commit/UpdateServiceCommit'),
       },
       // Service commits end
 

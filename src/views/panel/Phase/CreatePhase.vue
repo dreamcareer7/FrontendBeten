@@ -166,11 +166,8 @@ export default {
   },
   async mounted() {
     await this.$axios
-      // TODO: Implement search of services instead of assigning first 50
-      .get('/services')
-      // TODO: We only need the ID and title, maybe hit a different API endpoint
-      // that selects only those two elements
-      .then((response) => (this.available_services = response.data.data))
+      .get('/phases/create')
+      .then((response) => (this.available_services = response.data))
   },
 }
 </script>
