@@ -7,52 +7,30 @@
             <CCard class="p-4">
               <CCardBody>
                 <CForm>
-                  <h1 class="text-center">{{ $t('Login') }}</h1>
+                  <h1 class="text-center">{{ $t('OTP') }}</h1>
                   <p class="text-medium-emphasis text-center">
-                    {{ $t('Sign in to your account') }}
+                    {{ $t('An SMS has been sent to your phone') }}
                   </p>
                   <CInputGroup class="mb-3">
-                    <CInputGroupText>@</CInputGroupText>
                     <CFormInput
-                      type="email"
-                      :placeholder="$t('Email')"
-                      v-model="form.email"
-                      autocomplete="email"
+                      type="text"
+                      :placeholder="$t('Please enter your verification code')"
+                      v-model="form.otp"
+                      autocomplete="otp"
                       style="direction: inherit;"
                     />
                   </CInputGroup>
-                  <CInputGroup class="mb-4">
-                    <CInputGroupText>
-                      <CIcon icon="cil-lock-locked" />
-                    </CInputGroupText>
-                    <CFormInput
-                      type="password"
-                      v-model="form.password"
-                      :placeholder="$t('Password')"
-                      autocomplete="current-password"
-                      @keyup.enter="login"
-                    />
-                  </CInputGroup>
+
                   <div v-show="error_message" class="error_style">
                     {{ error_message }}
                   </div>
                   <CRow>
                     <CCol :xs="8">
-                      <CButton @click="sendOTP" color="primary" class="px-4">
-                        {{ $t('Login') }}
+                      <CButton @click="verifyOTP" color="primary" class="px-4">
+                        {{ $t('Verify') }}
                       </CButton>
                     </CCol>
-                    <CCol :xs="4" class="text-right">
-                      <router-link
-                        :to="{
-                          name: 'reset_password',
-                        }"
-                      >
-                        <CButton color="link" class="px-0">
-                          {{ $t('Forgot password?') }}
-                        </CButton>
-                      </router-link>
-                    </CCol>
+
                   </CRow>
                 </CForm>
               </CCardBody>
@@ -72,15 +50,27 @@ export default {
     form: {},
   }),
   methods: {
-    sendOTP: async function(){
+    verifyOTP: async function(){
+      this.form.user_id = localStorage.getItem('auth_user_id')
+      this.error_message = "";
+      await this.$axios.
+            post('/verify/otp', this.form)
+            .then((response) => {
+              console.log('test',this.form,response)
+              localStorage.setItem('auth_token', response.data.token)
+              localStorage.setItem('user', JSON.stringify(response.data.user))
+              localStorage.setItem(
+                'permissions',
+                JSON.stringify(response.data.permissions),
+              )
+              localStorage.removeItem('auth_user_id')
+              window.location.href = '/dashboard'
+            })
+            .catch((error) =>{
+              console.log('error',this.form,error)
+              this.error_message = error.response?.data.message || error.message
+            })
 
-      const response = await this.$axios.post('/login', this.form)
-      const user_id = response.data.user_id
-
-      if(user_id) {
-        localStorage.setItem('auth_user_id', response.data.user_id)
-        this.$router.push({ name: 'verify.otp' });
-      }
     },
     login: async function () {
       await this.$axios

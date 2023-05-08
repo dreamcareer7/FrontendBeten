@@ -265,6 +265,12 @@ const routes = [
         component: () => import('@/views/panel/Auth/Login'),
       },
       {
+        path: 'verify/otp',
+        name: 'verify.otp',
+        meta: { isVerifyOtp: true },
+        component: () => import('@/views/panel/Auth/VerifyOtp.vue'),
+      },
+      {
         path: 'reset',
         name: 'reset_password',
         component: () => import('@/views/panel/Auth/ResetPassword'),
@@ -299,7 +305,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const auth_token = localStorage.getItem('auth_token')
+  const auth_user_id = localStorage.getItem('auth_user_id')
   const reqAuth = to.matched.some((record) => record.meta.requiresAuth)
+  const isVerifyOtp = to.matched.some((record) => record.meta.isVerifyOtp)
   const defaultQuery = { path: '/', query: {} }
 
   if (to.matched.length > 0) {
@@ -307,6 +315,10 @@ router.beforeEach((to, from, next) => {
       next(defaultQuery)
     } else if (!reqAuth && auth_token) {
       next('/dashboard')
+    }else if(auth_user_id && !isVerifyOtp){
+      next({name:'verify.otp'})
+    }else if(!auth_user_id && isVerifyOtp){
+      next(defaultQuery)
     } else {
       next()
     }
