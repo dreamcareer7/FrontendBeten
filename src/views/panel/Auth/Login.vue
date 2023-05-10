@@ -75,12 +75,17 @@ export default {
     sendOTP: async function(){
 
       const response = await this.$axios.post('/login', this.form)
-      const user_id = response.data.user_id
-
-      if(user_id) {
-        localStorage.setItem('auth_user_id', response.data.user_id)
-        this.$router.push({ name: 'verify.otp' });
-      }
+        .then((response) => {
+          const user_id = response.data.user_id
+          if (user_id) {
+            localStorage.setItem('auth_user_id', response.data.user_id)
+            this.$router.push({name: 'verify.otp'});
+          }
+        }).catch(
+          (error) =>
+            (this.error_message =
+              error.response?.data.message || error.message),
+        )
     },
     login: async function () {
       await this.$axios
