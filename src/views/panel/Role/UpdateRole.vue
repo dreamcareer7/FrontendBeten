@@ -23,7 +23,7 @@
                   <CFormCheck 
                     v-for="permission_by_entity in permissions_by_entity[entity]"
                     class="permission-item"
-                    :id="permission_by_entity.id"
+                    :id="`permission_${permission_by_entity.id}`"
                     :label="permission_by_entity.name.split('.').map(item => $t(item)).join('.')"
                     :checked="role.permissions.find(permission => permission.id === permission_by_entity.id)"
                     @change="(event) => permissionChanged(event.target.checked, permission_by_entity)"
@@ -126,5 +126,6 @@ export default {
 <style scoped>
 .permission-item {
   margin-left: 20px;
+  min-width: 250px;
 }
 </style>
