@@ -10,16 +10,16 @@
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">{{
-                  "Name"
+                  $t("Name")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
-                  "Actions"
+                  $t("Actions")
                 }}</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="role in roles" :key="role.id">
-                <CTableDataCell>{{ role.name }}</CTableDataCell>
+                <CTableDataCell>{{ $t(role.name) }}</CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
@@ -69,13 +69,13 @@
         <CCol :md="12">
           <CTable class="table table-responsive">
             <CTableRow>
-              <CTableHeaderCell>{{ "Name" }}</CTableHeaderCell>
-              <CTableDataCell>{{ role.name }}</CTableDataCell>
+              <CTableHeaderCell>{{ $t("Name") }}</CTableHeaderCell>
+              <CTableDataCell>{{ $t(role.name) }}</CTableDataCell>
             </CTableRow>
             <CTableRow class="mt-8" v-if="role.users.length">
-              <CTableHeaderCell>{{ "Users" }}</CTableHeaderCell>
+              <CTableHeaderCell>{{ $t("Users") }}</CTableHeaderCell>
               <CTableRow v-for="user in role.users" :key="user">
-                {{ user }}
+                {{ $t(user) }}
               </CTableRow>
             </CTableRow>
           </CTable>

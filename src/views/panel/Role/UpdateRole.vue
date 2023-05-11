@@ -1,22 +1,22 @@
 <template>
   <div class="card border-warning mb-4">
-    <div class="card-header">Update Role</div>
+    <div class="card-header">{{ $t("Update Role") }}</div>
     <form @submit.prevent="update">
       <div class="card-body">
         <div class="form-floating mb-3">
           <CTableRow class="form-control">
-            <CTableHeaderCell>{{ role.name }}</CTableHeaderCell>
+            <CTableHeaderCell>{{ $t(role_name) }}</CTableHeaderCell>
           </CTableRow>
         </div>
 
         <div class="form-floating mb-3">
           <CTableRow class="form-control">
-            <CTableHeaderCell>Permissions</CTableHeaderCell>
+            <CTableHeaderCell>{{ $t("Permissions") }}</CTableHeaderCell>
           </CTableRow>
           <CAccordion>
             <CAccordionItem v-for="entity in entities">
               <CAccordionHeader>
-                {{ entity }}
+                {{ $t(entity) }}
               </CAccordionHeader>
               <CAccordionBody>
                 <div class="d-flex flex-wrap">
@@ -24,7 +24,7 @@
                     v-for="permission_by_entity in permissions_by_entity[entity]"
                     class="permission-item"
                     :id="permission_by_entity.id"
-                    :label="permission_by_entity.name"
+                    :label="permission_by_entity.name.split('.').map(item => $t(item)).join('.')"
                     :checked="role.permissions.find(permission => permission.id === permission_by_entity.id)"
                     @change="(event) => permissionChanged(event.target.checked, permission_by_entity)"
                   />
@@ -37,7 +37,7 @@
         <CRow v-if="error_message">
           <CCol :md="12">
             <div class="error_style">
-              {{ error_message }}
+              {{ $t(error_message) }}
             </div>
           </CCol>
         </CRow>
@@ -64,6 +64,7 @@ export default {
   name: 'UpdateRole',
   data: () => ({
     role: {},
+    role_name: '',
     entities: [],
     permissions_by_entity: {},
     checked_permissions: [],
@@ -109,7 +110,8 @@ export default {
   async mounted() {
     await this.$axios
       .get(`/roles/${this.$decrypt(this.$route.params.id)}/edit`)
-      .then((response) => (this.role = response.data))
+      .then((response) => (this.role = response.data));
+    this.role_name = this.role.name;
     let entities = this.role.available_permissions.map(element => element.name.split(".")[0]);
     entities = new Set(entities);
     this.entities = entities;
