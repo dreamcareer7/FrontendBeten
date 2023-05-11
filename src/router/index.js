@@ -246,6 +246,20 @@ const routes = [
           import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
       },
       // Hospitalities Menu ends here
+      
+      // Roles Menu
+      {
+        path: '/roles',
+        name: 'All roles',
+        component: () => import('@/views/panel/Role/Roles'),
+      },
+      {
+        path: '/roles/update/:id',
+        name: 'Update Role',
+        component: () => import('@/views/panel/Role/UpdateRole'),
+      },
+
+      // Roles Menu ends here
     ],
   },
   {

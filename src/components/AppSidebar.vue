@@ -10,6 +10,14 @@
       }}</router-link>
     </CSidebarBrand>
     <AppSidebarNav />
+    <CDropdown>
+      <CDropdownToggle color="dark">
+        <CIcon icon="cil-settings" class="settings-icon" /> Settings
+      </CDropdownToggle>
+      <CDropdownMenu>
+        <CDropdownItem href="/roles">Roles & Permissions</CDropdownItem>
+      </CDropdownMenu>
+    </CDropdown>
     <CSidebarToggler
       class="d-none d-lg-flex"
       @click="$store.commit('toggleUnfoldable')"
@@ -34,10 +42,13 @@ export default {
 </script>
 
 <style scoped>
-a {
+.sidebar-brand a, li a {
   text-decoration: none;
   font-family: Scripto;
   font-size: 2rem;
   color: white;
+}
+.settings-icon {
+  margin-left: 8px;
 }
 </style>
