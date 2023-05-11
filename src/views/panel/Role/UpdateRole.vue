@@ -10,20 +10,23 @@
         </div>
 
         <div class="form-floating mb-3">
+          <CTableRow class="form-control">
+            <CTableHeaderCell>Permissions</CTableHeaderCell>
+          </CTableRow>
           <CAccordion>
-            <CAccordionItem>
+            <CAccordionItem v-for="entity in entities">
               <CAccordionHeader>
-                Permissions
+                {{ entity }}
               </CAccordionHeader>
               <CAccordionBody>
                 <div class="d-flex flex-wrap">
-                  <CFormCheck 
-                    v-for="a_permission in role.available_permissions"
+                  <CFormCheck
+                    v-for="permission_by_entity in permissions_by_entity[entity]"
                     class="permission-item"
-                    :id="a_permission.id"
-                    :label="a_permission.name"
-                    :checked="role.permissions.find(permission => permission.id === a_permission.id)"
-                    @change="(event) => permissionChanged(event.target.checked, a_permission)"
+                    :id="permission_by_entity.id"
+                    :label="permission_by_entity.name"
+                    :checked="role.permissions.find(permission => permission.id === permission_by_entity.id)"
+                    @change="(event) => permissionChanged(event.target.checked, permission_by_entity)"
                   />
                 </div>
               </CAccordionBody>
@@ -61,7 +64,9 @@ export default {
   name: 'UpdateRole',
   data: () => ({
     role: {},
-    permissions: [],
+    entities: [],
+    permissions_by_entity: {},
+    checked_permissions: [],
     error_message: '',
   }),
   methods: {
@@ -74,7 +79,7 @@ export default {
       }).then((willUpdate) => {
         if (willUpdate) {
           this.$axios
-            .patch(`/roles/${this.role.id}`, { permissions: this.permissions })
+            .patch(`/roles/${this.role.id}`, { permissions: this.checkedPermissions })
             .then(() => {
               this.$router.push({ name: 'All roles' })
               swal(this.$i18n.t('Updated successfully!'), {
@@ -94,10 +99,10 @@ export default {
     },
     permissionChanged: function (checked, permission) {
       if (checked)
-        this.permissions.push(permission.id);
+        this.checkedPermissions.push(permission.id);
       else {
-        const index = this.permissions.indexOf(permission.id);
-        this.permissions.splice(index, 1);
+        const index = this.checkedPermissions.indexOf(permission.id);
+        this.checkedPermissions.splice(index, 1);
       }
     },
   },
@@ -105,7 +110,13 @@ export default {
     await this.$axios
       .get(`/roles/${this.$decrypt(this.$route.params.id)}/edit`)
       .then((response) => (this.role = response.data))
-    this.permissions = this.role.permissions.map(permission => permission.id);
+    let entities = this.role.available_permissions.map(element => element.name.split(".")[0]);
+    entities = new Set(entities);
+    this.entities = entities;
+    entities.forEach(entity => {
+      this.permissions_by_entity[entity] = this.role.available_permissions.filter(item => item.name.startsWith(entity));
+    });
+    this.checkedPermissions = this.role.permissions.map(permission => permission.id);
   },
 }
 </script>

@@ -44,14 +44,6 @@
                       <ion-icon name="create-outline"></ion-icon>
                     </CButton>
                   </router-link>
-                  <button
-                    class="btn btn-sm btn-danger text-white m-1"
-                    @click="deleteRole(role.id)"
-                    :title="$t('Delete')"
-                    v-if="$can('roles.delete')"
-                  >
-                    <ion-icon name="trash-bin-outline"></ion-icon>
-                  </button>
                 </CTableDataCell>
               </CTableRow>
             </CTableBody>
@@ -108,28 +100,6 @@ export default {
         .get(`/roles/${id}`)
         .then((response) => (this.role = response.data));
       this.is_role_modal_visible = true;
-    },
-    deleteRole: async function (id) {
-      await swal({
-        title: this.$i18n.t("Are you sure?"),
-        text: this.$i18n.t("Once deleted, you will not be able to recover!"),
-        icon: "warning",
-        buttons: [this.$i18n.t("Cancel"), this.$i18n.t("Confirm")],
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
-          this.$axios.delete(`/roles/${id}`).then(
-            this.roles.splice(
-              this.roles.findIndex((role) => role.id === id),
-              1
-            )
-          );
-          swal(this.$i18n.t("Role has been deleted!"), {
-            icon: "success",
-            timer: 3000,
-          });
-        }
-      });
     },
   },
   mounted: async function () {
