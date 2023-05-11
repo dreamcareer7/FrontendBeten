@@ -134,4 +134,19 @@ export default [
       },
     ],
   },
+  {
+    component: 'CNavGroup',
+    name: 'Settings',
+    to: '/roles',
+    icon: 'cil-settings',
+    visible: can('roles.index'),
+    items: [
+      {
+        component: 'CNavItem',
+        name: 'Roles & Permissions',
+        to: '/roles',
+        visible: can('roles.index'),
+      },
+    ],
+  },
 ]
