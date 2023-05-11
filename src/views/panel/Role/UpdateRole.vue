@@ -4,9 +4,16 @@
     <form @submit.prevent="update">
       <div class="card-body">
         <div class="form-floating mb-3">
-          <CTableRow class="form-control">
-            <CTableHeaderCell>{{ $t(role_name) }}</CTableHeaderCell>
-          </CTableRow>
+          <input
+            class="form-control"
+            id="name"
+            type="text"
+            autocomplete="off"
+            v-model="role.name"
+            required
+            autofocus
+          />
+          <label for="name">{{ $t("Name") }}</label>
         </div>
 
         <div class="form-floating mb-3">
@@ -70,6 +77,11 @@ export default {
     checked_permissions: [],
     error_message: '',
   }),
+  computed: {
+    dir() {
+      return document.dir === "rtl" ? "float-end" : "pull-right";
+    },
+  },
   methods: {
     update: async function () {
       await swal({
@@ -127,5 +139,9 @@ export default {
 .permission-item {
   margin-left: 20px;
   min-width: 250px;
+}
+*[dir=rtl] .accordion-item >>> .accordion-button::after {
+  margin-left: 0 !important;
+  margin-right: auto !important;
 }
 </style>
