@@ -12,10 +12,10 @@
     <AppSidebarNav />
     <CDropdown>
       <CDropdownToggle color="dark">
-        <CIcon icon="cil-settings" class="settings-icon" /> Settings
+        <CIcon icon="cil-settings" class="settings-icon" /> {{ $t("Settings") }}
       </CDropdownToggle>
       <CDropdownMenu>
-        <CDropdownItem href="/roles">Roles & Permissions</CDropdownItem>
+        <CDropdownItem href="/roles">{{ $t("Roles & Permissions") }}</CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
     <CSidebarToggler
