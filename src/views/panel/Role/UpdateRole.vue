@@ -92,7 +92,7 @@ export default {
       }).then((willUpdate) => {
         if (willUpdate) {
           this.$axios
-            .patch(`/roles/${this.role.id}`, { permissions: this.checkedPermissions })
+            .patch(`/roles/${this.role.id}`, { name: this.role.name, permissions: this.checked_permissions })
             .then(() => {
               this.$router.push({ name: 'All roles' })
               swal(this.$i18n.t('Updated successfully!'), {
@@ -112,10 +112,10 @@ export default {
     },
     permissionChanged: function (checked, permission) {
       if (checked)
-        this.checkedPermissions.push(permission.id);
+        this.checked_permissions.push(permission.id);
       else {
-        const index = this.checkedPermissions.indexOf(permission.id);
-        this.checkedPermissions.splice(index, 1);
+        const index = this.checked_permissions.indexOf(permission.id);
+        this.checked_permissions.splice(index, 1);
       }
     },
   },
@@ -130,7 +130,7 @@ export default {
     entities.forEach(entity => {
       this.permissions_by_entity[entity] = this.role.available_permissions.filter(item => item.name.startsWith(entity));
     });
-    this.checkedPermissions = this.role.permissions.map(permission => permission.id);
+    this.checked_permissions = this.role.permissions.map(permission => permission.id);
   },
 }
 </script>

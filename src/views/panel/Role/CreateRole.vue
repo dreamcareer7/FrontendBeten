@@ -19,7 +19,7 @@
         <CTableRow class="form-control">
           <CTableHeaderCell>{{ $t("Permissions") }}</CTableHeaderCell>
         </CTableRow>
-        <!-- <CAccordion>
+        <CAccordion>
           <CAccordionItem v-for="entity in entities">
             <CAccordionHeader>
               {{ $t(entity) }}
@@ -31,13 +31,12 @@
                   class="permission-item"
                   :id="`permission_${permission_by_entity.id}`"
                   :label="permission_by_entity.name.split('.').map(item => $t(item)).join('.')"
-                  :checked="role.permissions.find(permission => permission.id === permission_by_entity.id)"
                   @change="(event) => permissionChanged(event.target.checked, permission_by_entity)"
                 />
               </div>
             </CAccordionBody>
           </CAccordionItem>
-        </CAccordion> -->
+        </CAccordion>
       </div>
 
         <CRow v-if="error_message">
@@ -62,11 +61,17 @@ export default {
   data: () => ({
     error_message: '',
     role: {},
+    entities: [],
+    permissions_by_entity: {},
+    checked_permissions: [],
   }),
   methods: {
     async create() {
       await this.$axios
-        .post('/roles', this.role)
+        .post('/roles', {
+          name: this.role.name,
+          permissions: this.checked_permissions,
+        })
         .then(() => this.$router.push({ name: 'All roles' }))
         .catch((error) => {
           if (error.response) {
@@ -76,6 +81,36 @@ export default {
           }
         })
     },
+    permissionChanged: function (checked, permission) {
+      if (checked)
+        this.checked_permissions.push(permission.id);
+      else {
+        const index = this.checked_permissions.indexOf(permission.id);
+        this.checked_permissions.splice(index, 1);
+      }
+    },
+  },
+  async mounted() {
+    await this.$axios
+      .get('/roles/permissions/all')
+      .then((response) => (this.role = response.data));
+    let entities = this.role.permissions.map(element => element.name.split(".")[0]);
+    entities = new Set(entities);
+    this.entities = entities;
+    entities.forEach(entity => {
+      this.permissions_by_entity[entity] = this.role.permissions.filter(item => item.name.startsWith(entity));
+    });
   },
 }
 </script>
+
+<style scoped>
+.permission-item {
+  margin-left: 20px;
+  min-width: 250px;
+}
+*[dir=rtl] .accordion-item >>> .accordion-button::after {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+</style>
