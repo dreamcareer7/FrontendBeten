@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import IdleJs from "idle-js";
 import avatar from '@/assets/images/user.jpeg'
 export default {
   name: 'AppHeaderDropdownAccnt',
@@ -69,11 +70,40 @@ export default {
         name: 'Login',
       })
     },
+    trackIdleState() {
+      const mins = 15;    // 15 minutes
+      const expiresInMs = mins * 60000;
+      let idle = new IdleJs({
+        idle: expiresInMs, // idle time in ms
+        events: ['mousemove', 'keydown', 'mousedown', 'touchstart'], // events that will trigger the idle resetter
+        onIdle: () => {
+          swal({
+            title: 'Unauthenticated',
+            text: 'Your session has expired. Please login again.',
+            icon: 'error',
+          });
+
+          localStorage.removeItem('auth_token')
+          localStorage.removeItem('user')
+          localStorage.removeItem('permissions')
+          this.$router.push({
+            name: 'Login',
+          })
+        },
+        keepTracking: true, // set it to false if you want to be notified only on the first idleness change
+        startAtIdle: false // set it to true if you want to start in the idle state
+      });
+
+      idle.start();
+    }
   },
   computed:{
     user(){
       return JSON.parse(localStorage.getItem('user'))
     }
+  },
+  mounted() {
+    this.trackIdleState();
   }
 }
 </script>
