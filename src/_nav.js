@@ -134,4 +134,25 @@ export default [
       },
     ],
   },
+  {
+    component: 'CNavItem',
+    name: 'Evaluations',
+    to: '/evaluations',
+    icon: 'cil-star',
+    visible: can('evaluations.index'),
+  },
+  {
+    component: 'CNavItem',
+    name: 'Locations',
+    to: '/locations',
+    icon: 'cil-map',
+    visible: can('locations.index'),
+  },
+  {
+    component: 'CNavItem',
+    name: 'Roles & Permissions',
+    to: '/roles',
+    icon: 'cil-rights',
+    visible: can('roles.index'),
+  },
 ]
