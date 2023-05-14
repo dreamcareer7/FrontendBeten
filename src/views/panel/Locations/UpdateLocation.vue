@@ -58,7 +58,7 @@ export default {
   methods: {
     update: async function () {
       await this.$axios
-        .post('/cities', this.city)
+        .patch(`/cities/${this.city.id}`, this.city)
         .then(() => {
           swal(this.$i18n.t("Location has been updated successfully"), {
             icon: "success",
