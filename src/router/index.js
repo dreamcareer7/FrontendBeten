@@ -246,7 +246,7 @@ const routes = [
           import('@/views/panel/Hospitality/Transactions/CreateTransaction'),
       },
       // Hospitalities Menu ends here
-      
+
       // Roles Menu
       {
         path: '/roles',
@@ -260,6 +260,25 @@ const routes = [
       },
 
       // Roles Menu ends here
+
+      // Locations Menu
+      {
+        path: '/locations',
+        name: 'Locations',
+        component: () => import('@/views/panel/Locations/Locations'),
+      },
+      {
+        path: '/locations/create',
+        name: 'Create Location',
+        component: () => import('@/views/panel/Locations/CreateLocation'),
+      },
+      {
+        path: '/locations/update/:id',
+        name: 'Update Location',
+        component: () => import('@/views/panel/Locations/UpdateLocation'),
+      }
+
+      // Locations Menu ends here
     ],
   },
   {

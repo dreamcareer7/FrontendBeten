@@ -41,7 +41,7 @@
             <CTableBody>
               <CTableRow v-for="service in services" :key="service.id">
                 <CTableDataCell>{{ service.title }}</CTableDataCell>
-                <CTableDataCell>{{ service.city?.title }}</CTableDataCell>
+                <CTableDataCell v-html="displayCity(service.city)"></CTableDataCell>
                 <CTableDataCell>{{ service.before_date }}</CTableDataCell>
                 <CTableDataCell>{{ service.exact_date }}</CTableDataCell>
                 <CTableDataCell>{{ service.after_date }}</CTableDataCell>
@@ -203,6 +203,9 @@ export default {
         this.showServiceDetailModal = true;
       });
     },
+    displayCity(city) {
+      return city ? city?.location_url ? `<a href="${city?.location_url}" target="_blank">${city?.title}</a>` : city?.title : '';
+    }
   },
   async mounted() {
     await this.$axios.get("/services").then((response) => {

@@ -514,5 +514,13 @@
     "view": "منظر",
     "edit": "يحرر",
     "delete": "يمسح",
-    "index": "فِهرِس"
+    "index": "فِهرِس",
+    "Locations": "الأماكن",
+    "Create location": "إضافة مكان",
+    "Update location": "تحديث مكان",
+    "Location Url": "رابط المكان",
+     "Locations navigation": "تنقل الاماكن",
+  "The location has been deleted!": "تم حذف المكان!",
+  "Location has been created successfully":"تم إنشاء المكان بنجاح",
+  "Location has been updated successfully": "تم تحديث المكان بنجاح"
 }
