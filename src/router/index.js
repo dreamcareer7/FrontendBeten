@@ -276,7 +276,26 @@ const routes = [
         path: '/locations/update/:id',
         name: 'Update Location',
         component: () => import('@/views/panel/Locations/UpdateLocation'),
-      }
+      },
+
+      // Locations Menu ends here
+
+      // evaluations Menu
+      {
+        path: '/evaluations',
+        name: 'Evaluations',
+        component: () => import('@/views/panel/Evaluation/Evaluations'),
+      },
+      {
+        path: '/evaluations/create',
+        name: 'Create Evaluation',
+        component: () => import('@/views/panel/Evaluation/CreateEvaluation'),
+      },
+      // {
+      //   path: '/evaluations/update/:id',
+      //   name: 'Update Evaluations',
+      //   component: () => import('@/views/panel/Locations/UpdateLocation'),
+      // }
 
       // Locations Menu ends here
     ],

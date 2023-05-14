@@ -10,15 +10,15 @@
       }}</router-link>
     </CSidebarBrand>
     <AppSidebarNav />
-    <CDropdown>
-      <CDropdownToggle color="dark">
-        <CIcon icon="cil-settings" class="settings-icon" /> {{ $t("Settings") }}
-      </CDropdownToggle>
-      <CDropdownMenu>
-        <CDropdownItem href="/locations">{{ $t("Locations") }}</CDropdownItem>
-        <CDropdownItem href="/roles">{{ $t("Roles & Permissions") }}</CDropdownItem>
-      </CDropdownMenu>
-    </CDropdown>
+<!--    <CDropdown>-->
+<!--      <CDropdownToggle color="dark">-->
+<!--        <CIcon icon="cil-settings" class="settings-icon" /> {{ $t("Settings") }}-->
+<!--      </CDropdownToggle>-->
+<!--      <CDropdownMenu>-->
+<!--        <CDropdownItem href="/locations">{{ $t("Locations") }}</CDropdownItem>-->
+<!--        <CDropdownItem href="/roles">{{ $t("Roles & Permissions") }}</CDropdownItem>-->
+<!--      </CDropdownMenu>-->
+<!--    </CDropdown>-->
     <CSidebarToggler
       class="d-none d-lg-flex"
       @click="$store.commit('toggleUnfoldable')"
