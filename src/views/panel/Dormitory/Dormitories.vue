@@ -80,7 +80,7 @@
               <CTableRow v-for="dormitory in dormitories" :key="dormitory.id">
                 <CTableDataCell>{{ dormitory.title }}</CTableDataCell>
                 <CTableDataCell>{{ dormitory.phones }}</CTableDataCell>
-                <CTableDataCell>{{ dormitory.city?.title }}</CTableDataCell>
+                <CTableDataCell v-html="displayCity(dormitory.city)"></CTableDataCell>
                 <CTableDataCell>{{ dormitory.location }}</CTableDataCell>
                 <CTableDataCell>
                   <CBadge
@@ -293,6 +293,9 @@ export default {
         }
       })
     },
+    displayCity(city) {
+      return city ? city?.location_url ? `<a href="${city?.location_url}" target="_blank">${city?.title}</a>` : city?.title : '';
+    }
   },
   mounted: async function () {
     await this.getDormitories()

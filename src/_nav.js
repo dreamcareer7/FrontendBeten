@@ -135,18 +135,24 @@ export default [
     ],
   },
   {
-    component: 'CNavGroup',
-    name: 'Settings',
+    component: 'CNavItem',
+    name: 'Evaluations',
+    to: '/evaluations',
+    icon: 'cil-star',
+    visible: can('evaluations.index'),
+  },
+  {
+    component: 'CNavItem',
+    name: 'Locations',
+    to: '/locations',
+    icon: 'cil-map',
+    visible: can('locations.index'),
+  },
+  {
+    component: 'CNavItem',
+    name: 'Roles & Permissions',
     to: '/roles',
-    icon: 'cil-settings',
+    icon: 'cil-rights',
     visible: can('roles.index'),
-    items: [
-      {
-        component: 'CNavItem',
-        name: 'Roles & Permissions',
-        to: '/roles',
-        visible: can('roles.index'),
-      },
-    ],
   },
 ]
