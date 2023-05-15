@@ -258,6 +258,12 @@ const routes = [
         name: 'Update Role',
         component: () => import('@/views/panel/Role/UpdateRole'),
       },
+      {
+        path: '/roles/create',
+        name: 'Create role',
+        component: () =>
+          import('@/views/panel/Role/CreateRole'),
+      },
 
       // Roles Menu ends here
 

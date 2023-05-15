@@ -4,6 +4,15 @@
       <CCard class="mb-4">
         <CCardHeader>
           <CCardTitle>{{ $t("Roles") }}</CCardTitle>
+          <router-link
+            :to="{ name: 'Create role' }"
+            v-if="$can('roles.create')"
+          >
+            <CButton color="success" class="float-end text-white">
+              <ion-icon name="fast-food-outline"></ion-icon>&nbsp;
+              {{ $t("Create Role") }}
+            </CButton>
+          </router-link>
         </CCardHeader>
         <CCardBody>
           <CTable>
