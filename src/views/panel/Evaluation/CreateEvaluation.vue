@@ -31,7 +31,7 @@
         <div class=" mb-2">
           <label style="display: block">{{ $t('Vote') }}</label>
           <div>
-            <star-rating v-model:rating="evaluation.vote" :increment="0.5" :max-rating="10"	 />
+            <star-rating v-model:rating="evaluation.vote" :increment="0.5" :max-rating="5"	 />
           </div>
         </div>
 

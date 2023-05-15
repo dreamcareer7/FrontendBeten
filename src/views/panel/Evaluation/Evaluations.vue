@@ -120,7 +120,7 @@
           <CTableHeaderCell>{{ $t("Vote") }}</CTableHeaderCell>
 <!--          <CTableDataCell>{{ evaluation.vote }}</CTableDataCell>-->
           <CTableDataCell>
-            <star-rating :rating="evaluation.vote" :increment="0.5" :max-rating="10" :read-only="true" star-size="20"	 />
+            <star-rating :rating="evaluation.vote" :increment="0.5" :max-rating="5" :read-only="true" star-size="20"	 />
           </CTableDataCell>
         </CTableRow>
         <CTableRow v-if="evaluation.note">
