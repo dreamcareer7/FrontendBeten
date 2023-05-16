@@ -297,13 +297,27 @@ const routes = [
         name: 'Create Evaluation',
         component: () => import('@/views/panel/Evaluation/CreateEvaluation'),
       },
-      // {
-      //   path: '/evaluations/update/:id',
-      //   name: 'Update Evaluations',
-      //   component: () => import('@/views/panel/Locations/UpdateLocation'),
-      // }
 
-      // Locations Menu ends here
+      // evaluations Menu ends here
+
+      // professions Menu
+      {
+        path: '/professions',
+        name: 'Professions',
+        component: () => import('@/views/panel/Profession/Professions'),
+      },
+      {
+        path: '/professions/create',
+        name: 'Create Profession',
+        component: () => import('@/views/panel/Profession/CreateProfession'),
+      },
+      {
+        path: '/professions/update/:id',
+        name: 'Update Profession',
+        component: () => import('@/views/panel/Profession/UpdateProfession'),
+      },
+
+      // professions Menu ends here
     ],
   },
   {
