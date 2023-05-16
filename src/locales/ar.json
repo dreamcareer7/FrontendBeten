@@ -534,5 +534,13 @@
   "Evaluation has been created successfully": "تم اضافة التقييم",
   "Choose Provider": "اختر المزود",
   "Notes": "ملاحظات",
-  "Evaluation Information": "تفاصيل التقييم"
+  "Evaluation Information": "تفاصيل التقييم",
+  "Professions": "المهنة",
+  "Create Profession": "إضافة المهنة",
+  "The profession has been deleted!": "تم حذف المهنة",
+  "Professions navigation": "تنقل المهن",
+  "Profession Information": "تفاصيل المهنة",
+  "Profession has been created successfully": "تم اضافة المهنة",
+  "Profession has been updated successfully": "تم تعديل المهنة",
+  "Update Profession": "تعديل مهنة"
 }

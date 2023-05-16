@@ -150,9 +150,16 @@ export default [
   },
   {
     component: 'CNavItem',
+    name: 'Professions',
+    to: '/professions',
+    icon: 'cil-speedometer',
+    visible: can('professions.index'),
+  },
+  {
+    component: 'CNavItem',
     name: 'Roles & Permissions',
     to: '/roles',
-    icon: 'cil-rights',
+    icon: 'cil-bullhorn',
     visible: can('roles.index'),
   },
 ]
