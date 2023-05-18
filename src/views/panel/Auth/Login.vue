@@ -6,7 +6,8 @@
           <CCardGroup>
             <CCard class="p-4">
               <CCardBody>
-                <CForm>
+                <CForm
+                @submit.prevent="sendOTP">
                   <h1 class="text-center">{{ $t('Login') }}</h1>
                   <p class="text-medium-emphasis text-center">
                     {{ $t('Sign in to your account') }}
@@ -30,7 +31,6 @@
                       v-model="form.password"
                       :placeholder="$t('Password')"
                       autocomplete="current-password"
-                      @keyup.enter="login"
                     />
                   </CInputGroup>
                   <div v-show="error_message" class="error_style">
@@ -38,7 +38,7 @@
                   </div>
                   <CRow>
                     <CCol :xs="8">
-                      <CButton @click="sendOTP" color="primary" class="px-4">
+                      <CButton type="submit" color="primary" class="px-4">
                         {{ $t('Login') }}
                       </CButton>
                     </CCol>
@@ -74,7 +74,7 @@ export default {
   methods: {
     sendOTP: async function(){
 
-      const response = await this.$axios.post('/login', this.form)
+      await this.$axios.post('/login', this.form)
         .then((response) => {
           const user_id = response.data.user_id
           if (user_id) {
@@ -88,7 +88,8 @@ export default {
         )
     },
     login: async function () {
-      await this.$axios
+      alert(1)
+      /*await this.$axios
         .post('/login', this.form)
         .then((response) => {
           localStorage.setItem('auth_token', response.data.token)
@@ -103,7 +104,7 @@ export default {
           (error) =>
             (this.error_message =
               error.response?.data.message || error.message),
-        )
+        )*/
     },
   },
 }

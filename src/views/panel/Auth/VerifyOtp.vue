@@ -6,7 +6,9 @@
           <CCardGroup>
             <CCard class="p-4">
               <CCardBody>
-                <CForm>
+                <CForm
+                  @submit.prevent="verifyOTP"
+                  >
                   <h1 class="text-center">{{ $t('OTP') }}</h1>
                   <p class="text-medium-emphasis text-center">
                     {{ $t('An SMS has been sent to your phone') }}
