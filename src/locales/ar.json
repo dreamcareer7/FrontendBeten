@@ -542,5 +542,12 @@
   "Profession Information": "تفاصيل المهنة",
   "Profession has been created successfully": "تم اضافة المهنة",
   "Profession has been updated successfully": "تم تعديل المهنة",
-  "Update Profession": "تعديل مهنة"
+  "Update Profession": "تعديل مهنة",
+  "Crew":"الطاقم",
+  "Hospitality":"الضيافه",
+  "Client":"الزبون",
+  "Domitrory":"المساكن",
+  "MealType":"نوع الوجبات",
+  "Group":"المجموعه",
+  "Vehicle":"النقل"
 }

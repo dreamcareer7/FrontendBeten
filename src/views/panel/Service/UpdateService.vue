@@ -31,7 +31,14 @@
           <label for="city">{{ $t('City') }} *</label>
         </div>
         <div class="form-floating mb-3">
+          <div v-if="models" v-for="(m,index) in models" class="form-check form-check-inline">
+            <input class="form-check-input" :checked="false" :value="m.id" v-model="model_ids"  type="checkbox">
+            <label class="form-label form-check-label">{{$t(m.name)}}</label>
+          </div>
+        </div>
+        <div class="form-floating mb-3">
           <input
+            required
             type="date"
             class="form-control"
             id="before_date"
@@ -50,6 +57,7 @@
         </div>
         <div class="form-floating mb-3">
           <input
+            required
             type="date"
             class="form-control"
             id="after_date"
@@ -91,6 +99,8 @@ export default {
     error_message: '',
     service: {},
     cities: [],
+    models:[],
+    model_ids:[]
   }),
   methods: {
     update: async function () {
@@ -101,6 +111,7 @@ export default {
         buttons: [this.$i18n.t('Cancel'), this.$i18n.t('Confirm')],
       }).then((willUpdate) => {
         if (willUpdate) {
+          this.service.model_ids = this.model_ids
           this.$axios
             .patch(`/services/${this.service.id}`, this.service)
             .then(() => {
@@ -126,6 +137,13 @@ export default {
     const service_id = this.$decrypt(this.$route.params.id)
     await this.$axios.get(`/services/${service_id}`).then((response) => {
       this.service = response.data
+      const service_models = response.data?.service_models;
+      const models = response.data?.models;
+
+      this.models = models;
+      this.model_ids = service_models;
+
+      //console.log('response.data',response.data?.service_models)
     })
   },
 }
