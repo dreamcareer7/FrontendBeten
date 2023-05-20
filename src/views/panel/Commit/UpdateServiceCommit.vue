@@ -45,6 +45,7 @@
       <div class="form-floating mb-3">
         <input
           type="datetime-local"
+          step="1"
           class="form-control"
           id="started_at"
           v-model="service_commit.started_at"
