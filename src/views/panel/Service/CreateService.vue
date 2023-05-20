@@ -94,6 +94,10 @@ export default {
 
   methods: {
     create: async function () {
+      if(this.service.before_date > this.service.after_date){
+        alert('Before date cannot be greater than after date')
+        return;
+      }
       this.service.model_ids = this.model_ids
       await this.$axios
         .post('/services', this.service)

@@ -104,6 +104,10 @@ export default {
   }),
   methods: {
     update: async function () {
+      if(this.service.before_date > this.service.after_date){
+        alert('Before date cannot be greater than after date')
+        return;
+      }
       await swal({
         title: this.$i18n.t('Are you sure?'),
         text: this.$i18n.t('Click confirm to update, this action is irreversible'),
