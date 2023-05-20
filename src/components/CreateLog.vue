@@ -78,11 +78,9 @@ export default {
     },
   },
   mounted() {
-    console.log('this.service_id',this.service_id)
     this.$axios
       .get('/service/commit/model-types/'+this.service_id)
       .then((response) =>{
-        console.log('response.data',response.data)
         this.model_types = response.data.models
       })
   },
