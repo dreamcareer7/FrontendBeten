@@ -6,15 +6,17 @@
           <CCardGroup>
             <CCard class="p-4">
               <CCardBody>
-                <CForm
-                  @submit.prevent="verifyOTP"
-                  >
+                <button type="button" @click="removeOTP" class="btn-close pull-right" aria-label="Close"></button>
+                <CForm @submit.prevent="verifyOTP" autofocus>
                   <h1 class="text-center">{{ $t('OTP') }}</h1>
                   <p class="text-medium-emphasis text-center">
                     {{ $t('An SMS has been sent to your phone') }}
                   </p>
                   <CInputGroup class="mb-3">
                     <CFormInput
+                      ref="myInput"
+                      id="otp"
+                      autofocus
                       type="text"
                       :placeholder="$t('Please enter your verification code')"
                       v-model="form.otp"
@@ -51,6 +53,11 @@ export default {
     error_message: '',
     form: {},
   }),
+  mounted() {
+   // document.getElementById('otp').focus()
+
+    //this.$refs.myInput[0].focus();
+  },
   methods: {
     verifyOTP: async function(){
       this.form.user_id = localStorage.getItem('auth_user_id')
@@ -74,25 +81,13 @@ export default {
             })
 
     },
-    login: async function () {
-      await this.$axios
-        .post('/login', this.form)
-        .then((response) => {
-          localStorage.setItem('auth_token', response.data.token)
-          localStorage.setItem('user', JSON.stringify(response.data.user))
-          localStorage.setItem(
-            'permissions',
-            JSON.stringify(response.data.permissions),
-          )
-          window.location.href = '/dashboard'
-        })
-        .catch(
-          (error) =>
-            (this.error_message =
-              error.response?.data.message || error.message),
-        )
-    },
+    removeOTP: function (){
+      localStorage.removeItem('auth_user_id')
+      //this.$router.push({name: 'Login'});
+      window.location.href = '/panel/login'
+    }
   },
+
 }
 </script>
 

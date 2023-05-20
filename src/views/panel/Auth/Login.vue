@@ -7,7 +7,7 @@
             <CCard class="p-4">
               <CCardBody>
                 <CForm
-                @submit.prevent="sendOTP">
+                @submit.prevent="sendOTP" autofocus>
                   <h1 class="text-center">{{ $t('Login') }}</h1>
                   <p class="text-medium-emphasis text-center">
                     {{ $t('Sign in to your account') }}
@@ -15,6 +15,8 @@
                   <CInputGroup class="mb-3">
                     <CInputGroupText>@</CInputGroupText>
                     <CFormInput
+                      ref="myInput"
+                      autofocus
                       type="email"
                       :placeholder="$t('Email')"
                       v-model="form.email"
@@ -71,6 +73,7 @@ export default {
     error_message: '',
     form: {},
   }),
+
   methods: {
     sendOTP: async function(){
 
@@ -79,7 +82,8 @@ export default {
           const user_id = response.data.user_id
           if (user_id) {
             localStorage.setItem('auth_user_id', response.data.user_id)
-            this.$router.push({name: 'verify.otp'});
+            //this.$router.push({name: 'verify.otp'});
+            window.location.href = '/verify/otp'
           }
         }).catch(
           (error) =>
@@ -87,25 +91,7 @@ export default {
               error.response?.data.message || error.message),
         )
     },
-    login: async function () {
-      alert(1)
-      /*await this.$axios
-        .post('/login', this.form)
-        .then((response) => {
-          localStorage.setItem('auth_token', response.data.token)
-          localStorage.setItem('user', JSON.stringify(response.data.user))
-          localStorage.setItem(
-            'permissions',
-            JSON.stringify(response.data.permissions),
-          )
-          window.location.href = '/dashboard'
-        })
-        .catch(
-          (error) =>
-            (this.error_message =
-              error.response?.data.message || error.message),
-        )*/
-    },
+
   },
 }
 </script>
