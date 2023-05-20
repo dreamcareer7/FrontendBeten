@@ -166,7 +166,7 @@
       <CModalTitle>{{ $t("Add log") }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
-      <CreateLog :service_commit_id="service_commit.id" @created="getCommit" />
+      <CreateLog :service_id="service_commit.service?.id" :service_commit_id="service_commit.id" @created="getCommit" />
     </CModalBody>
   </CModal>
 </template>

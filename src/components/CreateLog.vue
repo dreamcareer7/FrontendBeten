@@ -50,7 +50,7 @@
 <script>
 export default {
   name: 'CreateLog',
-  props: ['service_commit_id'],
+  props: ['service_commit_id','service_id'],
   emits: ['created'],
   data() {
     return {
@@ -78,9 +78,13 @@ export default {
     },
   },
   mounted() {
+    console.log('this.service_id',this.service_id)
     this.$axios
-      .get('/model_types')
-      .then((response) => (this.model_types = response.data))
+      .get('/service/commit/model-types/'+this.service_id)
+      .then((response) =>{
+        console.log('response.data',response.data)
+        this.model_types = response.data.models
+      })
   },
 }
 </script>
