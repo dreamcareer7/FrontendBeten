@@ -23,15 +23,15 @@
           <CAccordion>
             <CAccordionItem v-for="entity in entities">
               <CAccordionHeader>
-                {{ $t(entity) }}
+                <label style="text-transform: lowercase;">{{ $t(entity) }}</label>
               </CAccordionHeader>
               <CAccordionBody>
                 <div class="d-flex flex-wrap">
-                  <CFormCheck 
+                  <CFormCheck
                     v-for="permission_by_entity in permissions_by_entity[entity]"
                     class="permission-item"
                     :id="`permission_${permission_by_entity.id}`"
-                    :label="permission_by_entity.name.split('.').map(item => $t(item)).join('.')"
+                    :label="permissions[permission_by_entity.name].split(' ').map(item => $t(item)).join(' ')"
                     :checked="role.permissions.find(permission => permission.id === permission_by_entity.id)"
                     @change="(event) => permissionChanged(event.target.checked, permission_by_entity)"
                   />
@@ -67,9 +67,12 @@
 </template>
 
 <script>
+import * as permissions from '@/locales/permissions.json'
+
 export default {
   name: 'UpdateRole',
   data: () => ({
+    permissions,
     role: {},
     role_name: '',
     entities: [],
@@ -128,7 +131,7 @@ export default {
     entities = new Set(entities);
     this.entities = entities;
     entities.forEach(entity => {
-      this.permissions_by_entity[entity] = this.role.available_permissions.filter(item => item.name.startsWith(entity));
+      this.permissions_by_entity[entity] = this.role.available_permissions.filter(item => item.name.startsWith(`${entity}.`));
     });
     this.checked_permissions = this.role.permissions.map(permission => permission.id);
   },
