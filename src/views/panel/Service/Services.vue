@@ -137,8 +137,8 @@
             <CTableRow>
               <CTableHeaderCell>Before date:</CTableHeaderCell>
               <CTableDataCell>{{ service.before_date }}</CTableDataCell>
-              <CTableHeaderCell>Exact date:</CTableHeaderCell>
-              <CTableDataCell>{{ service.exact_date }}</CTableDataCell>
+<!--              <CTableHeaderCell>Exact date:</CTableHeaderCell>
+              <CTableDataCell>{{ service.exact_date }}</CTableDataCell>-->
             </CTableRow>
           </CTable>
         </CCol>

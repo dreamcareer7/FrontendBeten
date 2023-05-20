@@ -46,7 +46,7 @@
           />
           <label for="before_date">{{ $t('Before date') }}</label>
         </div>
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-3 d-none">
           <input
             type="date"
             class="form-control"
