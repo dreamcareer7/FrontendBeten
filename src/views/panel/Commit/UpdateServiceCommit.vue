@@ -35,6 +35,7 @@
         <input
           type="datetime-local"
           class="form-control"
+          step="1"
           id="schedule_at"
           v-model="service_commit.schedule_at"
         />
