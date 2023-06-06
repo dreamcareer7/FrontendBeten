@@ -16,12 +16,11 @@
       </div>
       <div class="form-floating mb-2">
         <input
-          type="email"
+          type="text"
           class="form-control"
           id="email"
           autocomplete="off"
           v-model="user.email"
-          disabled
         />
         <label for="email">{{ $t("Email") }}</label>
       </div>
