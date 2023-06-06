@@ -36,7 +36,7 @@
         <div class="form-floating mb-2">
           <input
             id="email"
-            type="email"
+            type="text"
             class="form-control"
             autocomplete="email"
             v-model="user.email"
