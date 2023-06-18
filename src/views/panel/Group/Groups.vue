@@ -111,6 +111,7 @@
                     </CButton>
                   </router-link>
                   <button
+                    v-if="group.clients_count < 1"
                     class="btn btn-sm btn-danger text-white"
                     @click="deleteGroup(group.id, group.clients_count)"
                     :title="$t('Delete')"
