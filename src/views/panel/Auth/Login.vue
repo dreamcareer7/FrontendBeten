@@ -17,7 +17,7 @@
                     <CFormInput
                       ref="myInput"
                       autofocus
-                      type="email"
+                      type="text"
                       :placeholder="$t('Email')"
                       v-model="form.email"
                       autocomplete="email"
