@@ -88,6 +88,23 @@ const routes = [
         name: 'Service Commits',
         component: () => import('@/views/panel/Commit/Commits'),
       },
+      // Service Center
+      {
+        path: '/service-center',
+        name: 'Service center',
+        component: () => import('@/views/panel/ServiceCenter/ServiceCenter'),
+      },
+      {
+        path: '/service-center/create',
+        name: 'Create service center',
+        component: () => import('@/views/panel/ServiceCenter/CreateServiceCenter'),
+      },
+      {
+        path: '/service-center/:id',
+        name: 'Update service center',
+        component: () => import('@/views/panel/ServiceCenter/UpdateServiceCenter'),
+      },
+
       // Service Commits
       {
         path: '/services/commits/:id',

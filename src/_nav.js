@@ -143,6 +143,13 @@ export default [
   },
   {
     component: 'CNavItem',
+    name: 'Services Center',
+    to: '/service-center',
+    icon: "cil-window",
+    visible: can('services-center.index'),
+  },
+  {
+    component: 'CNavItem',
     name: 'Locations',
     to: '/locations',
     icon: 'cil-map',
