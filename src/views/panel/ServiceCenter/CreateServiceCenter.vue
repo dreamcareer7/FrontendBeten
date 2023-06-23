@@ -23,7 +23,7 @@
                 class="form-control"
                 id="title"
                 v-model="service.phone"
-                required
+              
                 autofocus
                 autocomplete="off"
               />
@@ -35,7 +35,7 @@
                 class="form-control"
                 id="title"
                 v-model="service.location"
-                required
+              
                 autofocus
                 autocomplete="off"
               />
@@ -48,7 +48,7 @@
                 class="form-control"
                 id="title"
                 v-model="service.group"
-                required
+            
                 autofocus
                 autocomplete="off"
               />
@@ -61,7 +61,7 @@
                 class="form-control"
                 id="title"
                 v-model="service.maxClientCount"
-                required
+              
                 autofocus
                 autocomplete="off"
               />
