@@ -84,6 +84,9 @@
                   $t("Contact")
                 }}</CTableHeaderCell>
                 <CTableHeaderCell scope="col">{{
+                  $t("Service center")
+                }}</CTableHeaderCell>
+                <CTableHeaderCell scope="col">{{
                   $t("Actions")
                 }}</CTableHeaderCell>
               </CTableRow>
@@ -101,6 +104,7 @@
                   </CBadge>
                 </CTableDataCell>
                 <CTableDataCell>{{ user.contact }}</CTableDataCell>
+                <CTableDataCell>{{ user.service_center_id }}</CTableDataCell>
                 <CTableDataCell :aria-colspan="2">
                   <button
                     class="btn btn-sm btn-info text-white mx-1"
