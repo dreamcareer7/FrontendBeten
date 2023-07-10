@@ -179,6 +179,61 @@
           <CTableDataCell>{{ $t('Coordinate') }}</CTableDataCell>
           <CTableDataCell>{{ dormitory.coordinate }}</CTableDataCell>
         </CTableRow>
+
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE ID') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_ID }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE COMMERCIAL NAME AR') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_COMMERCIAL_NAME_AR }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE COMMERCIAL NAME LA') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_COMMERCIAL_NAME_LA }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE CITY ID') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_CITY_ID }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE TOTAL ROOMS') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_TOTAL_ROOMS }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE GUEST CAPACITY') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_GUEST_CAPACITY }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE MAP ADDRESS LATITUDE') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_MAP_ADDRESS_LATITUDE }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE MAP ADDRESS LONGITUDE') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_MAP_ADDRESS_LONGITUDE }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE ADDRESS 1') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_ADDRESS_1 }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE PHONES NO') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_PHONES_NO }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE MANAGER NAME') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_MANAGER_NAME }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE MANAGER PHONE') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_MANAGER_PHONE }}</CTableDataCell>
+        </CTableRow>
+        <CTableRow>
+          <CTableDataCell>{{ $t('HOUSE RENEWAL SEASON') }}</CTableDataCell>
+          <CTableDataCell>{{ dormitory.HOUSE_RENEWAL_SEASON }}</CTableDataCell>
+        </CTableRow>
+
+
         <CTableRow>
           <CTableDataCell>{{ $t('Active') }}</CTableDataCell>
           <CTableDataCell>

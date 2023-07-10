@@ -422,6 +422,23 @@
   "Update phase": "تحديث المرحلة",
   "Commit Service": "تكليف مهمة",
   "Coordinate": "إحداثيات",
+
+
+  "HOUSE ID": "رقم النُزل",
+  "HOUSE COMMERCIAL NAME AR": "الاسم العربي",
+  "HOUSE COMMERCIAL NAME LA": "الاسم اللاتيني",
+  "HOUSE CITY ID": "المدينة",
+  "HOUSE TOTAL ROOMS": "عدد الغرف",
+  "HOUSE GUEST CAPACITY": "عدد الحجاج",
+  "HOUSE MAP ADDRESS LATITUDE": "إحداثيات اكس",
+  "HOUSE MAP ADDRESS LONGITUDE": "إحداثيات عرض",
+  "HOUSE ADDRESS 1": "العنوان",
+  "HOUSE PHONES NO": "هاتف النُزل",
+  "HOUSE MANAGER NAME": "اسم المدير",
+  "HOUSE MANAGER PHONE": "هاتف المدير",
+  "HOUSE RENEWAL SEASON": "الموسم",
+
+
   "Update Dormitory": "تحديث المسكن",
   "Passengers": "عدد الركاب",
   "Update Vehicle": "تحديث المركبة",
